@@ -1,0 +1,7 @@
+{
+  "// This is an example .claude/settings.local.json file.": "",
+  "// Copy to .claude/settings.local.json for personal overrides (git-ignored).": "",
+  "disableAllHooks": false,
+  "alwaysThinkingEnabled": true,
+  "language": "en"
+}
