@@ -1,0 +1,38 @@
+# LL-G Lessons Learned & Gotchas
+
+> Machine-readable knowledge base of coding gotchas. Before scripting, load this file, then load the llms.txt for each technology you are about to use. Load only HIGH-severity entries unless a specific topic is relevant.
+
+## Severity Legend
+
+HIGH = silent wrong output or hard-to-debug errors -- always load these
+MEDIUM = obvious failures (build errors, test failures) -- load when relevant
+LOW = style/convention, caught by linter -- skip unless explicitly asked
+
+## Technologies
+
+### PowerShell
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (8 entries)
+
+### Next.js
+- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (3 entries)
+
+### Tailwind CSS
+- [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (3 entries)
+
+### TypeScript
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (3 entries)
+
+### Graph API (Microsoft)
+- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (13 entries)
+
+### Godot / GDScript
+- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (9 entries)
+
+### Better Auth
+- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (5 entries)
+
+### Bash
+- [Bash index](kb/bash/llms.txt): All bash shell gotchas (1 entry)
+
+### NinjaOne
+- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (2 entries)

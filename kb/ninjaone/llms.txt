@@ -1,0 +1,8 @@
+# NinjaOne Gotchas
+
+Lessons from NinjaOne REST API v2 and the NinjaOne MCP tools.
+
+## Entries (2)
+
+- HIGH [no-adhoc-script-execution.md](no-adhoc-script-execution.md): NinjaOne API does not support ad-hoc script execution -- must use saved script IDs
+- HIGH [volume-query-deviceid-filter-500.md](volume-query-deviceid-filter-500.md): ninjaone_query_volumes with deviceId filter returns HTTP 500 -- use /device/{id}/volumes instead
