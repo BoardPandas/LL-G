@@ -19,3 +19,4 @@
 - [Private channels have separate SharePoint sites](private-channels.md): Private channel files are not accessible through the parent team's drive. Use Get-MgTeamChannelFileFolder to get the correct drive reference. HIGH.
 - [Conditional Access operations require extra permissions](conditional-access.md): Standard app registrations don't include CA scopes. Sign-in log CA details are redacted without Policy.Read.All. Error codes: 53003 (CA block), 50076 (MFA), 530003 (non-compliant device). MEDIUM.
 - [OneDrive search requires Sites.ReadWrite.All](onedrive-search-permissions.md): Search endpoint is SharePoint-backed. Files.ReadWrite.All handles CRUD but search returns 403 without Sites.ReadWrite.All. MEDIUM.
+- [@odata.type cannot be used in $select queries](odata-type-in-select.md): Including @odata.type in $select causes 400 Bad Request. It is returned automatically -- just omit it from $select and access it in the response. MEDIUM.

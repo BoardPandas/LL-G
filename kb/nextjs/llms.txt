@@ -1,0 +1,9 @@
+# Next.js Gotchas
+
+> Known Next.js patterns that cause silent failures or hard-to-debug errors. Load all HIGH entries before writing any Next.js code.
+
+## Entries
+
+- ['use client' directive placement](use-client.md): Must be the very first line of the file (before imports). Cannot be in files that import server-only modules. HIGH.
+- [Async Server Components](server-components.md): Server Components are async natively -- do not wrap data fetching in useEffect or useState. MEDIUM.
+- [metadata export in Client Components](metadata.md): The metadata or generateMetadata export only works in Server Components. Exporting it from a Client Component silently has no effect. HIGH.

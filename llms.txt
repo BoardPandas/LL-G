@@ -11,7 +11,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ## Technologies
 
 ### PowerShell
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (11 entries)
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (12 entries)
 
 ### Next.js
 - [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (3 entries)
@@ -23,7 +23,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (3 entries)
 
 ### Graph API (Microsoft)
-- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (15 entries)
+- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (16 entries)
 
 ### Godot / GDScript
 - [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (11 entries)

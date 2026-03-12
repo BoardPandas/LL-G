@@ -15,3 +15,4 @@
 - [Feature-detect SDK parameters before using them](feature-detect-params.md): SDK versions add parameters over time. Use (Get-Command).Parameters.ContainsKey() before using optional parameters. MEDIUM.
 - [Don't assume catch-block operations will succeed](catch-block-safety.md): Fallback operations in catch blocks can also throw. Use nested try/catch for critical fallbacks. MEDIUM.
 - [All Microsoft.Graph.* submodules must be the same version](graph-module-version-mismatch.md): Mixed versions cause assembly loading errors. Check version alignment after installing multiple Graph submodules. HIGH.
+- [Old EXO module in user path shadows system-wide version](exo-module-version-shadowing.md): PS7 loads from ~/Documents/PowerShell/Modules first. A stale EXO 2.x there shadows the system-wide 3.x, causing WinRM errors with no hint about the version mismatch. HIGH.
