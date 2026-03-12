@@ -1,0 +1,8 @@
+# Bash Gotchas
+
+> Known bash shell patterns that cause silent failures or unexpected output. Load HIGH entries before writing any bash scripts.
+
+## Entries
+
+- [jq outputs pretty-printed JSON by default -- use -c for JSONL](jq-compact.md): jq -c produces single-line output. Without -c, grep and wc -l fail on multi-line JSON. HIGH.
+- [Git Bash on Windows: PATH and tool availability](git-bash-windows.md): /usr/bin not always on PATH. Use explicit PATH setup or full paths for utilities in scripts and hooks. MEDIUM.

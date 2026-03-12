@@ -11,7 +11,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ## Technologies
 
 ### PowerShell
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (8 entries)
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (11 entries)
 
 ### Next.js
 - [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (3 entries)
@@ -23,7 +23,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (3 entries)
 
 ### Graph API (Microsoft)
-- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (13 entries)
+- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (15 entries)
 
 ### Godot / GDScript
 - [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (9 entries)
@@ -32,7 +32,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (5 entries)
 
 ### Bash
-- [Bash index](kb/bash/llms.txt): All bash shell gotchas (1 entry)
+- [Bash index](kb/bash/llms.txt): All bash shell gotchas (2 entries)
+
+### Teams & SharePoint
+- [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
 
 ### NinjaOne
-- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (2 entries)
+- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (3 entries)

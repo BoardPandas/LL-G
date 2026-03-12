@@ -1,0 +1,9 @@
+# Teams & SharePoint Gotchas
+
+> Known Teams and SharePoint patterns that cause failures during channel operations, file migrations, and permission management. See also Graph API entries for channel provisioning, file uploads, and private channels.
+
+## Entries (3)
+
+- MEDIUM [file-copy-async.md](file-copy-async.md): File copy between channels is async (202 response). Only files can be copied -- recreate folders manually first.
+- MEDIUM [channel-name-restrictions.md](channel-name-restrictions.md): Channel names have strict character restrictions and 256-char limit. Teams API has tight rate limits -- add 500ms delays between bulk operations.
+- MEDIUM [site-vs-channel-permissions.md](site-vs-channel-permissions.md): Adding someone to a private channel does NOT grant SharePoint site access. May need to grant both Teams and SharePoint permissions separately.

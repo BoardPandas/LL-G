@@ -1,0 +1,17 @@
+# PowerShell Gotchas
+
+> Known PowerShell patterns that cause silent failures or hard-to-debug errors. Load all HIGH entries before writing any PowerShell script.
+
+## Entries
+
+- [Variable quoting in strings](quoting.md): Double quotes expand variables; single quotes are always literal. Use $() for expressions inside strings. HIGH.
+- [Error handling with -ErrorAction Stop](error-handling.md): Default error action is Continue -- errors are silently swallowed. Always use -ErrorAction Stop with try/catch and set $ErrorActionPreference = 'Stop' at script top. HIGH.
+- [Array safety with @() wrapping](array-safety.md): Pipeline results with a single item become a scalar, not an array. Wrap in @() to guarantee array type. HIGH.
+- [Runtime module checks instead of #Requires](modules.md): Never use #Requires -Modules; check at runtime with Get-Module -ListAvailable and install if missing. MEDIUM.
+- [Always use UTC for date fields](utc-dates.md): [DateTime]::Now is local time. Use [DateTime]::UtcNow for Graph API and any external API that expects UTC. Causes KeyCredentialsInvalidEndDate and similar errors. HIGH.
+- [Initialize variables before conditional branches (StrictMode)](strict-mode-variables.md): Under Set-StrictMode -Version Latest, accessing an unset variable throws. Initialize all variables before any if/else branch that might not execute. HIGH.
+- [> is redirection and parens can misparse in strings](special-chars-in-strings.md): Bare > in double-quoted strings is parsed as output redirection. Use -> instead. Parentheses around words can also misparse -- use backtick-escape or rephrase. HIGH.
+- [Never pass complex scripts inline via -Command from bash](bash-to-powershell.md): Bash expands $variables, $false, $true, $null, and backticks before PowerShell runs. Use a temp .ps1 file with -File instead. HIGH.
+- [Feature-detect SDK parameters before using them](feature-detect-params.md): SDK versions add parameters over time. Use (Get-Command).Parameters.ContainsKey() before using optional parameters. MEDIUM.
+- [Don't assume catch-block operations will succeed](catch-block-safety.md): Fallback operations in catch blocks can also throw. Use nested try/catch for critical fallbacks. MEDIUM.
+- [All Microsoft.Graph.* submodules must be the same version](graph-module-version-mismatch.md): Mixed versions cause assembly loading errors. Check version alignment after installing multiple Graph submodules. HIGH.

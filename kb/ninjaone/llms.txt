@@ -2,7 +2,8 @@
 
 Lessons from NinjaOne REST API v2 and the NinjaOne MCP tools.
 
-## Entries (2)
+## Entries (3)
 
 - HIGH [no-adhoc-script-execution.md](no-adhoc-script-execution.md): NinjaOne API does not support ad-hoc script execution -- must use saved script IDs
 - HIGH [volume-query-deviceid-filter-500.md](volume-query-deviceid-filter-500.md): ninjaone_query_volumes with deviceId filter returns HTTP 500 -- use /device/{id}/volumes instead
+- HIGH [device-filter-syntax.md](device-filter-syntax.md): The df parameter on query endpoints does not support deviceId filtering (HTTP 500). Use /device/{id}/<resource> for single-device queries. Works with org and location filters only.

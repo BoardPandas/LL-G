@@ -1,0 +1,21 @@
+# Microsoft Graph API Gotchas
+
+> Known Microsoft Graph API patterns that cause silent failures, auth errors, or data loss. Load all HIGH entries before writing any Graph API code.
+
+## Entries
+
+- [Certificate must be in CurrentUser store](cert-auth.md): Get-ChildItem Cert:\CurrentUser\My -- not LocalMachine. Verify cert exists before connecting. HIGH.
+- [Always Disconnect-MgGraph in finally block](disconnect-finally.md): Stale connections leave tokens active. Always disconnect in finally even if the script throws. HIGH.
+- [403 = missing admin consent, not missing permission](403-admin-consent.md): The permission may be listed in the app registration but admin consent was never granted. Check role assignments, not just permission declarations. MEDIUM.
+- [New permissions take 1-15 min to propagate](permission-propagation.md): After granting admin consent, disconnect and reconnect. Existing token won't have new scopes. Poll before proceeding. HIGH.
+- [KeyCredentials: use cert RawData and cert dates](key-credentials.md): Use $cert.RawData directly (not base64 then ASCII bytes). Use $cert.NotBefore/$cert.NotAfter (not UtcNow). Use -KeyCredentials with PascalCase (not -BodyParameter camelCase). HIGH.
+- [Always use -All or follow @odata.nextLink](pagination.md): Default page size is 999 items. Omitting -All silently truncates results. HIGH.
+- [Exchange Online needs Exchange.ManageAsApp + Exchange Admin role + domain not GUID](exchange-online.md): Graph permissions alone are insufficient. Requires both the app permission and the directory role. Connect-ExchangeOnline -Organization takes a domain name, not a GUID. HIGH.
+- [URL-encode single quotes as %27 in filter queries](filter-encoding.md): Bare single quotes in $filter strings cause BadRequest or type mismatch errors. MEDIUM.
+- [PATCH CA policy: send full conditions.users object](ca-policy-patch.md): Sending only excludeUsers in a PATCH silently clears includeUsers. Read current policy first and include all fields. HIGH.
+- [429/503: Invoke-MgGraphRequest does not auto-retry](throttling.md): The SDK auto-handles throttling but Invoke-MgGraphRequest does not. Add retry logic with Retry-After header. MEDIUM.
+- [Channel creation is async -- poll before accessing files](channel-provisioning.md): New channel file folders are not immediately available. Poll Get-MgTeamChannelFileFolder until it succeeds. MEDIUM.
+- [Large file uploads need upload sessions (over 4MB)](file-uploads.md): Direct PUT fails for files over 4MB. Use createUploadSession for large files. MEDIUM.
+- [Private channels have separate SharePoint sites](private-channels.md): Private channel files are not accessible through the parent team's drive. Use Get-MgTeamChannelFileFolder to get the correct drive reference. HIGH.
+- [Conditional Access operations require extra permissions](conditional-access.md): Standard app registrations don't include CA scopes. Sign-in log CA details are redacted without Policy.Read.All. Error codes: 53003 (CA block), 50076 (MFA), 530003 (non-compliant device). MEDIUM.
+- [OneDrive search requires Sites.ReadWrite.All](onedrive-search-permissions.md): Search endpoint is SharePoint-backed. Files.ReadWrite.All handles CRUD but search returns 403 without Sites.ReadWrite.All. MEDIUM.
