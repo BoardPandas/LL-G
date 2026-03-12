@@ -1,0 +1,13 @@
+# Better Auth Gotchas
+
+> Known Better Auth framework patterns that cause silent failures or TypeScript errors. Load all HIGH entries before writing any Better Auth integration code.
+
+## Entries
+
+- [Use better-auth/react for React hooks, not better-auth/client](client-import.md): better-auth/client returns framework-agnostic atoms, not callable React hooks. Import from better-auth/react instead. HIGH.
+- [verifyEmail token goes in query param, not top-level body](verify-email-token.md): GET endpoints put params in the query object. Passing token at top level causes a TypeScript error and the call fails. HIGH.
+- [Cross-subdomain cookies require explicit config](cross-subdomain-cookies.md): Cookies don't travel between subdomains by default. Must enable crossSubDomainCookies with a leading-dot domain. HIGH.
+- [Browser auth client uses import.meta.env not process.env](browser-env-vars.md): process.env does not exist in browser or Cloudflare Pages. Use import.meta.env.VITE_* variables. HIGH.
+- [Method names are camelCase from URL paths -- check types](method-names.md): Method names are derived by camelCasing the URL path segments. Guessing from docs is unreliable; check the dist type definitions. MEDIUM.
+- [signIn two-factor response: check redirect, not twoFactorRedirect](two-factor-redirect.md): When MFA is enabled, signIn.email returns data.redirect (boolean), not data.twoFactorRedirect. MEDIUM.
+- [twoFactor.enable requires the user's current password](two-factor-enable-password.md): Calling twoFactor.enable() without arguments throws TS2554. Must pass { password }. MEDIUM.

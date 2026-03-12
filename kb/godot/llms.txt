@@ -1,0 +1,17 @@
+# Godot / GDScript Gotchas
+
+> Known Godot 4 and GDScript patterns that cause crashes, silent failures, or hard-to-debug rendering issues. Load all HIGH entries before writing any .tscn or .gd file.
+
+## Entries
+
+- [Projectiles must be children of a container node](projectile-parent.md): Adding projectiles as children of the player causes them to inherit the player's transform and move with it. Use a sibling container node. HIGH.
+- [Sub-resource IDs in .tscn must be unique strings](sub-resource-ids.md): Duplicate sub-resource IDs cause silent resource conflicts. Godot uses format like "RectangleShape2D_abc12". HIGH.
+- [Preload paths must match exact file locations](preload-paths.md): preload() crashes at parse time if the path doesn't exist. All referenced scenes must exist before any script that preloads them. HIGH.
+- [collision_layer vs collision_mask](collision-layers.md): collision_layer = what I am; collision_mask = what I detect. Setting both to the same value causes objects to scan for themselves. HIGH.
+- [CanvasModulate must be near-black not pure black](canvasmodulate.md): Pure black (0,0,0) makes PointLight2D invisible. Use (0.02, 0.02, 0.04). PointLight2D also requires a CanvasModulate node to have any visible effect. HIGH.
+- [Timer callbacks can outlive their source node](timer-callbacks.md): SceneTree timers outlive the node that created them. Check is_instance_valid(self) at the start of every timer callback. HIGH.
+- [@onready var paths must match .tscn node names exactly](onready-paths.md): Mismatched node names fail silently at runtime. HIGH.
+- [:= type inference fails through base-class-typed variables](type-inference.md): Use explicit type annotation (var x: float =) instead of := when accessing script-defined properties through a base-class-typed variable. MEDIUM.
+- [No class_name on autoload scripts](no-class-name-autoload.md): Autoloads are accessed by node name. Adding class_name causes naming conflicts. MEDIUM.
+- [Area2D body_entered vs area_entered detect different node types](area2d-signals.md): body_entered detects PhysicsBody2D nodes. area_entered detects other Area2D nodes. Using the wrong signal silently fails. MEDIUM.
+- [project.godot input map serialization is fragile](input-map-serialization.md): Hand-written InputEventKey variant encoding is error-prone. Use the Godot editor or fall back to Input.is_key_pressed. MEDIUM.

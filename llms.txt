@@ -26,10 +26,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (15 entries)
 
 ### Godot / GDScript
-- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (9 entries)
+- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (11 entries)
 
 ### Better Auth
-- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (5 entries)
+- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (7 entries)
 
 ### Bash
 - [Bash index](kb/bash/llms.txt): All bash shell gotchas (2 entries)
@@ -38,4 +38,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
 
 ### NinjaOne
-- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (3 entries)
+- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (4 entries)
