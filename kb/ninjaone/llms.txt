@@ -2,9 +2,10 @@
 
 Lessons from NinjaOne REST API v2 and the NinjaOne MCP tools.
 
-## Entries (4)
+## Entries (5)
 
 - HIGH [no-adhoc-script-execution.md](no-adhoc-script-execution.md): NinjaOne API does not support ad-hoc script execution -- must use saved script IDs
 - HIGH [volume-query-deviceid-filter-500.md](volume-query-deviceid-filter-500.md): ninjaone_query_volumes with deviceId filter returns HTTP 500 -- use /device/{id}/volumes instead
 - HIGH [device-filter-syntax.md](device-filter-syntax.md): The df parameter on query endpoints does not support deviceId filtering (HTTP 500). Use /device/{id}/<resource> for single-device queries. Works with org and location filters only.
 - HIGH [query-endpoint-response-structure.md](query-endpoint-response-structure.md): Query endpoint responses are wrapped in {results: [...]} not a plain array -- must unwrap before iterating or you get AttributeError on strings. Also: list_devices lacks domainRole/domain fields, use query_computer_systems or get_device instead.
+- HIGH [oauth-authorization-code-flow.md](oauth-authorization-code-flow.md): OAuth Authorization Code flow requires /ws/oauth/ path (not /oauth/), tenant-specific domain, "Web" platform client (not API Services), client_secret in authorize URL, and offline_access scope for refresh tokens

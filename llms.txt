@@ -38,4 +38,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
 
 ### NinjaOne
-- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (4 entries)
+- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (5 entries)
