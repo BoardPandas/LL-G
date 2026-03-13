@@ -61,8 +61,14 @@ $Scopes = "monitoring management control offline_access"
 # Web client -> authorization_code + refresh_token (script execution)
 ```
 
+## Additional Gotchas
+
+7. **`runAs` must be lowercase in the API body** -- `"system"` works, `"SYSTEM"` causes "Unable to retrieved credential information" errors. The NinjaOne UI shows "System" but the API expects lowercase. The homotechsual module examples also use lowercase (`'system'`, `'loggedonuser'`).
+
+8. **Don't fire multiple script triggers in quick succession** -- The Script Runner's `finally` block clears the `techAssistantScript` custom field after each execution. If you trigger twice before the first run completes, the first run's cleanup wipes the field before the second run reads it.
+
 ## Notes
 
-- The homotechsual/NinjaOne PowerShell module (authoritative open-source reference) confirms all of the above patterns in its `Connect-NinjaOne.ps1` source.
+- The homotechsual/NinjaOne PowerShell module (authoritative open-source reference) confirms all of the above patterns in its `Connect-NinjaOne.ps1` and `Invoke-NinjaOneDeviceScript.ps1` source.
 - Valid NinjaOne instance domains: `app.ninjarmm.com` (US), `eu.ninjarmm.com` (EU), `oc.ninjarmm.com` (OC), `ca.ninjarmm.com` (CA), `us2.ninjarmm.com` (US2), `{tenant}.rmmservice.com` (custom).
 - The MCP server's client_credentials token URL (`/oauth/token` without `/ws/`) works for that grant type but is NOT the correct path for authorization code flow.
