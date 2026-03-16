@@ -7,3 +7,8 @@
 - ['use client' directive placement](use-client.md): Must be the very first line of the file (before imports). Cannot be in files that import server-only modules. HIGH.
 - [Async Server Components](server-components.md): Server Components are async natively -- do not wrap data fetching in useEffect or useState. MEDIUM.
 - [metadata export in Client Components](metadata.md): The metadata or generateMetadata export only works in Server Components. Exporting it from a Client Component silently has no effect. HIGH.
+- [BullMQ + separate ioredis causes type conflicts](bullmq-ioredis-conflict.md): Installing ioredis alongside bullmq causes TS type conflicts. Use BullMQ's built-in connection config instead. HIGH.
+- [Biome cannot parse Tailwind CSS v4 syntax](biome-tailwind-css-parse.md): Biome 2.x fails on @theme inline, @custom-variant, @apply. Exclude *.css files from Biome entirely. HIGH.
+- [Biome 2.x removed organizeImports key](biome-v2-organize-imports.md): Top-level organizeImports config causes Biome 2.x to reject the entire config. MEDIUM.
+- [serverExternalPackages not experimental](server-external-packages.md): Renamed from experimental.serverComponentsExternalPackages in Next.js 15. Old name silently fails. HIGH.
+- [PostHog server SDK must flush immediately](posthog-server-flush.md): Set flushAt: 1, flushInterval: 0 in posthog-node for Next.js server functions. Events are lost otherwise. HIGH.

@@ -13,3 +13,4 @@
 - [twoFactor.enable requires the user's current password](two-factor-enable-password.md): Calling twoFactor.enable() without arguments throws TS2554. Must pass { password }. MEDIUM.
 - [Organization plugin creates separate tables from custom schema](org-plugin-tables.md): BA's organization() plugin auto-creates its own `organization` + `member` tables. Custom `organizations`/`team_members` tables are a separate system -- frontend writes to BA tables, backend checks custom tables, causing silent FORBIDDEN. HIGH.
 - [toNodeHandler + reply.raw bypasses Fastify CORS plugin](fastify-cors-bypass.md): Mounting BA in Fastify via toNodeHandler with reply.raw skips the entire plugin chain. @fastify/cors never runs for auth routes. Must add CORS headers manually. HIGH.
+- [setActive() requires organization ID, not slug](set-active-org-id.md): Using slug in setActive causes silent session context loss. Always use the UUID id field. HIGH.
