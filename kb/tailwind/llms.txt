@@ -7,3 +7,4 @@
 - [Arbitrary value syntax](arbitrary-values.md): Arbitrary values use bracket syntax: w-[42px]. No spaces inside brackets. Class names must be complete strings -- dynamic string concatenation defeats Tailwind's static analysis. HIGH.
 - [Conditional classes with cn()](cn-utility.md): Use cn() (clsx + twMerge) for conditional/merged classes. Template literal concatenation silently drops conflicting utility classes without warning. HIGH.
 - [Dark mode configuration](dark-mode.md): Dark mode strategy (media vs class) must be set in tailwind.config. The class strategy requires a .dark class on the html element -- it does not activate automatically. MEDIUM.
+- [Tailwind 4.x @import resolves from the package directory in monorepos](v4-workspace-resolution.md): @tailwindcss/vite resolves `@import "tailwindcss"` from the file's package, not the consuming app. Add tailwindcss as a devDependency in any workspace package that imports it in CSS. HIGH.

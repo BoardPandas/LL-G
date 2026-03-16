@@ -1,0 +1,7 @@
+# Cloudflare Gotchas
+
+> Known Cloudflare Workers and Pages patterns that cause deployment failures or unexpected behavior. Load all HIGH entries before deploying to Cloudflare.
+
+## Entries
+
+- [@cloudflare/vite-plugin builds a Worker, not a Pages project](vite-plugin-worker-deploy.md): Deploy with `wrangler deploy` from `build/server/`, not `wrangler pages deploy build/client/`. Using Pages deploy gives static-only site with no SSR. MEDIUM.
