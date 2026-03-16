@@ -1,0 +1,7 @@
+# React Router Gotchas
+
+> Known React Router 7 patterns that cause silent failures or unexpected behavior. Load all HIGH entries before building React Router apps with SSR.
+
+## Entries
+
+- [Form POST on index route hits root route instead of index action](index-route-form-post.md): `<form method="post">` without explicit `action` on an index route sends POST to the root layout, causing 405. Use `action="/?index"` to target the index route. HIGH.

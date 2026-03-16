@@ -13,6 +13,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### PowerShell
 - [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (12 entries)
 
+### React Router
+- [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
+
 ### Next.js
 - [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (8 entries)
 
