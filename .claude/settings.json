@@ -21,7 +21,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Committing changes...'"
+            "command": "bash .claude/scripts/check-changelog-staged.sh",
+            "statusMessage": "Checking changelog is staged..."
           }
         ]
       }
