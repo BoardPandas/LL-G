@@ -4,12 +4,15 @@ description: Add a new gotcha or lesson learned to the LL-G knowledge base
 model: haiku
 ---
 
-You are adding a new entry to the LL-G lessons-learned knowledge base at `C:\Github\LL-G`.
+You are adding a new entry to the LL-G lessons-learned knowledge base.
+
+**Repository:** `wellforce-brandon/LL-G` on GitHub
+**Raw URL base:** `https://raw.githubusercontent.com/wellforce-brandon/LL-G/main/`
 
 ## Step 1: Collect information
 
 Ask the user for the following (you may ask all at once):
-1. **Technology** -- which folder does this belong in? (powershell, nextjs, tailwind, typescript, or a new tech name)
+1. **Technology** -- which folder does this belong in? (powershell, nextjs, tailwind, typescript, better-auth, godot, graph-api, bash, ninjaone, cloudflare, teams-sharepoint, cmd, or a new tech name)
 2. **Title** -- short descriptive title (becomes the H1 and the link text in llms.txt)
 3. **Problem** -- what goes wrong and why it's not obvious
 4. **Wrong pattern** -- code showing the incorrect approach
@@ -28,10 +31,19 @@ Severity legend:
 Convert the title to a slug: lowercase, spaces and punctuation replaced with hyphens, no leading/trailing hyphens.
 Example: "Variable quoting in strings" → `quoting.md`
 
-## Step 3: Create the entry file
+## Step 3: Fetch current state from GitHub
 
-Create `C:\Github\LL-G\kb\<tech>\<slug>.md` with this exact format:
+Use WebFetch to read the current master `llms.txt` and the relevant tech `llms.txt` (if the tech folder exists) so you know the current entry count and can avoid duplicates:
+```
+WebFetch https://raw.githubusercontent.com/wellforce-brandon/LL-G/main/llms.txt
+WebFetch https://raw.githubusercontent.com/wellforce-brandon/LL-G/main/kb/<tech>/llms.txt
+```
 
+## Step 4: Create the entry file via GitHub API
+
+Use the `mcp__github__create_or_update_file` tool to create `kb/<tech>/<slug>.md` on the `main` branch of `wellforce-brandon/LL-G`:
+
+Content format:
 ```
 ---
 tech: <technology>
@@ -57,16 +69,18 @@ severity: <high|medium|low>
 <notes, or omit the section if none>
 ```
 
-## Step 4: Update the tech llms.txt
+Commit message: `Add <tech> gotcha: <title>`
 
-Append a new bullet to `C:\Github\LL-G\kb\<tech>\llms.txt` under `## Entries`:
+## Step 5: Update the tech llms.txt
 
+Fetch the current content of `kb/<tech>/llms.txt` via GitHub API (`mcp__github__get_file_contents`), then update it with `mcp__github__create_or_update_file` (include the `sha` for update).
+
+Append a new bullet under `## Entries`:
 ```
 - [<Title>](<slug>.md): <one-line description>. <SEVERITY>.
 ```
 
-If the tech folder does not exist yet, create it:
-1. Create `C:\Github\LL-G\kb\<tech>\llms.txt` with:
+If the tech folder does not exist yet, create `kb/<tech>/llms.txt` with:
 ```
 # <Tech> Gotchas
 
@@ -77,18 +91,23 @@ If the tech folder does not exist yet, create it:
 - [<Title>](<slug>.md): <one-line description>. <SEVERITY>.
 ```
 
-2. Add the new tech to the master `llms.txt` under `## Technologies`:
+Commit message: `Update <tech> index: add <slug>`
+
+## Step 6: Update master llms.txt entry count
+
+Fetch the current `llms.txt` via GitHub API, find the bullet for this technology, and increment the entry count: `(N entries)` → `(N+1 entries)`.
+
+If this is a new technology, add a new section under `## Technologies`:
 ```
 ### <Tech>
 - [<Tech> index](kb/<tech>/llms.txt): All <tech> gotchas (1 entry)
 ```
 
-## Step 5: Update master llms.txt entry count
+Commit message: `Update master index: <tech> now has N+1 entries`
 
-Read `C:\Github\LL-G\llms.txt`. Find the bullet for this technology and increment the entry count in parentheses: `(N entries)` → `(N+1 entries)`.
+## Step 7: Confirm
 
-If this is a new technology (Step 4 path), the entry was already added in Step 4 -- no increment needed.
-
-## Step 6: Confirm
-
-Output the path of the created entry file and confirm both index files were updated.
+Output:
+- The GitHub URL of the created entry file
+- Confirmation that both index files were updated
+- The entry's severity level

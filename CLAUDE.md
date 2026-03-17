@@ -53,4 +53,7 @@ To add manually:
 
 ## KB Location
 
-This repo lives at `C:\Github\LL-G`. All paths in `llms.txt` and per-tech indexes are relative to the repo root.
+**GitHub:** `https://github.com/wellforce-brandon/LL-G`
+**Raw URL base:** `https://raw.githubusercontent.com/wellforce-brandon/LL-G/main/`
+
+All paths in `llms.txt` and per-tech indexes are relative to the repo root. Consumer repos should use the raw GitHub URLs to fetch entries, not local file paths.
