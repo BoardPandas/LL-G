@@ -57,3 +57,14 @@ To add manually:
 **Raw URL base:** `https://raw.githubusercontent.com/wellforce-brandon/LL-G/main/`
 
 All paths in `llms.txt` and per-tech indexes are relative to the repo root. Consumer repos should use the raw GitHub URLs to fetch entries, not local file paths.
+
+## RULE 3 -- Check BP Before Starting New Work
+
+**When onboarding a repo, starting a new feature, or setting up tooling -- load the BP index and check applicable best practices.**
+
+Step 1: Fetch https://raw.githubusercontent.com/wellforce-brandon/BP/main/llms.txt
+Step 2: For each concern relevant to your task, read its llms.txt index
+Step 3: Load all FOUNDATIONAL entries (these apply to every repo)
+Step 4: Load RECOMMENDED entries whose tech tags match the current project
+
+BP is the complement to LL-G: where LL-G tracks what NOT to do, BP tracks what TO do.
