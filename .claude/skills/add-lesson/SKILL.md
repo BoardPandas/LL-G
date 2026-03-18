@@ -105,7 +105,25 @@ If this is a new technology, add a new section under `## Technologies`:
 
 Commit message: `Update master index: <tech> now has N+1 entries`
 
-## Step 7: Confirm
+## Step 7: Check for complementary BP entry
+
+After creating the LL-G entry, consider whether this gotcha implies a best practice. Ask yourself:
+- Does the RIGHT pattern represent a reusable practice that other repos should adopt?
+- Is this pattern about infrastructure, tooling, or configuration (not app-specific logic)?
+
+If yes, check `C:\Github\BP\llms.txt` (or fetch `https://raw.githubusercontent.com/wellforce-brandon/BP/main/llms.txt`) to see if a complementary best practice already exists. If not, tell the user:
+
+```
+This gotcha implies a best practice that isn't in BP yet.
+The RIGHT pattern could be captured as: "<suggested title>"
+Run `/add-practice` in a BP session to create it, or I can draft it now.
+```
+
+If the user agrees, create the complementary BP entry at `C:\Github\BP\practices\<concern>\<slug>.md` following BP's entry format (PATTERN/WHY/EXAMPLE/CHECK/IMPLEMENT). Update BP's concern `llms.txt` and master `llms.txt` entry count.
+
+If the RIGHT pattern is too app-specific or already covered in BP, skip this step silently.
+
+## Step 8: Confirm
 
 Output:
 - The GitHub URL of the created entry file
