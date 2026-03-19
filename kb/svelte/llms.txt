@@ -1,0 +1,9 @@
+# Svelte Gotchas
+
+> Known Svelte 5 patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [{@const} placement restriction](const-placement.md): {@const} can only be immediate child of certain blocks, not regular HTML elements. MEDIUM.
+- [Runes require .svelte.ts extension](runes-file-extension.md): $state/$derived/$effect only work in .svelte and .svelte.ts files, not plain .ts. MEDIUM.
+- [Biome reports false unused imports](biome-false-positives.md): Biome cannot see template usage in .svelte files, auto-fix deletes needed imports. MEDIUM.
