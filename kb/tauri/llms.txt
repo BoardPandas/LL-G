@@ -1,0 +1,7 @@
+# Tauri Gotchas
+
+> Known Tauri patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Rust toolchain must be pre-installed](rust-toolchain.md): Tauri npm packages install but builds fail without system Rust installation. HIGH.
