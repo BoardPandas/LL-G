@@ -1,0 +1,7 @@
+# cmd.exe Gotchas
+
+> Known cmd.exe patterns that cause errors or unexpected behavior. Especially relevant for zero-disk-space emergencies where PowerShell can't run.
+
+## Entries
+
+- [cmd.exe does not support wildcards in the middle of a path](mid-path-wildcards.md): `del C:\Users\*\AppData\...` fails -- use a `for /d` loop to enumerate the parent. HIGH.
