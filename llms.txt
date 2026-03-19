@@ -23,7 +23,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (4 entries)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (3 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (6 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (17 entries)
@@ -48,3 +48,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### NinjaOne
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (5 entries)
+
+### Tauri
+- [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (1 entry)
+
+### Svelte
+- [Svelte index](kb/svelte/llms.txt): Svelte 5 component and runes gotchas (3 entries)
