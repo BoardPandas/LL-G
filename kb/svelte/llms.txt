@@ -7,3 +7,4 @@
 - [{@const} placement restriction](const-placement.md): {@const} can only be immediate child of certain blocks, not regular HTML elements. MEDIUM.
 - [Runes require .svelte.ts extension](runes-file-extension.md): $state/$derived/$effect only work in .svelte and .svelte.ts files, not plain .ts. MEDIUM.
 - [Biome reports false unused imports](biome-false-positives.md): Biome cannot see template usage in .svelte files, auto-fix deletes needed imports. MEDIUM.
+- [Dead import in root component crashes entire app](dead-import-root-crash.md): A single dead import in App.svelte or layout kills all routes, not just the one using it. HIGH.
