@@ -5,3 +5,4 @@
 ## Entries
 
 - [Rust toolchain must be pre-installed](rust-toolchain.md): Tauri npm packages install but builds fail without system Rust installation. HIGH.
+- [plugin-sql lastInsertId is number | undefined](lastinsertid-undefined.md): execute().lastInsertId typed as number | undefined causes type errors in typed wrappers. MEDIUM.
