@@ -12,3 +12,5 @@
 - [Biome 2.x removed organizeImports key](biome-v2-organize-imports.md): Top-level organizeImports config causes Biome 2.x to reject the entire config. MEDIUM.
 - [serverExternalPackages not experimental](server-external-packages.md): Renamed from experimental.serverComponentsExternalPackages in Next.js 15. Old name silently fails. HIGH.
 - [PostHog server SDK must flush immediately](posthog-server-flush.md): Set flushAt: 1, flushInterval: 0 in posthog-node for Next.js server functions. Events are lost otherwise. HIGH.
+- [Server actions turn thrown errors into generic 500s](server-action-throws.md): Next.js intercepts thrown errors in server actions and returns opaque 500 responses. Use discriminated return types or return empty with logging instead. MEDIUM.
+- [Silent empty returns from server actions hide auth failures](server-action-silent-auth-failure.md): Returning [] when auth fails is indistinguishable from "no data" on the client. Always add console.warn for auth failures in server actions. MEDIUM.
