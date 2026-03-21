@@ -10,3 +10,4 @@
 - [Vitest jsdom requires separate install](vitest-jsdom.md): environment: "jsdom" in vitest.config.ts fails unless jsdom is installed as a devDependency. MEDIUM.
 - [Vite $lib alias needs vite.config.ts](vite-lib-alias.md): Path alias in tsconfig.json only is not enough -- Vite/Rollup needs it in vite.config.ts resolve.alias too. MEDIUM.
 - [Biome 2.x config format changed](biome-config-migration.md): organizeImports, files.ignore, and folder patterns all changed. Run npx biome migrate --write. MEDIUM.
+- [Cascading import breakage on module deletion](cascading-import-breakage.md): Deleting modules causes chain-reaction build failures far beyond the listed files. Trace full import graph before deleting. HIGH.
