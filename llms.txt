@@ -22,8 +22,11 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (4 entries)
 
+### CSS
+- [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (1 entry)
+
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (7 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (8 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (17 entries)
@@ -44,7 +47,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
 
 ### Cloudflare
-- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, and Pages deployment gotchas (3 entries)
+- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, and Pages deployment gotchas (5 entries)
 
 ### NinjaOne
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (5 entries)

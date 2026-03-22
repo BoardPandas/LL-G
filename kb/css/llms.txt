@@ -1,0 +1,7 @@
+# CSS Gotchas
+
+Known CSS patterns that cause silent rendering failures or hard-to-debug issues.
+
+## Entries
+
+- [Self-hosted @font-face fonts do not render inside iframe documents](iframe-font-face-rendering.md): WOFF2 fonts loaded via @font-face (URL, base64, data URI) never render inside iframes despite valid files and successful fetches. Use Google Fonts CDN link tags instead. HIGH.
