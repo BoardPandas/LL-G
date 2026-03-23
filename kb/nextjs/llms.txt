@@ -15,3 +15,4 @@
 - [Server actions turn thrown errors into generic 500s](server-action-throws.md): Next.js intercepts thrown errors in server actions and returns opaque 500 responses. Use discriminated return types or return empty with logging instead. MEDIUM.
 - [Silent empty returns from server actions hide auth failures](server-action-silent-auth-failure.md): Returning [] when auth fails is indistinguishable from "no data" on the client. Always add console.warn for auth failures in server actions. MEDIUM.
 - [Standalone mode on Windows requires Developer Mode for symlinks](standalone-windows-symlink.md): output: "standalone" fails with EPERM symlink error on Windows without Developer Mode. Use `next start` from project root for local deployments. HIGH.
+- [Next.js dev mode ignores PORT env var](dev-ignores-port-env.md): PORT and HOSTNAME in .env are ignored by next dev and next start. Use -p and -H CLI flags instead. MEDIUM.
