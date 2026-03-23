@@ -14,3 +14,4 @@
 - [PostHog server SDK must flush immediately](posthog-server-flush.md): Set flushAt: 1, flushInterval: 0 in posthog-node for Next.js server functions. Events are lost otherwise. HIGH.
 - [Server actions turn thrown errors into generic 500s](server-action-throws.md): Next.js intercepts thrown errors in server actions and returns opaque 500 responses. Use discriminated return types or return empty with logging instead. MEDIUM.
 - [Silent empty returns from server actions hide auth failures](server-action-silent-auth-failure.md): Returning [] when auth fails is indistinguishable from "no data" on the client. Always add console.warn for auth failures in server actions. MEDIUM.
+- [Standalone mode on Windows requires Developer Mode for symlinks](standalone-windows-symlink.md): output: "standalone" fails with EPERM symlink error on Windows without Developer Mode. Use `next start` from project root for local deployments. HIGH.
