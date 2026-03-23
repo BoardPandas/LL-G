@@ -17,7 +17,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
 
 ### Next.js
-- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (11 entries)
+- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (12 entries)
 
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (4 entries)
@@ -32,10 +32,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (17 entries)
 
 ### Godot / GDScript
-- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (11 entries)
+- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (12 entries)
 
 ### Better Auth
-- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (11 entries)
+- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (12 entries)
 
 ### Bash
 - [Bash index](kb/bash/llms.txt): All bash shell gotchas (2 entries)
