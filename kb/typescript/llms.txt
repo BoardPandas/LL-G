@@ -13,3 +13,4 @@
 - [Cascading import breakage on module deletion](cascading-import-breakage.md): Deleting modules causes chain-reaction build failures far beyond the listed files. Trace full import graph before deleting. HIGH.
 - [SQL parameter index off-by-one in dynamic UPDATE builders](sql-parameter-index-off-by-one.md): Dynamic SET clause with appended fields shifts WHERE clause indices. Query executes without error but matches zero rows. Silent data loss. HIGH.
 - [Date-only strings parse as UTC, off-by-one in local timezone](date-only-utc-off-by-one.md): new Date("2026-01-15") is UTC midnight; Intl.DateTimeFormat shows previous day in US timezones. MEDIUM.
+- [Async singleton race condition](async-singleton-race.md): Guarding async singleton with null check on resolved value lets concurrent callers create duplicate instances. Store the promise, not the value. HIGH.

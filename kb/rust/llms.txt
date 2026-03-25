@@ -1,0 +1,7 @@
+# Rust Gotchas
+
+> Known Rust patterns that cause blocking, panics, or silent performance degradation. Load all HIGH entries before writing async Rust code.
+
+## Entries
+
+- [Blocking std::fs calls on Tokio runtime starve the executor](blocking-io-on-tokio.md): Path::exists(), metadata(), and read_dir() from std::fs block the async executor thread. Use tokio::fs or spawn_blocking instead. HIGH.

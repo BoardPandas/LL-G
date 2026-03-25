@@ -7,3 +7,4 @@
 - [Rust toolchain must be pre-installed](rust-toolchain.md): Tauri npm packages install but builds fail without system Rust installation. HIGH.
 - [plugin-sql lastInsertId is number | undefined](lastinsertid-undefined.md): execute().lastInsertId typed as number | undefined causes type errors in typed wrappers. MEDIUM.
 - [Migration UPDATEs silently fail when seed data does not exist yet](migration-updates-before-seed.md): Migrations run before seedData(), so UPDATEs matching seeded rows hit 0 rows and commit successfully. Use post-seed fixup functions instead. HIGH.
+- [Event listeners registered async -- events emitted before registration are lost](event-listener-race.md): Tauri listen() is async. Events emitted before listeners resolve are silently dropped. Await all registrations before triggering emitters. MEDIUM.

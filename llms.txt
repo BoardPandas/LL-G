@@ -26,7 +26,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (1 entry)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (9 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (10 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (17 entries)
@@ -53,7 +53,16 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (5 entries)
 
 ### Tauri
-- [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (2 entries)
+- [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
 
 ### Svelte
 - [Svelte index](kb/svelte/llms.txt): Svelte 5 component and runes gotchas (4 entries)
+
+### React
+- [React index](kb/react/llms.txt): React hooks and lifecycle gotchas (2 entries)
+
+### Rust
+- [Rust index](kb/rust/llms.txt): Rust async runtime and Tokio gotchas (1 entry)
+
+### SQLite
+- [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)

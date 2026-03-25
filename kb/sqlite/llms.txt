@@ -1,0 +1,7 @@
+# SQLite Gotchas
+
+> Known SQLite patterns that cause data integrity issues or silent data loss. Load all HIGH entries before writing SQLite queries.
+
+## Entries
+
+- [Upsert by display name silently merges unrelated records](upsert-by-name-collision.md): Using a human-readable name as upsert key causes collisions when two entities share the same name. Use unique paths or compound keys. MEDIUM.

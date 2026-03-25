@@ -1,0 +1,8 @@
+# React Gotchas
+
+> Known React patterns that cause infinite loops, memory leaks, or silent state bugs. Load all HIGH entries before writing React components.
+
+## Entries
+
+- [useEffect infinite loop when state setter depends on its own state](useeffect-infinite-loop.md): Calling setState inside useEffect with that state in the dependency array creates an infinite re-render loop. HIGH.
+- [setTimeout in useEffect without cleanup fires after unmount](settimeout-cleanup.md): setTimeout scheduled in useEffect fires even after unmount, updating stale state. Always return a cleanup function. MEDIUM.
