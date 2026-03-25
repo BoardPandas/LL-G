@@ -1,7 +1,7 @@
 # TypeScript 6 peer dependency conflict with typescript-eslint
 
 **Severity:** HIGH
-**Tech:** TypeScript, ESLint
+**Tech:** TypeScript, ESLint, Docker
 **Added:** 2026-03-25
 
 ## The gotcha
@@ -28,7 +28,21 @@ Add `.npmrc` with `legacy-peer-deps=true` to every package root that has the con
 legacy-peer-deps=true
 ```
 
-Commit the `.npmrc` alongside the TypeScript upgrade so Docker and CI see it on clean installs.
+### CRITICAL: Docker requires explicit COPY
+
+Creating `.npmrc` locally is not enough. Dockerfiles that only copy `package*.json` before `npm ci` will never see the `.npmrc`. You MUST add it to the COPY instruction in every Dockerfile stage that runs `npm ci`:
+
+```dockerfile
+# WRONG — .npmrc is not copied, npm ci still fails
+COPY package*.json ./
+RUN npm ci
+
+# RIGHT — .npmrc is copied before npm ci
+COPY package*.json .npmrc ./
+RUN npm ci
+```
+
+This applies to every stage in a multi-stage build (builder AND production). Missing it in any one stage causes the build to fail.
 
 ## When to remove
 
@@ -39,5 +53,6 @@ Once `typescript-eslint` releases a version supporting TypeScript 6 (likely v9+)
 1. Before upgrading, run `npm ls typescript` and check which packages declare peer dependencies on `typescript`.
 2. Verify that all peer dependency ranges include the target TypeScript version.
 3. If any package lags behind, add `legacy-peer-deps=true` to `.npmrc` as a bridge.
-4. Add a reminder/TODO to remove the override once upstream catches up.
-5. Test with `npm ci` (not `npm install`) to catch resolution failures before they hit CI/Docker.
+4. **Verify every Dockerfile copies `.npmrc` before any `npm ci` or `npm install` step.**
+5. Add a reminder/TODO to remove the override once upstream catches up.
+6. Test with `npm ci` (not `npm install`) to catch resolution failures before they hit CI/Docker.
