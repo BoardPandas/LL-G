@@ -16,3 +16,5 @@
 - [Silent empty returns from server actions hide auth failures](server-action-silent-auth-failure.md): Returning [] when auth fails is indistinguishable from "no data" on the client. Always add console.warn for auth failures in server actions. MEDIUM.
 - [Standalone mode on Windows requires Developer Mode for symlinks](standalone-windows-symlink.md): output: "standalone" fails with EPERM symlink error on Windows without Developer Mode. Use `next start` from project root for local deployments. HIGH.
 - [Next.js dev mode ignores PORT env var](dev-ignores-port-env.md): PORT and HOSTNAME in .env are ignored by next dev and next start. Use -p and -H CLI flags instead. MEDIUM.
+- [Stripe webhook signature verification needs the raw body](stripe-webhook-raw-body.md): Use request.text() not request.json() before constructEvent. Reserialized JSON breaks the HMAC. HIGH.
+- [Stripe Connect Platform OAuth requires a single registered redirect URI](stripe-connect-single-redirect-uri.md): Per-tenant path segments cannot be registered. Use a single fixed callback path and encode tenant ID in the OAuth state parameter. HIGH.
