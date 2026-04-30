@@ -15,3 +15,4 @@
 - [Date-only strings parse as UTC, off-by-one in local timezone](date-only-utc-off-by-one.md): new Date("2026-01-15") is UTC midnight; Intl.DateTimeFormat shows previous day in US timezones. MEDIUM.
 - [Async singleton race condition](async-singleton-race.md): Guarding async singleton with null check on resolved value lets concurrent callers create duplicate instances. Store the promise, not the value. HIGH.
 - [TypeScript 6 peer dep conflict with typescript-eslint](ts6-peer-dep-conflict.md): typescript-eslint 8.x requires typescript <6.0.0. Upgrading to TS 6 breaks npm ci in Docker/CI. Add legacy-peer-deps=true to .npmrc as a bridge. HIGH.
+- [drizzle-kit migrate silently skips older when timestamps](drizzle-kit-migrate-silent-skip.md): drizzle-kit applies migrations by the when field in _journal.json, not file order. Newly generated migrations with when below the existing ceiling are skipped silently with a misleading success message. HIGH.
