@@ -66,3 +66,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### SQLite
 - [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
+
+### M365 Admin Center
+- [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
