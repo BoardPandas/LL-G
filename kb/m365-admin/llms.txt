@@ -1,0 +1,7 @@
+# M365 Admin Center Gotchas
+
+> Known Microsoft 365 admin center patterns that cause silent failures or hard-to-debug errors (Integrated Apps, Office add-in deployment, centralized deployment, RBAC).
+
+## Entries
+
+- [Integrated Apps deployment failed with no Entra audit trail](integrated-apps-deploy-failure.md): "Deployment failed" with zero ApplicationManagement audit events means the failure is upstream of Entra (manifest extraction) -- not consent/RBAC; use O365CentralizedAddInDeployment for a better error; check PIM-activated roles and Unified Manifest. MEDIUM.
