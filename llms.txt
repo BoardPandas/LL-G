@@ -26,7 +26,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (1 entry)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (17 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (20 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (21 entries)
@@ -69,3 +69,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### M365 Admin Center
 - [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
+
+### Architecture
+- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift (1 entry)

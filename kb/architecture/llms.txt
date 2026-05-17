@@ -1,0 +1,7 @@
+# Architecture Gotchas
+
+> Cross-service and system-design patterns that cause silent data divergence, duplicated effort, or hard-to-debug ownership problems.
+
+## Entries
+
+- [Check sibling services for an existing store before building a parallel one](check-sibling-services-before-parallel-store.md): A service adding a local store for data a sibling already owns creates a redundant, drifting copy with a redundant sync path -- and loses user data when that copy is non-durable. Grep across service boundaries first. HIGH.
