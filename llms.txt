@@ -38,7 +38,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (13 entries)
 
 ### Bash
-- [Bash index](kb/bash/llms.txt): All bash shell gotchas (2 entries)
+- [Bash index](kb/bash/llms.txt): All bash shell gotchas (3 entries)
 
 ### cmd.exe (Windows)
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
