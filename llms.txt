@@ -40,6 +40,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Bash
 - [Bash index](kb/bash/llms.txt): All bash shell gotchas (3 entries)
 
+### Linux
+- [Linux index](kb/linux/llms.txt): Linux server ops gotchas: systemd service management, daemon restart policies, package-update restart races (1 entry)
+
 ### cmd.exe (Windows)
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
 
