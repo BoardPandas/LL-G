@@ -1,0 +1,7 @@
+# Linux Server Ops Gotchas
+
+> Known Linux service-management and server-administration patterns (systemd, daemons, package updates) that cause silent failures or hard-to-debug outages. Load HIGH entries before working on Linux server services.
+
+## Entries
+
+- [Daemon stays dead after an auto-upgrade restart (socket bind race + Restart=on-abort)](systemd-restart-on-abort-bind-race.md): unattended-upgrades + needrestart restarts a daemon; the new master loses the port-bind race and the packaged Restart=on-abort policy leaves it failed with no retry. Connection-refused until manual restart/reboot. HIGH.
