@@ -53,7 +53,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, and Pages deployment gotchas (5 entries)
 
 ### NinjaOne
-- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (5 entries)
+- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (6 entries)
 
 ### Tauri
 - [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
