@@ -1,0 +1,7 @@
+# Azure Gotchas
+
+> Known Azure (ARM / Az PowerShell) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [InvalidResourceReference for GatewaySubnet is an ARM gateway deploy failing validation, not a broken gateway](gatewaysubnet-invalidresourcereference.md): A VNet/VPN gateway deploy fails because a subnet named exactly `GatewaySubnet` is missing; the gateway is never created (404), so create the subnet via a surgical child-resource PUT and re-deploy. MEDIUM.
