@@ -1,0 +1,7 @@
+# Intune Gotchas
+
+> Known Microsoft Intune / endpoint-policy patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Intune "Require Remote Credential Guard" breaks RDP to Entra-joined / IP / non-Kerberos targets](remote-credential-guard-rdp.md): Forcing RCG fails outbound RDP to IP/Entra/workgroup targets with "The requested security package does not exist" (0x80090305), before any Entra auth; both mstsc and Windows App affected. HIGH.
