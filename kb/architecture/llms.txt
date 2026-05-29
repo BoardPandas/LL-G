@@ -5,3 +5,4 @@
 ## Entries
 
 - [Check sibling services for an existing store before building a parallel one](check-sibling-services-before-parallel-store.md): A service adding a local store for data a sibling already owns creates a redundant, drifting copy with a redundant sync path -- and loses user data when that copy is non-durable. Grep across service boundaries first. HIGH.
+- [A batch operation keys on a specific status field -- not a sibling "done" flag](batch-op-keys-on-specific-status-field.md): A "process the missing ones" batch gates on one specific status field; judging "nothing to do" from a sibling stage flag or rolled-up count can silently trigger real, paid work on every item. MEDIUM.
