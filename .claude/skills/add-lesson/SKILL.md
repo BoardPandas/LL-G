@@ -1,7 +1,6 @@
 ---
 name: add-lesson
 description: Add a new gotcha or lesson learned to the LL-G knowledge base
-model: haiku
 ---
 
 You are adding a new entry to the LL-G lessons-learned knowledge base.
