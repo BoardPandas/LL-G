@@ -1,0 +1,7 @@
+# UniFi (Ubiquiti) Gotchas
+
+> Known Ubiquiti UniFi Site Manager API patterns that cause wrong conclusions about client coverage.
+
+## Entries
+
+- [UniFi Site Manager cloud key only covers that account -- not all client sites](site-manager-cloud-key-coverage.md): The api.ui.com key only exposes its own account's consoles/sites; locally-managed controllers are invisible. If a client's site is absent, verify on-site rather than reporting zero devices. HIGH.
