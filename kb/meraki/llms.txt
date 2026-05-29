@@ -1,0 +1,8 @@
+# Meraki Gotchas
+
+> Known Cisco Meraki Dashboard API and licensing patterns that cause silent failures or wrong conclusions.
+
+## Entries
+
+- [A Meraki Dashboard API key is MSP-wide -- filter /organizations by name](api-key-msp-wide.md): One key returns every org the key can see, and the Meraki org name often differs from the client's name in other systems. Always filter /organizations by name. HIGH.
+- [Meraki co-termination: all licenses share one expiry](co-termination-licensing.md): The MX firewall license and every wireless AP license expire on one date; a renewal must cover the firewall AND all wireless licenses, not just the firewall. HIGH.
