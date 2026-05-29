@@ -2,7 +2,7 @@
 
 Lessons from NinjaOne REST API v2 and the NinjaOne MCP tools.
 
-## Entries (6)
+## Entries (7)
 
 - HIGH [no-adhoc-script-execution.md](no-adhoc-script-execution.md): NinjaOne API does not support ad-hoc script execution -- must use saved script IDs
 - HIGH [volume-query-deviceid-filter-500.md](volume-query-deviceid-filter-500.md): ninjaone_query_volumes with deviceId filter returns HTTP 500 -- use /device/{id}/volumes instead
@@ -10,3 +10,4 @@ Lessons from NinjaOne REST API v2 and the NinjaOne MCP tools.
 - HIGH [query-endpoint-response-structure.md](query-endpoint-response-structure.md): Query endpoint responses are wrapped in {results: [...]} not a plain array -- must unwrap before iterating or you get AttributeError on strings. Also: list_devices lacks domainRole/domain fields, use query_computer_systems or get_device instead.
 - HIGH [oauth-authorization-code-flow.md](oauth-authorization-code-flow.md): OAuth Authorization Code flow requires /ws/oauth/ path (not /oauth/), tenant-specific domain, "Web" platform client (not API Services), client_secret in authorize URL, and offline_access scope for refresh tokens
 - HIGH [decommissioned-hardware-lock-self-uninstall.md](decommissioned-hardware-lock-self-uninstall.md): Agent MSI installs (exit 0) then silently self-uninstalls in ~15s when the hardware (service tag) has a DECOMMISSIONED record. Delete the old record to release the lock; find it with df="status = DECOMMISSIONED".
+- HIGH [warranty-devices-detailed-expand.md](warranty-devices-detailed-expand.md): Device warranty/purchase dates live in references.warranty and require GET /devices-detailed?expand=warranty -- it is not a custom field, is absent from get_device, and is omitted from devices-detailed without the expand param. Use startDate as the age anchor; VMs/Macs lack records.
