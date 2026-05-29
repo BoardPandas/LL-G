@@ -77,7 +77,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Azure index](kb/azure/llms.txt): Azure ARM and Az PowerShell gotchas: VNet gateway deploys, GatewaySubnet, service principal RBAC vs Graph scopes (1 entry)
 
 ### Architecture
-- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift (1 entry)
+- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift (2 entries)
 
 ### Cisco Meraki
 - [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (2 entries)
