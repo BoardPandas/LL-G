@@ -17,7 +17,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
 
 ### Next.js
-- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (16 entries)
+- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (17 entries)
 
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (4 entries)
