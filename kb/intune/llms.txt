@@ -5,3 +5,4 @@
 ## Entries
 
 - [Intune "Require Remote Credential Guard" breaks RDP to Entra-joined / IP / non-Kerberos targets](remote-credential-guard-rdp.md): Forcing RCG fails outbound RDP to IP/Entra/workgroup targets with "The requested security package does not exist" (0x80090305), before any Entra auth; both mstsc and Windows App affected. HIGH.
+- [Autodesk (ODIS) Win32 deploy: package the generated image, not the downloaded creator exe](autodesk-odis-win32-deploy.md): The ~30 MB Autodesk download is AdOdisDeployTool.exe (a creator), not the installer; run it to build the multi-GB image folder, then wrap that. Also: cert app-only Graph auth uploads Win32 LOB fine (content goes to the Azure SAS URI), and you need DeviceManagementApps.ReadWrite.All. HIGH.
