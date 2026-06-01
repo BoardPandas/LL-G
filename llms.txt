@@ -77,7 +77,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
 
 ### Intune
-- [Intune index](kb/intune/llms.txt): Microsoft Intune endpoint-policy gotchas: Remote Credential Guard breaking RDP to Entra-joined/IP targets; Autodesk ODIS Win32 deployment packaging + cert app-only Graph upload (2 entries)
+- [Intune index](kb/intune/llms.txt): Microsoft Intune endpoint-policy gotchas: Azure VM Entra-ID RDP needs a tenant-wide oauth2PermissionGrant (Microsoft Remote Desktop -> Azure Windows VM Sign-In); Autodesk ODIS Win32 deployment packaging + cert app-only Graph upload (2 entries)
 
 ### Azure
 - [Azure index](kb/azure/llms.txt): Azure ARM and Az PowerShell gotchas: VNet gateway deploys, GatewaySubnet, service principal RBAC vs Graph scopes (1 entry)
