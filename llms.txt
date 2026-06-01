@@ -17,7 +17,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
 
 ### Next.js
-- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (19 entries)
+- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (20 entries)
 
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (6 entries)
@@ -26,7 +26,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (1 entry)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (23 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (25 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (28 entries)
@@ -38,7 +38,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (14 entries)
 
 ### Bash
-- [Bash index](kb/bash/llms.txt): All bash shell gotchas (3 entries)
+- [Bash index](kb/bash/llms.txt): All bash shell gotchas (4 entries)
 
 ### Linux
 - [Linux index](kb/linux/llms.txt): Linux server ops gotchas: systemd service management, daemon restart policies, package-update restart races (1 entry)
@@ -71,7 +71,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
 
 ### Postgres
-- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL gotchas: boot-applied schema.sql not retrofitting constraints onto existing tables (1 entry)
+- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL gotchas: boot-applied schema.sql not retrofitting constraints onto existing tables (2 entries)
 
 ### M365 Admin Center
 - [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
