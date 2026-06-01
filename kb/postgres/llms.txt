@@ -5,3 +5,4 @@
 ## Entries
 
 - [CREATE TABLE IF NOT EXISTS never retrofits constraints onto existing tables](create-table-if-not-exists-stale-constraints.md): Boot-applied schema.sql skips the whole CREATE statement on existing tables, so added FK ON DELETE CASCADE / SET NULL clauses never reach prod; code looks correct while the live constraint stays stale. HIGH.
+- [ON CONFLICT must echo an expression-based unique index](on-conflict-expression-index.md): Upserting against a unique index on expressions (e.g. LEAST/GREATEST) requires repeating the exact expression in ON CONFLICT, not bare columns, or it errors 42P10. MEDIUM.
