@@ -10,7 +10,7 @@ Before creating or modifying infrastructure, tooling, or configuration files, co
 
 ## Required Steps
 
-1. Fetch https://raw.githubusercontent.com/wellforce-brandon/BP/main/llms.txt
+1. Fetch https://raw.githubusercontent.com/BoardPandas/BP/main/llms.txt
 2. Identify relevant concerns from the file you're about to write
 3. Fetch the relevant concern index
 4. Read all FOUNDATIONAL entries and RECOMMENDED entries matching this project's tech tags

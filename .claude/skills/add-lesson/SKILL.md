@@ -5,8 +5,8 @@ description: Add a new gotcha or lesson learned to the LL-G knowledge base
 
 You are adding a new entry to the LL-G lessons-learned knowledge base.
 
-**Repository:** `wellforce-brandon/LL-G` on GitHub
-**Raw URL base:** `https://raw.githubusercontent.com/wellforce-brandon/LL-G/main/`
+**Repository:** `BoardPandas/LL-G` on GitHub
+**Raw URL base:** `https://raw.githubusercontent.com/BoardPandas/LL-G/main/`
 
 ## Step 1: Collect information
 
@@ -34,13 +34,13 @@ Example: "Variable quoting in strings" → `quoting.md`
 
 Use WebFetch to read the current master `llms.txt` and the relevant tech `llms.txt` (if the tech folder exists) so you know the current entry count and can avoid duplicates:
 ```
-WebFetch https://raw.githubusercontent.com/wellforce-brandon/LL-G/main/llms.txt
-WebFetch https://raw.githubusercontent.com/wellforce-brandon/LL-G/main/kb/<tech>/llms.txt
+WebFetch https://raw.githubusercontent.com/BoardPandas/LL-G/main/llms.txt
+WebFetch https://raw.githubusercontent.com/BoardPandas/LL-G/main/kb/<tech>/llms.txt
 ```
 
 ## Step 4: Create the entry file via GitHub API
 
-Use the `mcp__github__create_or_update_file` tool to create `kb/<tech>/<slug>.md` on the `main` branch of `wellforce-brandon/LL-G`:
+Use the `mcp__github__create_or_update_file` tool to create `kb/<tech>/<slug>.md` on the `main` branch of `BoardPandas/LL-G`:
 
 Content format:
 ```
@@ -110,7 +110,7 @@ After creating the LL-G entry, consider whether this gotcha implies a best pract
 - Does the RIGHT pattern represent a reusable practice that other repos should adopt?
 - Is this pattern about infrastructure, tooling, or configuration (not app-specific logic)?
 
-If yes, check `C:\Github\BP\llms.txt` (or fetch `https://raw.githubusercontent.com/wellforce-brandon/BP/main/llms.txt`) to see if a complementary best practice already exists. If not, tell the user:
+If yes, check `C:\Github\BP\llms.txt` (or fetch `https://raw.githubusercontent.com/BoardPandas/BP/main/llms.txt`) to see if a complementary best practice already exists. If not, tell the user:
 
 ```
 This gotcha implies a best practice that isn't in BP yet.
