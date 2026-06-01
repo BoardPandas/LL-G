@@ -1,6 +1,6 @@
 ---
 tech: nextjs
-tags: [eslint, eslint-config-next, eslint-plugin-react, linting, eslint-10, next-16]
+tags: [eslint, eslint-config-next, eslint-plugin-react, linting, eslint-10, next-16, legacy-peer-deps]
 severity: high
 ---
 # eslint-config-next 16 + ESLint 10 crash via eslint-plugin-react
@@ -35,14 +35,16 @@ What makes it silent and hard to debug: **Next.js 16 no longer runs ESLint durin
 // until eslint-plugin-react ships an ESLint-10-compatible release.
 {
   "devDependencies": {
-    "eslint": "^9.40.0",
+    "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.6"
   }
 }
-// (alternative) force a fixed eslint-plugin-react via a root package.json
-// "overrides" if you must stay on ESLint 10.
+// In a workspaces repo, pin eslint to the SAME ^9.x in every package
+// (root + each app) so a single copy hoists and satisfies the config.
 ```
 Then confirm linting actually runs: `npx eslint src/some/file.tsx` should report results, not throw.
 
 ## NOTES
 Because `next build` does not run ESLint in Next 16, a crashing lint config is invisible in CI/build output -- always run `npx eslint` explicitly to detect it. Corollary: newly added lint rules can appear "configured" yet never fire if the runner is broken. Verify rule activation with an intentional violation after fixing the version.
+
+Install trap: with `legacy-peer-deps=true` in `.npmrc`, npm installs ESLint 10 silently with no peer-conflict warning, so the incompatible combo lands undetected (eslint-config-next 16's eslint peer range tops out at `^9`, and the latest `eslint-plugin-react`, 7.37.5, peers only up to `^9.7`). No published `eslint-plugin-react` supports ESLint 10 yet, so upgrading the plugin is NOT currently an option -- pinning ESLint to 9.x is the only fix. Confirm a single hoisted copy with `node -e "console.log(require('eslint/package.json').version)"`.
