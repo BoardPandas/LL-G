@@ -53,8 +53,8 @@ To add manually:
 
 ## KB Location
 
-**GitHub:** `https://github.com/wellforce-brandon/LL-G`
-**Raw URL base:** `https://raw.githubusercontent.com/wellforce-brandon/LL-G/main/`
+**GitHub:** `https://github.com/BoardPandas/LL-G`
+**Raw URL base:** `https://raw.githubusercontent.com/BoardPandas/LL-G/main/`
 
 All paths in `llms.txt` and per-tech indexes are relative to the repo root. Consumer repos should use the raw GitHub URLs to fetch entries, not local file paths.
 
@@ -62,7 +62,7 @@ All paths in `llms.txt` and per-tech indexes are relative to the repo root. Cons
 
 **When onboarding a repo, starting a new feature, or setting up tooling -- load the BP index and check applicable best practices.**
 
-Step 1: Fetch https://raw.githubusercontent.com/wellforce-brandon/BP/main/llms.txt
+Step 1: Fetch https://raw.githubusercontent.com/BoardPandas/BP/main/llms.txt
 Step 2: For each concern relevant to your task, read its llms.txt index
 Step 3: Load all FOUNDATIONAL entries (these apply to every repo)
 Step 4: Load RECOMMENDED entries whose tech tags match the current project

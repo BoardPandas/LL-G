@@ -19,7 +19,7 @@ Replace the existing `## Knowledge Base` section in all repos with this expanded
 
 Before writing any script or code, check the LL-G knowledge base for known failure patterns:
 
-1. Fetch the index: https://raw.githubusercontent.com/wellforce-brandon/LL-G/main/llms.txt
+1. Fetch the index: https://raw.githubusercontent.com/BoardPandas/LL-G/main/llms.txt
 2. For each technology you are about to use, fetch its sub-index from the same repo (e.g., `kb/powershell/llms.txt`)
 3. Read all HIGH-severity entries for those technologies
 4. Read any MEDIUM entry whose title matches your specific task
