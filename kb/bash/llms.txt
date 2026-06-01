@@ -7,3 +7,4 @@
 - [jq outputs pretty-printed JSON by default -- use -c for JSONL](jq-compact.md): jq -c produces single-line output. Without -c, grep and wc -l fail on multi-line JSON. HIGH.
 - [Git Bash on Windows: PATH and tool availability](git-bash-windows.md): /usr/bin not always on PATH. Use explicit PATH setup or full paths for utilities in scripts and hooks. MEDIUM.
 - [gh issue close --comment silently drops the comment on already-closed issues](gh-close-comment-on-already-closed.md): The --comment body is dropped (exit 0) when the issue is already closed. Comment-first, then close. MEDIUM.
+- [Verify the current git branch before committing](verify-branch-before-commit.md): With shared working trees a parallel process can move HEAD; your next commit lands on the wrong branch and push says "Everything up-to-date". Check git rev-parse --abbrev-ref HEAD first; push HEAD not a named ref. MEDIUM.
