@@ -20,7 +20,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (19 entries)
 
 ### Tailwind CSS
-- [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (4 entries)
+- [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (6 entries)
 
 ### CSS
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (1 entry)
