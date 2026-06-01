@@ -86,7 +86,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift (2 entries)
 
 ### Cisco Meraki
-- [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (2 entries)
+- [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (3 entries)
 
 ### UniFi (Ubiquiti)
 - [UniFi index](kb/unifi/llms.txt): Ubiquiti UniFi Site Manager API coverage gotchas (1 entry)
