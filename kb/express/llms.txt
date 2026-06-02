@@ -1,0 +1,7 @@
+# Express Gotchas
+
+> Known Express (Node.js) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Express global compression() buffers SSE responses](compression-buffers-sse.md): app.use(compression()) zlib-buffers a text/event-stream so EventSource never sees live events; exclude the SSE path via a filter and set X-Accel-Buffering: no + Content-Encoding: identity. HIGH.
