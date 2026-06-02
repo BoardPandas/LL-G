@@ -1,0 +1,7 @@
+# Northflank Gotchas
+
+> Known Northflank patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Northflank Rails app upgrades: no auto-migrate, and the addon app role can't run DDL](rails-upgrade-migrations.md): Bumping an external image tag does not run Rails migrations (login works, dashboard 500s with PG::UndefinedColumn); the addon app role isn't the table owner so migrate fails with "must be owner of table" -- run migrate as the addon ADMIN role, then restart web + worker. HIGH.
