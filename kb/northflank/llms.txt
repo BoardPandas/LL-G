@@ -5,3 +5,8 @@
 ## Entries
 
 - [Northflank Rails app upgrades: no auto-migrate, and the addon app role can't run DDL](rails-upgrade-migrations.md): Bumping an external image tag does not run Rails migrations (login works, dashboard 500s with PG::UndefinedColumn); the addon app role isn't the table owner so migrate fails with "must be owner of table" -- run migrate as the addon ADMIN role, then restart web + worker. HIGH.
+
+- [API errors come back as { error: { message, details } }, not a string](error-envelope.md): The v1 API nests errors under an `error` object; reading it as a string prints [object Object] and drops the field-level `details`. Unwrap error.message + error.details. HIGH.
+- [Resource-create validation: region/plan IDs, required buildSettings, description charset](resource-create-validation.md): Region IDs are cluster-specific (us-east1; an unknown region returns 404), plans are nf-compute-<cpu>-<ram>, combined services require buildSettings, and descriptions reject the + character. MEDIUM.
+- [Creating a secret group: variables go under secrets.variables, priority required](secret-group-variables.md): A top-level data field is silently ignored (the group is created empty, so inheriting services boot with no env); put variables under secrets.variables and send priority. HIGH.
+- [Several v1 list paths differ from docs, and you cannot PATCH a service git branch](api-endpoint-paths.md): Use /plans, /addon-types, /integrations/vcs (not /billing/plans, /addons/types, /integrations); changing a branch needs a full PUT or the dashboard. MEDIUM.
