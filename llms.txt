@@ -22,6 +22,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Express
 - [Express index](kb/express/llms.txt): All Express (Node.js) gotchas (1 entry)
 
+### Node.js
+- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (1 entry)
+
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (6 entries)
 
