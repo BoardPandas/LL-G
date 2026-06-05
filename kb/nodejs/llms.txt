@@ -1,0 +1,7 @@
+# Node.js Gotchas
+
+> Known Node.js runtime patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Global fetch() with no User-Agent is rejected (HTTP 400) by some external APIs](fetch-user-agent.md): Node/undici's default User-Agent gets 400'd by Scryfall (and likely other APIs); the swallowed error silently falls back to a data source missing fields. Always set an explicit User-Agent. HIGH.
