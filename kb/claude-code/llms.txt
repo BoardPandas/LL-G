@@ -1,0 +1,8 @@
+# Claude Code Gotchas
+
+> Known Claude Code configuration patterns (hooks, skills, settings.json) that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Hook matcher only matches tool names, not permission-rule syntax](hook-matcher-tool-names-only.md): Permission-rule syntax in a hook matcher field silently never fires; use matcher for the tool name and the if field for argument filtering, and self-filter in the script because if fires conservatively on opaque substitutions. HIGH.
+- [Skill frontmatter key disable-model-invocation uses hyphens, not underscores](disable-model-invocation-key-hyphens.md): disable_model_invocation with underscores is silently ignored and the skill stays auto-invocable; all skill frontmatter keys are hyphenated. HIGH.
