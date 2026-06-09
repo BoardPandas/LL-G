@@ -99,3 +99,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Northflank
 - [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, and the Postgres addon app role can't run DDL (5 entries)
+
+### Claude Code
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration gotchas: hooks, skill frontmatter, settings.json (2 entries)
