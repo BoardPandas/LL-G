@@ -17,10 +17,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
 
 ### Next.js
-- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (21 entries)
+- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (22 entries)
 
 ### Express
-- [Express index](kb/express/llms.txt): All Express (Node.js) gotchas (1 entry)
+- [Express index](kb/express/llms.txt): All Express (Node.js) gotchas (2 entries)
 
 ### Node.js
 - [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (1 entry)
@@ -32,7 +32,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (1 entry)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (25 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (28 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (29 entries)
@@ -98,7 +98,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [UniFi index](kb/unifi/llms.txt): Ubiquiti UniFi Site Manager API coverage gotchas (1 entry)
 
 ### Northflank
-- [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, and the Postgres addon app role can't run DDL (5 entries)
+- [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, and the Postgres addon app role can't run DDL (6 entries)
 
 ### Claude Code
 - [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration gotchas: hooks, skill frontmatter, settings.json (2 entries)
