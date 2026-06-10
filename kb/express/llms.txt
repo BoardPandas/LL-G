@@ -5,3 +5,4 @@
 ## Entries
 
 - [Express global compression() buffers SSE responses](compression-buffers-sse.md): app.use(compression()) zlib-buffers a text/event-stream so EventSource never sees live events; exclude the SSE path via a filter and set X-Accel-Buffering: no + Content-Encoding: identity. HIGH.
+- [Rate-limiter skip() on unvalidated header presence](rate-limit-skip-header-presence.md): skip callbacks that exempt requests merely carrying auth-looking headers let unauthenticated attackers disable throttling; only skip on validated credentials, or use a separate higher-ceiling bucket. MEDIUM.
