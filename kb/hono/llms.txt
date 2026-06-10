@@ -1,0 +1,7 @@
+# Hono Gotchas
+
+> Known Hono (Node.js web framework) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Splitting a monolith Hono route file: registration order is semantic](route-registration-order-on-split.md): Overlapping patterns match in registration order and app.use only covers routes registered after it, so splitting a big route file into sub-routers can silently change which handler wins or drop middleware. Preserve order, hoist middleware to the parent, and diff app.routes before/after. HIGH.
