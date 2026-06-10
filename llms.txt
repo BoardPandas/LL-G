@@ -23,7 +23,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Express index](kb/express/llms.txt): All Express (Node.js) gotchas (2 entries)
 
 ### Node.js
-- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (1 entry)
+- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (2 entries)
 
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (6 entries)
@@ -32,7 +32,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (1 entry)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (28 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (29 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (29 entries)
@@ -101,4 +101,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, and the Postgres addon app role can't run DDL (6 entries)
 
 ### Claude Code
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration gotchas: hooks, skill frontmatter, settings.json (2 entries)
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration gotchas: hooks, skill frontmatter, settings.json (4 entries)
