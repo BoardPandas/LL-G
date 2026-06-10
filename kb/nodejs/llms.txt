@@ -5,3 +5,4 @@
 ## Entries
 
 - [Global fetch() with no User-Agent is rejected (HTTP 400) by some external APIs](fetch-user-agent.md): Node/undici's default User-Agent gets 400'd by Scryfall (and likely other APIs); the swallowed error silently falls back to a data source missing fields. Always set an explicit User-Agent. HIGH.
+- [Scripts walking `git ls-files` crash on tracked-but-missing files](git-ls-files-missing-on-disk.md): git ls-files lists the index, not the disk; an AD-status file (staged then deleted) crashes naive readFileSync loops in guard scripts right when the tree is messy. Guard ENOENT and skip. MEDIUM.
