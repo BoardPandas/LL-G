@@ -105,3 +105,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Claude Code
 - [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration gotchas: hooks, skill frontmatter, settings.json (4 entries)
+
+### Windows DNS
+- [Windows DNS index](kb/windows-dns/llms.txt): Windows / Active Directory DNS gotchas: Legacy-scope AD-integrated zones serve stale records on other DCs until forced reload (1 entry)
