@@ -1,0 +1,7 @@
+# Windows DNS Gotchas
+
+> Known Windows DNS / Active Directory DNS patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Legacy-scope AD-integrated DNS zone serves stale records on other DCs until forced reload](legacy-zone-stale-secondary-dc.md): A record added on one DC returns NXDOMAIN on other DCs (repadmin shows success) because the Legacy-scope zone's DNS service only re-reads AD on its ~180s poll; fix with `dnscmd /ZoneUpdateFromDs`. MEDIUM.
