@@ -1,0 +1,7 @@
+# Prisma Gotchas
+
+> Known Prisma ORM patterns that cause silent failures or hard-to-debug errors, especially around migrations and drift detection.
+
+## Entries
+
+- [Raw-SQL index not declared in schema.prisma is silently DROPped by the next migrate dev](raw-sql-index-drift-drop.md): An index created via raw SQL in a migration but absent from schema.prisma is seen as drift; every later migrate dev emits DROP INDEX into unrelated migrations. Declare it with @@index(..., type: Gin, map: "name") so Prisma owns it. HIGH.

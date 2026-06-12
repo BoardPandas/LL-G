@@ -108,3 +108,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Windows DNS
 - [Windows DNS index](kb/windows-dns/llms.txt): Windows / Active Directory DNS gotchas: Legacy-scope AD-integrated zones serve stale records on other DCs until forced reload (1 entry)
+
+### Prisma
+- [Prisma index](kb/prisma/llms.txt): Prisma ORM migration and drift-detection gotchas (1 entry)
