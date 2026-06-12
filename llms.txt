@@ -101,7 +101,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [UniFi index](kb/unifi/llms.txt): Ubiquiti UniFi Site Manager API coverage gotchas (1 entry)
 
 ### Northflank
-- [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, and the Postgres addon app role can't run DDL (6 entries)
+- [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, and the Postgres addon app role can't run DDL (7 entries)
 
 ### Claude Code
 - [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration gotchas: hooks, skill frontmatter, settings.json (4 entries)
