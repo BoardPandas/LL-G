@@ -114,3 +114,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Prisma
 - [Prisma index](kb/prisma/llms.txt): Prisma ORM migration and drift-detection gotchas (1 entry)
+
+### WiX / MSI
+- [WiX index](kb/wix/llms.txt): WiX Toolset / Windows Installer gotchas: major-upgrade RemoveExistingProducts scheduling can wipe runtime-modified data files (config.json) despite NeverOverwrite (1 entry)
