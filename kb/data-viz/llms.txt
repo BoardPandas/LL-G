@@ -1,0 +1,7 @@
+# Data Viz Gotchas
+
+> Known data-visualization and chart-rendering patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [One normalization divisor across mixed-scale metrics silently clamps the chart](mixed-scale-divisor.md): Sharing one divisor / normalization constant across metrics on different scales (0..100 scores vs a 1..3 multiplier) clamps the larger-scale ones to a full bar and shrinks the smaller ones toward empty; the chart ships looking fine but conveys nothing. Map each metric's own domain to [0,1] instead of dividing every series by the same number. HIGH.
