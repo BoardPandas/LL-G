@@ -31,6 +31,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### CSS
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (1 entry)
 
+### Data Viz
+- [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas: one shared divisor across mixed-scale metrics silently clamps the larger-scale ones (1 entry)
+
 ### TypeScript
 - [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (31 entries)
 
