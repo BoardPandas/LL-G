@@ -1,0 +1,7 @@
+# WiX / MSI Gotchas
+
+> Known WiX Toolset and Windows Installer (MSI) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Major upgrade wipes runtime-modified data files (config.json) despite NeverOverwrite](major-upgrade-config-wipe.md): RemoveExistingProducts scheduled early deletes the old product's runtime-modified config before the new install, orphaning the app; schedule afterInstallExecute + Permanent component. HIGH.
