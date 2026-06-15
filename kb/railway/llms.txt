@@ -1,0 +1,7 @@
+# Railway Gotchas
+
+> Known Railway platform patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [`railway ssh` hangs on host-key verification in non-TTY shells](ssh-host-key-verification-hangs.md): `railway ssh --service X -- <cmd>` prompts to accept the host key and hangs forever in a non-interactive shell; use the system ssh client with StrictHostKeyChecking=accept-new and BatchMode=yes after registering a key. MEDIUM.
