@@ -117,3 +117,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### WiX / MSI
 - [WiX index](kb/wix/llms.txt): WiX Toolset / Windows Installer gotchas: major-upgrade RemoveExistingProducts scheduling can wipe runtime-modified data files (config.json) despite NeverOverwrite (1 entry)
+
+### Antigravity CLI
+- [Antigravity CLI index](kb/antigravity-cli/llms.txt): Antigravity CLI (`agy`) gotchas: hangs headless without empty stdin, print mode has no machine-readable stdout, and blog-documented flags don't exist (1 entry)
