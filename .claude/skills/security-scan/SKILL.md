@@ -1,5 +1,6 @@
 ---
 name: security-scan
+effort: high
 description: Run a security audit covering OWASP Top 10, secrets detection, dependency vulnerabilities, and input validation. Use before releases or after security-sensitive changes.
 user-invocable: true
 argument-hint: [optional: file or directory path to scope the scan]
@@ -9,7 +10,6 @@ allowed-tools:
   - Glob
   - Grep
   - Bash
-  - Task
 ---
 
 # Security Scan
