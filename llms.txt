@@ -25,6 +25,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Node.js
 - [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (2 entries)
 
+### LLM Integration
+- [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang (1 entry)
+
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (6 entries)
 
