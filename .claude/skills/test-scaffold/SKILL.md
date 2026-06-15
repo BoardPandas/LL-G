@@ -1,5 +1,7 @@
 ---
 name: test-scaffold
+model: sonnet
+effort: medium
 description: Generate test files for untested modules. Detects the test framework and creates test stubs matching existing patterns. Use to improve test coverage.
 user-invocable: true
 argument-hint: [optional: file or directory to generate tests for]
@@ -8,7 +10,7 @@ allowed-tools:
   - Write
   - Glob
   - Grep
-  - Task
+  - Agent
 ---
 
 # Test Scaffolding

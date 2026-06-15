@@ -1,6 +1,8 @@
 ---
 name: plan-repo
-description: Analyze project requirements and recommend the best tech stack for the current year. Infrastructure (Cloudflare Pages, Northflank, Better Auth, R2, Postgres, Redis) is fixed. Researches languages, frameworks, UI libraries, and tooling, then generates README, design guardrails, and tools reference. Run this before init-repo.
+model: opus
+effort: high
+description: Analyze project requirements and recommend the best tech stack for the current year. Infrastructure (Northflank frontend + backend, Cloudflare R2/CDN, Better Auth, Postgres, Redis) is fixed. Researches languages, frameworks, UI libraries, and tooling, then generates README, design guardrails, and tools reference. Run this before init-repo.
 user-invocable: true
 argument-hint: [optional: project name or description]
 allowed-tools:
@@ -27,15 +29,15 @@ Check the current date FIRST. All recommendations must reflect the state of the 
 
 Read `.claude/references/infrastructure.md` FIRST. The hosting and infrastructure stack is fixed and non-negotiable:
 
-- **Frontend hosting:** Cloudflare Pages (SPA or SSR)
+- **Frontend hosting:** Northflank (container-based; SPA static-served or SSR -- the framework choice decides which)
 - **Backend hosting:** Northflank (container-based API service)
 - **Database:** Northflank Postgres
 - **Cache/Queue:** Northflank Redis
 - **Object storage:** Cloudflare R2 (public + signed URLs for private)
 - **Auth:** Better Auth (hosted within the Northflank API)
 - **Cron jobs:** Northflank Cron (standalone container)
-- **Email:** Resend or AWS SES
-- **CDN:** Cloudflare (automatic with Pages)
+- **Email:** Resend
+- **CDN:** Cloudflare proxy (orange-cloud) in front of the Northflank frontend (Northflank built-in Fastly CDN as no-WAF fallback)
 
 Do NOT ask about or recommend alternatives for any of the above. These are locked.
 
@@ -64,21 +66,21 @@ Do NOT ask about timelines. Planning is phase-based, not date-based.
 
 ## Step 2: Research Current Options
 
-Based on answers, spin up parallel Explore subagents to research the layers that are NOT locked. Each subagent must use WebSearch to get information current as of today's date.
+Based on answers, spin up parallel `explorer` agents to research the layers that are NOT locked. Each subagent must use WebSearch to get information current as of today's date. Use the custom `explorer` agent (defined in `.claude/agents/`), never the built-in `Explore` type -- the built-in loads every MCP tool schema and blows the context window.
 
 ### Language & Runtime Subagent
-"Research the current state of [relevant languages] for a full-stack web app deploying to Cloudflare Pages (frontend) + Northflank containers (backend) as of today's date. The backend must support Better Auth and connect to Postgres and Redis. Compare: ecosystem maturity, Better Auth SDK support, Cloudflare Pages compatibility, Northflank container support, developer tooling quality. WHY: We need the best language that works with our fixed infrastructure (Cloudflare Pages + Northflank + Better Auth + Postgres + Redis)."
+"Research the current state of [relevant languages] for a full-stack web app where both the frontend and backend run in containers on Northflank, fronted by a Cloudflare proxy (CDN/WAF) as of today's date. The backend must support Better Auth and connect to Postgres and Redis. Compare: ecosystem maturity, Better Auth SDK support, container build/startup quality, Northflank container support, developer tooling quality. WHY: We need the best language that works with our fixed infrastructure (Northflank containers + Cloudflare CDN/R2 + Better Auth + Postgres + Redis)."
 
 Relevant comparisons:
 - **TypeScript (Node)** vs **TypeScript (Bun)** vs **Go** vs **Rust** vs **Python** vs **Elixir**
-- Consider: Better Auth has official SDKs for which languages? Cloudflare Pages SSR supports which runtimes?
+- Consider: Better Auth has official SDKs for which languages? Which runtimes containerize cleanly for Northflank?
 
 ### Frontend Framework Subagent
-"Research the current best frontend frameworks that deploy to Cloudflare Pages as of today's date. Compare: Cloudflare Pages compatibility (SPA vs SSR vs hybrid), build speed, ecosystem size, Better Auth client SDK support, developer experience. WHY: The frontend must deploy to Cloudflare Pages and integrate with Better Auth client-side."
+"Research the current best frontend frameworks that run as a container on Northflank (static-served SPA or Node/Bun SSR server) behind a Cloudflare proxy as of today's date. Compare: ease of producing a production container or static build, SPA vs SSR vs hybrid trade-offs, build speed, ecosystem size, Better Auth client SDK support, developer experience. WHY: The frontend deploys to Northflank (NOT Cloudflare Pages) and integrates with Better Auth client-side; Cloudflare sits in front only as a CDN/WAF proxy."
 
 Relevant comparisons:
 - **Next.js** vs **SvelteKit** vs **Nuxt** vs **Astro** vs **Remix** vs **Solid Start** vs **React (SPA with Vite)**
-- Key factor: which frameworks have first-class Cloudflare Pages adapters?
+- Key factor: which frameworks containerize cleanly on Northflank, and whether SPA (static) or SSR (Node/Bun server) better fits the project.
 
 ### Backend Framework Subagent
 "Research the current best backend/API frameworks for [recommended language] that run in containers on Northflank as of today's date. The framework must support Better Auth middleware, Postgres connections via an ORM, Redis connections, and Cloudflare R2 S3-compatible API. Compare: performance, middleware ecosystem, Better Auth integration, container startup time. WHY: The API runs on Northflank containers and must host Better Auth endpoints alongside application logic."
@@ -122,14 +124,15 @@ Synthesize all subagent results into a recommendation. The infrastructure sectio
 ## Infrastructure (Locked)
 | Layer | Choice |
 |-------|--------|
-| Frontend hosting | Cloudflare Pages |
+| Frontend hosting | Northflank (container; SPA or SSR) |
 | Backend hosting | Northflank (container) |
 | Database | Northflank Postgres |
 | Cache/Queue | Northflank Redis |
 | Object storage | Cloudflare R2 |
 | Auth | Better Auth |
 | Cron | Northflank Cron |
-| Email | Resend (or SES) |
+| Email | Resend |
+| CDN | Cloudflare proxy in front of Northflank |
 
 ## Language & Runtime
 **Recommended:** <choice> <version>
@@ -138,7 +141,7 @@ Synthesize all subagent results into a recommendation. The infrastructure sectio
 
 ## Frontend Framework
 **Recommended:** <choice> <version>
-**Why:** <2-3 sentences, must reference Cloudflare Pages compatibility>
+**Why:** <2-3 sentences, must reference Northflank container hosting and whether it ships as a static-served SPA or an SSR server>
 **Runner-up:** <choice> -- <trade-off>
 
 ## Backend Framework
@@ -192,7 +195,7 @@ Create a `README.md` with:
    - Phase 2: Core features (primary functionality)
    - Phase 3: Polish (error handling, edge cases, testing)
    - Phase 4: Ship (production deployment, monitoring, documentation)
-9. Deployment section (Cloudflare Pages + Northflank specifics)
+9. Deployment section (Northflank frontend + API specifics, plus the Cloudflare proxy/CDN setup in front of the Northflank frontend -- DNS CNAME, Full (Strict) TLS, ACME/proxy ordering)
 
 ## Step 5: Generate Design Guardrails
 
@@ -219,8 +222,8 @@ Tools to include:
 - Build and dev commands
 - Framework CLI commands (frontend + backend)
 - ORM/migration commands (connecting to remote Northflank Postgres)
-- Wrangler commands (Cloudflare Pages + R2)
-- Northflank CLI commands (backend deploy, addon management, port-forwarding)
+- Wrangler commands (Cloudflare R2 + DNS/CDN -- NOT Pages; the frontend deploys to Northflank)
+- Northflank CLI commands (frontend + backend deploy, addon management, port-forwarding)
 - Linter and formatter commands
 - Test runner commands
 
@@ -233,7 +236,7 @@ Also preserve the **Available MCP Servers** section in tools.md -- it documents 
 Standard structure for this infrastructure:
 
 - Root `CLAUDE.md` -- Project-wide rules, full stack summary, shared conventions
-- `frontend/CLAUDE.md` (or `apps/web/CLAUDE.md`) -- Cloudflare Pages conventions, UI component rules, styling rules
+- `frontend/CLAUDE.md` (or `apps/web/CLAUDE.md`) -- Northflank frontend (SPA/SSR container) conventions, UI component rules, styling rules
 - `api/CLAUDE.md` (or `apps/api/CLAUDE.md`) -- Northflank API conventions, Better Auth integration rules, database patterns
 
 Plan these but do NOT create subfolder CLAUDE.md files until the folders exist.

@@ -1,5 +1,7 @@
 ---
 name: update-practices
+model: opus
+effort: high
 description: Fetch latest Claude Code best practices and update the .claude/ folder configuration. Safe to run repeatedly.
 user-invocable: true
 argument-hint: (no arguments needed)
@@ -37,7 +39,7 @@ Check the current date FIRST. All best practices must be verified as current as 
 
 ## Step 2: Fetch Latest Practices
 
-Spin up parallel Explore subagents to fetch and analyze sources:
+Spin up parallel `explorer` agents to fetch and analyze sources. Use the custom `explorer` agent (defined in `.claude/agents/`), never the built-in `Explore` type -- the built-in loads every MCP tool schema and blows the context window.
 
 1. **Official sources subagent:** "Fetch all official Anthropic sources from the source URL registry. Extract: current Claude Code version, new features, deprecated features, new recommended settings/skills/agents/hooks, folder structure changes, new frontmatter fields for agents and skills, new hook events, new settings options. WHY: We need to know what changed officially to update the config accurately."
 
@@ -46,6 +48,77 @@ Spin up parallel Explore subagents to fetch and analyze sources:
 3. **Stack freshness subagent:** "Check the project's detected stack (from CLAUDE.md or dependency manifests) against current versions and best practices as of today's date. WHY: We need to ensure tools.md and design guardrails reflect the latest stable versions."
 
 Wait for all subagents, then proceed.
+
+## Step 2b: Sync from Bootstrap Template
+
+The `.claude/` folder in this repo was originally scaffolded from the **claude-code-bootstrap** template. This step checks the template for any new or updated files that should be pulled in.
+
+### Fetch the template file tree
+
+```
+WebFetch https://api.github.com/repos/BoardPandas/claude-code-bootstrap/git/trees/main?recursive=1
+```
+
+Parse the JSON response. Extract all paths under `.claude/` — these are the canonical template files. Ignore files outside `.claude/` (CLAUDE.md, README.md, package.json, etc.) since those are project-specific.
+
+### Categorize each template file
+
+For each `.claude/` path in the template tree:
+
+1. **Check if it exists locally** using Glob or Read.
+2. If it does NOT exist locally → mark as **TEMPLATE-NEW**.
+3. If it exists locally → fetch the template version:
+   ```
+   WebFetch https://raw.githubusercontent.com/BoardPandas/claude-code-bootstrap/main/<path>
+   ```
+   **Read the FULL local file and the FULL template file and compare the actual text content**, not just file existence, size, or frontmatter. Do a real line-by-line comparison of the body:
+   - If the text is byte-for-byte identical → mark as **TEMPLATE-CURRENT** (no action needed).
+   - If the text differs in a few lines/sections (incremental edits) → mark as **TEMPLATE-UPDATED**.
+   - If the body has been substantially rewritten (most steps/sections changed, reordered, or replaced — e.g., the `add-lesson` skill was rewritten upstream) → mark as **TEMPLATE-REWRITTEN**. A rewrite is when a merge would produce a Frankenstein file; the template's version is the new canonical source.
+
+   Do not rely on quick heuristics like "the file exists, so it's current." A skill that exists locally can still be stale if its instructions were rewritten in the template. Always diff the prose.
+
+### Files to sync (whitelist)
+
+Only sync these categories of `.claude/` files from the template:
+
+| Category | Path pattern | Sync strategy |
+|----------|-------------|---------------|
+| Skills | `.claude/skills/*/SKILL.md` | Sync new skills entirely. For **TEMPLATE-UPDATED** skills, merge new steps/sections but preserve project-specific customizations (e.g., custom matchers, stack-specific checks). For **TEMPLATE-REWRITTEN** skills, **replace the body wholesale with the template version**, then re-apply only the genuinely project-specific additions (custom stack checks, custom paths). Do not try to merge a rewrite line-by-line. |
+| Agents | `.claude/agents/*.md` | Sync new agents entirely. For **TEMPLATE-UPDATED** agents, update frontmatter fields and instructions but preserve project-specific `context` or `skills` overrides. For **TEMPLATE-REWRITTEN** agents, replace the body with the template version, preserving only project-specific `context`/`skills`/`tools` overrides. |
+| Rules | `.claude/rules/*.md` | Sync new rules entirely. For **TEMPLATE-UPDATED** rules, update content but preserve custom `paths:` frontmatter if the project has different file structure. For **TEMPLATE-REWRITTEN** rules, replace the body with the template version, preserving only the project's custom `paths:` frontmatter. |
+| Scripts | `.claude/scripts/*.sh` | Sync new scripts entirely. For existing scripts, replace with template version unless local version has project-specific logic (check for project-specific paths, env vars, or tool references). |
+| References | `.claude/references/source-urls.md` | Merge: add any new URLs from template that aren't already present. Never remove existing URLs. |
+| References | `.claude/references/hooks-and-settings.md` | Generic catalog, not project-specific. Replace with the template version unless the local copy has project-specific notes appended, in which case merge new rows in. |
+| References | `.claude/references/infrastructure.md` | Do NOT sync — infrastructure is project-specific. |
+| References | `.claude/references/tools.md` | Do NOT sync — tools depend on project stack. |
+| References | `.claude/references/design-guardrails.md` | Do NOT sync — guardrails depend on project stack. |
+| Settings | `.claude/settings.json` | Deep-merge: add new hooks, permissions, and env vars from template. Never remove existing entries. Preserve project-specific matchers and custom hooks. |
+| Settings | `.claude/settings.local.json.example` | Replace with template version (it's just an example file). |
+
+### Files to NEVER sync
+
+- `.claude/agent-memory/*` — project-specific memory, never overwrite.
+- Any file not in the `.claude/` directory.
+- `CLAUDE.md`, `agents.md`, `instructions.md` — these are project-tailored.
+
+### Apply template changes
+
+For each **TEMPLATE-NEW** file:
+- Create it locally with the template content.
+
+For each **TEMPLATE-UPDATED** file:
+- Apply the sync strategy from the table above.
+- When merging, use the non-destructive rules: never remove project-specific content, append/merge rather than replace.
+
+For each **TEMPLATE-REWRITTEN** file:
+- The upstream body is the new canonical source. Replace the local body with the template version per the sync strategy above.
+- Before replacing, scan the local file for genuinely project-specific content (custom stack checks, custom paths, custom `paths:`/`context`/`skills` frontmatter). Re-apply ONLY those after pulling in the rewrite.
+- Do not attempt a line-by-line merge of a rewrite — that produces an incoherent hybrid. Take the template body whole, then graft back the small project-specific pieces.
+
+### Track template version
+
+After syncing, note the latest commit SHA from the template repo (available from the tree API response). Log it in the final report so future runs can detect if the template has changed.
 
 ## Step 3: Compare and Identify Changes
 
@@ -99,24 +172,20 @@ Review each skill for new frontmatter fields:
 - Should HTTP hooks be added for team workflows?
 - Are matchers using the correct syntax?
 
-Available hook events (18 as of v2.1.70 -- check for new ones in fetched sources):
-SessionStart, SessionEnd, UserPromptSubmit, PreToolUse, PostToolUse, PostToolUseFailure,
-PermissionRequest, SubagentStart, SubagentStop, Stop, Notification, PreCompact,
-TeammateIdle, TaskCompleted, InstructionsLoaded, ConfigChange, WorktreeCreate, WorktreeRemove
-
-Hook types: command, http, prompt, agent
+The full event catalog, hook types, and matcher syntax live in `.claude/references/hooks-and-settings.md` — check configured hooks against it. When the fetched sources reveal a hook event or type not yet in that reference, add it there (not into a skill body), so the catalog stays in one place.
 
 ### Settings
-Check for new or updated settings:
-- `attribution.commit` / `attribution.pr` — commit/PR attribution
-- `autoUpdatesChannel` — stable or preview update channel
-- `sandbox.permissions` / `sandbox.network` — sandbox configuration
-- `language` — response language
-- `allowedHttpHookUrls` — HTTP hook URL allowlist
-- `alwaysThinkingEnabled` — extended thinking
-- `disableAllHooks` — hook kill switch (for settings.local.json)
+Check configured settings against the optional-settings catalog in `.claude/references/hooks-and-settings.md` (`attribution.*`, `autoUpdatesChannel`, `sandbox.*`, `worktree.*`, `language`, `allowedHttpHookUrls`, `alwaysThinkingEnabled`, `disableAllHooks`). If the latest Claude Code version introduces a new setting, add it to that reference too.
 
-Also check if any new settings have been introduced in the latest Claude Code version.
+### Cost / token efficiency
+
+Audit the config for token-efficiency patterns. Do NOT recommend disabling the 1M context window (the 200K default is intentionally not used in this template).
+
+- **Per-prompt effort:** Are skills setting `effort:` in frontmatter where appropriate? Mechanical, step-by-step skills should use `low` or `medium`; analysis skills `medium`; orchestration/planning `high` or `max`. Flag skills missing `effort` where a non-default would save tokens.
+- **Model routing:** Are skills and agents assigned the cheapest model that fits? Step-by-step → haiku, analysis → sonnet, orchestration/planning → opus. Flag any opus assignment that could be sonnet/haiku.
+- **Cache preservation:** Skills and agents should not switch model mid-session unnecessarily (model switches invalidate the prompt cache). Flag skills that change model partway through a multi-step flow.
+- **Input format swaps:** Where the project ingests PDFs, web pages, or screenshots, prefer cheaper extractors (`pdftotext` for PDFs, an agent-browser / DOM read over screenshot capture, code knowledge graphs over raw repo dumps). Note any tool reference in `tools.md` that should be added.
+- **Subagent delegation:** Long mechanical work (log scans, repo-wide searches, doc fetches) should be delegated to subagents with cheaper models so the main session's cache stays intact.
 
 ## Step 4: Implement Changes
 
@@ -133,7 +202,7 @@ For each NEW or UPDATED item:
 
 Ensure these skills still exist and are current:
 - plan-repo, init-repo, update-practices
-- spec-developer, code-review, security-scan
+- spec-developer, security-scan
 - performance-review, dependency-audit, test-scaffold
 - doc-sync, mermaid-diagram
 
@@ -191,6 +260,15 @@ Review `.claude/rules/*.md` files:
 Print a diff-style summary:
 
 ```
+BOOTSTRAP TEMPLATE SYNC:
+  Template repo: BoardPandas/claude-code-bootstrap
+  Template commit: <SHA from tree API>
+  [TEMPLATE-NEW] Added <path> -- <description>
+  [TEMPLATE-UPDATED] Updated <path> -- <what changed (incremental merge)>
+  [TEMPLATE-REWRITTEN] Replaced body of <path> -- <upstream rewrite; project-specific bits re-applied: ...>
+  [TEMPLATE-CURRENT] No changes needed: <list>
+  [TEMPLATE-SKIPPED] Skipped <path> -- <reason, e.g., project-specific>
+
 CHANGES APPLIED:
   [NEW] Added skill: <name> -- <reason>
   [NEW] Added rule: <path> -- <scope description>
@@ -209,7 +287,7 @@ FEATURES IN USE:
   - Path-scoped rules: <count> rules in .claude/rules/
   - Agent memory: <count> files in .claude/agent-memory/
   - Hook events: <list of configured events>
-  - Hook types: <command|http|prompt>
+  - Hook types: <command|http|prompt|agent|mcp_tool>
   - Advanced agent frontmatter: <agents using background/isolation/context/skills/memory>
   - Advanced skill frontmatter: <skills using context/agent>
   - Settings: <list of configured optional settings>

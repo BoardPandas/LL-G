@@ -1,8 +1,10 @@
 ---
 name: mermaid-diagram
+model: sonnet
+effort: low
 description: Generate Mermaid diagrams to visualize data flow, architecture, or state machines. Use for debugging, documentation, or understanding complex systems.
 user-invocable: true
-disable_model_invocation: true
+disable-model-invocation: true
 argument-hint: [optional: specific flow or component to diagram]
 allowed-tools:
   - Read
@@ -28,7 +30,7 @@ Ask the user what they need (or infer from context):
 
 ## Step 2: Explore the Code
 
-Spin up parallel Explore subagents based on the diagram type:
+Spin up parallel `explorer` agents based on the diagram type. Use the custom `explorer` agent (defined in `.claude/agents/`), never the built-in `Explore` type -- the built-in loads every MCP tool schema and blows the context window.
 
 - **Data flow / Sequence:** "Trace the complete path of <specific operation> from entry point to final output, including middleware, services, and data stores. WHY: We need every hop in the chain to draw an accurate flow diagram."
 - **Architecture:** "Map all top-level modules, their public interfaces, and which modules depend on which. WHY: We need the dependency graph to draw an accurate architecture diagram."

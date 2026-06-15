@@ -13,3 +13,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - Repointed LL-G and BP knowledge-base references from the `wellforce-brandon` GitHub org to `BoardPandas` after both repos moved (fetch URLs, `gh api` paths, and raw content links)
+
+## [2026-06-14]
+
+### Added
+- `.claude/references/hooks-and-settings.md`: canonical hook-events table, hook types (command, http, prompt, agent, mcp_tool), matcher syntax, and settings catalog in a single reference file; `init-repo` and `update-practices` now point here instead of duplicating the tables inline.
+- `.claude/scripts/kb-upsert.sh`: portable shell helper used by `add-lesson` to create or update files in a GitHub repo via the contents API without requiring the GNU-only `base64 -w0` flag or manual SHA capture.
+- `.gitattributes`: `*.sh text eol=lf` rule so shell scripts are checked out with LF line endings on all platforms, preventing `bad interpreter: bash\r` errors.
+
+### Changed
+- Propagated template skill fixes from `claude-code-bootstrap`:
+  - All skills that referenced the built-in `Explore` subagent type now use the custom `explorer` agent (the built-in loads every MCP tool schema and blows the context window).
+  - `init-repo`: added Steps 3a/3b (BP + LL-G knowledge-base integration), Step 7 new rules (`bp-check.md`, `llg-check.md`), Step 11 now delegates to `hooks-and-settings.md`, added Steps 13-15 (instructions.md, report, BP verification). Added `model: opus`, `effort: high` frontmatter.
+  - `update-practices`: added Step 2b (bootstrap template sync with TEMPLATE-NEW/UPDATED/REWRITTEN categorization), updated hooks section to point to `hooks-and-settings.md`, added cost/token efficiency audit, expanded Step 8 report format. Added `model: opus`, `effort: high` frontmatter.
+  - `plan-repo`: corrected fixed-infrastructure description (frontend deploys to Northflank container, not Cloudflare Pages). Added `model: opus`, `effort: high` frontmatter.
+  - `doc-sync`: replaced the old lightweight audit-only skill with the full TOC-driven wiki system (three modes: init/update/audit; AUTOGEN markers; evidence-based citations; Mermaid validation; `explorer` subagents for parallel page generation). Added `model: sonnet`, `effort: medium` frontmatter.
+  - `mermaid-diagram`: fixed `disable_model_invocation` (underscore) to `disable-model-invocation` (hyphen); added `model: sonnet`, `effort: low` frontmatter.
+  - `spec-developer`: fixed `disable_model_invocation` to `disable-model-invocation`; added `model: opus`, `effort: high` frontmatter.
+  - `dependency-audit`: added `model: sonnet`, `effort: medium` frontmatter.
+  - `performance-review`: replaced deprecated `- Task` tool with no task tool (scan uses Read/Glob/Grep); added `effort: medium` frontmatter.
+  - `security-scan`: replaced deprecated `- Task` tool; added `effort: high` frontmatter.
+  - `test-scaffold`: replaced deprecated `- Task` tool with `- Agent`; added `model: sonnet`, `effort: medium` frontmatter.

@@ -1,9 +1,11 @@
 ---
 name: spec-developer
+model: opus
+effort: high
 description: Interview-driven spec generation. Asks 20+ clarifying questions, then produces a detailed implementation plan saved to /tasks. Use for any feature larger than a single file change.
 user-invocable: true
 argument-hint: <feature name or description>
-disable_model_invocation: true
+disable-model-invocation: true
 allowed-tools:
   - Read
   - Write
@@ -24,7 +26,7 @@ This skill produces a plan ONLY. It does not implement anything. The user will s
 
 ## Step 1: Explore the Codebase (Spec Developer Explorer variant)
 
-Before asking questions, spin up 3-5 parallel Explore subagents to understand the codebase:
+Before asking questions, spin up 3-5 parallel `explorer` agents to understand the codebase. Use the custom `explorer` agent (defined in `.claude/agents/`), never the built-in `Explore` type -- the built-in loads every MCP tool schema and blows the context window before it can do any work.
 
 1. **Architecture subagent:** "Understand the project's architecture and module boundaries. WHY: We need to know where this feature fits and what it can depend on."
 2. **Patterns subagent:** "Find existing patterns for similar features (routing, state, data fetching, error handling). WHY: The new feature must follow established patterns to maintain consistency."

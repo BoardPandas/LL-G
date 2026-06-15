@@ -1,5 +1,7 @@
 ---
 name: dependency-audit
+model: sonnet
+effort: medium
 description: Audit project dependencies for outdated versions, known vulnerabilities, and unused packages. Use periodically or before releases.
 user-invocable: true
 argument-hint: (no arguments needed)

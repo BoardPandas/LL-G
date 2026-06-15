@@ -1,5 +1,6 @@
 ---
 name: performance-review
+effort: medium
 description: Analyze the codebase for performance bottlenecks, inefficiencies, and optimization opportunities. Use when investigating slowness or preparing for scale.
 user-invocable: true
 argument-hint: [optional: file or directory path to scope the review]
@@ -8,7 +9,6 @@ allowed-tools:
   - Read
   - Glob
   - Grep
-  - Task
 ---
 
 # Performance Review
