@@ -1,0 +1,7 @@
+# Antigravity CLI Gotchas
+
+> Known Antigravity CLI (`agy`) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Antigravity CLI (agy) hangs headless and has no machine-readable output](headless-hangs-no-output.md): Non-interactive runs hang without `< /dev/null` + `--dangerously-skip-permissions`; print mode renders to TTY only so redirected stdout is empty (recover from the SQLite conversation DB); blog flags `--output json`/`--yes`/`run` do not exist. HIGH.
