@@ -1,0 +1,7 @@
+# Lumen Gotchas
+
+> Known Lumen NaaS API patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Price-qualify endpoint rejects partnerId alongside masterSiteId](price-qualify-partnerid-422.md): /Product/v1/price 422s if partnerId is sent with masterSiteId; qualify location-only, quote needs partnerId for DC circuits. HIGH.
