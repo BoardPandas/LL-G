@@ -1,0 +1,7 @@
+# Active Directory Gotchas
+
+> Known Active Directory patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Multi-homed DC + stale DNS corrupts a newly promoted DC's local KDC (unrepairable)](multihomed-dc-corrupt-kdc.md): sc_verify OK but klist 0x52e = corrupt local KDC; fix DNS/single-home before dcpromo, else metadata-cleanup + rebuild. HIGH.
