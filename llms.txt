@@ -55,6 +55,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Bash
 - [Bash index](kb/bash/llms.txt): All bash shell gotchas (4 entries)
 
+### Git
+- [Git index](kb/git/llms.txt): Git tooling gotchas: `git ls-files`-based lint/check guards silently skip untracked files and report a false green (1 entry)
+
 ### Linux
 - [Linux index](kb/linux/llms.txt): Linux server ops gotchas: systemd service management, daemon restart policies, package-update restart races (1 entry)
 
