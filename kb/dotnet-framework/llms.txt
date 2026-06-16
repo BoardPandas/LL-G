@@ -1,0 +1,7 @@
+# .NET Framework Gotchas
+
+> Known .NET Framework (legacy CLR 2.0/3.0/3.5, WCF, GAC) patterns that cause silent failures or hard-to-debug errors on Windows.
+
+## Entries
+
+- [Server 2025 in-place upgrade leaves .NET 3.0 WCF (System.ServiceModel 3.0.0.0) un-GAC'd](netfx3-wcf-ungacced.md): legacy .NET 3.5/WCF services crash at launch (SCM 1053, no app log, no visible process) because System.ServiceModel 3.0.0.0 sits in WinSxS but was never projected into the legacy GAC; fix = DISM disable/Remove + enable NetFx3 from media, then reboot. HIGH.
