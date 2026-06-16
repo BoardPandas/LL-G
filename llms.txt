@@ -138,3 +138,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Lumen (NaaS)
 - [Lumen index](kb/lumen/llms.txt): Lumen NaaS API gotchas: price-qualify (/Product/v1/price) 422s if partnerId is sent with masterSiteId, while quote still needs partnerId for DC circuits (1 entry)
+
+### .NET Framework
+- [.NET Framework index](kb/dotnet-framework/llms.txt): Legacy .NET Framework (CLR 2.0/3.0/3.5, WCF, GAC) gotchas: a Server 2025 in-place upgrade can leave System.ServiceModel 3.0.0.0 staged in WinSxS but un-GAC'd, so legacy WCF services crash at launch with SCM 1053 and no app log; fix = DISM disable/enable NetFx3 from media + reboot (1 entry)
