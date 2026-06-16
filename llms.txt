@@ -134,7 +134,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [WiX index](kb/wix/llms.txt): WiX Toolset / Windows Installer gotchas: major-upgrade RemoveExistingProducts scheduling can wipe runtime-modified data files (config.json) despite NeverOverwrite (1 entry)
 
 ### Antigravity CLI
-- [Antigravity CLI index](kb/antigravity-cli/llms.txt): Antigravity CLI (`agy`) gotchas: hangs headless without empty stdin, print mode has no machine-readable stdout, and blog-documented flags don't exist (1 entry)
+- [Antigravity CLI index](kb/antigravity-cli/llms.txt): Antigravity CLI (`agy`) gotchas: hangs headless without empty stdin, print mode has no machine-readable stdout, blog-documented flags don't exist, and a clean exit 0 does not mean the plan completed (2 entries)
 
 ### Lumen (NaaS)
 - [Lumen index](kb/lumen/llms.txt): Lumen NaaS API gotchas: price-qualify (/Product/v1/price) 422s if partnerId is sent with masterSiteId, while quote still needs partnerId for DC circuits (1 entry)
