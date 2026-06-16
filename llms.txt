@@ -97,6 +97,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Azure
 - [Azure index](kb/azure/llms.txt): Azure ARM and Az PowerShell gotchas: VNet gateway deploys, GatewaySubnet, service principal RBAC vs Graph scopes (1 entry)
 
+### Hyper-V
+- [Hyper-V index](kb/hyper-v/llms.txt): Hyper-V virtualization gotchas: Dynamic Memory's Startup RAM (not Minimum) is the host's boot-time allocation, so a VM still fails to start (event 3122) if Startup is left high (1 entry)
+
 ### Architecture
 - [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift (2 entries)
 
