@@ -1,0 +1,7 @@
+# Git Gotchas
+
+> Known git patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [git ls-files can't see untracked files](git-ls-files-blind-spot.md): Lint/check guards that enumerate via `git ls-files` skip new unstaged files and report a false green. MEDIUM.
