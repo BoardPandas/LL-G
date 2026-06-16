@@ -1,0 +1,7 @@
+# Hyper-V Gotchas
+
+> Known Hyper-V patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Dynamic Memory does not lower a VM's boot-time RAM allocation](dynamic-memory-startup-ram.md): Startup RAM (the top "RAM" field) is what the host must have free to boot; Minimum only balloons down after the guest runs, so the VM still fails to start with event 3122 if Startup is left high. MEDIUM.
