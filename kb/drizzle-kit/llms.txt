@@ -1,0 +1,7 @@
+# drizzle-kit Gotchas
+
+> Known drizzle-kit / Drizzle ORM patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [drizzle-kit "No schema changes" when a new schema file isn't registered in an explicit drizzle.config schema list](config-explicit-schema-list.md): With an explicit `schema` file array (not a glob), db:generate ignores the barrel re-export and silently emits no migration for a new table file. HIGH.
