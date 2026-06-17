@@ -5,3 +5,4 @@
 ## Entries
 
 - [Windows disk-full remediation gotchas (Installer orphans, read-only deletes, DISM, OneDrive sizing)](disk-full-remediation.md): C:\Windows\Installer orphan cleanup needs an all-orphan guard; read-only attribute silently blocks deletes; DISM no-ops with 0x800f080a until reboot; OneDrive placeholders inflate size reports past disk capacity. HIGH.
+- [Dell SupportAssist SARemediation snapshots + unbounded VSS silently fill C:](dell-supportassist-snapshot-bloat.md): SupportAssist's SARemediation system-repair snapshots never self-prune (30+ GB, 2+ yrs deep) and pair with unbounded VSS; clearing once isn't enough, you must cap VSS and disable the "Dell SupportAssist Remediation" service. HIGH.
