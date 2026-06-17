@@ -1,0 +1,7 @@
+# Windows Gotchas
+
+> Known Windows OS administration patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Windows disk-full remediation gotchas (Installer orphans, read-only deletes, DISM, OneDrive sizing)](disk-full-remediation.md): C:\Windows\Installer orphan cleanup needs an all-orphan guard; read-only attribute silently blocks deletes; DISM no-ops with 0x800f080a until reboot; OneDrive placeholders inflate size reports past disk capacity. HIGH.
