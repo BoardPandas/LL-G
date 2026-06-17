@@ -41,7 +41,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (32 entries)
 
 ### Graph API (Microsoft)
-- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (29 entries)
+- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (30 entries)
 
 ### Godot / GDScript
 - [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (12 entries)
