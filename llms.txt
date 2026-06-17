@@ -144,3 +144,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### .NET Framework
 - [.NET Framework index](kb/dotnet-framework/llms.txt): Legacy .NET Framework (CLR 2.0/3.0/3.5, WCF, GAC) gotchas: a Server 2025 in-place upgrade can leave System.ServiceModel 3.0.0.0 staged in WinSxS but un-GAC'd, so legacy WCF services crash at launch with SCM 1053 and no app log; fix = DISM disable/enable NetFx3 from media + reboot (1 entry)
+
+### Drizzle ORM (drizzle-kit)
+- [drizzle-kit index](kb/drizzle-kit/llms.txt): drizzle-kit migration-generation gotchas: an explicit `schema` file array (not a glob) makes db:generate ignore barrel re-exports and silently emit no migration for a new table file (1 entry)
