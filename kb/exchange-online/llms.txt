@@ -1,0 +1,7 @@
+# Exchange Online Gotchas
+
+> Known Exchange Online (EXO PowerShell / app-only auth) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [App-only EXO connects but every cmdlet 401s (role propagation); Get-Mailbox hides it as a GetResponseHeader error](app-only-401-propagation.md): app-only cert connects (tokenStatus=Active) yet all cmdlets 401 until Exchange.ManageAsApp/Exchange Admin propagate; Get-Mailbox masks the 401 as a GetResponseHeader error; use Get-EXO* to see it and delegated `-Device` auth to bypass. MEDIUM.
