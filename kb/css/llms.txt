@@ -5,3 +5,4 @@ Known CSS patterns that cause silent rendering failures or hard-to-debug issues.
 ## Entries
 
 - [Self-hosted @font-face fonts do not render inside iframe documents](iframe-font-face-rendering.md): WOFF2 fonts loaded via @font-face (URL, base64, data URI) never render inside iframes despite valid files and successful fetches. Use Google Fonts CDN link tags instead. HIGH.
+- [Stylesheet load order decides equal-specificity wins; scope the selector when you can't rely on it](stylesheet-load-order-equal-specificity.md): Two runtime-injected sheets with equal-specificity rules resolve by load order, so a restyle in the first-loaded sheet silently loses to a global rule; rely on order deliberately or bump specificity with a scoping class (.dl .x beats .x). MEDIUM.
