@@ -32,7 +32,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (6 entries)
 
 ### CSS
-- [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (1 entry)
+- [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (2 entries)
 
 ### Data Viz
 - [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas: one shared divisor across mixed-scale metrics silently clamps the larger-scale ones (1 entry)
@@ -110,7 +110,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Hyper-V index](kb/hyper-v/llms.txt): Hyper-V virtualization gotchas: Dynamic Memory's Startup RAM (not Minimum) is the host's boot-time allocation, so a VM still fails to start (event 3122) if Startup is left high (1 entry)
 
 ### Architecture
-- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift (2 entries)
+- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift (5 entries)
 
 ### Cisco Meraki
 - [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (4 entries)
