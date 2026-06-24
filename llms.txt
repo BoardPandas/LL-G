@@ -32,7 +32,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (6 entries)
 
 ### CSS
-- [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (2 entries)
+- [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (3 entries)
 
 ### Data Viz
 - [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas: one shared divisor across mixed-scale metrics silently clamps the larger-scale ones (1 entry)
