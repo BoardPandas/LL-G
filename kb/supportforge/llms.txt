@@ -1,0 +1,7 @@
+# SupportForge Gotchas
+
+> Known SupportForge (remote endpoint agent) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [&quot;Online&quot; agent at near-full disk is a heartbeat, not a working executor](online-flag-vs-hung-executor.md): a SupportForge agent at sub-1% free disk reports online but its executor is hung — one command completes per session, then "Session not found or has ended"; relieve disk out-of-band before remediating. HIGH.
