@@ -68,7 +68,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
 
 ### Windows
-- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas: disk-full remediation (Installer orphan cleanup with all-orphan guard, read-only attribute silently blocking deletes, DISM 0x800f080a pending-servicing, OneDrive placeholder size inflation; Dell SupportAssist SARemediation snapshot bloat + unbounded VSS; DeviceMetadataRetrievalClient dllhost CPU spin fixed by disabling DsmSvc) (4 entries)
+- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas: disk-full remediation (Installer orphan cleanup with all-orphan guard, read-only attribute silently blocking deletes, DISM 0x800f080a pending-servicing, OneDrive placeholder size inflation; Dell SupportAssist SARemediation snapshot bloat + unbounded VSS; DeviceMetadataRetrievalClient dllhost CPU spin fixed by disabling DsmSvc) (5 entries)
 
 ### Teams & SharePoint
 - [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
