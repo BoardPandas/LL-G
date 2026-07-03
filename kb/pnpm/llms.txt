@@ -1,0 +1,7 @@
+# pnpm Gotchas
+
+> Known pnpm patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Packages with legacy bundled types (bare `/// <reference types="node" />`) fail tsc under pnpm + nodenext](legacy-package-types-nodenext.md): npm-passing packages like winston-transport lose their `stream.Writable` base under pnpm's symlinked store + `moduleResolution: nodenext`; config fixes (node-linker, public-hoist, packageExtensions, preserveSymlinks) all fail, use a local type shim. HIGH.
