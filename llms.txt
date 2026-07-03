@@ -25,6 +25,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Node.js
 - [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (3 entries)
 
+### pnpm
+- [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker gotchas: packages with legacy bundled types fail tsc under pnpm's symlinked store + moduleResolution nodenext, and no linker/hoist config fixes it (1 entry)
+
 ### LLM Integration
 - [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang (1 entry)
 
