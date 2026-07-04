@@ -1,0 +1,8 @@
+# React Native Gotchas
+
+> Known React Native (and Expo) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [TanStack Query interval refetch never pauses on native without focusManager](refetch-interval-background-native.md): refetchInterval keeps polling while backgrounded because native focus is always-on; wire focusManager to AppState. HIGH.
+- [Nesting a VirtualizedList in a ScrollView defeats virtualization](virtualizedlist-in-scrollview.md): a FlatList inside a ScrollView warns and mounts every row instead of windowing; make the list the scroll container. MEDIUM.
