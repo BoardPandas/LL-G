@@ -156,3 +156,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Drizzle ORM (drizzle-kit)
 - [drizzle-kit index](kb/drizzle-kit/llms.txt): drizzle-kit migration-generation gotchas: an explicit `schema` file array (not a glob) makes db:generate ignore barrel re-exports and silently emit no migration for a new table file (1 entry)
+
+### React Native
+- [React Native index](kb/react-native/llms.txt): React Native + Expo gotchas: TanStack Query interval polling never pauses in the background unless focusManager is wired to AppState; nesting a VirtualizedList in a ScrollView warns and defeats windowing (2 entries)
