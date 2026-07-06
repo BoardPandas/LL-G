@@ -92,7 +92,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Svelte index](kb/svelte/llms.txt): Svelte 5 component and runes gotchas (4 entries)
 
 ### React
-- [React index](kb/react/llms.txt): React hooks and lifecycle gotchas (2 entries)
+- [React index](kb/react/llms.txt): React hooks and lifecycle gotchas (3 entries)
 
 ### Rust
 - [Rust index](kb/rust/llms.txt): Rust async runtime and Tokio gotchas (1 entry)
