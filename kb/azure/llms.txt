@@ -5,3 +5,4 @@
 ## Entries
 
 - [InvalidResourceReference for GatewaySubnet is an ARM gateway deploy failing validation, not a broken gateway](gatewaysubnet-invalidresourcereference.md): A VNet/VPN gateway deploy fails because a subnet named exactly `GatewaySubnet` is missing; the gateway is never created (404), so create the subnet via a surgical child-resource PUT and re-deploy. MEDIUM.
+- [Binding secondary IPs on an Azure VM's primary NIC silently kills all outbound when the subnet has no NAT gateway](secondary-ip-breaks-outbound.md): Secondary IPs bound in-guest on the default-route adapter can become the outbound source, but only the primary IP has SNAT (no NAT gateway, defaultOutboundAccess=False), so all egress drops; reboot/redeploy don't clear the persisted config. Fix = dedicated gateway-less second NIC or a subnet NAT gateway. HIGH.
