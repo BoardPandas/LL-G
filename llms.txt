@@ -113,7 +113,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Intune index](kb/intune/llms.txt): Microsoft Intune endpoint-policy + app-management gotchas: Azure VM Entra-ID RDP tenant-wide oauth2PermissionGrant; Autodesk ODIS Win32 packaging + cert app-only upload; Managed Google Play apps need interactive iframe approval (not app-only POST); mobileApp assignment needs publishingState=published; iosStoreApp can wedge in processing; win32LobApp create needs the unified `rules` collection (not the legacy `detectionRules`) (6 entries)
 
 ### Azure
-- [Azure index](kb/azure/llms.txt): Azure ARM and Az PowerShell gotchas: VNet gateway deploys, GatewaySubnet, service principal RBAC vs Graph scopes (1 entry)
+- [Azure index](kb/azure/llms.txt): Azure ARM and Az PowerShell gotchas: VNet gateway deploys, GatewaySubnet, service principal RBAC vs Graph scopes (2 entries)
 
 ### Hyper-V
 - [Hyper-V index](kb/hyper-v/llms.txt): Hyper-V virtualization gotchas: Dynamic Memory's Startup RAM (not Minimum) is the host's boot-time allocation, so a VM still fails to start (event 3122) if Startup is left high (1 entry)
