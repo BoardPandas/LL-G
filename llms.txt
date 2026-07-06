@@ -110,7 +110,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
 
 ### Intune
-- [Intune index](kb/intune/llms.txt): Microsoft Intune endpoint-policy + app-management gotchas: Azure VM Entra-ID RDP tenant-wide oauth2PermissionGrant; Autodesk ODIS Win32 packaging + cert app-only upload; Managed Google Play apps need interactive iframe approval (not app-only POST); mobileApp assignment needs publishingState=published; iosStoreApp can wedge in processing (5 entries)
+- [Intune index](kb/intune/llms.txt): Microsoft Intune endpoint-policy + app-management gotchas: Azure VM Entra-ID RDP tenant-wide oauth2PermissionGrant; Autodesk ODIS Win32 packaging + cert app-only upload; Managed Google Play apps need interactive iframe approval (not app-only POST); mobileApp assignment needs publishingState=published; iosStoreApp can wedge in processing; win32LobApp create needs the unified `rules` collection (not the legacy `detectionRules`) (6 entries)
 
 ### Azure
 - [Azure index](kb/azure/llms.txt): Azure ARM and Az PowerShell gotchas: VNet gateway deploys, GatewaySubnet, service principal RBAC vs Graph scopes (1 entry)
