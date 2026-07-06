@@ -1,0 +1,8 @@
+# WPF Gotchas
+
+> Known WPF (Windows Presentation Foundation / XAML) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [TemplateBinding does no type conversion; StringFormat ignored on object targets](templatebinding-no-conversion.md): A templated control bound to a non-string value renders empty with no binding error; Binding.StringFormat only works on string-typed targets. Use ContentPresenter + ContentStringFormat. HIGH.
+- [Topmost=True can silently lose its Win32 z-band](topmost-lost-on-activation.md): A non-activated transparent topmost overlay drops behind normal windows when the same app activates another window; window.Topmost still reads True. Re-assert with SetWindowPos(HWND_TOPMOST, SWP_NOACTIVATE). HIGH.
