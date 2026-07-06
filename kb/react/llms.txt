@@ -6,3 +6,4 @@
 
 - [useEffect infinite loop when state setter depends on its own state](useeffect-infinite-loop.md): Calling setState inside useEffect with that state in the dependency array creates an infinite re-render loop. HIGH.
 - [setTimeout in useEffect without cleanup fires after unmount](settimeout-cleanup.md): setTimeout scheduled in useEffect fires even after unmount, updating stale state. Always return a cleanup function. MEDIUM.
+- [base-ui Select shows the raw value in its collapsed trigger without an items prop](base-ui-select-items-prop-collapsed-trigger.md): Children-only SelectItem labels don't resolve before mount or for values missing from the mounted list, so the trigger silently shows raw enums/ids; always pass items={[{value,label}]} and resolve labels for stale values. MEDIUM.
