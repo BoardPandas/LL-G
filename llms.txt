@@ -32,7 +32,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang (1 entry)
 
 ### Tailwind CSS
-- [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (6 entries)
+- [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (7 entries)
 
 ### CSS
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (3 entries)
