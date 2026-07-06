@@ -5,3 +5,4 @@
 ## Entries
 
 - [Packages with legacy bundled types (bare `/// <reference types="node" />`) fail tsc under pnpm + nodenext](legacy-package-types-nodenext.md): npm-passing packages like winston-transport lose their `stream.Writable` base under pnpm's symlinked store + `moduleResolution: nodenext`; config fixes (node-linker, public-hoist, packageExtensions, preserveSymlinks) all fail, use a local type shim. HIGH.
+- [npm install in a pnpm repo leaves stale physical packages that shadow pnpm's versions](npm-install-contaminates-pnpm-node-modules.md): stale physical copies at the node_modules root survive `pnpm install` ("Already up to date") and surface later as baffling version-mismatch errors (e.g. jest's `clearMocksOnScope is not a function`); diagnose with an isSymbolicLink() scan, fix with a full node_modules wipe + `pnpm install`. HIGH.
