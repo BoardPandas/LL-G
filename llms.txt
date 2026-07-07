@@ -88,6 +88,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Tauri
 - [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
 
+### NAudio
+- [NAudio index](kb/naudio/llms.txt): NAudio/WASAPI gotchas: MMDevice COM objects are apartment-bound with no marshaling proxy, so a UI-thread read of a background-thread device throws InvalidCastException E_NOINTERFACE and kills the app (1 entry)
+
 ### WPF
 - [WPF index](kb/wpf/llms.txt): WPF/XAML gotchas: TemplateBinding does no type conversion (templated controls render silently empty); Topmost=True overlays silently lose their Win32 z-band when another app window activates; SizeToContent windows positioned after Show() land at the default cascade spot on first show; DispatcherTimer is capped near 64 Hz by the default ~15.6 ms timer resolution unless timeBeginPeriod(1) is requested (4 entries)
 

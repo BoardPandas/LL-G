@@ -1,0 +1,7 @@
+# NAudio Gotchas
+
+> Known NAudio (WASAPI/CoreAudio wrapper) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [MMDevice RCWs are apartment-bound; cross-thread access throws E_NOINTERFACE](mmdevice-apartment-bound.md): An MMDevice created on one thread (e.g. a background audio poll) crashes with InvalidCastException when a UI-thread timer reads AudioMeterInformation from it - WASAPI interfaces have no COM marshaling proxy. Cache display values; confine the device to its creating thread. HIGH.
