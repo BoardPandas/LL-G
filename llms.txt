@@ -31,6 +31,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### LLM Integration
 - [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang (1 entry)
 
+### MCP (Model Context Protocol)
+- [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas: a process-global stdio server (state built from process.env) must be spawned one child per session in a multi-tenant host or it leaks tenant data (1 entry)
+
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (7 entries)
 
@@ -41,7 +44,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas: one shared divisor across mixed-scale metrics silently clamps the larger-scale ones (1 entry)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (33 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (34 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (30 entries)
