@@ -5,3 +5,4 @@
 ## Entries
 
 - [Process-global MCP server leaks across tenants if run in-process](process-global-server-cross-tenant-leak.md): A stdio MCP server whose state is a process-global client built from process.env must be spawned as one child per session in a multi-tenant host; sharing it in-process leaks one tenant's data to another. HIGH.
+- [Partial credential update silently wipes OAuth-captured hidden keys](partial-credential-update-clobbers-oauth-keys.md): Rebuilding a connector credential from visible form fields only deletes OAuth-captured keys (refresh token, realm id) on any re-save; merge stored non-field keys forward instead of replacing. HIGH.
