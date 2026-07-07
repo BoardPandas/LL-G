@@ -20,7 +20,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (24 entries)
 
 ### Express
-- [Express index](kb/express/llms.txt): All Express (Node.js) gotchas (2 entries)
+- [Express index](kb/express/llms.txt): All Express (Node.js) gotchas (3 entries)
 
 ### Node.js
 - [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (3 entries)
