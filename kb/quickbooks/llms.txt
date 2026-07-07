@@ -1,0 +1,8 @@
+# QuickBooks Online Gotchas
+
+> Known QuickBooks Online (Intuit) API and OAuth integration patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Intuit rejects http://localhost redirect URIs for production QuickBooks apps](oauth-localhost-redirect-rejected.md): Production apps reject localhost redirects; host the OAuth callback on a real public HTTPS origin registered byte-exact in the app. MEDIUM.
+- [QuickBooks OAuth: same endpoints for sandbox/prod, and realmId comes in the callback](oauth-endpoints-sandbox-prod-realmid.md): Authorize/token endpoints are identical for sandbox and production (only the API base differs); realmId arrives as a callback query param, not in the token response. MEDIUM.
