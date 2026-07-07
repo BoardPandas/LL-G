@@ -1,0 +1,7 @@
+# MCP (Model Context Protocol) Gotchas
+
+> Known Model Context Protocol server/host integration patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Process-global MCP server leaks across tenants if run in-process](process-global-server-cross-tenant-leak.md): A stdio MCP server whose state is a process-global client built from process.env must be spawned as one child per session in a multi-tenant host; sharing it in-process leaks one tenant's data to another. HIGH.
