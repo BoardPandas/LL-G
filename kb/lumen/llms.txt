@@ -4,4 +4,5 @@
 
 ## Entries
 
-- [Price-qualify endpoint rejects partnerId alongside masterSiteId](price-qualify-partnerid-422.md): /Product/v1/price 422s if partnerId is sent with masterSiteId; qualify location-only, quote needs partnerId for DC circuits. HIGH.
+- [Price-qualify endpoint rejects partnerId alongside masterSiteId](price-qualify-partnerid-422.md): /Product/v1/price 422s if partnerId is sent with masterSiteId; partnerId belongs on the quote step, not qualify. HIGH.
+- [Lumen qualify (/Product/v1/price) requires serviceId for customer-port circuits](qualify-serviceid-customer-port.md): a customer-port circuit qualified by bare masterSiteId now 422s "Not a NaaS Enabled Location"; send masterSiteId + serviceId (never partnerId). Supersedes the "qualify location-only" guidance. HIGH.
