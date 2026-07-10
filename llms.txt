@@ -161,7 +161,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Antigravity CLI index](kb/antigravity-cli/llms.txt): Antigravity CLI (`agy`) gotchas: hangs headless without empty stdin, print mode has no machine-readable stdout, blog-documented flags don't exist, and a clean exit 0 does not mean the plan completed (2 entries)
 
 ### Lumen (NaaS)
-- [Lumen index](kb/lumen/llms.txt): Lumen NaaS API gotchas: price-qualify (/Product/v1/price) 422s if partnerId is sent with masterSiteId, while quote still needs partnerId for DC circuits; customer-port qualify now also needs serviceId (2 entries)
+- [Lumen index](kb/lumen/llms.txt): Lumen NaaS API gotchas: price-qualify (/Product/v1/price) 422s if partnerId is sent with masterSiteId, while quote still needs partnerId for DC circuits; customer-port qualify now also needs serviceId; EoD EVC bandwidth modify is UNI-to-UNI only (3 entries)
 
 ### .NET Framework
 - [.NET Framework index](kb/dotnet-framework/llms.txt): Legacy .NET Framework (CLR 2.0/3.0/3.5, WCF, GAC) gotchas: a Server 2025 in-place upgrade can leave System.ServiceModel 3.0.0.0 staged in WinSxS but un-GAC'd, so legacy WCF services crash at launch with SCM 1053 and no app log; fix = DISM disable/enable NetFx3 from media + reboot (1 entry)
