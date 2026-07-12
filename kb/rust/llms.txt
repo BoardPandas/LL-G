@@ -5,3 +5,4 @@
 ## Entries
 
 - [Blocking std::fs calls on Tokio runtime starve the executor](blocking-io-on-tokio.md): Path::exists(), metadata(), and read_dir() from std::fs block the async executor thread. Use tokio::fs or spawn_blocking instead. HIGH.
+- [GUI-subsystem parent spawns visible console windows for every console child](gui-subsystem-console-child-window.md): A windows_subsystem="windows" binary has no console, so every console child (git, where, taskkill) pops a new console window; on a poll loop it flashes and steals keyboard focus. Set CREATE_NO_WINDOW (0x0800_0000). HIGH.
