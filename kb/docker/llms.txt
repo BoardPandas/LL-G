@@ -1,0 +1,8 @@
+# Docker Gotchas
+
+> Known Docker / docker-compose image and orchestration patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [postgres:18 image rejects the classic /var/lib/postgresql/data mount](postgres-18-data-mount.md): postgres:18 stores data in a major-version subdir and wants the volume mounted at /var/lib/postgresql; the long-standing /var/lib/postgresql/data mount crash-loops the container. HIGH.
+- [`docker compose exec -T` inside an ssh heredoc eats the rest of the script](compose-exec-stdin-heredoc-drain.md): exec -T (or any stdin reader) drains the remaining heredoc as its own stdin, silently skipping every later command; append `</dev/null` or run the script from a file. MEDIUM.
