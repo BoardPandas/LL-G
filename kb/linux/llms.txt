@@ -5,3 +5,4 @@
 ## Entries
 
 - [Daemon stays dead after an auto-upgrade restart (socket bind race + Restart=on-abort)](systemd-restart-on-abort-bind-race.md): unattended-upgrades + needrestart restarts a daemon; the new master loses the port-bind race and the packaged Restart=on-abort policy leaves it failed with no retry. Connection-refused until manual restart/reboot. HIGH.
+- [systemd 203/EXEC on unit scripts under /home (SELinux user_home_t)](selinux-systemd-exec-home.md): SELinux blocks systemd from exec'ing ExecStart scripts living under /home; `mv` into /etc/systemd/system also preserves the wrong label so the unit won't load. Use /opt or /usr/local/bin and `restorecon`. MEDIUM.
