@@ -77,7 +77,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
 
 ### Windows
-- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas: disk-full remediation (Installer orphan cleanup with all-orphan guard, read-only attribute silently blocking deletes, DISM 0x800f080a pending-servicing, OneDrive placeholder size inflation; Dell SupportAssist SARemediation snapshot bloat + unbounded VSS; DeviceMetadataRetrievalClient dllhost CPU spin fixed by disabling DsmSvc) (6 entries)
+- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas: disk-full remediation (Installer orphan cleanup with all-orphan guard, read-only attribute silently blocking deletes, DISM 0x800f080a pending-servicing, OneDrive placeholder size inflation; Dell SupportAssist SARemediation snapshot bloat + unbounded VSS; DeviceMetadataRetrievalClient dllhost CPU spin fixed by disabling DsmSvc) (7 entries)
 
 ### Teams & SharePoint
 - [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
@@ -89,7 +89,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (7 entries)
 
 ### SupportForge
-- [SupportForge index](kb/supportforge/llms.txt): SupportForge remote-agent gotchas: a box at sub-1% free disk reports "online" (Redis heartbeat) but its command executor is hung — one command per session then "Session not found" (1 entry)
+- [SupportForge index](kb/supportforge/llms.txt): SupportForge remote-agent gotchas: a box at sub-1% free disk reports "online" (Redis heartbeat) but its command executor is hung — one command per session then "Session not found" (2 entries)
 
 ### Tauri
 - [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
