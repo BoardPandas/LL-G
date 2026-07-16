@@ -110,7 +110,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React index](kb/react/llms.txt): React hooks and lifecycle gotchas (4 entries)
 
 ### Rust
-- [Rust index](kb/rust/llms.txt): Rust async runtime + Windows process-spawning gotchas: blocking std::fs on the Tokio executor; a GUI-subsystem binary pops a visible console window for every console child (git/where/taskkill) and steals keyboard focus unless CREATE_NO_WINDOW is set (2 entries)
+- [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, and Windows process-spawning gotchas: blocking std::fs on the Tokio executor; GUI-subsystem console-child window flashing (CREATE_NO_WINDOW); reqwest multipart masking connect/timeout errors as body errors; reqwest 0.13 TLS feature rename (4 entries)
 
 ### SQLite
 - [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
