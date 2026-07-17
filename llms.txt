@@ -11,7 +11,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ## Technologies
 
 ### PowerShell
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (20 entries)
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (21 entries)
 
 ### React Router
 - [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
@@ -54,6 +54,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Exchange Online
 - [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas: app-only cert connects but cmdlets 401 until role propagation, Get-Mailbox masks it as a GetResponseHeader error (1 entry)
+
+### Entra External ID (CIAM)
+- [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas: workforce-blade lookalike trap, no email account-linking, MSA via custom OIDC only, fixed custom-IdP icons, branding asset limits (5 entries)
 
 ### Godot / GDScript
 - [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (12 entries)
