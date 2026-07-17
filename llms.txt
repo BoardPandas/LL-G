@@ -11,7 +11,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ## Technologies
 
 ### PowerShell
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (21 entries)
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (22 entries)
 
 ### React Router
 - [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
@@ -50,7 +50,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (36 entries)
 
 ### Graph API (Microsoft)
-- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (30 entries)
+- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (33 entries)
 
 ### Exchange Online
 - [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas: app-only cert connects but cmdlets 401 until role propagation, Get-Mailbox masks it as a GetResponseHeader error (1 entry)
@@ -95,7 +95,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (7 entries)
 
 ### SupportForge
-- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent heartbeat/executor pitfalls, plus platform patterns like the portal backend outpacing its UI (3 entries)
+- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent heartbeat/executor pitfalls, plus platform patterns like the portal backend outpacing its UI (4 entries)
 
 ### Tauri
 - [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
