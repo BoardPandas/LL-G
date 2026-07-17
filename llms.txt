@@ -95,7 +95,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (7 entries)
 
 ### SupportForge
-- [SupportForge index](kb/supportforge/llms.txt): SupportForge remote-agent gotchas: a box at sub-1% free disk reports "online" (Redis heartbeat) but its command executor is hung — one command per session then "Session not found" (2 entries)
+- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent heartbeat/executor pitfalls, plus platform patterns like the portal backend outpacing its UI (3 entries)
 
 ### Tauri
 - [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
