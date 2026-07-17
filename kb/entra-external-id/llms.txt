@@ -1,0 +1,11 @@
+# Entra External ID (CIAM) Gotchas
+
+> Known Microsoft Entra External ID (external tenant / CIAM) patterns that cause silent misconfiguration or hard-to-debug behavior. The workforce and external tenant admin UIs look nearly identical; always verify tenant context first.
+
+## Entries
+
+- [Workforce-tenant External Identities blade is a CIAM lookalike trap](workforce-blade-b2b-trap.md): The workforce blade shows "Configured" defaults in every tenant and configuring Google there opens B2B guest redemption into the production directory instead of adding customer sign-in. HIGH.
+- [No automatic account linking by email; same person becomes two accounts](no-auto-account-linking.md): email+password and Google sign-ins with the same address are separate user objects; link via the Graph identities array (local account is the anchor), and pre-link during Auth0 migrations using exported Google subject IDs. HIGH.
+- [Microsoft personal accounts are NOT a built-in IdP in external tenants](msa-not-builtin-idp.md): only Google/Facebook/Apple are built-in; MSA requires custom OIDC federation (consumers well-known endpoint, issuer login.live.com, multitenant+MSA app registration). MEDIUM.
+- [Custom OIDC provider icons can't be changed, and custom CSS is gone for new tenants](custom-oidc-icon-not-customizable.md): custom OIDC buttons get a fixed generic icon; the Company Branding custom-CSS workaround is unavailable for tenants created after 2026-01-05. MEDIUM.
+- [Company Branding image slots have strict size limits and confusing roles](branding-asset-limits.md): background max 1920x1080/300KB, banner 245x36 (this replaces the tenant-name text on the sign-in card, not the square logo), square 240x240/50KB, favicon 32x32/5KB. LOW.
