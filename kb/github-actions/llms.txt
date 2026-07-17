@@ -1,0 +1,7 @@
+# GitHub Actions Gotchas
+
+> Known GitHub Actions patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Azure Trusted Signing action: credentials go in with:, not env:](azure-trusted-signing-credentials.md): the action reads SP creds from its own inputs and clobbers step env:, so env-passed creds fail auth "not fully configured"; an empty signing secret surfaces as an opaque signtool SignerSign() failure. HIGH.
