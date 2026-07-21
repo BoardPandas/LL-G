@@ -113,7 +113,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React index](kb/react/llms.txt): React hooks and lifecycle gotchas (4 entries)
 
 ### Rust
-- [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, and Windows process-spawning gotchas: blocking std::fs on the Tokio executor; GUI-subsystem console-child window flashing (CREATE_NO_WINDOW); reqwest multipart masking connect/timeout errors as body errors; reqwest 0.13 TLS feature rename; cargo update silently holding a crate back when a newer version drops a required feature; rubato 4.0 API restructure and the process_all whole-clip contract; Double Metaphone code collisions requiring a string-similarity confirm guard; libsqlite3-sys 0.38 hidden MSRV (opaque E0658, toolchain 1.95+); eframe 0.34/0.35 App trait split + panel unification; egui companion-crate version lag; startup set_theme clobbering the persisted theme preference; CollapsingHeader controlled-open one-frame latch; ScrollArea::show_rows uniform-height assumption; join-on-drop JoinHandle deadlock via sender-holding field drop order (14 entries)
+- [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, and Windows process-spawning gotchas: blocking std::fs on the Tokio executor; GUI-subsystem console-child window flashing (CREATE_NO_WINDOW); reqwest multipart masking connect/timeout errors as body errors; reqwest 0.13 TLS feature rename; cargo update silently holding a crate back when a newer version drops a required feature; rubato 4.0 API restructure and the process_all whole-clip contract; Double Metaphone code collisions requiring a string-similarity confirm guard; libsqlite3-sys 0.38 hidden MSRV (opaque E0658, toolchain 1.95+); eframe 0.34/0.35 App trait split + panel unification; egui companion-crate version lag; startup set_theme clobbering the persisted theme preference; CollapsingHeader controlled-open one-frame latch; ScrollArea::show_rows uniform-height assumption; join-on-drop JoinHandle deadlock via sender-holding field drop order; mean-RMS silence gate over a padded audio window being utterance-length dependent; cargo check skipping test targets so breaking renames look clean (16 entries)
 
 ### SQLite
 - [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
@@ -149,7 +149,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Railway index](kb/railway/llms.txt): Railway platform gotchas: `railway ssh` host-key verification hangs in non-TTY shells (1 entry)
 
 ### Claude Code
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration gotchas: hooks, skill frontmatter, settings.json (4 entries)
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas: hooks, skill frontmatter, settings.json, sandboxed Bash failures imitating a missing system dependency (5 entries)
 
 ### Windows DNS
 - [Windows DNS index](kb/windows-dns/llms.txt): Windows / Active Directory DNS gotchas: Legacy-scope AD-integrated zones serve stale records on other DCs until forced reload (1 entry)
