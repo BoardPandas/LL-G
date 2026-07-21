@@ -119,7 +119,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
 
 ### Postgres
-- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL gotchas: boot-applied schema.sql not retrofitting constraints onto existing tables (2 entries)
+- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL and query gotchas: boot-applied schema.sql not retrofitting constraints onto existing tables; ORDER BY ... DESC defaulting to NULLS FIRST, silently inverting a boolean preference/tie-break over a nullable column (3 entries)
 
 ### M365 Admin Center
 - [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
