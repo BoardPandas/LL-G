@@ -50,7 +50,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (36 entries)
 
 ### Graph API (Microsoft)
-- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (33 entries)
+- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (34 entries)
 
 ### Exchange Online
 - [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas: app-only cert connects but cmdlets 401 until role propagation, Get-Mailbox masks it as a GetResponseHeader error (1 entry)
