@@ -1,0 +1,7 @@
+# Chrome Gotchas
+
+> Known Google Chrome / Chromium patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Pending Chrome update stalls service-worker apps (OWA) while other sites load fine](pending-update-relaunch.md): Chrome swaps its binaries on auto-update while still running, so until relaunch it cannot spawn service workers and OWA hangs on skeleton placeholders with no error, reading as a network/DNS/M365 fault. Check for two version folders and new_chrome.exe first, and cross-test in another browser. HIGH.
