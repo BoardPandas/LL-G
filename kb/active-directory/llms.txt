@@ -5,3 +5,4 @@
 ## Entries
 
 - [Multi-homed DC + stale DNS corrupts a newly promoted DC's local KDC (unrepairable)](multihomed-dc-corrupt-kdc.md): sc_verify OK but klist 0x52e = corrupt local KDC; fix DNS/single-home before dcpromo, else metadata-cleanup + rebuild. HIGH.
+- [OU names lie: never scope a risky GPO by OU without auditing what is actually in it](ou-names-lie-gpo-scoping.md): An OU called "Office Workstations" held live POS terminals while a third of the active fleet sat in the un-linkable CN=Computers container, so the obvious OU link both missed its targets and hit the machines it was meant to spare; use an include-group filter, keep Authenticated Users at Read (MS16-072), and remember computer group membership needs a reboot not a gpupdate. HIGH.
