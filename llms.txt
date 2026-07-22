@@ -35,7 +35,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas: a process-global stdio server (state built from process.env) must be spawned one child per session in a multi-tenant host or it leaks tenant data; partial credential updates wipe OAuth-captured hidden keys (2 entries)
 
 ### Tailwind CSS
-- [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (7 entries)
+- [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (8 entries)
 
 ### CSS
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (3 entries)
