@@ -47,7 +47,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [QuickBooks index](kb/quickbooks/llms.txt): QuickBooks Online OAuth integration gotchas: production apps reject http://localhost redirect URIs (host the callback on a public HTTPS origin); authorize/token endpoints are identical for sandbox and production and realmId arrives as a callback query param, not in the token response (2 entries)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (36 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (37 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (34 entries)
