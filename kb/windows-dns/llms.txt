@@ -5,3 +5,4 @@
 ## Entries
 
 - [Legacy-scope AD-integrated DNS zone serves stale records on other DCs until forced reload](legacy-zone-stale-secondary-dc.md): A record added on one DC returns NXDOMAIN on other DCs (repadmin shows success) because the Legacy-scope zone's DNS service only re-reads AD on its ~180s poll; fix with `dnscmd /ZoneUpdateFromDs`. MEDIUM.
+- [Aging without scavenging fills the AD zone root and silently breaks DC location](zone-root-aging-no-scavenging.md): Aging stamps dynamic records but only scavenging deletes them, so client registrations pile up at the zone root until the bare domain resolves to 100+ addresses and DC location becomes a coin flip; fingerprint is recurring NETLOGON 5719 plus unattributable site-wide intermittent slowness. HIGH.
