@@ -1,0 +1,7 @@
+# Zod Gotchas
+
+> Known Zod schema patterns that reject valid requests or accept invalid ones. Load all HIGH entries before writing validation at an API boundary.
+
+## Entries
+
+- [.passthrough() allows unknown KEYS, not unknown ENUM VALUES](passthrough-does-not-relax-enums.md): A permissive-looking .passthrough() body schema still rejects a newly supported `op` value on a declared key, so the route handler never runs and the client gets a generic 400; widen the enum in the same change as the handler. MEDIUM.
