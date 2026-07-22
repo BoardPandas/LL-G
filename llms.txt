@@ -47,7 +47,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [QuickBooks index](kb/quickbooks/llms.txt): QuickBooks Online OAuth integration gotchas: production apps reject http://localhost redirect URIs (host the callback on a public HTTPS origin); authorize/token endpoints are identical for sandbox and production and realmId arrives as a callback query param, not in the token response (2 entries)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (37 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (39 entries)
+
+### Biome
+- [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas: the useOptionalChain autofix is not behavior-preserving (`a && a.b` keeps a falsy receiver, `a?.b` yields undefined); a repo-wide reformat reflows enough lines to break an unrelated line-count CI gate (2 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (34 entries)
@@ -149,7 +152,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Railway index](kb/railway/llms.txt): Railway platform gotchas: `railway ssh` host-key verification hangs in non-TTY shells (1 entry)
 
 ### Claude Code
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas: hooks, skill frontmatter, settings.json, sandboxed Bash failures imitating a missing system dependency (5 entries)
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas: hooks, skill frontmatter, settings.json, sandboxed Bash failures imitating a missing system dependency, worktree-isolated subagents silently working against stale content, scripted bulk edits landing on the wrong occurrence (7 entries)
 
 ### Windows DNS
 - [Windows DNS index](kb/windows-dns/llms.txt): Windows / Active Directory DNS gotchas: Legacy-scope AD-integrated zones serve stale records on other DCs until forced reload (1 entry)
