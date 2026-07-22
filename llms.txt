@@ -143,7 +143,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [UniFi index](kb/unifi/llms.txt): Ubiquiti UniFi Site Manager API coverage gotchas (1 entry)
 
 ### Northflank
-- [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, the Postgres addon app role can't run DDL, and deleting a "CI-only" secret from an unrestricted secret group silently disables the runtime feature that also reads it (8 entries)
+- [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, the Postgres addon app role can't run DDL, deleting a "CI-only" secret from an unrestricted secret group silently disables the runtime feature that also reads it, and a key pinned at the service level silently shadows the secret group so clearing it from the group never reaches the container (9 entries)
 
 ### Railway
 - [Railway index](kb/railway/llms.txt): Railway platform gotchas: `railway ssh` host-key verification hangs in non-TTY shells (1 entry)
