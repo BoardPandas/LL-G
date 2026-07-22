@@ -1,0 +1,8 @@
+# Biome Gotchas
+
+> Known Biome (linter + formatter) patterns that cause silent behavior changes or break unrelated gates. Biome's "unsafe" autofixes are not uniformly behavior-preserving; run them one rule at a time.
+
+## Entries
+
+- [Biome's useOptionalChain autofix is not behavior-preserving: `a && a.b` is not `a?.b`](use-optional-chain-not-behavior-preserving.md): `a && a.b` short-circuits on any FALSY receiver and evaluates to that receiver (`""`, `0`, `false`); `a?.b` short-circuits only on nullish and always yields `undefined`, so `null` becomes `undefined` too. Invisible where the result is read for truthiness, live where it is assigned, returned, interpolated, or `===`-compared. Never include it in a blanket `--write --unsafe`; classify sites by how the result is consumed, then apply with `--only`. HIGH.
+- [A repo-wide formatter run reflows enough lines to break an unrelated CI gate](mass-format-breaks-line-count-gate.md): When the configured `indentStyle` disagrees with how a subtree was written, `lint:fix` is a rewrite, not a touch-up -- 948 files, +99k/-62k -- and tab conversion plus import re-wrapping pushed 42 files past a hard 500-line cap enforced as a fail-fast CI step, from a change containing no logic. Measure the blast radius and record every count-based gate's state first, and exclude vendored/generated files from the formatter's scope before running it. MEDIUM.
