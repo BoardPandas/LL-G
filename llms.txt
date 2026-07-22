@@ -65,7 +65,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (12 entries)
 
 ### Better Auth
-- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (24 entries)
+- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (25 entries)
 
 ### Hono
 - [Hono index](kb/hono/llms.txt): Hono routing and middleware gotchas (1 entry)
