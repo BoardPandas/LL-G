@@ -37,6 +37,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (8 entries)
 
+### Base UI
+- [Base UI index](kb/base-ui/llms.txt): Base UI (@base-ui-components/react) gotchas: rc.0 imports from @base-ui-components/react, not the renamed @base-ui/react the docs already show — copied imports fail to resolve; verify parts/props from the installed types (1 entry)
+
 ### CSS
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (3 entries)
 
