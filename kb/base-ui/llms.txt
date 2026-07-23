@@ -1,0 +1,7 @@
+# Base UI Gotchas
+
+> Known Base UI (@base-ui-components/react) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Base UI rc.0 imports from `@base-ui-components/react`, not the renamed `@base-ui/react` the docs show](package-rename-import-path.md): the docs already reference the post-rc.0 package rename, so a copied import fails to resolve; use `@base-ui-components/react/<component>` and verify parts/props from the installed types. HIGH.
