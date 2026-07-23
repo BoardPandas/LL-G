@@ -6,3 +6,4 @@
 
 - [git ls-files can't see untracked files](git-ls-files-blind-spot.md): Lint/check guards that enumerate via `git ls-files` skip new unstaged files and report a false green. MEDIUM.
 - [Concurrent agents on one working tree: isolate your commit in a worktree](concurrent-shared-tree-worktree.md): A parallel session's stash/pull/rebase silently reverts your uncommitted edits and resets the index; recover via an out-of-repo backup patch + an isolated worktree cherry-pick of only your SHAs, and stage by explicit path (never `git add -A`). HIGH.
+- [`git clone --branch <ref>` rejects a commit SHA (silent under set -e)](clone-branch-rejects-sha.md): `--branch` takes only a branch/tag name, so pinning to a bare SHA fails exit 128; with the clone redirected to /dev/null under `set -e` the script dies silently. Use `git init` + `fetch --depth 1 origin <ref>` + `checkout FETCH_HEAD`, which resolves branch/tag/SHA alike, and never hide fetch stderr. MEDIUM.
