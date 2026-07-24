@@ -1,0 +1,7 @@
+# Jonas Gotchas
+
+> Known Jonas Club Management / Jonas Activity Management (JAM) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [JAM users provision from Club Management via a manual sync, and a full seat cap greys out New silently](jam-user-provisioning.md): JAM users are created in Club Management and pulled across by a manual gear import on System Administration > Integration, never in JAM itself; a full active-user seat cap greys out New/Delete with no error and imitates a permissions problem. HIGH.
