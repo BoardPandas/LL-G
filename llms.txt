@@ -194,3 +194,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [GitHub Actions index](kb/github-actions/llms.txt): CI workflow gotchas: the Azure Trusted Signing action reads service-principal creds from its own inputs (not step env:, which it clobbers) and an empty signing secret surfaces as an opaque signtool SignerSign() failure (1 entry)
 ### Zod
 - [Zod index](kb/zod/llms.txt): Zod schema-validation gotchas: .passthrough() relaxes unknown KEYS only, so a declared z.enum still rejects a newly supported value and the route handler never runs behind a generic 400 (1 entry)
+
+### Jonas
+- [Jonas index](kb/jonas/llms.txt): Jonas Club Management / Activity Management (JAM) gotchas: JAM users are provisioned in Club Management and pulled across by a manual gear import, never created in JAM, and a full active-user seat cap greys out New/Delete with no error message (1 entry)
