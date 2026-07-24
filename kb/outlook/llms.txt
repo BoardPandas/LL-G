@@ -1,0 +1,7 @@
+# Outlook Gotchas
+
+> Known Outlook data-format and client patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Parsing the Outlook AutoComplete (RoamCache) stream without NK2Edit](roamcache-autocomplete-stream-format.md): The nickname cache is a binary mailbox stream (Stream_Autocomplete_*.dat), not .NK2; header magic 0xBAADF00D, per-property layout [tag 4][reserved 4][field 8][cb 4][UTF-16 incl null], with the propIds for name / SMTP / routing. MEDIUM.
