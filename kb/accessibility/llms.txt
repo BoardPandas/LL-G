@@ -1,0 +1,9 @@
+# Accessibility Gotchas
+
+> Known accessibility patterns that cause silent failures: contracts declared but not
+> enforced, and states that vanish for users who are not on the default palette.
+
+## Entries
+
+- [`aria-modal="true"` is a promise your code must keep, and a Tab trap does not keep it](aria-modal-needs-inert-not-tab-trap.md): The attribute changes no behaviour -- it only tells assistive tech the background is unreachable -- so a scrim dialog without enforcement actively lies to a screen reader. The usual fix is worse than it looks: a JS Tab trap handles Tab but leaves the background in the accessibility tree, so the virtual cursor still browses it. Use `inert` on the background, refcount it for stacked overlays, and add a force-release valve if dialogs can outlive their opener. HIGH.
+- [Windows High Contrast drops your backgrounds, so any state carried by a tint vanishes](forced-colors-drops-background-state.md): In `forced-colors: active` the OS discards background fills (and box-shadow, and alpha borders), so active nav, selected tiles, focus rings, and status pills become invisible rather than restyled -- silently, since nobody outside High Contrast ever sees it. Re-express each state with an outline/border/system colour instead of restoring your palette, and drop scrims, which paint as an opaque block over the dialog. MEDIUM.
