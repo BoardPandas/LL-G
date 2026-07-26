@@ -44,7 +44,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Base UI index](kb/base-ui/llms.txt): Base UI (@base-ui-components/react) gotchas: rc.0 imports from @base-ui-components/react, not the renamed @base-ui/react the docs already show — copied imports fail to resolve; verify parts/props from the installed types (1 entry)
 
 ### CSS
-- [CSS index](kb/css/llms.txt): CSS rendering gotchas, especially @font-face in iframes (3 entries)
+- [CSS index](kb/css/llms.txt): CSS rendering gotchas: @font-face never renders in iframes; runtime-injected sheets resolve equal specificity by load order; a canvas preview must mirror drawImage rather than object-fit:cover; a global `zoom` scale is media-gated so phone CSS is in real px and a `:where()` touch-target floor enforces nothing (4 entries)
 
 ### Data Viz
 - [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas: one shared divisor across mixed-scale metrics silently clamps the larger-scale ones (1 entry)
