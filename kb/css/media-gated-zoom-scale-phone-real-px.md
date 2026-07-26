@@ -109,14 +109,11 @@ console.log(r.width, r.height, getComputedStyle(document.documentElement)
   `min-height` term. Watch for the same guard being spelled with two different
   height thresholds in different files -- document the divergence rather than
   "unifying" it blind, since the two gate different things.
-- **Compounding trap: a `:where()` "guarantee" enforces nothing.**
-  `@media (pointer: coarse) { :where(button, [role="button"], .tab) { min-height: 44px } }`
-  reads as a global floor, but `:where()` contributes zero specificity, so the
-  whole selector sits at (0,0,1) and ANY class rule (0,1,0) overrides it. It is
-  a floor only for elements no other rule sizes. Use `:where()` when a rule
-  *should* yield (a UA-chrome reset that must lose to component classes); never
-  for a minimum you intend to hold. Audit what currently slips under one before
-  trusting it.
+- **Compounding trap: the `@media (pointer: coarse)` net that appears to floor
+  touch targets is usually written with `:where()` and enforces nothing.** Full
+  writeup: [`:where()` contributes ZERO specificity, so a rule written with it
+  guarantees nothing](where-zero-specificity-guarantees-nothing.md). Check the
+  guard before citing it as the reason a small target is acceptable.
 - **Both halves of this failure are "already handled" claims.** When a size
   looks too small and someone explains why it is secretly fine, measure the
   rendered box before accepting the explanation. Two plausible mitigations were
