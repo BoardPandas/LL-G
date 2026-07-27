@@ -5,3 +5,4 @@
 ## Entries
 
 - [Azure Trusted Signing action: credentials go in with:, not env:](azure-trusted-signing-credentials.md): the action reads SP creds from its own inputs and clobbers step env:, so env-passed creds fail auth "not fully configured"; an empty signing secret surfaces as an opaque signtool SignerSign() failure. HIGH.
+- [Adding a tag trigger changes the OIDC subject and breaks Azure signing](tag-trigger-breaks-azure-oidc.md): the OIDC subject claim follows the trigger, so adding `on: push: tags:` presents `ref:refs/tags/*` instead of `ref:refs/heads/main` and no federated credential matches (AADSTS700213); pin the job to a GitHub Environment so the subject stops tracking the ref. HIGH.
