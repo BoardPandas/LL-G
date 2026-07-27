@@ -26,7 +26,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Express index](kb/express/llms.txt): All Express (Node.js) gotchas (3 entries)
 
 ### Node.js
-- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (3 entries)
+- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (4 entries)
 
 ### pnpm
 - [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker gotchas: legacy bundled types fail tsc under the symlinked store + nodenext; npm install in a pnpm repo leaves stale physical packages that shadow pnpm's versions until a full node_modules wipe (2 entries)
