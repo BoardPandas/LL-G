@@ -29,7 +29,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (4 entries)
 
 ### pnpm
-- [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker gotchas: legacy bundled types fail tsc under the symlinked store + nodenext; npm install in a pnpm repo leaves stale physical packages that shadow pnpm's versions until a full node_modules wipe (2 entries)
+- [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas: legacy bundled types fail tsc under the symlinked store + nodenext; npm install in a pnpm repo leaves stale physical packages that shadow pnpm's versions until a full node_modules wipe; pnpm v11 silently ignores package.json `pnpm.overrides` (they moved to pnpm-workspace.yaml) and DOES re-resolve range overrides, unlike v10 (3 entries)
 
 ### LLM Integration
 - [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang (1 entry)
