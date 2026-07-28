@@ -164,7 +164,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Railway index](kb/railway/llms.txt): Railway platform gotchas: `railway ssh` host-key verification hangs in non-TTY shells (1 entry)
 
 ### Claude Code
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas: hooks, skill frontmatter, settings.json, sandboxed Bash failures imitating a missing system dependency, worktree-isolated subagents silently working against stale content, scripted bulk edits landing on the wrong occurrence (8 entries)
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas: hooks, skill frontmatter, settings.json, sandboxed Bash failures imitating a missing system dependency, worktree-isolated subagents silently working against stale content, scripted bulk edits landing on the wrong occurrence (10 entries)
 
 ### Windows DNS
 - [Windows DNS index](kb/windows-dns/llms.txt): Windows / Active Directory DNS gotchas: Legacy-scope AD-integrated zones serve stale records on other DCs until forced reload; aging enabled without scavenging lets client registrations pile up at the zone root until the bare domain resolves to 100+ addresses and DC location becomes a coin flip (NETLOGON 5719) (2 entries)
