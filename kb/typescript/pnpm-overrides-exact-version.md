@@ -1,12 +1,14 @@
 ---
-name: pnpm overrides need an exact version to force re-resolution
-description: Range-style pnpm overrides do not force re-resolution in pnpm v10. A vulnerable transitive dep stays locked on the bad version unless the override pins to an exact version.
+name: pnpm overrides need an exact version to force re-resolution (pnpm v10 only)
+description: On pnpm v10, range-style overrides do not force re-resolution -- a vulnerable transitive stays locked on the bad version unless the override pins to an exact version. Does NOT apply to pnpm v11, where ranges DO re-resolve and overrides live in pnpm-workspace.yaml; check `pnpm --version` first.
 type: gotcha
 tech: typescript
-tags: [pnpm, dependencies, security, vite, lockfile]
+tags: [pnpm, dependencies, security, vite, lockfile, pnpm-v10]
 severity: high
 ---
-# pnpm overrides need an exact version to force re-resolution
+# pnpm overrides need an exact version to force re-resolution (pnpm v10 only)
+
+> **Version scope: pnpm v10.** On **pnpm v11 this entry does not apply** -- range overrides DO force re-resolution, and overrides moved out of package.json into `pnpm-workspace.yaml` (a `pnpm.overrides` block there is silently ignored). Run `pnpm --version` before applying any of the below, and see [../pnpm/v11-overrides-workspace-yaml-and-ranges.md](../pnpm/v11-overrides-workspace-yaml-and-ranges.md) for v11.
 
 ## PROBLEM
 
@@ -47,5 +49,7 @@ Then run `rm pnpm-lock.yaml && pnpm install` to regenerate the lockfile. Verify 
 ## NOTES
 
 Verified on pnpm 10.33.2 against vitest 4.1.5 (peer-dep `vite >=8.0.5`).
+
+**Superseded on pnpm v11** by [../pnpm/v11-overrides-workspace-yaml-and-ranges.md](../pnpm/v11-overrides-workspace-yaml-and-ranges.md): v11 reads overrides only from `pnpm-workspace.yaml` (package.json's `pnpm.overrides` is silently ignored -- install succeeds, lockfile unchanged), and range overrides there DO force re-resolution. Applying this entry's advice on v11 wastes time in exactly the wrong place, because the symptom (override appears not to take) is identical while the cause is the ignored file.
 
 Tradeoff: exact pinning means you have to bump it manually when patches roll. That is acceptable for security-driven overrides; for ergonomics-driven overrides reconsider whether to override at all rather than committing to manual bumps.
