@@ -149,7 +149,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Hyper-V index](kb/hyper-v/llms.txt): Hyper-V virtualization gotchas: Dynamic Memory's Startup RAM (not Minimum) is the host's boot-time allocation, so a VM still fails to start (event 3122) if Startup is left high (1 entry)
 
 ### Architecture
-- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift (7 entries)
+- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift (8 entries)
 
 ### Cisco Meraki
 - [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (4 entries)
