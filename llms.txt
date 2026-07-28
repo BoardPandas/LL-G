@@ -83,7 +83,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Bash index](kb/bash/llms.txt): All bash shell gotchas (6 entries)
 
 ### Git
-- [Git index](kb/git/llms.txt): Git tooling gotchas: `git ls-files`-based check guards skip untracked files (false green); concurrent agents sharing one working tree silently revert your uncommitted edits, so isolate your commit in a worktree; `git clone --branch` rejects a bare commit SHA (exit 128) and dies silently under set -e, use init+fetch+checkout FETCH_HEAD; a hook tracked as mode 100644 is silently skipped so the guard never runs on any clone (4 entries)
+- [Git index](kb/git/llms.txt): Git tooling gotchas: `git ls-files`-based check guards skip untracked files (false green); concurrent agents sharing one working tree silently revert your uncommitted edits, so isolate your commit in a worktree; `git clone --branch` rejects a bare commit SHA (exit 128) and dies silently under set -e, use init+fetch+checkout FETCH_HEAD; a hook tracked as mode 100644 is silently skipped so the guard never runs on any clone; a hand-assigned version read at task start goes stale mid-session, and a duplicate version can merge cleanly with no error (5 entries)
 
 ### Linux
 - [Linux index](kb/linux/llms.txt): Linux server ops gotchas: systemd service management, daemon restart policies, package-update restart races (2 entries)
