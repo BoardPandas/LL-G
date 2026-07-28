@@ -35,7 +35,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang (1 entry)
 
 ### MCP (Model Context Protocol)
-- [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas: a process-global stdio server (state built from process.env) must be spawned one child per session in a multi-tenant host or it leaks tenant data; partial credential updates wipe OAuth-captured hidden keys; a tool missing from the host manifest is NOT a missing capability -- the route it wraps usually still accepts X-API-Key (3 entries)
+- [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas: a process-global stdio server (state built from process.env) must be spawned one child per session in a multi-tenant host or it leaks tenant data; partial credential updates wipe OAuth-captured hidden keys; a tool can be defined+deployed yet never named in the tools/list the server advertises, so grepping the source is a false negative -- and the route it wraps usually still accepts X-API-Key (3 entries)
 
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (8 entries)
