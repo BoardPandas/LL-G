@@ -92,7 +92,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
 
 ### Windows
-- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas: disk-full remediation (Installer orphan cleanup with all-orphan guard, read-only attribute silently blocking deletes, DISM 0x800f080a pending-servicing, OneDrive placeholder size inflation; Dell SupportAssist SARemediation snapshot bloat + unbounded VSS; DeviceMetadataRetrievalClient dllhost CPU spin fixed by disabling DsmSvc) (9 entries)
+- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas: disk-full remediation (Installer orphan cleanup with all-orphan guard, read-only attribute silently blocking deletes, DISM 0x800f080a pending-servicing, OneDrive placeholder size inflation; Dell SupportAssist SARemediation snapshot bloat + unbounded VSS; DeviceMetadataRetrievalClient dllhost CPU spin fixed by disabling DsmSvc) (10 entries)
 
 ### Chrome
 - [Chrome index](kb/chrome/llms.txt): Google Chrome / Chromium gotchas: a staged-but-not-relaunched auto-update leaves the running instance unable to spawn service workers, so OWA hangs on skeleton placeholders while other sites load fine and it reads as a network/DNS/M365 fault (1 entry)
@@ -110,7 +110,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (7 entries)
 
 ### SupportForge
-- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent heartbeat/executor pitfalls, ticket-API defaults that silently return the wrong rows (solved tickets in open queues, oldest-first message truncation, id-vs-MSP-number collisions), plus platform patterns like the portal backend outpacing its UI and dual-keyed ticket aggregates that undercount when scoped by a single key (8 entries)
+- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent heartbeat/executor pitfalls, ticket-API defaults that silently return the wrong rows (solved tickets in open queues, oldest-first message truncation, id-vs-MSP-number collisions), plus platform patterns like the portal backend outpacing its UI and dual-keyed ticket aggregates that undercount when scoped by a single key (9 entries)
 
 ### Tauri
 - [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
@@ -164,7 +164,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Railway index](kb/railway/llms.txt): Railway platform gotchas: `railway ssh` host-key verification hangs in non-TTY shells (1 entry)
 
 ### Claude Code
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas: hooks, skill frontmatter, settings.json, sandboxed Bash failures imitating a missing system dependency, worktree-isolated subagents silently working against stale content, scripted bulk edits landing on the wrong occurrence (7 entries)
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas: hooks, skill frontmatter, settings.json, sandboxed Bash failures imitating a missing system dependency, worktree-isolated subagents silently working against stale content, scripted bulk edits landing on the wrong occurrence (8 entries)
 
 ### Windows DNS
 - [Windows DNS index](kb/windows-dns/llms.txt): Windows / Active Directory DNS gotchas: Legacy-scope AD-integrated zones serve stale records on other DCs until forced reload; aging enabled without scavenging lets client registrations pile up at the zone root until the bare domain resolves to 100+ addresses and DC location becomes a coin flip (NETLOGON 5719) (2 entries)
