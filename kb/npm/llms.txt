@@ -1,0 +1,7 @@
+# npm Gotchas
+
+> Known npm patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [`npm run <script> --workspaces` runs alphabetically, not in dependency order](run-workspaces-not-topological.md): npm topologically sorts installs but NOT script runs, so a workspace that imports a sibling's build output can build before it exists (`Module not found` on a package in the same repo). Invisible locally because `dist/`/`.next/` are gitignored and persist from earlier runs -- every local build reads stale artifacts and passes, so it only fails on a clean tree (CI, fresh clone, Docker), and a repo whose image builds via a Dockerfile with its own ordering can ship for months while the root `build` script has never worked. Split into explicit dependency-first stages and verify after deleting build output. HIGH.
