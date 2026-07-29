@@ -28,6 +28,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Node.js
 - [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (5 entries)
 
+### npm
+- [npm index](kb/npm/llms.txt): npm workspace gotchas: `npm run <script> --workspaces` is alphabetical, not topological, so a workspace can build before the sibling it imports -- and gitignored `dist/` makes it pass locally while failing on every clean checkout (1 entry)
+
 ### pnpm
 - [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas: legacy bundled types fail tsc under the symlinked store + nodenext; npm install in a pnpm repo leaves stale physical packages that shadow pnpm's versions until a full node_modules wipe; pnpm v11 silently ignores package.json `pnpm.overrides` (they moved to pnpm-workspace.yaml) and DOES re-resolve range overrides, unlike v10; the `--` that npm needs to pass flags through `run` is what breaks pass-through in pnpm, turning the flag into a positional argument (4 entries)
 
