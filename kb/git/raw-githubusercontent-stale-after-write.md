@@ -36,7 +36,7 @@ gh api "repos/BoardPandas/LL-G/commits?path=kb/x/y.md&per_page=5" \
 
 ## NOTES
 
-- **If your PUT returned a URL, it landed.** `kb-upsert.sh` reads the blob SHA immediately before the PUT, so a genuine concurrent write fails the request with a 409 rather than silently overwriting. A successful response plus a "missing" raw read means the raw read is wrong, not the write.
+- **If your PUT returned a URL, it landed -- but that does not mean nothing was lost.** A 200 plus a "missing" raw read means the raw read is wrong. It says nothing about whether your write discarded someone else's: a helper that refreshes the blob SHA immediately before the PUT overwrites any concurrent write and still returns 200. That is a separate and more damaging bug -- see `github-contents-sha-refresh-defeats-cas.md`. This entry's original text claimed such a helper would 409; it does not, and that claim cost a real index line.
 - The commit log for the path is the cheapest ground truth: your SHA is either in it or it is not. Diffing content against a CDN cannot distinguish "not written" from "not yet propagated".
 - The same staleness applies on the **read** side at session start. A `curl` of `kb/<tech>/llms.txt` may serve an index minutes old, so an entry appended earlier in the session can appear absent. Re-fetch via `gh api` before deciding an entry is missing and writing a duplicate.
 - Generalises beyond this KB workflow: any write-then-verify loop against GitHub (docs sites, config repos, release manifests) needs the verify step pointed at the API, not the CDN.
