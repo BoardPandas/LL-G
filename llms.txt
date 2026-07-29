@@ -71,7 +71,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas: workforce-blade lookalike trap, no email account-linking, MSA via custom OIDC only, fixed custom-IdP icons, branding asset limits (5 entries)
 
 ### Godot / GDScript
-- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (12 entries)
+- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (11 entries)
 
 ### Better Auth
 - [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (26 entries)
@@ -200,3 +200,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Jonas
 - [Jonas index](kb/jonas/llms.txt): Jonas Club Management / Activity Management (JAM) gotchas: JAM users are provisioned in Club Management and pulled across by a manual gear import, never created in JAM, and a full active-user seat cap greys out New/Delete with no error message (1 entry)
+
+### npm
+- [npm index](kb/npm/llms.txt): npm workspace gotchas: `npm run <script> --workspaces` runs alphabetically, not in dependency order (npm sorts installs topologically but not script runs), so a workspace importing a sibling's build output can build before it exists; gitignored `dist/` surviving from earlier local runs hides it until a clean tree (CI, fresh clone, Docker) (1 entry)
