@@ -11,7 +11,15 @@ As of mid-2026 Lumen tightened the Internet On-Demand qualify endpoint
 by bare `masterSiteId` now returns `422 {"reason":"Not a NaaS Enabled Location",
 "code":"INVALIDVALUE","propertyPath":"masterSiteId"}`. The location IS still
 NaaS-enabled — the endpoint just can no longer resolve a customer-port location
-without the circuit identifier. This breaks the pricing-refresh sweep AND the IoD
+without the circuit identifier.
+
+> **If you are already sending `serviceId` and still get this 422, stop here.**
+> The same error is also returned provider-wide while Lumen is faulting, for
+> locations that are perfectly fine — see
+> [qualify-not-naas-transient.md](qualify-not-naas-transient.md). Do not go
+> hunting for a parameter fix, and do not treat it as terminal on first sight.
+> This entry covers only the case where the request is genuinely missing
+> `serviceId`. This breaks the pricing-refresh sweep AND the IoD
 bandwidth-change flow (qualify → quote → order) for customer-port circuits, while
 data-center circuits (still resolvable by masterSiteId alone) keep working. Lumen
 changed runtime behavior silently — there is no "What's New" entry, so it reads as
@@ -54,6 +62,11 @@ await lumenFetch("/Product/v1/price", {
 - No data-center circuit was available to confirm the `partnerId`-on-qualify path;
   combined with the sibling entry (partnerId 422s on qualify), the safe rule is
   **always send serviceId, never send partnerId** to qualify.
+- **Sending `serviceId` does not make this error terminal.** Adding it fixes the
+  cause documented here; it does not fix (and cannot detect) the transient
+  provider-wide variant. Callers on an ordering path should still retry a bounded
+  number of times before failing — see
+  [qualify-not-naas-transient.md](qualify-not-naas-transient.md).
 - Fixed in Vigilis 2.103.0: `qualifyService` (src/lib/integrations/lumen/bandwidth.ts),
   `QualifyParams.serviceId` (types.ts), callers refresh-pricing.ts and
   worker/bandwidth-submit.ts (submitInternet).
