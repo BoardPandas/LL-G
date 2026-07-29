@@ -6,4 +6,5 @@
 
 - [Price-qualify endpoint rejects partnerId alongside masterSiteId](price-qualify-partnerid-422.md): /Product/v1/price 422s if partnerId is sent with masterSiteId; partnerId belongs on the quote step, not qualify. HIGH.
 - [Lumen qualify (/Product/v1/price) requires serviceId for customer-port circuits](qualify-serviceid-customer-port.md): a customer-port circuit qualified by bare masterSiteId now 422s "Not a NaaS Enabled Location"; send masterSiteId + serviceId (never partnerId). Supersedes the "qualify location-only" guidance. HIGH.
+- ["Not a NaaS Enabled Location" is also a transient provider-wide fault](qualify-not-naas-transient.md): the same 422 is returned for everything while Lumen faults, so it must be retried before it is believed; failing on sight blames a healthy site and trips downstream breakers. HIGH.
 - [EoD EVC bandwidth modify (PATCH /evcs) works only on UNI-to-UNI connections](eod-evc-modify-uni-uni-only.md): every cloud-connect EVC (aws, azure, google, oracle, equinix-data-center, dlr-data-center) 400s "Bandwidth modify is not allowed for <cloudProvider>"; gate app-side per provider family, delete + recreate is the only path. HIGH.
