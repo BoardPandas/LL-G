@@ -107,7 +107,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas: postgres:18 rejects the classic /var/lib/postgresql/data mount; `docker compose exec -T` drains an ssh heredoc's stdin and silently skips later commands (2 entries)
 
 ### NinjaOne
-- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (7 entries)
+- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (8 entries)
 
 ### SupportForge
 - [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent heartbeat/executor pitfalls, ticket-API defaults that silently return the wrong rows (solved tickets in open queues, oldest-first message truncation, id-vs-MSP-number collisions), plus platform patterns like the portal backend outpacing its UI and dual-keyed ticket aggregates that undercount when scoped by a single key (9 entries)
