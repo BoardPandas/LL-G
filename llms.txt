@@ -65,7 +65,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (40 entries)
 
 ### Exchange Online
-- [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas: app-only cert connects but cmdlets 401 until role propagation, Get-Mailbox masks it as a GetResponseHeader error (1 entry)
+- [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas: app-only cert connects but cmdlets 401 until role propagation, Get-Mailbox masks it as a GetResponseHeader error; Get-InboxRule returns a literal $null rather than an empty collection so @(...).Count is 1 on a mailbox with zero rules, which in compromised-account triage either invents a phantom rule or reports a mailbox holding a real malicious one as CLEAN (2 entries)
 
 ### Entra External ID (CIAM)
 - [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas: workforce-blade lookalike trap, no email account-linking, MSA via custom OIDC only, fixed custom-IdP icons, branding asset limits (5 entries)
