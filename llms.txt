@@ -26,7 +26,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Express index](kb/express/llms.txt): All Express (Node.js) gotchas (3 entries)
 
 ### Node.js
-- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (9 entries)
+- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (10 entries)
 
 ### pnpm
 - [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas: legacy bundled types fail tsc under the symlinked store + nodenext; npm install in a pnpm repo leaves stale physical packages that shadow pnpm's versions until a full node_modules wipe; pnpm v11 silently ignores package.json `pnpm.overrides` (they moved to pnpm-workspace.yaml) and DOES re-resolve range overrides, unlike v10; the `--` that npm needs to pass flags through `run` is what breaks pass-through in pnpm, turning the flag into a positional argument (4 entries)
