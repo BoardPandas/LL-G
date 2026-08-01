@@ -194,7 +194,8 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React Native index](kb/react-native/llms.txt): React Native + Expo gotchas: TanStack Query interval polling never pauses in the background unless focusManager is wired to AppState; nesting a VirtualizedList in a ScrollView warns and defeats windowing (2 entries)
 
 ### GitHub Actions
-- [GitHub Actions index](kb/github-actions/llms.txt): CI workflow gotchas: the Azure Trusted Signing action reads service-principal creds from its own inputs (not step env:, which it clobbers), and adding a tag trigger changes the OIDC subject claim so no federated identity credential matches (AADSTS700213) (2 entries)
+- [GitHub Actions index](kb/github-actions/llms.txt): CI workflow gotchas: the Azure Trusted Signing action reads service-principal creds from its own inputs (not step env:, which it clobbers); adding a tag trigger changes the OIDC subject claim so no federated identity credential matches (AADSTS700213); and a tag-triggered release workflow that is independent of CI builds, signs and publishes on a commit whose tests are failing while reporting green, with `workflow_run` unable to gate it (CI has no tag trigger, and the job loses the tag to default-branch context) so the checks belong inline in the release job (3 entries)
+
 ### Zod
 - [Zod index](kb/zod/llms.txt): Zod schema-validation gotchas: .passthrough() relaxes unknown KEYS only, so a declared z.enum still rejects a newly supported value and the route handler never runs behind a generic 400 (1 entry)
 
