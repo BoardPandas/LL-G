@@ -55,6 +55,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### QuickBooks Online (Intuit)
 - [QuickBooks index](kb/quickbooks/llms.txt): QuickBooks Online OAuth integration gotchas: production apps reject http://localhost redirect URIs (host the callback on a public HTTPS origin); authorize/token endpoints are identical for sandbox and production and realmId arrives as a callback query param, not in the token response (2 entries)
 
+### Stripe
+- [Stripe index](kb/stripe/llms.txt): Stripe Connect billing gotchas: stored catalog product and price IDs can belong to a previous connected account, so validate and repair ownership through the current account and make customer/subscription retries idempotent (1 entry)
+
 ### TypeScript
 - [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (44 entries)
 
