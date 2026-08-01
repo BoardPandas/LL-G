@@ -56,7 +56,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [QuickBooks index](kb/quickbooks/llms.txt): QuickBooks Online OAuth integration gotchas: production apps reject http://localhost redirect URIs (host the callback on a public HTTPS origin); authorize/token endpoints are identical for sandbox and production and realmId arrives as a callback query param, not in the token response (2 entries)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (43 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (44 entries)
 
 ### Biome
 - [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas: the useOptionalChain autofix is not behavior-preserving (`a && a.b` keeps a falsy receiver, `a?.b` yields undefined); a repo-wide reformat reflows enough lines to break an unrelated line-count CI gate (2 entries)
