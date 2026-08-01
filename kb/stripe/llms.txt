@@ -1,0 +1,7 @@
+# Stripe Gotchas
+
+> Known Stripe and Stripe Connect patterns that cause hard-to-debug billing failures.
+
+## Entries
+
+- [Catalog Stripe IDs do not prove Connect account ownership](catalog-ids-do-not-prove-connect-account-ownership.md): Stored product and price IDs can belong to a previous connected account; validate and repair them through the current account, and make customer/subscription retries idempotent. MEDIUM.
