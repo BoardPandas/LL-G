@@ -62,10 +62,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas: the useOptionalChain autofix is not behavior-preserving (`a && a.b` keeps a falsy receiver, `a?.b` yields undefined); a repo-wide reformat reflows enough lines to break an unrelated line-count CI gate (2 entries)
 
 ### Graph API (Microsoft)
-- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (40 entries)
+- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (42 entries)
 
 ### Exchange Online
-- [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas: app-only cert connects but cmdlets 401 until role propagation, Get-Mailbox masks it as a GetResponseHeader error; Get-InboxRule returns a literal $null rather than an empty collection so @(...).Count is 1 on a mailbox with zero rules, which in compromised-account triage either invents a phantom rule or reports a mailbox holding a real malicious one as CLEAN (2 entries)
+- [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas: app-only cert connects but cmdlets 401 until role propagation, Get-Mailbox masks it as a GetResponseHeader error; Get-InboxRule returns a literal $null rather than an empty collection so @(...).Count is 1 on a mailbox with zero rules, which in compromised-account triage either invents a phantom rule or reports a mailbox holding a real malicious one as CLEAN ; removing a leaver from a distribution list can silently cut off the successor when the leaver mailbox forward was their only path to that mail; EXO membership/permission reads are replica-inconsistent and disagree with Graph seconds apart, so never gate a destructive action on an EXO pre-read (4 entries)
 
 ### Entra External ID (CIAM)
 - [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas: workforce-blade lookalike trap, no email account-linking, MSA via custom OIDC only, fixed custom-IdP icons, branding asset limits (5 entries)
