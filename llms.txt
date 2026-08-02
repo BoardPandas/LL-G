@@ -83,7 +83,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Hono index](kb/hono/llms.txt): Hono routing and middleware gotchas (1 entry)
 
 ### Bash
-- [Bash index](kb/bash/llms.txt): All bash shell gotchas (7 entries)
+- [Bash index](kb/bash/llms.txt): All bash shell gotchas (8 entries)
 
 ### Git
 - [Git index](kb/git/llms.txt): Git tooling gotchas: `git ls-files`-based check guards skip untracked files (false green); concurrent agents sharing one working tree silently revert your uncommitted edits, so isolate your commit in a worktree; `git clone --branch` rejects a bare commit SHA (exit 128) and dies silently under set -e, use init+fetch+checkout FETCH_HEAD; a hook tracked as mode 100644 is silently skipped so the guard never runs on any clone; a hand-assigned version read at task start goes stale mid-session, and a duplicate version can merge cleanly with no error; an identical version bump is dropped by rebase as already-applied, reporting success while the commit bumps nothing; verifying a GitHub write against raw.githubusercontent reporting a phantom lost update; refreshing the blob SHA just before a contents-API PUT defeats the lost-update protection it appears to provide; an interrupted rebase leaves HEAD detached so the next commit lands on no branch while the push reports "Everything up-to-date" (9 entries)
@@ -167,7 +167,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Railway index](kb/railway/llms.txt): Railway platform gotchas: `railway ssh` host-key verification hangs in non-TTY shells (1 entry)
 
 ### Claude Code
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas: hooks, skill frontmatter, settings.json, sandboxed Bash failures imitating a missing system dependency, worktree-isolated subagents silently working against stale content, scripted bulk edits landing on the wrong occurrence, mid-line @imports in CLAUDE.md being silently just prose, regex self-filters in Bash hooks misparsing git argv, blocking hooks losing their refusal message to discarded stdout, hook env vars that do not exist silently disabling a gate (14 entries)
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas: hooks, skill frontmatter, settings.json, sandboxed Bash failures imitating a missing system dependency, worktree-isolated subagents silently working against stale content, scripted bulk edits landing on the wrong occurrence, mid-line @imports in CLAUDE.md being silently just prose, regex self-filters in Bash hooks misparsing git argv, blocking hooks losing their refusal message to discarded stdout, hook env vars that do not exist silently disabling a gate, PreToolUse guards that validate command text instead of file state (15 entries)
 
 ### Windows DNS
 - [Windows DNS index](kb/windows-dns/llms.txt): Windows / Active Directory DNS gotchas: Legacy-scope AD-integrated zones serve stale records on other DCs until forced reload; aging enabled without scavenging lets client registrations pile up at the zone root until the bare domain resolves to 100+ addresses and DC location becomes a coin flip (NETLOGON 5719) (2 entries)
