@@ -1,6 +1,6 @@
 ---
 tech: supportforge
-tags: [reports, analytics, sql, client_id, organization_id, dual-key, deleted_at, undercount, zendesk-import]
+tags: [reports, analytics, sql, client_id, organization_id, dual-key, deleted_at, undercount, zendesk-import, end_users, membership]
 severity: high
 ---
 # Ticket aggregates scoped by a single key (client_id or organization_id) silently undercount
@@ -12,12 +12,21 @@ Observed live: the client-portal Reports page showed **Created 1 / Solved 1** wh
 
 A second compounding gap: most report queries also omitted `deleted_at IS NULL`, so soft-deleted tickets kept counting in reports while the ticket lists (which do filter it) disagreed.
 
+**This is not limited to tickets.** `end_users` are dual-keyed the same way, so org *membership* lookups have the identical failure. `GET /organizations/:id/users` branches to one key or the other based on whether the org happens to have a `zendesk_org_id`, which means a Zendesk-synced org silently drops every contact carrying only `client_id`. Treat "which rows belong to this org" as a dual-key question everywhere, not just in ticket aggregates.
+
 ## WRONG
 ```sql
 -- Counts only Zendesk-imported tickets; native tickets are invisible.
 SELECT COUNT(*) FROM tickets
 WHERE organization_id = $1
   AND created_at >= NOW() - ($2::int) * INTERVAL '1 day';
+```
+
+```typescript
+// Same bug, contacts instead of tickets: branching to ONE key.
+// A Zendesk-synced org drops every contact that carries only client_id.
+if (org.zendesk_org_id) { where = 'u.organization_id = $1' }
+else                    { where = 'u.client_id = $1' }
 ```
 
 ## RIGHT
@@ -36,7 +45,16 @@ await db.query(
 );
 ```
 
+```sql
+-- Membership: the same OR, joined against the client row.
+SELECT COUNT(*) FROM end_users u
+ WHERE (u.organization_id::text = c.zendesk_org_id::text OR u.client_id = c.id)
+   AND COALESCE(u.msp_id, 'NULL_MSP') = COALESCE(c.msp_id, 'NULL_MSP');
+```
+
 ## NOTES
 - `src/services/ticket-analytics.ts` was already correct and is the reference pattern; `client-reports.ts`, `client-reports-aggregate.ts`, and several report routes were not. Fixed in supportforge-platform v3.7.0.0, which also merged the client-portal Reports page into Tickets so there is a single query path.
+- For the end_users half, the `user_counts` LATERAL in `GET /organizations` and the join in `src/services/contacts.ts` both use the correct OR form; `GET /organizations/:id/users` is the outlier still branching on one key (as of v3.24.0.0). `GET /organizations/:id/summary` was written against the OR form from the start.
 - MSP-wide aggregates need the same treatment with IN-subqueries: `(client_id IN (SELECT id FROM clients WHERE msp_id=$1) OR organization_id IN (SELECT CASE WHEN id LIKE 'org_%' THEN substring(id from 5) ELSE id END FROM clients WHERE msp_id=$1))`.
 - When two pages disagree on the same metric for the same tenant, diff their WHERE clauses first — key scoping and `deleted_at` are the usual suspects (see also list-tickets-includes-solved.md for status-default divergence).
+- A count can be scoped correctly and still be wrong for a different reason: see org-user-counts-are-recent-requesters.md, where a one-year ticket filter makes a correctly-scoped membership count mean something else entirely.
