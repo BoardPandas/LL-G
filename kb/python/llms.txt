@@ -1,0 +1,7 @@
+# Python Gotchas
+
+> Known Python runtime, packaging, and virtualenv patterns that cause silent failures or hard-to-debug errors. Load HIGH entries before working on Python environments or services.
+
+## Entries
+
+- [`python -V` succeeds in a virtualenv whose stdlib is gone](venv-stdlib-gone-python-v-lies.md): old-style virtualenv copies the interpreter but leaves the stdlib in the base prefix, so a distro release upgrade kills the venv while `-V` still prints a version (it short-circuits before Py_Initialize). Running processes survive until the next restart, so the reboot gets blamed months later. Test with a real import. HIGH.
