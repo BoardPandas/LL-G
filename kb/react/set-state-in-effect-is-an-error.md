@@ -98,11 +98,109 @@ useEffect(() => {
 useResetOnChange([id], () => setLoading(true))
 ```
 
+## VERIFY
+Which shapes this rule accepts is undocumented and has changed between versions, so do not trust this entry (or any summary of it) over a measurement. Drop this file into a linted source dir and run `npx eslint <file>`. It is the authority; the prose above is a description of what it produced.
+
+```tsx
+import { useCallback, useEffect, useRef, useState } from "react"
+
+// [1] render-phase adjustment
+export function C1({ org }: { org: string }) {
+  const [sel, setSel] = useState<string | null>(null)
+  const [prev, setPrev] = useState(org)
+  if (prev !== org) { setPrev(org); setSel(null) }
+  return <div>{sel}</div>
+}
+// [2] custom hook doing render-phase adjustment
+function useResetOnChange(deps: readonly unknown[], reset: () => void) {
+  const [prev, setPrev] = useState(deps)
+  if (prev.length !== deps.length || prev.some((v, i) => !Object.is(v, deps[i]))) { setPrev(deps); reset() }
+}
+export function C2({ id }: { id: string }) {
+  const [banner, setBanner] = useState<string | null>(null)
+  useResetOnChange([id], () => setBanner(null))
+  return <div>{banner}</div>
+}
+// [3] setState AFTER await, async fn declared inside the effect
+export function C3({ id }: { id: string }) {
+  const [x, setX] = useState(0)
+  useEffect(() => { void (async () => { await fetch(`/a/${id}`); setX(1) })() }, [id])
+  return <div>{x}</div>
+}
+// [4] setState BEFORE await, inside an effect-local async IIFE -- a REAL cascade
+export function C4({ id }: { id: string }) {
+  const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    void (async () => { setLoading(true); await fetch(`/a/${id}`); setLoading(false) })()
+  }, [id])
+  return <div>{String(loading)}</div>
+}
+// [5] identity-stable functional no-op in the effect body
+export function C5({ rows }: { rows: string[] }) {
+  const [edits, setEdits] = useState<Record<string, string>>({})
+  useEffect(() => { setEdits((prev) => prev) }, [rows])
+  return <div>{Object.keys(edits).length}</div>
+}
+// [6] useCallback with sync setState, called from the effect
+export function C6({ id }: { id: string }) {
+  const [x, setX] = useState(0)
+  const reset = useCallback(() => setX(0), [])
+  useEffect(() => { reset() }, [id, reset])
+  return <div>{x}</div>
+}
+// [7] useCallback async, setState ONLY after await -- no cascade possible
+export function C7({ id }: { id: string }) {
+  const [x, setX] = useState(0)
+  const load = useCallback(async () => { await fetch(`/a/${id}`); setX(1) }, [id])
+  useEffect(() => { void load() }, [load])
+  return <div>{x}</div>
+}
+// [8] plain async fn in component body, setState after await
+export function C8({ id }: { id: string }) {
+  const [x, setX] = useState(0)
+  async function load() { await fetch(`/a/${id}`); setX(1) }
+  useEffect(() => { void load() }, [])
+  return <div>{x}</div>
+}
+// [9] component-scope loader called from INSIDE an effect-local async IIFE
+export function C9({ id }: { id: string }) {
+  const [x, setX] = useState(0)
+  const load = useCallback(async () => { setX(0); await fetch(`/a/${id}`) }, [id])
+  useEffect(() => { void (async () => { await load() })() }, [load])
+  return <div>{x}</div>
+}
+// [10] ref indirection
+export function C10({ id }: { id: string }) {
+  const [x, setX] = useState(0)
+  const load = useCallback(() => setX(0), [])
+  const loadRef = useRef(load)
+  loadRef.current = load
+  useEffect(() => { void loadRef.current() }, [id])
+  return <div>{x}</div>
+}
+```
+
+Measured on `eslint-plugin-react-hooks@7.1.1` / `eslint-config-next@16.2.11` / `eslint@10.6.0`:
+
+| case | shape | result |
+|---|---|---|
+| 1 | render-phase adjustment | passes |
+| 2 | same, via a custom hook | passes |
+| 3 | setState after `await`, fn declared in effect | passes |
+| 4 | setState **before** `await`, effect-local IIFE | **passes** (real cascade, not reported) |
+| 5 | identity-stable functional no-op | FLAGGED |
+| 6 | `useCallback` sync setState, called from effect | FLAGGED |
+| 7 | `useCallback` async, setState only after `await` | **FLAGGED** (false positive) |
+| 8 | plain async fn in component body | FLAGGED |
+| 9 | loader called from inside effect-local IIFE | passes (call is hidden, cascade unchanged) |
+| 10 | `loadRef.current()` from effect | passes (call is hidden, cascade unchanged) |
+
+Rows 4, 9 and 10 are the ones to be careful with: they pass while changing nothing about the cascade. Rows 7 and 8 are the false positives. Together they show the rule is matching lexical position, not behaviour.
+
 ## NOTES
-- Verified against `eslint-plugin-react-hooks@7.1.1` (via `eslint-config-next@16.2.11`, `eslint@10.6.0`). Probe the exact behaviour before designing around it -- write a scratch file with each candidate shape and lint it. Which shapes pass is not documented and has changed between versions.
 - Severity is medium, not high: it fails loudly at lint/CI rather than producing wrong output. It earns an entry because the natural fixes (an eslint-disable, or an async-IIFE wrapper) both silently accept the cascading re-render the rule exists to prevent.
 - Check whether the rule is error or warning in your repo: `npx eslint <file> -f json` and read `severity` (2 = error).
-- A scoped `eslint-disable-next-line` IS defensible for case 1 above -- a shared/exported async loader that cannot move inside the effect and whose only synchronous setState is a no-op against the initial state. Say that in the comment, so the next reader knows it was reasoned about rather than silenced.
-- The identity-stable functional-updater trick (`return changed ? next : prev`) does NOT satisfy this rule -- it still reports. It remains useful on its own terms, because React bails out of the re-render when the reducer returns the identical state object, but it is not a lint fix.
-- The rule also cannot see through a ref (`loadRef.current()`). Same category as the IIFE wrapper: it hides the call rather than removing the cascade.
+- A scoped `eslint-disable-next-line` IS defensible for a VERIFY-row-7 shape -- a shared or exported async loader that cannot move inside the effect, and whose only synchronous setState is a no-op against the initial state (e.g. `setLoading(true)` when `loading` already starts `true`). State that reasoning in the comment, so the next reader knows it was measured rather than silenced.
+- The identity-stable functional-updater trick (`return changed ? next : prev`) does NOT satisfy this rule -- VERIFY row 5 still reports. It remains useful on its own terms, because React bails out of the re-render when the reducer returns the identical state object, but it is not a lint fix.
+- VERIFY rows 9 and 10 (IIFE wrapper, ref indirection) are the two tempting escape hatches. Both pass, and both leave the cascade exactly where it was. If you use one, you have silenced the rule, not satisfied it -- prefer a disable with a reason, which is at least honest about what happened.
 - Related: [useEffect infinite loop when state setter depends on its own state](useeffect-infinite-loop.md). That entry covers the loop; this one covers the lint rule that now forbids the shape outright.
