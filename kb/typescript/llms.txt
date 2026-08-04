@@ -4,6 +4,8 @@
 
 ## Entries
 
+- [UTC-day recurrence drifts IANA wall clocks across DST](utc-day-recurrence-drifts-iana-wall-clocks.md): Adding UTC days preserves an instant but silently shifts the intended local HH:mm after DST; advance local calendar dates and re-resolve in the stored IANA zone. HIGH.
+
 - [Type assertions with as](type-assertions.md): as bypasses the type checker entirely -- TypeScript trusts you unconditionally. Use type guards, satisfies, or instanceof instead for safe narrowing. HIGH.
 - [Optional chaining vs nullish coalescing](nullish.md): ?. returns undefined on a missing property (does not throw). ?? only catches null and undefined -- it does NOT catch 0, empty string, or false. MEDIUM.
 - [Pin Drizzle ORM to ^0.45.x](drizzle-version-pinning.md): v1.0.0-beta has breaking migration folder structure changes. Stay on 0.45.x until a deliberate upgrade window. HIGH.
