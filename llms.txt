@@ -59,7 +59,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Stripe index](kb/stripe/llms.txt): Stripe Connect billing gotchas: stored catalog product and price IDs can belong to a previous connected account, so validate and repair ownership through the current account and make customer/subscription retries idempotent (1 entry)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (44 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (45 entries)
 
 ### Biome
 - [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas: the useOptionalChain autofix is not behavior-preserving (`a && a.b` keeps a falsy receiver, `a?.b` yields undefined); a repo-wide reformat reflows enough lines to break an unrelated line-count CI gate (2 entries)
