@@ -1,0 +1,7 @@
+# Jest Gotchas
+
+> Known Jest patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Use runTestsByPath for Next.js app-router test paths](run-tests-by-path-for-nextjs-app-router-test-paths.md): Positional paths containing route-group parentheses or dynamic-segment brackets are parsed as regex patterns and can report that an existing test file was not found. MEDIUM.
