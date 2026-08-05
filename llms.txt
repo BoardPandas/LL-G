@@ -210,3 +210,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### npm
 - [npm index](kb/npm/llms.txt): npm workspace gotchas: `npm run <script> --workspaces` runs alphabetically, not in dependency order (npm sorts installs topologically but not script runs), so a workspace importing a sibling's build output can build before it exists; gitignored `dist/` surviving from earlier local runs hides it until a clean tree (CI, fresh clone, Docker) (1 entry)
+
+### Jest
+- [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments (1 entry)
+
