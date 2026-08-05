@@ -83,7 +83,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Hono index](kb/hono/llms.txt): Hono routing and middleware gotchas (1 entry)
 
 ### Bash
-- [Bash index](kb/bash/llms.txt): All bash shell gotchas (8 entries)
+- [Bash index](kb/bash/llms.txt): All bash shell gotchas (10 entries)
 
 ### Git
 - [Git index](kb/git/llms.txt): Git tooling gotchas: `git ls-files`-based check guards skip untracked files (false green); concurrent agents sharing one working tree silently revert your uncommitted edits, so isolate your commit in a worktree; `git clone --branch` rejects a bare commit SHA (exit 128) and dies silently under set -e, use init+fetch+checkout FETCH_HEAD; a hook tracked as mode 100644 is silently skipped so the guard never runs on any clone; a hand-assigned version read at task start goes stale mid-session, and a duplicate version can merge cleanly with no error; an identical version bump is dropped by rebase as already-applied, reporting success while the commit bumps nothing; verifying a GitHub write against raw.githubusercontent reporting a phantom lost update; refreshing the blob SHA just before a contents-API PUT defeats the lost-update protection it appears to provide; an interrupted rebase leaves HEAD detached so the next commit lands on no branch while the push reports "Everything up-to-date" (9 entries)
