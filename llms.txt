@@ -23,7 +23,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (26 entries)
 
 ### Express
-- [Express index](kb/express/llms.txt): All Express (Node.js) gotchas (3 entries)
+- [Express index](kb/express/llms.txt): Express (Node.js) gotchas: compression buffering SSE, rate-limit skips keyed on unvalidated headers, state-mutating GETs fired by email link scanners, and routers left unauthenticated because a path-prefix list was read as enforcement (4 entries)
 
 ### Node.js
 - [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (10 entries)
