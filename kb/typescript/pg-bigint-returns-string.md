@@ -134,8 +134,9 @@ reintroduces the >2^53 truncation everywhere instead of in one place.
   ```sql
   SELECT table_schema||'.'||table_name||'.'||column_name
     FROM information_schema.columns
-   WHERE data_type = 'bigint'
-     AND table_schema NOT IN ('pg_catalog','information_schema');
+   WHERE data_type IN ('bigint','numeric','money')   -- all of them, one pass
+     AND table_schema NOT IN ('pg_catalog','information_schema')
+     AND table_name NOT LIKE 'pg_stat_statements%';  -- extension, not yours
   ```
   Then state the arithmetic, or "no findings" means nothing: one audit found 44
   columns, of which **25** belonged to the `pg_stat_statements` extension and
@@ -151,7 +152,7 @@ reintroduces the >2^53 truncation everywhere instead of in one place.
   driver, this bug is systematically ABSENT. It has to be: SQLite returns a
   number and pg returns a string for the same logical column, so the author
   could not avoid noticing, and what they wrote is pattern 4 above. Postgres-only
-  code is where nothing forces the question. Across 20 audited columns every
+  code is where nothing forces the question. Across 19 audited bigint columns every
   single lie was in Postgres-only code, and every dual-driver table was already
   correct — so audit by *how many drivers a table has*, not by how important it
   looks.
