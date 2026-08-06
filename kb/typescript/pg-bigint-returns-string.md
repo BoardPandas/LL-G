@@ -1,6 +1,6 @@
 ---
 tech: typescript
-tags: [postgres, node-postgres, pg, bigint, bigserial, types, silent-failure, database, identity, set-lookup, sqlite, multi-driver, audit]
+tags: [postgres, node-postgres, pg, bigint, bigserial, numeric, decimal, money, prices, types, silent-failure, database, identity, set-lookup, sqlite, multi-driver, audit]
 severity: high
 ---
 # node-postgres returns BIGINT as a string, so `id: number` is a lie tsc cannot catch
@@ -11,6 +11,16 @@ severity: high
 (`BIGINT`, `BIGSERIAL`) as a **string**, because a 64-bit integer does not fit
 in a JS number without possible precision loss. It does this by default, in
 every process, with no warning.
+
+**`int8` is not the only one.** The same rule applies to every type `pg` cannot
+represent losslessly as a JS double — `numeric`/`decimal` (arbitrary precision),
+`money`, and `int8[]`. `numeric` is the one that bites hardest in practice,
+because `numeric` columns are almost always **prices**, and adding prices is the
+one operation JS does *not* rescue by coercion:
+
+```js
+["0.78", "1.00", "0.34"].reduce((a, b) => a + b)  // "0.781.000.34", not 2.12
+```
 
 Hand-written row interfaces almost always declare `id: number`. That
 annotation is never checked against anything: `pool.query<Row>(...)` is a
@@ -128,8 +138,14 @@ reintroduces the >2^53 truncation everywhere instead of in one place.
      AND table_schema NOT IN ('pg_catalog','information_schema');
   ```
   Then state the arithmetic, or "no findings" means nothing: one audit found 44
-  columns, of which 24 belonged to the `pg_stat_statements` extension view and
-  were not modeled in TS, leaving 20 real ones — 7 lying, 13 correct.
+  columns, of which **25** belonged to the `pg_stat_statements` extension and
+  were not modeled in TS, leaving 19 real ones — 7 lying, 12 correct.
+  > That count was first published as "24 extension columns, 20 real, 13
+  > correct". `pg_stat_statements_info` is a SECOND table in the same extension,
+  > and its one column was tallied as application code. Filter the extension by
+  > `table_name LIKE 'pg_stat_statements%'`, not by the exact table name — an
+  > off-by-one in the coverage figure is the same species of error this bullet
+  > exists to prevent.
 - **Look in SINGLE-DRIVER code first — that is where the lie lives.** In a
   codebase where the same row type is served by *both* a SQLite and a Postgres
   driver, this bug is systematically ABSENT. It has to be: SQLite returns a
@@ -154,6 +170,20 @@ reintroduces the >2^53 truncation everywhere instead of in one place.
   `Number(raw.apply_count) || 0` means someone already met the string on the
   wire and patched it locally instead of at the type. Grep for that pattern —
   it points straight at the mistyped fields.
+- **Audit `numeric` in the same pass, and check `ARRAY` element types.** One
+  sweep of a whole database found every `numeric` column lying (all four were
+  prices) after the bigint pass had already been declared finished — widen the
+  `data_type IN (...)` filter rather than running the audit twice:
+  ```sql
+  ... WHERE data_type IN ('bigint','numeric','money')
+  ```
+  For `ARRAY`, check `udt_name`: `_text` is parsed to `string[]` correctly, but
+  `_int8` would be a `string[]` where the type says `number[]` — the same bug
+  one level down.
+- **A price total can be wrong by luck rather than by design.** `*` and `-`
+  coerce, `+` concatenates — so `total += price * qty` survives a string price
+  while `total += price` does not. If summing works today it may be one
+  refactor away from breaking, and nothing in the types will say so.
 - Same trap, other drivers: `mysql2` returns `BIGINT` as a string when
   `supportBigNumbers` is on, and `better-sqlite3` returns `BigInt` (not
   `number`) once `safeIntegers` is enabled. Both are silent in the same way.
