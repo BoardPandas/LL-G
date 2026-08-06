@@ -1,6 +1,6 @@
 ---
 tech: typescript
-tags: [postgres, node-postgres, pg, bigint, bigserial, numeric, decimal, money, prices, types, silent-failure, database, identity, set-lookup, sqlite, multi-driver, audit]
+tags: [postgres, node-postgres, pg, bigint, bigserial, numeric, decimal, money, prices, types, silent-failure, database, identity, set-lookup, sqlite, multi-driver, audit, migration, alter-table, schema-change, zero-downtime]
 severity: high
 ---
 # node-postgres returns BIGINT as a string, so `id: number` is a lie tsc cannot catch
@@ -21,6 +21,12 @@ one operation JS does *not* rescue by coercion:
 ```js
 ["0.78", "1.00", "0.34"].reduce((a, b) => a + b)  // "0.781.000.34", not 2.12
 ```
+
+**The inverse is worse: a number STORED as `text`.** Then the wrong type is in
+the database, not just in the interface, and SQL itself starts lying — `ORDER BY
+price_usd` on a text column is a LEXICAL sort, so `'9.99'` ranks above
+`'100.00'`, and any index on it cannot serve a numeric sort at all. Re-typing
+the TS interface does not fix that; the column has to move. See MIGRATING.
 
 Hand-written row interfaces almost always declare `id: number`. That
 annotation is never checked against anything: `pool.query<Row>(...)` is a
@@ -119,6 +125,77 @@ Do not "fix" this globally with `pg.types.setTypeParser(20, Number)`. That flips
 columns, counters — including code already written against strings, and it
 reintroduces the >2^53 truncation everywhere instead of in one place.
 
+## MIGRATING THE COLUMN
+
+When the storage type itself is wrong (a number kept as `text`, money kept as
+`float8`), the fix is a type migration. Three things make it go badly, and all
+three are avoidable.
+
+**1. Code and data cannot change in the same instant, so write SQL that is valid
+against BOTH types and deploy it FIRST.** There is almost always such a form:
+
+```sql
+NULLIF(price_usd, '')::numeric   -- valid on text ONLY  (errors on numeric)
+price_usd <> ''                  -- valid on text ONLY  (errors on numeric)
+price_usd::numeric               -- valid on BOTH       <- deploy this first
+```
+
+Order: ship the both-shapes reads → migrate the data → ship the DDL. No release
+ever runs against a schema it does not understand, and there is no window where
+the deployed code and the live column disagree. Dropping the `NULLIF` needs the
+empty-string count to be zero first — check, do not assume.
+
+**2. An idempotent schema file is NOT a safe place for `ALTER ... TYPE`.**
+`CREATE TABLE IF NOT EXISTS` is free to re-run; a type change rewrites the whole
+table under `ACCESS EXCLUSIVE`. If that file executes on every boot, a multi-
+minute rewrite runs during startup — and if a container healthcheck reaps the
+process partway, the rewrite rolls back and the next boot starts it again.
+That is an infinite loop of expensive rewrites that never completes. Guard it,
+and prefer running it out of band:
+
+```sql
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.columns
+             WHERE table_name='cards' AND column_name='price_usd'
+               AND data_type='text') THEN
+    ALTER TABLE cards
+      ALTER COLUMN price_usd TYPE NUMERIC(10,2) USING NULLIF(price_usd,'')::numeric,
+      ALTER COLUMN price_eur TYPE NUMERIC(10,2) USING NULLIF(price_eur,'')::numeric;
+      -- every column in ONE statement: Postgres rewrites the table once for the
+      -- whole ALTER, not once per column
+  END IF;
+END $$;
+```
+
+Keep the defensive `NULLIF` in the `USING` clause even after proving the live
+data is clean — `USING` runs against the OLD text column, and another deployment
+of the same schema may not be as tidy.
+
+**3. Verify inside the transaction, so a bad migration rolls itself back.**
+Checking afterwards means discovering the damage once it is committed:
+
+```sql
+BEGIN;
+ALTER TABLE cards ALTER COLUMN price_usd TYPE NUMERIC(10,2) USING ...;
+DO $$
+DECLARE before_fp text; after_fp text;
+BEGIN
+  SELECT fp INTO before_fp FROM price_fingerprint WHERE phase='before';
+  SELECT md5(string_agg(id||':'||price_usd::text, ',' ORDER BY id))
+    INTO after_fp FROM cards WHERE price_usd IS NOT NULL;
+  IF before_fp IS DISTINCT FROM after_fp THEN
+    RAISE EXCEPTION 'fingerprint mismatch -- rolling back';
+  END IF;
+END $$;
+COMMIT;
+```
+
+`numeric::text` reproduces the original string exactly when the values share a
+fixed scale (all 2dp, say), which is what makes the round-trip comparable —
+confirm that first with a `GROUP BY length(split_part(col,'.',2))`. Measured
+cost for reference: 3 GB table, six columns, one statement, **24s**.
+
 ## NOTES
 
 - **Verify, do not infer.** Reading the DDL tells you the column is `BIGINT`; it
@@ -185,6 +262,17 @@ reintroduces the >2^53 truncation everywhere instead of in one place.
   coerce, `+` concatenates — so `total += price * qty` survives a string price
   while `total += price` does not. If summing works today it may be one
   refactor away from breaking, and nothing in the types will say so.
+- **A stricter column turns tolerated garbage into a hard error, and batching
+  amplifies it.** `text` accepts anything; `numeric` does not. Audit the WRITE
+  path before migrating, not just the reads — and note that `??` does NOT catch
+  an empty string:
+  ```ts
+  price_usd: card.prices?.usd ?? null   // "" sails straight through
+  price_usd: price(card.prices?.usd)    // non-decimal -> null
+  ```
+  This matters more than it looks when rows are upserted in batches: one bad
+  value fails the whole batch, not the one row, so a single empty string can
+  stall an entire sync.
 - Same trap, other drivers: `mysql2` returns `BIGINT` as a string when
   `supportBigNumbers` is on, and `better-sqlite3` returns `BigInt` (not
   `number`) once `safeIntegers` is enabled. Both are silent in the same way.
