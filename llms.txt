@@ -113,7 +113,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (8 entries)
 
 ### SupportForge
-- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent heartbeat/executor pitfalls, ticket-API defaults that silently return the wrong rows (solved tickets in open queues, oldest-first message truncation, id-vs-MSP-number collisions), plus platform patterns like the portal backend outpacing its UI, dual-keyed ticket and membership queries that undercount when scoped by a single key, and org "user" counts that actually mean recent requesters, plus session rows and ownership records that outlive the process holding the socket they describe (11 entries)
+- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent heartbeat/executor pitfalls, ticket-API defaults that silently return the wrong rows (solved tickets in open queues, oldest-first message truncation, id-vs-MSP-number collisions), plus platform patterns like the portal backend outpacing its UI, dual-keyed ticket and membership queries that undercount when scoped by a single key, and org "user" counts that actually mean recent requesters, plus session rows and ownership records that outlive the process holding the socket they describe, and dual-key scoping rules that expire when the PSA they were written for is retired (12 entries)
 
 ### Tauri
 - [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
