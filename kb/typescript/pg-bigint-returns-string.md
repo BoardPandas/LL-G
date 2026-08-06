@@ -1,6 +1,6 @@
 ---
 tech: typescript
-tags: [postgres, node-postgres, pg, bigint, bigserial, types, silent-failure, database, identity, set-lookup]
+tags: [postgres, node-postgres, pg, bigint, bigserial, types, silent-failure, database, identity, set-lookup, sqlite, multi-driver, audit]
 severity: high
 ---
 # node-postgres returns BIGINT as a string, so `id: number` is a lie tsc cannot catch
@@ -92,6 +92,16 @@ export function parseBigIntId(raw: string | null | undefined): string | null {
 await pool.query<{ apply_count: number }>(
   `SELECT apply_count::int AS apply_count FROM styles WHERE id = $1`, [id],
 );
+
+// 4. If the same table is served by MORE THAN ONE driver, no single scalar type
+//    is true -- SQLite hands back a real number for INTEGER, pg a string for
+//    BIGINT. Type the RAW row as the honest union and normalize in one mapper,
+//    so callers downstream see a single type and nobody re-derives it.
+interface RawRoomRow { seq: number | string }   // sqlite | postgres
+interface Room       { seq: number }            // what callers actually get
+
+const rowToRoom = (r: RawRoomRow): Room => ({ seq: Number(r.seq) });
+// `seq + 1` is now safe. On the raw row it would have been "5" + 1 === "51".
 ```
 
 Do not "fix" this globally with `pg.types.setTypeParser(20, Number)`. That flips
@@ -108,9 +118,38 @@ reintroduces the >2^53 truncation everywhere instead of in one place.
   const r = await pool.query(`SELECT id, apply_count FROM t LIMIT 1`);
   for (const [k, v] of Object.entries(r.rows[0])) console.log(k, typeof v);
   ```
-- **Audit by column type, not by symptom.** `grep -nE 'BIGSERIAL|BIGINT' schema.sql`
-  then check each against its TS interface. In one 8-column style feature, four
-  fields were lying; only one had been noticed.
+- **Audit by column type, not by symptom, and enumerate from the DATABASE.**
+  `schema.sql` misses every column added by a migration, by an auth library, or
+  by hand, so grepping it under-reports:
+  ```sql
+  SELECT table_schema||'.'||table_name||'.'||column_name
+    FROM information_schema.columns
+   WHERE data_type = 'bigint'
+     AND table_schema NOT IN ('pg_catalog','information_schema');
+  ```
+  Then state the arithmetic, or "no findings" means nothing: one audit found 44
+  columns, of which 24 belonged to the `pg_stat_statements` extension view and
+  were not modeled in TS, leaving 20 real ones — 7 lying, 13 correct.
+- **Look in SINGLE-DRIVER code first — that is where the lie lives.** In a
+  codebase where the same row type is served by *both* a SQLite and a Postgres
+  driver, this bug is systematically ABSENT. It has to be: SQLite returns a
+  number and pg returns a string for the same logical column, so the author
+  could not avoid noticing, and what they wrote is pattern 4 above. Postgres-only
+  code is where nothing forces the question. Across 20 audited columns every
+  single lie was in Postgres-only code, and every dual-driver table was already
+  correct — so audit by *how many drivers a table has*, not by how important it
+  looks.
+- **Fixing the shared interface does not finish the job.** `pool.query<T>()` takes
+  the generic per call, so a call site can restate the lie inline —
+  `client.query<{ id: number }>(...)` — and keep compiling after the interface is
+  corrected. Sweep for the inline form too:
+  ```
+  grep -rnE 'query<\{[^}]*\bid: number\b' src/
+  ```
+- **Belt and braces, where it matters.** The most robust store audited did both:
+  typed the id `string` AND selected `id::text`, so the row is a string even if
+  someone later registers a type parser. Its SQLite twin types the same field
+  `number`, and both normalize to one public `string`.
 - **A defensive coercion at a boundary is a tell.** Client code doing
   `Number(raw.apply_count) || 0` means someone already met the string on the
   wire and patched it locally instead of at the type. Grep for that pattern —
