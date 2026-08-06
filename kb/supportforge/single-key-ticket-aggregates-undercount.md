@@ -5,6 +5,8 @@ severity: high
 ---
 # Ticket aggregates scoped by a single key (client_id or organization_id) silently undercount
 
+> **Scope: this holds while the PSA is live.** Once the PSA is retired the dual-key OR stops being a safety net and starts masking drift in the canonical key, and the branching example under WRONG becomes actively lossy rather than merely incomplete. Read dual-key-scope-outlives-its-psa.md before applying any of this to a system that has already cut over.
+
 ## PROBLEM
 SupportForge tickets are dual-keyed. Native tickets (created via the app/portal/email) carry `client_id` (the clients.id, shaped like `org_36856164597395`); PSA/Zendesk-imported tickets carry `organization_id` (the same id minus the `org_` prefix, e.g. `36856164597395`), often with `client_id` unset. Any report or aggregate query that scopes by only one of the two keys runs fine, returns plausible numbers, and silently misses the other population.
 
@@ -58,3 +60,4 @@ SELECT COUNT(*) FROM end_users u
 - MSP-wide aggregates need the same treatment with IN-subqueries: `(client_id IN (SELECT id FROM clients WHERE msp_id=$1) OR organization_id IN (SELECT CASE WHEN id LIKE 'org_%' THEN substring(id from 5) ELSE id END FROM clients WHERE msp_id=$1))`.
 - When two pages disagree on the same metric for the same tenant, diff their WHERE clauses first — key scoping and `deleted_at` are the usual suspects (see also list-tickets-includes-solved.md for status-default divergence).
 - A count can be scoped correctly and still be wrong for a different reason: see org-user-counts-are-recent-requesters.md, where a one-year ticket filter makes a correctly-scoped membership count mean something else entirely.
+- **Superseded in part as of 2026-08.** SupportForge's Zendesk cutover was 2026-07-04. Tickets now agree on both keys for every resolvable row (4402, 0 disagreements) and orgs created since carry no `zendesk_org_id` at all, so the OR was collapsed to `client_id` in v3.54.1.0 after migration 388 backfilled the 63 contacts that only resolved through the legacy key. The `GET /organizations/:id/users` outlier noted above was not just incomplete by then, it was hiding post-cutover contacts on 38 of 41 orgs. See dual-key-scope-outlives-its-psa.md for the measurement that licenses the collapse and the order of operations it requires.
