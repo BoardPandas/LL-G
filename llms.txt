@@ -62,7 +62,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas (47 entries)
 
 ### Biome
-- [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas: the useOptionalChain autofix is not behavior-preserving (`a && a.b` keeps a falsy receiver, `a?.b` yields undefined); a repo-wide reformat reflows enough lines to break an unrelated line-count CI gate (2 entries)
+- [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas: the useOptionalChain autofix is not behavior-preserving (`a && a.b` keeps a falsy receiver, `a?.b` yields undefined); a repo-wide reformat reflows enough lines to break an unrelated line-count CI gate; `check --only=<rule>` still runs the formatter and assists, so a rule-scoped CI guard that treats a non-zero exit as "my rule fired" confidently blames a provably clean rule for every formatting drift (3 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (43 entries)
