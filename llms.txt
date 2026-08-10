@@ -26,7 +26,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Express index](kb/express/llms.txt): Express (Node.js) gotchas: compression buffering SSE, rate-limit skips keyed on unvalidated headers, state-mutating GETs fired by email link scanners, routers left unauthenticated because a path-prefix list was read as enforcement, and per-IP rate limits that throttle an entire NAT'd customer site rather than the abusive client, staying invisible until a restart makes the whole fleet reconnect at once (5 entries)
 
 ### Node.js
-- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (10 entries)
+- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (11 entries)
 
 ### pnpm
 - [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas: legacy bundled types fail tsc under the symlinked store + nodenext; npm install in a pnpm repo leaves stale physical packages that shadow pnpm's versions until a full node_modules wipe; pnpm v11 silently ignores package.json `pnpm.overrides` (they moved to pnpm-workspace.yaml) and DOES re-resolve range overrides, unlike v10; the `--` that npm needs to pass flags through `run` is what breaks pass-through in pnpm, turning the flag into a positional argument (4 entries)
