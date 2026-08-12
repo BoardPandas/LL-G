@@ -20,7 +20,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
 
 ### Next.js
-- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (26 entries)
+- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (27 entries)
 
 ### Express
 - [Express index](kb/express/llms.txt): Express (Node.js) gotchas: compression buffering SSE, rate-limit skips keyed on unvalidated headers, state-mutating GETs fired by email link scanners, routers left unauthenticated because a path-prefix list was read as enforcement, and per-IP rate limits that throttle an entire NAT'd customer site rather than the abusive client, staying invisible until a restart makes the whole fleet reconnect at once (5 entries)
