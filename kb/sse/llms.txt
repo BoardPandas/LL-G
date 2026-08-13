@@ -1,0 +1,10 @@
+# Server-Sent Events (SSE) Gotchas
+
+> Known SSE patterns that cause silent failures or hard-to-debug errors, on both
+> the client and the server. SSE fails quietly by nature: a dead stream and an
+> idle one look identical, so the symptom is almost always "the page stopped
+> updating" rather than an error.
+
+## Entries
+
+- [`source.close()` inside `onerror` permanently disables EventSource's own reconnect](eventsource-close-in-onerror-kills-reconnect.md): EventSource retries transient drops itself, so closing in the error handler throws that away for the life of the page — and a non-2xx response (the 503 every rolling deploy serves) is terminal per spec and gets no automatic retry at all, so real-time dies on every release until users happen to reload. Nothing throws and no request fails; the page just stops changing. Distinguish `CONNECTING` (leave it alone) from `CLOSED` (re-open with jittered backoff), and refetch on reconnect because SSE has no replay for the gap. HIGH.
