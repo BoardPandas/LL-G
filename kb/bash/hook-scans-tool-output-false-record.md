@@ -97,10 +97,24 @@ psql "$URL" -tAX -c "$sql" | grep -q MISSING && exit 0
 ```
 
 ## NOTES
-- The general principle, and the one that generalises past hooks: **a guard that
-  fires on the absence of a failure signal fails open.** Require evidence of the
-  effect you are about to claim -- ideally by observing the effect itself
-  (does the table exist?), not by reading the log that describes it.
+- **Measured, not asserted.** Both versions of the hook were fed the *identical*
+  payload -- the redirected dry-run, i.e. an empty `tool_response` -- against a
+  live scratch database, with the real command text and the real psql output:
+
+  | fed the redirected dry-run | ledger row | table |
+  |---|---|---|
+  | negative guard (WRONG above) | **written** | **MISSING** |
+  | positive guards (RIGHT above) | none | MISSING |
+
+  The first row is the bug in one line: a ledger row asserting a migration whose
+  table does not exist. On the genuine apply the positive version then wrote its
+  row and both declared objects were present, so the guards are not simply
+  refusing everything -- which is the failure mode to check for, because a hook
+  that never records looks identical to a correct one until the day you need it.
+- **A guard that fires on the absence of a failure signal fails open.** That is
+  the transferable point. Require evidence of the effect you are about to claim,
+  ideally by observing the effect itself (does the table exist?) rather than by
+  reading the log that describes it.
 - Under-recording is the safe direction here and costs nothing: migrations are
   idempotent, so the runner re-applies and records them on the next boot. Say so
   in the hook's message, or someone will "fix" the silence by loosening it.
@@ -114,7 +128,15 @@ psql "$URL" -tAX -c "$sql" | grep -q MISSING && exit 0
   it with real PostToolUse payloads and assert on whether a row was written,
   with a stub `psql` first on PATH answering from fixtures. Cover the dangerous
   cases explicitly: dry-run with output redirected away, COMMIT printed but
-  tables absent, empty output blob.
+  tables absent, empty output blob. Then run the counterfactual: feed the OLD
+  hook the same payload. A test that cannot fail proves nothing.
+- To test end to end against a real database you need a fixture migration, and
+  it must NOT go in the real `database/migrations/` -- the runner applies every
+  numbered file it finds there on the next boot. Because the hook resolves its
+  repo root from its own script location, copy it (and any helper it sources)
+  into a throwaway `<tmp>/.claude/scripts/`; it then reads
+  `<tmp>/database/migrations/` and the fixtures never touch the repo. Point it
+  at a scratch DATABASE_URL and give that database its own `schema_migrations`.
 - If the tool that owns the schema already records its own migrations on boot,
   weigh deleting the hook instead. At minimum give it an env kill switch, so it
   can be turned off without unwiring.
