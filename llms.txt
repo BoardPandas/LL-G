@@ -32,7 +32,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [SSE index](kb/sse/llms.txt): Server-Sent Events gotchas on both sides of the wire: closing EventSource in onerror permanently disables its automatic reconnect, and a deploy's 503 is terminal per spec, so real-time dies on every release with nothing thrown and no failed request -- the page simply stops updating until someone reloads (1 entry)
 
 ### Node.js
-- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (12 entries)
+- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas, including that process.exit() discards buffered stdout so a graceful shutdown that worked reads as one that was cut off -- and that wrappers rewrite the exit code, so neither the log nor the code proves what happened (13 entries)
 
 ### pnpm
 - [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas: legacy bundled types fail tsc under the symlinked store + nodenext; npm install in a pnpm repo leaves stale physical packages that shadow pnpm's versions until a full node_modules wipe; pnpm v11 silently ignores package.json `pnpm.overrides` (they moved to pnpm-workspace.yaml) and DOES re-resolve range overrides, unlike v10; the `--` that npm needs to pass flags through `run` is what breaks pass-through in pnpm, turning the flag into a positional argument (4 entries)
