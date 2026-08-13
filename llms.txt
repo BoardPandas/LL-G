@@ -26,7 +26,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Express index](kb/express/llms.txt): Express (Node.js) gotchas: compression buffering SSE, rate-limit skips keyed on unvalidated headers, state-mutating GETs fired by email link scanners, routers left unauthenticated because a path-prefix list was read as enforcement, and per-IP rate limits that throttle an entire NAT'd customer site rather than the abusive client, staying invisible until a restart makes the whole fleet reconnect at once (5 entries)
 
 ### Fastify
-- [Fastify index](kb/fastify/llms.txt): Fastify gotchas: writing through `reply.raw` hijacks the reply and bypasses the entire plugin chain, so `@fastify/cors`/helmet/compression silently stop applying to that route -- the server returns a clean 200 that curl accepts and only the browser rejects, killing an SSE stream and every cache invalidation riding it while the UI just stops updating (1 entry)
+- [Fastify index](kb/fastify/llms.txt): Fastify CORS and plugin-chain gotchas, both of which fail only in a browser while curl and server-side tests pass: writing through `reply.raw` hijacks the reply so `@fastify/cors`/helmet/compression stop applying to that route, and `@fastify/cors` defaults `methods` to GET,HEAD,POST so every PATCH/PUT/DELETE is refused at the preflight and never reaches the server -- no log, no network entry, just "Failed to fetch" (2 entries)
+
+### SSE
+- [SSE index](kb/sse/llms.txt): Server-Sent Events gotchas on both sides of the wire: closing EventSource in onerror permanently disables its automatic reconnect, and a deploy's 503 is terminal per spec, so real-time dies on every release with nothing thrown and no failed request -- the page simply stops updating until someone reloads (1 entry)
 
 ### Node.js
 - [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (11 entries)
