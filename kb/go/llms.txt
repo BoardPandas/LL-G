@@ -1,0 +1,7 @@
+# Go Gotchas
+
+> Known Go patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Resetting a sync.Once by reassigning it is fatal, not just racy](sync-once-reset.md): `once = sync.Once{}` to invalidate a cache hands an in-flight `Do()` a zeroed mutex, killing the process with `fatal error: sync: unlock of unlocked mutex`; the stack names the victim goroutine, not the reassigning one, and `go vet` stays clean. HIGH.
