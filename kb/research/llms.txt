@@ -1,0 +1,7 @@
+# Research Gotchas
+
+> Source-verification and web-research patterns that cause silent wrong output. These bite when facts gathered from the web get written into a durable artifact -- a dossier, a manifest, a printed object -- where nothing errors and nobody notices until a domain expert looks.
+
+## Entries
+
+- [Fan-wiki proper nouns are phonetic guesses when the editor works from audiobooks](fan-wiki-phonetic-proper-nouns.md): a Fandom wiki is often the only structured source for a book series, but an audiobook-derived one reconstructs every proper noun by ear; cross-checking a second fan source is false corroboration because it may have copied the first; fix by scraping a verbatim-text corpus (Goodreads quotes + Kindle Notes & Highlights) and by proving corpus coverage with a control query before trusting any zero-hit result. HIGH.
