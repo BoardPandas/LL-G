@@ -93,10 +93,13 @@ GET /v1/projects/{p}/services/{s}/build   # newest build .sha == the SHA you pus
   - `POST .../services/{id}/build-source` accepts `projectUrl`/`projectType`/
     `projectBranch`/`accountLogin`, but is **deprecated** in favour of the typed PATCH above.
   - `GET .../services/{id}/build` lists builds; `.../builds` (plural) is 404.
-- **Supersedes part of [api-endpoint-paths.md](api-endpoint-paths.md)**, which states you
-  cannot PATCH a service's git branch and must use a full PUT or the dashboard. The typed
-  `PATCH /services/combined/{id}` with a `vcsData` block does work, and is safer than PUT
-  because it does not require restating the whole service.
+- **`accountLogin` is an override, not a hint.** Per the API docs, when it is omitted
+  Northflank "will pick a linked account that has access to the repository"; when it is
+  supplied it uses that account and nothing else. This is the mechanism behind the whole
+  failure: the stale value actively defeats the auto-selection that would otherwise have
+  healed the transfer silently.
+- See [api-endpoint-paths.md](api-endpoint-paths.md) for the related path trap -- `PATCH` on
+  the bare `/services/{id}` 405s, so the service TYPE segment is required.
 - The old VCS account link usually survives the transfer and keeps serving whatever repos
   stayed behind, so it looks healthy in the integrations list. Its presence is not evidence
   that any particular service is correctly bound.
