@@ -223,3 +223,5 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Jest
 - [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments (1 entry)
 
+### Go
+- [Go index](kb/go/llms.txt): Go concurrency gotchas: reassigning a `sync.Once` to invalidate a compute-once cache hands an in-flight `Do()` a zeroed mutex and kills the process with `fatal error: sync: unlock of unlocked mutex` -- unrecoverable, timing-dependent, stack trace names the victim goroutine rather than the reassigning one, and `go vet` plus `gofmt` stay clean (1 entry)
