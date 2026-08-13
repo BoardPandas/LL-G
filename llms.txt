@@ -25,6 +25,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Express
 - [Express index](kb/express/llms.txt): Express (Node.js) gotchas: compression buffering SSE, rate-limit skips keyed on unvalidated headers, state-mutating GETs fired by email link scanners, routers left unauthenticated because a path-prefix list was read as enforcement, and per-IP rate limits that throttle an entire NAT'd customer site rather than the abusive client, staying invisible until a restart makes the whole fleet reconnect at once (5 entries)
 
+### Fastify
+- [Fastify index](kb/fastify/llms.txt): Fastify gotchas: writing through `reply.raw` hijacks the reply and bypasses the entire plugin chain, so `@fastify/cors`/helmet/compression silently stop applying to that route -- the server returns a clean 200 that curl accepts and only the browser rejects, killing an SSE stream and every cache invalidation riding it while the UI just stops updating (1 entry)
+
 ### Node.js
 - [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas (11 entries)
 
