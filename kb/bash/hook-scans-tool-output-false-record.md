@@ -137,8 +137,20 @@ psql "$URL" -tAX -c "$sql" | grep -q MISSING && exit 0
   into a throwaway `<tmp>/.claude/scripts/`; it then reads
   `<tmp>/database/migrations/` and the fixtures never touch the repo. Point it
   at a scratch DATABASE_URL and give that database its own `schema_migrations`.
-- If the tool that owns the schema already records its own migrations on boot,
-  weigh deleting the hook instead. At minimum give it an env kill switch, so it
-  can be turned off without unwiring.
+- **The repo this came from hardened the hook, verified it against a live
+  database, and then deleted it anyway.** That is the honest ending, and it is
+  worth more than the patch. If the tool that owns the schema already records
+  its own migrations on boot, a hook that also writes the ledger is a *second
+  writer*, and two writers is the actual defect -- the ledger can disagree with
+  the database, and the only symptom is migrations quietly never running. All
+  the hook ever covered was the narrow case of applying a migration by hand from
+  a session, bought at the price of a mechanism that could silently disable
+  every future auto-migration if it guessed wrong. It guessed wrong twice.
+- So: reach for deletion before hardening, and if you do keep it, give it an env
+  kill switch so it can be turned off without unwiring (a script left on disk
+  but unreferenced is its own silent failure). Deleting is not free either --
+  a migration applied by hand is then never recorded and the next deploy
+  re-applies it. Harmless for idempotent DDL, which is how migration files are
+  normally written; **not** harmless for a data backfill, which runs twice.
 - Related: [jq outputs pretty-printed JSON by default -- use -c for JSONL](jq-compact.md),
   [`command -v` finds a Windows Store alias stub](command-v-finds-nonexecuting-stub.md).
