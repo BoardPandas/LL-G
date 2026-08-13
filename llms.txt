@@ -157,6 +157,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Architecture
 - [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift, derived-cache currency, precondition gates that measure a different collection than the consumer processes (10 entries)
 
+### Research
+- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas: an audiobook-derived fan wiki reconstructs every proper noun by ear (duplicate pages under variant spellings, an infobox name disagreeing with its own page title, a page admitting it is a misspelling while its body text keeps using the wrong name), and cross-checking a second fan source is false corroboration because it may have copied the first -- fix by scraping a verbatim-text corpus (Goodreads quotes + Kindle Notes & Highlights) and by proving corpus coverage with a control query before trusting any zero-hit result as disconfirmation (1 entry)
+
 ### Cisco Meraki
 - [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (4 entries)
 
