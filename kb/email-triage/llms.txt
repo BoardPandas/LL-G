@@ -1,0 +1,7 @@
+# Email Triage Gotchas
+
+> Platform-agnostic mail-classification tradecraft: patterns that cause a triage pass to file a message in the wrong bucket. These reproduce on any mail API -- Gmail, Microsoft Graph, Exchange Online, IMAP -- because the behaviour lives in how senders and phishing kits construct messages, not in the API you read them with.
+
+## Entries
+
+- [Unrendered ESP template tags in a body are affirmative evidence mail is legitimate, not phishing](unrendered-esp-template-tags-indicate-legitimate-mail.md): Phishing tells are all negative, so a triage pass can fail to convict but can never clear a message -- and it therefore falls back on urgency language, which legitimate account-lifecycle mail (KYC deadlines, closure warnings, forced resets) shares with phishing by design, so a real "your account closes in 30 days" notice gets trashed and the clock runs out silently. Leftover uninterpolated Braze/Liquid or merge-tag syntax (`{{${cblid} | lid: '...'}}`) is the positive counter-tell: it proves the message traversed a real ESP campaign pipeline with a subscriber database, which a phishing kit cannot reproduce because it ships fully-substituted strings. Confirm alongside every-link-on-the-brand-apex-domain and a verifiable corporate footer; weight urgency at zero. Exact mirror of hashbuster padding, which only appears in mail sent around a legitimate pipeline rather than through one. HIGH.
