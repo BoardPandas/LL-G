@@ -225,3 +225,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Go
 - [Go index](kb/go/llms.txt): Go concurrency gotchas: reassigning a `sync.Once` to invalidate a compute-once cache hands an in-flight `Do()` a zeroed mutex and kills the process with `fatal error: sync: unlock of unlocked mutex` -- unrecoverable, timing-dependent, stack trace names the victim goroutine rather than the reassigning one, and `go vet` plus `gofmt` stay clean (1 entry)
+
+### Web Security
+- [Web Security index](kb/web-security/llms.txt): Framework-agnostic browser/HTTP security-header gotchas: `Referrer-Policy: no-referrer` also strips the `Origin` header from navigational form POSTs (Fetch sends `Origin: null`), so pairing it with an Origin-matching CSRF guard refuses every form on your own site while GETs keep working -- `curl` cannot reproduce it and tests that set `Origin` by hand never see it; check `Sec-Fetch-Site` first (1 entry)
