@@ -16,6 +16,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Outlook
 - [Outlook index](kb/outlook/llms.txt): All Outlook gotchas (1 entry)
 
+### Email Triage
+- [Email Triage index](kb/email-triage/llms.txt): Platform-agnostic mail-classification tradecraft (Gmail, Graph, Exchange Online, IMAP): phishing tells are all negative, so a triage pass can never clear a message and falls back on urgency language that legitimate account-lifecycle mail shares with phishing by design -- unrendered ESP template tags (Braze/Liquid merge syntax) are the positive counter-tell that a message traversed a real campaign pipeline, the exact mirror of hashbuster padding (1 entry)
+
 ### React Router
 - [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
 
