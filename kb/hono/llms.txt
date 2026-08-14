@@ -5,3 +5,7 @@
 ## Entries
 
 - [Splitting a monolith Hono route file: registration order is semantic](route-registration-order-on-split.md): Overlapping patterns match in registration order and app.use only covers routes registered after it, so splitting a big route file into sub-routers can silently change which handler wins or drop middleware. Preserve order, hoist middleware to the parent, and diff app.routes before/after. HIGH.
+
+## See also
+
+- [`Referrer-Policy: no-referrer` also nulls `Origin` on form POSTs](../web-security/referrer-policy-nulls-origin-on-form-post.md) (kb/web-security): bites any Hono app that pairs a `no-referrer` HTML response with an `Origin`-matching CSRF middleware -- every form POST arrives as `Origin: null` and is refused, while GET routes keep working. Not counted as a Hono entry; the behaviour is the browser's, not the router's. HIGH.
