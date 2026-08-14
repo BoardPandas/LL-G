@@ -1,0 +1,7 @@
+# Web Security Gotchas
+
+> Framework-agnostic browser and HTTP security-header patterns that cause silent failures or hard-to-debug errors. These reproduce on any stack -- Hono, Express, Fastify, Next.js, Go, Rails -- because the behaviour lives in the browser and the specs, not in your router.
+
+## Entries
+
+- [`Referrer-Policy: no-referrer` also nulls `Origin` on form POSTs, so an Origin-based CSRF guard refuses your own site](referrer-policy-nulls-origin-on-form-post.md): Two individually-correct hardenings that kill every write path when shipped together -- under `no-referrer`, Fetch sends `Origin: null` on a navigational POST, and an Origin-matching CSRF guard refuses it. GETs keep working so the app looks alive, `curl` cannot reproduce it, and tests that set `Origin` by hand never see it. Check `Sec-Fetch-Site` first (forbidden header, immune to referrer policy) and move to `Referrer-Policy: same-origin`. HIGH.
