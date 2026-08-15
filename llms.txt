@@ -227,7 +227,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [npm index](kb/npm/llms.txt): npm workspace gotchas: `npm run <script> --workspaces` runs alphabetically, not in dependency order (npm sorts installs topologically but not script runs), so a workspace importing a sibling's build output can build before it exists; gitignored `dist/` surviving from earlier local runs hides it until a clean tree (CI, fresh clone, Docker) (1 entry)
 
 ### Jest
-- [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments (1 entry)
+- [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus a test-double trap: a hand-written DB fake that omits a column makes the resulting bug look like correct behaviour and survives its own fix (2 entries)
 
 ### Go
 - [Go index](kb/go/llms.txt): Go concurrency gotchas: reassigning a `sync.Once` to invalidate a compute-once cache hands an in-flight `Do()` a zeroed mutex and kills the process with `fatal error: sync: unlock of unlocked mutex` -- unrecoverable, timing-dependent, stack trace names the victim goroutine rather than the reassigning one, and `go vet` plus `gofmt` stay clean ; and a `_darwin`/`_windows` filename applying an implicit build constraint that `_test` stripping preserves, so a test file runs on no machine at all when CI has no runner for that GOOS -- go test says ok, vet is clean, and a test that never ran is indistinguishable from one that passes (2 entries)
