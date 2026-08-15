@@ -179,7 +179,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [UniFi index](kb/unifi/llms.txt): Ubiquiti UniFi Site Manager API coverage gotchas (1 entry)
 
 ### Northflank
-- [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, the Postgres addon app role can't run DDL, deleting a "CI-only" secret from an unrestricted secret group silently disables the runtime feature that also reads it, a service's own pinned runtime env silently shadows the inherited group, and a GitHub org transfer updates vcsData.projectUrl (via GitHub's redirect) while leaving accountLogin on the old linked account that no longer has repo access, so auto-deploy stays broken and invisible until the next push (10 entries)
+- [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, the Postgres addon app role can't run DDL, deleting a "CI-only" secret from an unrestricted secret group silently disables the runtime feature that also reads it, a service's own pinned runtime env silently shadows the inherited group, and a GitHub org transfer updates vcsData.projectUrl (via GitHub's redirect) while leaving accountLogin on the old linked account that no longer has repo access, so auto-deploy stays broken and invisible until the next push, plus a networking trap that only surfaces from outside: a UDP load balancer source-NATs, so a STUN/TURN relay behind one answers correctly while reporting every client's address as the balancer's private one (11 entries)
 
 ### Railway
 - [Railway index](kb/railway/llms.txt): Railway platform gotchas: `railway ssh` host-key verification hangs in non-TTY shells (1 entry)
