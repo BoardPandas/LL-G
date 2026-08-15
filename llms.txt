@@ -130,6 +130,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### NAudio
 - [NAudio index](kb/naudio/llms.txt): NAudio/WASAPI gotchas: MMDevice COM objects are apartment-bound with no marshaling proxy, so a UI-thread read of a background-thread device throws InvalidCastException E_NOINTERFACE and kills the app (1 entry)
 
+### Voicemeeter
+- [Voicemeeter index](kb/voicemeeter/llms.txt): VB-Audio Voicemeeter (Standard/Banana/Potato) and MacroButtons gotchas: the script language has no error channel, so bad requests are clamped or discarded silently -- Strip[i].Pan_x is documented -0.5 to +0.5 while third-party docs and AI answers repeat ±1.0, and because out-of-range values clamp rather than error the wrong range still sounds correct at the extremes and is only wrong in between, making "half left" fully left and stalling a stepped sweep at its midpoint (1 entry)
+
 ### WPF
 - [WPF index](kb/wpf/llms.txt): WPF/XAML gotchas: TemplateBinding does no type conversion (templated controls render silently empty); Topmost=True overlays silently lose their Win32 z-band when another app window activates; SizeToContent windows positioned after Show() land at the default cascade spot on first show; DispatcherTimer is capped near 64 Hz by the default ~15.6 ms timer resolution unless timeBeginPeriod(1) is requested (4 entries)
 
