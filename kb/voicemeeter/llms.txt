@@ -1,0 +1,7 @@
+# Voicemeeter Gotchas
+
+> Known VB-Audio Voicemeeter (Standard / Banana / Potato) and MacroButtons patterns that cause silent failures or hard-to-debug errors. The script language has no error channel at all -- bad requests are clamped or discarded with no feedback -- so every entry here fails quietly.
+
+## Entries
+
+- [Strip Pan_x runs -0.5 to +0.5, not -1.0 to +1.0](strip-pan-x-range.md): Third-party docs and AI answers repeat a ±1.0 range; the vendor range is ±0.5. Out-of-range values clamp silently, so the wrong range still sounds correct at the extremes and is only wrong at intermediate values - a "half left" of -0.5 is fully left, and a stepped sweep stalls at its midpoint. HIGH.
