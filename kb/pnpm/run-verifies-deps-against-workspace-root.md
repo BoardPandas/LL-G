@@ -23,11 +23,19 @@ dashboard, admin portal, everything — because that is what it found by walking
 up.
 
 Locally this usually succeeds and is invisible: the root `node_modules` already
-exists, so the check passes and nothing prints. In CI, on a clean checkout that
-never ran a root install, it is a hard failure in a job that has no reason to
-install the rest of the repo at all. It cost two failed signed-release builds
-here before the cause was clear, on a step whose name ("Build frontend") points
-nowhere near a workspace install.
+exists, so the check passes and nothing prints. The cost is not usually that the
+root install *fails* — it is that a job which had no reason to touch the rest of
+the repo is now fully exposed to anything wrong with it.
+
+That is what happened here. An unrelated defect had been committed at the
+workspace root (a `dashboard/node_modules` symlink pointing into one developer's
+home directory, which does not exist on a runner). The agent build never
+referenced `dashboard` and had no business installing it — but the walk-up
+dragged it in, and two signed-release builds died on a step named "Build
+frontend", pointing nowhere near either the workspace or the real defect.
+
+Both halves are worth fixing independently. Scoping the build stops unrelated
+root breakage from reaching a job that does not need the root at all.
 
 Three tells, all of which name the real behaviour:
 
@@ -35,9 +43,12 @@ Three tells, all of which name the real behaviour:
 * Progress lines prefixed `../..` — pnpm reporting it left your directory.
 * A stack of `runDepsStatusCheck` → `_install` → `tryFrozenInstall` → `headlessInstall` → `linkDirectDeps` → `linkDirectDepsOfProject`.
 
-The observed failure was `ENOENT ... mkdir '<root>/dashboard/node_modules'` while
-symlinking the root's `eslint` — an error that mentions a workspace package the
-failing job never referenced, which is the part that misdirects.
+The misdirection is the error naming a workspace package the failing job never
+referenced — here `ENOENT ... mkdir '<root>/dashboard/node_modules'` while
+symlinking the root's `eslint`, in a job that builds a Svelte frontend. Read the
+scope line first: if it says `all N workspace projects` from a directory that is
+not one of them, the walk-up is what put you in front of that error, whatever
+the error turns out to be.
 
 ## WRONG
 
@@ -83,9 +94,13 @@ An `.npmrc` at the **workspace root** would apply, but that is the wrong lever
 here: it disables the check for every package in the repo to fix one nested
 non-member.
 
-**Reproducing it needs a clean checkout.** With a root `node_modules` present the
-check passes silently and everything looks fine — which is exactly why this
-survives local testing and only appears in CI.
+**Seeing it at all needs a clean checkout.** With a root `node_modules` already
+present the check passes and prints nothing, so the walk-up never announces
+itself — which is why this survives local testing and only shows up in CI. To
+confirm the behaviour rather than the failure, clone fresh, install the nested
+package scoped, run its build script, and then check whether a root
+`node_modules` appeared. If it did, every job running that script is installing
+the whole repo.
 
 **Setting `CI=true` is not related but often shows up alongside**, because pnpm
 refuses to purge a modules directory without a TTY
