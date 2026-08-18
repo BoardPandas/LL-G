@@ -1,0 +1,10 @@
+# DNS Gotchas
+
+> Provider-agnostic DNS patterns that cause silent failures, wrong conclusions, or misgraded
+> security findings. For Windows/AD-integrated DNS see `kb/windows-dns/`; for Cloudflare-specific
+> behaviour see `kb/cloudflare/`.
+
+## Entries
+
+- [Dangling is not takeover-able, and conflating them inflates every audit you run](dangling-vs-takeoverable.md): The takeover test is not "does the target resolve" but "can a third party cause the target to resolve to something they control" -- a CNAME to an NXDOMAIN target inside `lync.com` or `r2.dev` is textbook dangling and completely harmless, because nobody else can register a name in a provider's own zone. Grading on resolvability buries the one claimable hostname among five that never mattered, and trains the reader to ignore the report. Check for a wildcard first (one query; a wildcard makes every dangling finding moot), classify by who owns the target zone, and treat an expired TLS cert as corroboration of abandonment rather than a finding on its own. Cloudflare proxying hides the origin from external tooling entirely. HIGH.
+- [Reconstruct a zone's contents without API access by asking its authoritative nameservers](authoritative-nxdomain-recon.md): `NOERROR` proves a NAME exists even when the queried record type does not, so existence probing recovers TXT/MX/SRV-only names that A/CNAME enumeration misses entirely -- but only against the zone's own nameservers, because public recursors blur the distinction (`1.1.1.1` returned NOERROR for a random string the authoritative NS called NXDOMAIN, making every probe look like a hit). Seed candidates from Certificate Transparency rather than a wordlist, sanity-check for a wildcard before trusting any negative, and state the coverage limit instead of implying completeness. MEDIUM.
