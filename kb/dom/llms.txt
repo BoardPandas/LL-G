@@ -1,0 +1,7 @@
+# DOM Gotchas
+
+> Framework-agnostic DOM and browser-API patterns that cause silent failures. Load all HIGH entries before writing imperative DOM code.
+
+## Entries
+
+- [A dynamically built overlay wired with document.getElementById dies silently once two instances coexist](duplicate-id-getelementbyid-remounted-modal.md): `getElementById` returns the first match in tree order and `appendChild` puts each new node last, so a modal builder that runs twice wires BOTH handler sets onto the first (buried) overlay and leaves the second -- the one painted on top at equal z-index, swallowing every click -- with zero listeners; the buttons are real so `:active` still fires and they visibly depress while nothing runs, no error is logged, and the unsettled Promise skips every `finally` after the await. Scope lookups to the created element AND single-flight the builder. HIGH.

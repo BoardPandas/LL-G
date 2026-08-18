@@ -1,0 +1,7 @@
+# Supabase Gotchas
+
+> Known Supabase (supabase-js / auth-js / GoTrue) patterns that cause silent failures or duplicated side effects. Load all HIGH entries before writing Supabase auth or sync code.
+
+## Entries
+
+- [onAuthStateChange fires several times for ONE login -- never do once-per-login work in the callback](onauthstatechange-multiple-events-per-login.md): `_initialize()` emits `SIGNED_IN` from a detached `setTimeout` while `_emitInitialSession` emits `INITIAL_SESSION` on the microtask queue, so every OAuth login delivers both ~0ms apart -- deterministically, not as a race -- and refocus/BroadcastChannel re-emit `SIGNED_IN` again; `_notifyAllSubscribers` awaits all callbacks, so awaiting anything slow (worse, a modal click) stalls the emitter and causes the LockManager timeouts that tempt people into a no-op `lock`, which then removes the only serialization preventing concurrent re-entry. Guard on user id, record done only on success, never block the callback on user input. HIGH.
