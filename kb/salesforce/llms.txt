@@ -1,0 +1,9 @@
+# Salesforce Gotchas
+
+> Known Salesforce patterns that cause silent failures or hard-to-debug errors, focused on SAML SSO, Experience Cloud, and JIT provisioning. Read all HIGH entries before wiring Salesforce SSO or provisioning.
+
+## Entries
+
+- [Experience Cloud SAML: SP entity ID is the org, ACS is per-site](experience-cloud-saml-entity-id.md): Experience Cloud sends the org My Domain as the SP entity ID but a per-site URL as the ACS; set the IdP app Identifier to the org and register each site login URL as a reply URL, or hit AADSTS700016 / AADSTS50011. HIGH.
+- [Sandbox username suffix breaks SAML username matching; use Federation ID](sandbox-username-suffix-federation-id.md): sandboxes append .<sandboxname> to every username so username matching never lines up; match on Federation ID (free text) instead. HIGH.
+- [Community JIT needs custom Apex, and IdP custom attributes map to the wrong source](community-jit-custom-apex-attributes.md): Experience Cloud JIT needs a custom Auth.SamlJitHandler, and custom IdP sign-up attributes must map from the extension attribute, not the built-in (user.telephonenumber/companyname), or values silently arrive empty. HIGH.
