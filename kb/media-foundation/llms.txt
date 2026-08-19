@@ -1,0 +1,8 @@
+# Media Foundation Gotchas
+
+> Known Media Foundation / IMFTransform patterns that cause silent failures or hard-to-debug errors. Applies to any language driving MFTs, including hand-written COM vtable calls from Go, Rust or C# where the SDK headers are not available to transcribe from.
+
+## Entries
+
+- [MFT_MESSAGE_NOTIFY_END_OF_STREAM comes before START_OF_STREAM in the enum, and transposing them silently stalls every async MFT](mft-stream-notify-constants-transposed.md): END_OF_STREAM is 0x10000002 and START_OF_STREAM is 0x10000003, the opposite order to how anyone says them; transposed, a synchronous MFT keeps working perfectly while an asynchronous one accepts every media type, returns an event generator, and then never queues METransformNeedInput -- ProcessInput returns MF_E_NOTACCEPTING forever with no error anywhere, which reads as a vendor driver quirk. The working software path is the strongest false signal that your code is fine. HIGH.
+- [A hardware encoder MFT will not accept a media type at all until you give it a Direct3D device](hardware-mft-needs-d3d-manager.md): MFT_MESSAGE_SET_D3D_MANAGER is a precondition for configuration, not a GPU-residency optimisation, for any transform advertising MF_SA_D3D11_AWARE. Each vendor fails differently -- AMD returns MF_E_TRANSFORM_TYPE_NOT_SET in both type orders (sending you off swapping input/output order, which is not the problem), Microsoft's DX12 encoder returns 0x80041000, and NVIDIA's configures cleanly and then silently never asks for a frame. Also: enumerate and try every candidate, since the first is not always usable. HIGH.
