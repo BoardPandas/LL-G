@@ -109,6 +109,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Windows
 - [Windows index](kb/windows/llms.txt): Windows OS administration gotchas: disk-full remediation (Installer orphan cleanup with all-orphan guard, read-only attribute silently blocking deletes, DISM 0x800f080a pending-servicing, OneDrive placeholder size inflation; Dell SupportAssist SARemediation snapshot bloat + unbounded VSS; DeviceMetadataRetrievalClient dllhost CPU spin fixed by disabling DsmSvc); the NDIS HardwareInterface flag is not a physical-adapter test (Wi-Fi Direct virtuals set it, Bluetooth PAN does not) so use Win32_NetworkAdapter.PhysicalAdapter (11 entries)
 
+### Media Foundation (Windows)
+- [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from: MFT_MESSAGE_NOTIFY_END_OF_STREAM (0x10000002) comes *before* START_OF_STREAM (0x10000003), and transposing them leaves a synchronous MFT working perfectly while an asynchronous one accepts every media type and then never queues METransformNeedInput; and MFT_MESSAGE_SET_D3D_MANAGER is a precondition for media-type negotiation on any MF_SA_D3D11_AWARE transform, not a GPU-residency optimisation -- AMD, Microsoft DX12 and NVIDIA each fail differently without it, NVIDIA silently (2 entries)
+
 ### Chrome
 - [Chrome index](kb/chrome/llms.txt): Google Chrome / Chromium gotchas: a staged-but-not-relaunched auto-update leaves the running instance unable to spawn service workers, so OWA hangs on skeleton placeholders while other sites load fine and it reads as a network/DNS/M365 fault (1 entry)
 
