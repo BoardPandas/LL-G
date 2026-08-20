@@ -78,15 +78,22 @@ export function formatCloseDateLocal(value: string): string {
 }
 ```
 
-```ts
-// Pin it under a zone that would expose the regression. A test in UTC passes
-// against the broken version and is worse than no test, because it looks like
-// coverage.
-describe('formatCloseDate', () => {
-  const original = process.env.TZ
-  beforeAll(() => { process.env.TZ = 'America/New_York' })
-  afterAll(() => { process.env.TZ = original })
+```js
+// jest.config.js -- pin the zone HERE, not in the test file.
+//
+// Under jest-environment-jsdom, assigning process.env.TZ inside a beforeAll
+// does NOTHING: V8 has already cached the zone by the time a test body runs.
+// The suite then silently uses whatever the host machine is, so it passes on a
+// laptop in EDT and fails on UTC CI -- or worse, passes in UTC while asserting
+// nothing at all. jest.config.js is re-required per worker, so this lands.
+process.env.TZ = 'America/New_York'
 
+module.exports = { /* ... */ }
+```
+
+```ts
+// The test itself then needs no zone plumbing.
+describe('formatCloseDate', () => {
   it('renders the stored calendar day, not the day before it', () => {
     expect(formatCloseDate('2026-03-15')).toBe('Mar 15, 2026')
   })
@@ -97,13 +104,22 @@ describe('formatCloseDate', () => {
 })
 ```
 
+Verify the pin rather than assuming it. Break the fix on purpose and run the
+suite under several host zones: with `timeZone: 'UTC'` removed the assertions
+must fail under `TZ=UTC`, `TZ=America/New_York` **and** `TZ=Asia/Tokyo`. If they
+fail in one and pass in another, the host is still deciding and the test is
+worth nothing on the machine that matters.
+
 ## NOTES
 
-- Setting `process.env.TZ` inside a test file only works if it happens before
-  the first `Date` is constructed in that worker. Jest respects it in
-  `beforeAll` for these formatting calls; for anything that caches a formatter
-  at module scope, set `TZ` in the jest config or the runner's environment
-  instead.
+- **`process.env.TZ` in a `beforeAll` is a no-op under jsdom.** This was
+  originally written the other way round, and it was wrong. V8 caches the zone
+  before the test body runs, so the assignment changes nothing and the suite
+  quietly falls back to the host. Measured on a real repo: 132 dashboard tests
+  green on an EDT laptop, 6 of them failing the moment they ran under `TZ=UTC`,
+  with a `beforeAll` in the file claiming to have pinned the zone. Set it in
+  `jest.config.js` (or `TZ=... jest` in the script) and confirm by running the
+  broken code under three different host zones.
 - Better still, make the whole suite run somewhere awkward: `TZ=America/New_York`
   (a DST zone with a negative offset) catches this class where UTC never will.
   `Pacific/Kiritimati` (+14) catches the mirror-image bug where a local parse is
