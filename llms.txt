@@ -68,7 +68,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Stripe index](kb/stripe/llms.txt): Stripe Connect billing gotchas: stored catalog product and price IDs can belong to a previous connected account, so validate and repair ownership through the current account and make customer/subscription retries idempotent (1 entry)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas ; and an entrypoint-style `include` leaving any file nothing imports entirely out of the program, so tsc reports success on code it never parsed (50 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas ; an entrypoint-style `include` leaving any file nothing imports entirely out of the program, so tsc reports success on code it never parsed; and a date-only string parsing as UTC midnight, so a DATE column renders a day early for every user west of Greenwich while UTC-based CI stays green (51 entries)
 
 ### Biome
 - [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas: the useOptionalChain autofix is not behavior-preserving (`a && a.b` keeps a falsy receiver, `a?.b` yields undefined); a repo-wide reformat reflows enough lines to break an unrelated line-count CI gate; `check --only=<rule>` still runs the formatter and assists, so a rule-scoped CI guard that treats a non-zero exit as "my rule fired" confidently blames a provably clean rule for every formatting drift (3 entries)
