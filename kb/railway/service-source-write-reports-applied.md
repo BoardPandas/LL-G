@@ -99,6 +99,15 @@ two services (Web and Worker) in one project. Other writes through the plain MCP
 appeared in the same reads, so this is specific to the `source` block, not a broken
 connection or a stale-read artifact.
 
+**Positive control.** After toggling "Wait for CI" by hand in the dashboard, the same
+`get-service-config` call returned `"checkSuites": true` on both services. This is the
+part that closes the argument: the field is present in that read as `false` before, and
+as `true` after, so it is never omitted-when-set. The agent-side read that showed no
+`checkSuites` key was simply a different projection of the object, and reading "absent"
+as "applied" was inventing a rule to fit the desired conclusion. When two tools disagree
+about whether a field exists, that is a reason to distrust the read, not evidence about
+the write.
+
 **Adjacent:** an HTTP healthcheck path only belongs on services that actually serve HTTP.
 Setting one on a queue-worker service (BullMQ, Sidekiq, a bare consumer) with no listening
 port fails every deploy rather than protecting it. Where worker and web share
