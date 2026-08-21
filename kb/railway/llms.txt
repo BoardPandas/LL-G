@@ -5,3 +5,4 @@
 ## Entries
 
 - [`railway ssh` hangs on host-key verification in non-TTY shells](ssh-host-key-verification-hangs.md): `railway ssh --service X -- <cmd>` prompts to accept the host key and hangs forever in a non-interactive shell; use the system ssh client with StrictHostKeyChecking=accept-new and BatchMode=yes after registering a key. MEDIUM.
+- [Service source writes report "applied" and silently do not persist (checkSuites / Wait for CI)](service-source-write-reports-applied.md): the Railway agent's update tool accepts `{source: {checkSuites: true}}` and returns `"status": "applied"`, but the value never lands -- a fresh read still shows `false`, before and after committing staged changes; the agent's own read-back omits the key entirely, which invites the backwards inference that absence means success. Wait for CI is dashboard-only. Verify every config write by re-reading with the same read tool and quoting the field. HIGH.
