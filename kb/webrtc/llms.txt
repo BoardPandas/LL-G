@@ -1,0 +1,7 @@
+# WebRTC Gotchas
+
+> Known WebRTC patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [profile-level-id=42e01f caps you at 1280x720, and a hardware decoder answers a bigger picture with silence](h264-level-vs-desktop-resolution.md): The `1f` everyone copies is Level 3.1, MaxFS 3600 macroblocks, which is exactly 1280x720. A screen-share or remote-desktop stream that declares it and then encodes a real display is advertising a smaller picture than it sends: 1280x1024 is 42% over, 1080p is 127% over, 4K is 800% over. A hardware decoder sizes itself from the negotiated level before any bitstream arrives, is handed something larger, and produces no frames while raising no error and not falling back to software. The session is fully connected with bytesReceived climbing and framesDecoded stuck at 0, and it takes the mouse with it because a never-decoded video has videoWidth 0. Reproduces on a 1280x1024 terminal and not on a 1280x720 laptop, so it reads as "certain machines are broken". Raising the level is safe: profileLevelIDMatches compares only profile_idc and profile_iop, never the level byte. HIGH.
