@@ -37,7 +37,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### PowerShell
 
 
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (24 entries)
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (26 entries)
 
 
 
