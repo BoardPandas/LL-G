@@ -367,7 +367,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Cloudflare
 
 
-- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap: a TURN key's secret is returned only in the creation response and is unrecoverable afterwards, plus an upload trap: a presigned R2/S3 PUT from Go sends chunked transfer encoding unless ContentLength is set explicitly, and the Content-Type must match what was signed, plus a certificate trap: Universal SSL's wildcard matches exactly one label, so proxying a two-label subdomain aborts TLS with alert 40 and needs ACM to fix (14 entries)
+- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap: a TURN key's secret is returned only in the creation response and is unrecoverable afterwards, plus an upload trap: a presigned R2/S3 PUT from Go sends chunked transfer encoding unless ContentLength is set explicitly, and the Content-Type must match what was signed, plus a certificate trap: Universal SSL's wildcard matches exactly one label, so proxying a two-label subdomain aborts TLS with alert 40 and needs ACM to fix, plus a deploy trap: `wrangler deploy --dry-run` bundles but never EVALUATES the module, so an initialisation-order error passes typecheck, lint, build and the whole test suite and is rejected only at upload (15 entries)
 
 
 
