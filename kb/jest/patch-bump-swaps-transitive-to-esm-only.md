@@ -76,9 +76,32 @@ $ node -p "JSON.stringify(require('htmlparser2/package.json').exports['.'])"
 # v12: {"types":"...","default":"./dist/index.js"}                          <- ESM only
 ```
 
+```js
+// jest.config.js — TRANSFORM the ESM cluster instead of ignoring it. This is
+// the real fix; you do not need to move Jest to ESM.
+module.exports = {
+  // transformIgnorePatterns decides WHAT is eligible to be transformed.
+  // The leading (?!\\.pnpm/) is required by pnpm's layout: real paths are
+  // node_modules/.pnpm/htmlparser2@12.0.0/node_modules/htmlparser2/...,
+  // so the package name must be matched at the SECOND node_modules segment.
+  transformIgnorePatterns: [
+    'node_modules/(?!\\.pnpm/)(?!(htmlparser2|domhandler|domutils|entities|dom-serializer|domelementtype)/)'
+  ],
+  transform: {
+    // Required as well, and easy to miss: without a rule matching .js,
+    // nothing in node_modules is transformed no matter what you exempt above.
+    '^.+\\.js$': ['@swc/jest', {
+      jsc: { parser: { syntax: 'ecmascript' }, target: 'es2020' },
+      module: { type: 'commonjs' }
+    }],
+    '^.+\\.ts$': ['@swc/jest', { /* ...existing TS rule... */ }]
+  }
+}
+```
+
 ```jsonc
-// package.json — hold the direct dependency at the last version whose
-// transitive was still dual-format. Cheapest correct fix.
+// package.json — pinning back is a valid STOPGAP to unbreak CI in one line,
+// but it is not the fix. Land the transform and move on.
 {
   "dependencies": {
     "sanitize-html": "2.17.5"
@@ -94,11 +117,21 @@ $ node -p "JSON.stringify(require('htmlparser2/package.json').exports['.'])"
   here that reasoning is backwards, and the test runner is the only honest
   reporter in the set.
 
-- **Do not reach for `transformIgnorePatterns` or `moduleNameMapper` first.**
-  They cannot help when the dependency ships *no* CJS build at all — there is
-  nothing to map to and nothing Babel can rewrite that would give you one.
-  Genuinely fixing it forward means running Jest in ESM mode, which is its own
-  project. Pin, and schedule that separately.
+- **`transformIgnorePatterns` IS the fix. `moduleNameMapper` is not.** These get
+  conflated, and the distinction is the whole point: `moduleNameMapper` needs an
+  existing CJS build to redirect to, so it genuinely cannot help when the package
+  ships none. A transform does not — it compiles the ESM source down to CJS
+  itself, and needs nothing from the publisher. An earlier revision of this entry
+  claimed both were useless and that only a full Jest-ESM migration would do;
+  that was wrong and cost a scoping cycle. Adding six package names to
+  `transformIgnorePatterns` plus a `.js` transform rule fixed it with no
+  measurable change in suite runtime.
+
+- **Check whether your repo already solves this somewhere else.** The monorepo
+  that hit this had the exact technique in its dashboard Jest config, for the
+  react-markdown/micromark tree, written months earlier. The second occurrence
+  was scoped as a migration anyway because nobody looked. Grep your own configs
+  for `transformIgnorePatterns` before estimating.
 
 - **Do not "fix" it by overriding the transitive down a major** (`htmlparser2: ^10`
   while the parent declares `^12`). That silently pairs a package with a
