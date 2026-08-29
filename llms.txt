@@ -718,7 +718,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Jest
 
 
-- [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus two test-double traps that both end in a false green: a hand-written DB fake that omits a column makes the resulting bug look like correct behaviour, and a fake routing on a loose substring answers the wrong statement so the assertions pass against a query that never ran (3 entries)
+- [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus two test-double traps that both end in a false green: a hand-written DB fake that omits a column makes the resulting bug look like correct behaviour, and a fake routing on a loose substring answers the wrong statement so the assertions pass against a query that never ran; plus a dependency trap where a patch bump of a direct dependency swaps a transitive onto an ESM-only major and Jest is the only consumer that breaks (4 entries)
 
 
 
