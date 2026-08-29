@@ -109,7 +109,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Node.js
 
 
-- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas, including that process.exit() discards buffered stdout so a graceful shutdown that worked reads as one that was cut off -- and that wrappers rewrite the exit code, so neither the log nor the code proves what happened, while npx never forwards SIGTERM at all, so the handler never runs and the drain is skipped on every deploy behind a grace period that looks deliberately used; plus wiring attached per HTTP listener that is really per process, which delivers every message to an agent twice, and `npm run` as a start command doing exactly what npx does -- the default shape in every scaffolded project, where the `pid` field your logger already prints is the tell (16 entries)
+- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas, including that process.exit() discards buffered stdout so a graceful shutdown that worked reads as one that was cut off -- and that wrappers rewrite the exit code, so neither the log nor the code proves what happened, while npx never forwards SIGTERM at all, so the handler never runs and the drain is skipped on every deploy behind a grace period that looks deliberately used; plus wiring attached per HTTP listener that is really per process, which delivers every message to an agent twice, and `npm run` as a start command doing exactly what npx does -- the default shape in every scaffolded project, where the `pid` field your logger already prints is the tell (17 entries)
 
 
 
@@ -764,5 +764,3 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 
 - [DOM index](kb/dom/llms.txt): Framework-agnostic DOM gotchas: a modal builder that wires its buttons with `document.getElementById` puts BOTH handler sets on the first (buried) overlay when it runs twice and leaves the second -- painted on top at equal z-index and swallowing every click -- with zero listeners, so real `<button>`s visibly depress via `:active` while nothing runs, nothing is logged, and the unsettled Promise skips every `finally` after the await (1 entry)
-
-
