@@ -271,7 +271,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Better Auth
 
 
-- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (36 entries)
+- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (37 entries)
 
 
 
