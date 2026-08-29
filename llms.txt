@@ -136,7 +136,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### MCP (Model Context Protocol)
 
 
-- [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas: a process-global stdio server (state built from process.env) must be spawned one child per session in a multi-tenant host or it leaks tenant data; partial credential updates wipe OAuth-captured hidden keys; a tool can be defined+deployed yet never named in the tools/list the server advertises, so grepping the source is a false negative -- and the route it wraps usually still accepts X-API-Key; a tool description that calls a missing feature a filter ("excluded by default") so the gap reads as a switchable setting nobody examines; a streamable-HTTP session has no TTL and ends only on an explicit DELETE (a dropped SSE stream does not close it), so a vanished client pins its session and, for a stdio provider, its spawned child -- those live outside the V8 heap, so the container dies by cgroup OOM at exit 137 with no "JavaScript heap out of memory" banner, and that absence is the tell that heap profiling is the wrong tool (5 entries)
+- [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas: a process-global stdio server (state built from process.env) must be spawned one child per session in a multi-tenant host or it leaks tenant data; partial credential updates wipe OAuth-captured hidden keys; a tool can be defined+deployed yet never named in the tools/list the server advertises, so grepping the source is a false negative -- and the route it wraps usually still accepts X-API-Key; a tool description that calls a missing feature a filter ("excluded by default") so the gap reads as a switchable setting nobody examines; a streamable-HTTP session has no TTL and ends only on an explicit DELETE (a dropped SSE stream does not close it), so a vanished client pins its session and, for a stdio provider, its spawned child -- those live outside the V8 heap, so the container dies by cgroup OOM at exit 137 with no "JavaScript heap out of memory" banner, and that absence is the tell that heap profiling is the wrong tool; MCP-Protocol-Version arrived three revisions before the `_meta`/Mcp-Method rules it appears to gate, so gating on the header being PRESENT 400s most clients shipping today ("connected, but no tools"); a 404 for an unimplemented method is correct for 2026-07-28 and fatal for older clients, which read it as the cue to fall back to a transport a modern-only server does not serve; a protected resource must not advertise `openid` or `offline_access` in RFC 9728 metadata; and the v2 server SDK is `@modelcontextprotocol/server` -- `@modelcontextprotocol/sdk` is the v1 monolith, which is why hand-rolling the transport looks necessary and is not (9 entries)
 
 
 
@@ -271,7 +271,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Better Auth
 
 
-- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (34 entries)
+- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (36 entries)
 
 
 
