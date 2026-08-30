@@ -5,3 +5,4 @@
 ## Entries
 
 - [Reasoning models spiral silently in delta.reasoning](reasoning-model-spiral.md): Reasoning models stream chain-of-thought in `delta.reasoning` / `delta.reasoning_content`, separate from `delta.content` and `delta.tool_calls`. A spiral floods reasoning while emitting zero content and zero tool calls, so the turn looks like a silent empty hang until timeout. Count reasoning deltas and warn on the signature. HIGH.
+- [Confirmed tool actions need a durable continuation turn](confirmed-tool-actions-need-durable-continuation.md): Persisting a confirmed tool result without queuing a new model turn leaves the chat silently stopped at "action completed" even though the action succeeded. Store the result and idempotent continuation together, then follow that continuation stream. HIGH.
