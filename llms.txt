@@ -127,7 +127,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### LLM Integration
 
 
-- [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang (1 entry)
+- [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang; confirmed actions must persist an idempotent continuation turn or the chat silently stops after the tool succeeds (2 entries)
 
 
 
@@ -764,3 +764,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 
 - [DOM index](kb/dom/llms.txt): Framework-agnostic DOM gotchas: a modal builder that wires its buttons with `document.getElementById` puts BOTH handler sets on the first (buried) overlay when it runs twice and leaves the second -- painted on top at equal z-index and swallowing every click -- with zero listeners, so real `<button>`s visibly depress via `:active` while nothing runs, nothing is logged, and the unsettled Promise skips every `finally` after the await (1 entry)
+
