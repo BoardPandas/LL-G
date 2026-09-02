@@ -37,7 +37,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### PowerShell
 
 
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (26 entries)
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (27 entries)
 
 
 
@@ -385,7 +385,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### NinjaOne
 
 
-- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (8 entries)
+- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (10 entries)
 
 
 
