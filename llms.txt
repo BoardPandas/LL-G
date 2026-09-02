@@ -448,7 +448,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### React
 
 
-- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright: when a query key changes, `data ?? []` mints a new array each render and, once it reaches useReactTable, the grid re-renders forever without ever committing a frame -- React throws nothing, nothing is logged, and screenshots keep serving the last painted frame (8 entries)
+- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright: when a query key changes, `data ?? []` mints a new array each render and, once it reaches useReactTable, the grid re-renders forever without ever committing a frame -- React throws nothing, nothing is logged, and screenshots keep serving the last painted frame; and the TanStack Table v8->v9 upgrade moving column/row/header/cell APIs onto a shared prototype that reads its receiver from `this`, so a long-idiomatic detached `column.setFilterValue` reference is called with `this` undefined and throws inside the feature -- the signature is unchanged so tsc, lint and a stub-based test suite all stay green while every filter in the app silently stops applying (9 entries)
 
 
 
