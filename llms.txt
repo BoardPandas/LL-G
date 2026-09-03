@@ -538,7 +538,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Research
 
 
-- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas: an audiobook-derived fan wiki reconstructs every proper noun by ear (duplicate pages under variant spellings, an infobox name disagreeing with its own page title, a page admitting it is a misspelling while its body text keeps using the wrong name), and cross-checking a second fan source is false corroboration because it may have copied the first -- fix by scraping a verbatim-text corpus (Goodreads quotes + Kindle Notes & Highlights) and by proving corpus coverage with a control query before trusting any zero-hit result as disconfirmation (1 entry)
+- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas: an audiobook-derived fan wiki reconstructs every proper noun by ear (duplicate pages under variant spellings, an infobox name disagreeing with its own page title, a page admitting it is a misspelling while its body text keeps using the wrong name), and cross-checking a second fan source is false corroboration because it may have copied the first -- fix by scraping a verbatim-text corpus (Goodreads quotes + Kindle Notes & Highlights) and by proving corpus coverage with a control query before trusting any zero-hit result as disconfirmation; and, documenting an ADAPTATION, a model quotes the source novel verbatim and presents it as sourced, so every quoted line needs an 8-word fragment grepped back to the scraped corpus (2 entries)
 
 
 
