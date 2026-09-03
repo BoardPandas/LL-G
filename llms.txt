@@ -529,7 +529,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Architecture
 
 
-- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift, derived-cache currency, precondition gates that measure a different collection than the consumer processes, and conservation checks that cannot detect a misread source because both sides derive from it ; plus evolving a 1:1 relay into 1:N with no flag day, by stamping the sender's address server-side (the relay already knows which socket a frame came from) and broadcasting anything unaddressed, which makes all four deploy orders work from one change (12 entries)
+- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift, derived-cache currency, precondition gates that measure a different collection than the consumer processes, and conservation checks that cannot detect a misread source because both sides derive from it, and a singular field left writable on records whose consumer reads a per-variant array instead -- a 200 that changes nothing, after which auto-derived defaults produce plausible wrong content and the job reports zero failures ; plus evolving a 1:1 relay into 1:N with no flag day, by stamping the sender's address server-side (the relay already knows which socket a frame came from) and broadcasting anything unaddressed, which makes all four deploy orders work from one change (13 entries)
 
 
 
