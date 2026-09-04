@@ -127,7 +127,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### LLM Integration
 
 
-- [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang; confirmed actions must persist an idempotent continuation turn or the chat silently stops after the tool succeeds (2 entries)
+- [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang; confirmed actions must persist an idempotent continuation turn or the chat silently stops after the tool succeeds; a tool-argument type error is often the client stringifying it or a bound the schema never published, not the parameter (3 entries)
 
 
 
