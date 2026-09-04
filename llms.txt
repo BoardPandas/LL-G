@@ -226,7 +226,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Graph API (Microsoft)
 
 
-- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (43 entries)
+- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (44 entries)
 
 
 
