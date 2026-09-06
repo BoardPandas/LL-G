@@ -83,3 +83,27 @@ Zero means the build is stale, not that the import is wrong.
 - Related shape: `npm-install-contaminates-pnpm-node-modules.md`, where the
   installed tree disagrees with the lockfile and errors likewise blame the
   consumer.
+
+## CLEAN-CHECKOUT FAILURE HIDDEN BY A WARM WORKSPACE
+
+The reverse failure is equally misleading: an unrelated API build has already
+created `packages/contracts/dist`, so a dashboard's build and focused tests pass
+locally even though its own scripts never build that dependency. A fresh CI job
+fails with `Cannot find module` or Turbopack `Module not found`. Type-only imports
+can hide this omission until the first runtime schema or hash helper is added.
+An ancestor package's dependency can also make an undeclared app import resolve.
+
+Declare the existing contracts package in the consuming app's dependencies with
+`workspace:*`. Make that app's build, dev and test scripts explicitly build the
+contracts before starting their consumer. Include the contracts manifest before
+the frozen install and its source before the build in the app's Dockerfile.
+A successful job in a separate CI workspace does not prepare this job's files.
+
+Validate at least once with generated contracts output and the app build cache
+absent. Run the consuming app's script directly, without first running the root
+API build. Do not fix this by committing generated output or weakening checks.
+
+Observed in SupportForge issue 158: three dashboard suites and its production
+build passed locally but failed on clean runners; declaring and sequencing the
+workspace dependency fixed both. Existing clean CI jobs enforce the correction;
+no agent-configuration eval is needed for this technology gotcha.
