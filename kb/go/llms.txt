@@ -43,3 +43,5 @@
 - [Sequential redactors can invalidate each other's matches and leak fragments](sequential-redactors-invalidate-matches.md): A known-value replacement can erase a generic credential label, while a generic replacement can split a known multiline secret and expose its remainder; both orders pass isolated tests. Detect all sensitive spans on the original text, union them, then render once. HIGH.
 
 - [Preserve Windows process tokens when configuring flags](preserve-windows-process-token.md): Replacing SysProcAttr discards Token and silently launches as the service account; primary-token environments also require TOKEN_DUPLICATE. HIGH.
+
+- [A connected capture host does not mean its session UI is ready](session-ui-startup-readiness-race.md): Saved frame preferences race the user-session window startup; queue the latest toggle until ui.ready with a bounded timeout and teardown cancellation, while preserving immediate privacy refusals. MEDIUM.
