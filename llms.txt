@@ -208,7 +208,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### TypeScript
 
 
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas ; an entrypoint-style `include` leaving any file nothing imports entirely out of the program, so tsc reports success on code it never parsed; a glob `include` silently skipping every dot-directory, so config-as-code under `.railway/` or `.github/` is unchecked while tsconfig.json looks correct; a date-only string parsing as UTC midnight, so a DATE column renders a day early for every user west of Greenwich while UTC-based CI stays green; and `npx tsc` resolving the hoisted TypeScript rather than the second compiler a repo pins and its `type-check` script invokes by path, so a locally-green file fails CI on strictness the local binary never had (54 entries)
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas ; an entrypoint-style `include` leaving any file nothing imports entirely out of the program, so tsc reports success on code it never parsed; a glob `include` silently skipping every dot-directory, so config-as-code under `.railway/` or `.github/` is unchecked while tsconfig.json looks correct; a date-only string parsing as UTC midnight, so a DATE column renders a day early for every user west of Greenwich while UTC-based CI stays green; and `npx tsc` resolving the hoisted TypeScript rather than the second compiler a repo pins and its `type-check` script invokes by path, so a locally-green file fails CI on strictness the local binary never had (55 entries)
 
 
 
