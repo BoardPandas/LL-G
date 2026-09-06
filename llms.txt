@@ -1,767 +1,767 @@
-# LL-G Lessons Learned & Gotchas
-
-
-
-
-
-> Machine-readable knowledge base of coding gotchas. Before scripting, load this file, then load the llms.txt for each technology you are about to use. Load only HIGH-severity entries unless a specific topic is relevant.
-
-
-
-
-
-## Severity Legend
-
-
-
-
-
-HIGH = silent wrong output or hard-to-debug errors -- always load these
-
-
-MEDIUM = obvious failures (build errors, test failures) -- load when relevant
-
-
-LOW = style/convention, caught by linter -- skip unless explicitly asked
-
-
-
-
-
-## Technologies
-
-
-
-
-
-### PowerShell
-
-
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (27 entries)
-
-
-
-
-
-### Outlook
-
-
-- [Outlook index](kb/outlook/llms.txt): All Outlook gotchas (1 entry)
-
-
-
-
-
-### Email Triage
-
-
-- [Email Triage index](kb/email-triage/llms.txt): Platform-agnostic mail-classification tradecraft (Gmail, Graph, Exchange Online, IMAP): phishing tells are all negative, so a triage pass can never clear a message and falls back on urgency language that legitimate account-lifecycle mail shares with phishing by design -- unrendered ESP template tags (Braze/Liquid merge syntax) are the positive counter-tell that a message traversed a real campaign pipeline, the exact mirror of hashbuster padding (1 entry)
-
-
-
-
-
-### React Router
-
-
-- [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
-
-
-
-
-
-### Next.js
-
-
-- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (28 entries)
-
-
-
-
-
-### Express
-
-
-- [Express index](kb/express/llms.txt): Express (Node.js) gotchas: compression buffering SSE, rate-limit skips keyed on unvalidated headers, state-mutating GETs fired by email link scanners, routers left unauthenticated because a path-prefix list was read as enforcement, per-IP rate limits that throttle an entire NAT'd customer site rather than the abusive client, staying invisible until a restart makes the whole fleet reconnect at once, and literal routes made unreachable by a parameterised sibling registered above them, surfacing as a generic 500 that names nothing involved plus a guard chosen from the request body, which runs correctly while the route reads as unguarded to any census or reviewer, (7 entries)
-
-
-
-
-
-### Fastify
-
-
-- [Fastify index](kb/fastify/llms.txt): Fastify CORS and plugin-chain gotchas, both of which fail only in a browser while curl and server-side tests pass: writing through `reply.raw` hijacks the reply so `@fastify/cors`/helmet/compression stop applying to that route, and `@fastify/cors` defaults `methods` to GET,HEAD,POST so every PATCH/PUT/DELETE is refused at the preflight and never reaches the server -- no log, no network entry, just "Failed to fetch" (2 entries)
-
-
-
-
-
-### SSE
-
-
-- [SSE index](kb/sse/llms.txt): Server-Sent Events gotchas on both sides of the wire: closing EventSource in onerror permanently disables its automatic reconnect, and a deploy's 503 is terminal per spec, so real-time dies on every release with nothing thrown and no failed request -- the page simply stops updating until someone reloads (1 entry)
-
-
-
-
-
-### Node.js
-
-
-- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas, including that process.exit() discards buffered stdout so a graceful shutdown that worked reads as one that was cut off -- and that wrappers rewrite the exit code, so neither the log nor the code proves what happened, while npx never forwards SIGTERM at all, so the handler never runs and the drain is skipped on every deploy behind a grace period that looks deliberately used; plus wiring attached per HTTP listener that is really per process, which delivers every message to an agent twice, and `npm run` as a start command doing exactly what npx does -- the default shape in every scaffolded project, where the `pid` field your logger already prints is the tell (17 entries)
-
-
-
-
-
-### pnpm
-
-
-- [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas: legacy bundled types fail tsc under the symlinked store + nodenext; npm install in a pnpm repo leaves stale physical packages that shadow pnpm's versions until a full node_modules wipe; pnpm v11 silently ignores package.json `pnpm.overrides` (they moved to pnpm-workspace.yaml) and DOES re-resolve range overrides, unlike v10; the `--` that npm needs to pass flags through `run` is what breaks pass-through in pnpm, turning the flag into a positional argument ; and a stale workspace `dist/` producing a tsc "has no exported member" for a name plainly present in the package source, because bare npx gates skip the build the package script runs; and `--ignore-workspace` scoping `pnpm install` but NOT `pnpm run`, whose pre-run dep check resolves the nearest pnpm-workspace.yaml above cwd and installs the whole monorepo before a nested non-member package's build script; and `pnpm update` leaving the OLD version linked via orphaned `.pnpm` store dirs and the hoisted fallback, so the suite passes green against the package you just replaced; and pnpm 12 recording the package manager ITSELF inside the lockfile (a new first YAML document pinning pnpm plus all eight @pnpm/exe.* binaries), coupling pnpm-lock.yaml to `packageManager` in package.json -- so bumping the pnpm pin without regenerating the lockfile fails every `--frozen-lockfile` install, which is CI and every Docker stage, while a plain local `pnpm install` silently fixes it and reports success (8 entries)
-
-
-
-
-
-### LLM Integration
-
-
-- [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang; confirmed actions must persist an idempotent continuation turn or the chat silently stops after the tool succeeds; a tool-argument type error is often the client stringifying it or a bound the schema never published, not the parameter (3 entries)
-
-
-
-
-
-### MCP (Model Context Protocol)
-
-
-- [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas: a process-global stdio server (state built from process.env) must be spawned one child per session in a multi-tenant host or it leaks tenant data; partial credential updates wipe OAuth-captured hidden keys; a tool can be defined+deployed yet never named in the tools/list the server advertises, so grepping the source is a false negative -- and the route it wraps usually still accepts X-API-Key; a tool description that calls a missing feature a filter ("excluded by default") so the gap reads as a switchable setting nobody examines; a streamable-HTTP session has no TTL and ends only on an explicit DELETE (a dropped SSE stream does not close it), so a vanished client pins its session and, for a stdio provider, its spawned child -- those live outside the V8 heap, so the container dies by cgroup OOM at exit 137 with no "JavaScript heap out of memory" banner, and that absence is the tell that heap profiling is the wrong tool; MCP-Protocol-Version arrived three revisions before the `_meta`/Mcp-Method rules it appears to gate, so gating on the header being PRESENT 400s most clients shipping today ("connected, but no tools"); a 404 for an unimplemented method is correct for 2026-07-28 and fatal for older clients, which read it as the cue to fall back to a transport a modern-only server does not serve; a protected resource must not advertise `openid` or `offline_access` in RFC 9728 metadata; and the v2 server SDK is `@modelcontextprotocol/server` -- `@modelcontextprotocol/sdk` is the v1 monolith, which is why hand-rolling the transport looks necessary and is not (9 entries)
-
-
-
-
-
-### Tailwind CSS
-
-
-- [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (10 entries)
-
-
-
-
-
-### Base UI
-
-
-- [Base UI index](kb/base-ui/llms.txt): Base UI (@base-ui-components/react) gotchas: rc.0 imports from @base-ui-components/react, not the renamed @base-ui/react the docs already show — copied imports fail to resolve; verify parts/props from the installed types (1 entry)
-
-
-
-
-
-### Accessibility
-
-
-- [Accessibility index](kb/accessibility/llms.txt): Accessibility gotchas: `aria-modal` is a declaration the browser does not enforce and a JS Tab trap does not satisfy it (use `inert`, refcounted); `forced-colors` discards backgrounds so any state carried by a tint -- active nav, selection, focus, status pills -- goes invisible (2 entries)
-
-
-
-
-
-### CSS
-
-
-- [CSS index](kb/css/llms.txt): CSS rendering gotchas: @font-face never renders in iframes; runtime-injected sheets resolve equal specificity by load order; a canvas preview must mirror drawImage rather than object-fit:cover; a global `zoom` scale is media-gated so phone CSS is in real px; `:where()` has zero specificity so a rule written with it guarantees nothing; an undefined custom property is silent and resolves to `unset`, so color merely inherits while `transition` resets to none and never animates; a class borrowed from another section's code-split stylesheet resolves to nothing at all (7 entries)
-
-
-
-
-
-### Data Viz
-
-
-- [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas: one shared divisor across mixed-scale metrics silently clamps the larger-scale ones (1 entry)
-
-
-
-
-
-### QuickBooks Online (Intuit)
-
-
-- [QuickBooks index](kb/quickbooks/llms.txt): QuickBooks Online OAuth integration gotchas: production apps reject http://localhost redirect URIs (host the callback on a public HTTPS origin); authorize/token endpoints are identical for sandbox and production and realmId arrives as a callback query param, not in the token response (2 entries)
-
-
-
-
-
-### Stripe
-
-
-- [Stripe index](kb/stripe/llms.txt): Stripe Connect billing gotchas: stored catalog product and price IDs can belong to a previous connected account, so validate and repair ownership through the current account and make customer/subscription retries idempotent (1 entry)
-
-
-
-
-
-### TypeScript
-
-
-- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas ; an entrypoint-style `include` leaving any file nothing imports entirely out of the program, so tsc reports success on code it never parsed; a glob `include` silently skipping every dot-directory, so config-as-code under `.railway/` or `.github/` is unchecked while tsconfig.json looks correct; a date-only string parsing as UTC midnight, so a DATE column renders a day early for every user west of Greenwich while UTC-based CI stays green; and `npx tsc` resolving the hoisted TypeScript rather than the second compiler a repo pins and its `type-check` script invokes by path, so a locally-green file fails CI on strictness the local binary never had (55 entries)
-
-
-
-
-
-### Biome
-
-
-- [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas: the useOptionalChain autofix is not behavior-preserving (`a && a.b` keeps a falsy receiver, `a?.b` yields undefined); a repo-wide reformat reflows enough lines to break an unrelated line-count CI gate; `check --only=<rule>` still runs the formatter and assists, so a rule-scoped CI guard that treats a non-zero exit as "my rule fired" confidently blames a provably clean rule for every formatting drift (3 entries)
-
-
-
-
-
-### Graph API (Microsoft)
-
-
-- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (44 entries)
-
-
-
-
-
-### Exchange Online
-
-
-- [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas: app-only cert connects but cmdlets 401 until role propagation, Get-Mailbox masks it as a GetResponseHeader error; Get-InboxRule, Get-MessageTraceV2 and Get-EXOMailbox return a literal $null rather than an empty collection so @(...).Count is 1 on zero results -- and 1 on a genuine single result too, so the count cannot tell "no phishing mail from this sender" from "exactly one" -- which in compromised-account triage either invents a phantom rule or reports a mailbox holding a real malicious rule, or a real phishing message, as CLEAN ; removing a leaver from a distribution list can silently cut off the successor when the leaver mailbox forward was their only path to that mail; EXO membership/permission reads are replica-inconsistent and disagree with Graph seconds apart, so never gate a destructive action on an EXO pre-read; New-Mailbox -Shared takes the Entra UPN from the tenant DEFAULT accepted domain rather than -PrimarySmtpAddress, which stays invisible until the mailbox is converted to a sign-in account and the user is handed a login on the wrong org's domain; New-TenantAllowBlockListItems -Notes is capped at 100 characters and rejects the whole call rather than truncating, atomically across the -Entries array, so an unverified script reports a phishing domain as blocked while it stays fully deliverable ; Get-MessageTraceV2 rejects any window longer than 10 days and the usual try/catch turns that rejection into "this mailbox is dormant", which is the exact conclusion a usage audit was trying to reach; and the same $null-instead-of-empty-collection shape applies to PROPERTIES of returned objects, so a guard written as @($r.ForwardTo).Count -gt 0 is true for every inbox rule and inverts the safety gate it was meant to be (8 entries)
-
-
-
-
-
-### Salesforce
-
-
-- [Salesforce index](kb/salesforce/llms.txt): Salesforce SAML SSO, Experience Cloud, and JIT gotchas: SP entity ID is the org while ACS is per-site (AADSTS700016/50011); sandbox username suffix forces Federation ID matching; community JIT needs custom Apex and custom IdP attributes must map from the extension source or arrive empty (3 entries)
-
-
-
-
-
-### Entra External ID (CIAM)
-
-
-- [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas: workforce-blade lookalike trap, no email account-linking, MSA via custom OIDC only, fixed custom-IdP icons, branding asset limits (5 entries)
-
-
-
-
-
-### Godot / GDScript
-
-
-- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (11 entries)
-
-
-
-
-
-### Better Auth
-
-
-- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (37 entries)
-
-
-
-
-
-### Hono
-
-
-- [Hono index](kb/hono/llms.txt): Hono routing and middleware gotchas (1 entry)
-
-
-
-
-
-### Bash
-
-
-- [Bash index](kb/bash/llms.txt): All bash shell gotchas (13 entries)
-
-
-
-
-
-### Git
-
-
-- [Git index](kb/git/llms.txt): Git tooling gotchas: `git ls-files`-based check guards skip untracked files (false green); concurrent agents sharing one working tree silently revert your uncommitted edits, so isolate your commit in a worktree; `git clone --branch` rejects a bare commit SHA (exit 128) and dies silently under set -e, use init+fetch+checkout FETCH_HEAD; a hook tracked as mode 100644 is silently skipped so the guard never runs on any clone; a hand-assigned version read at task start goes stale mid-session, and a duplicate version can merge cleanly with no error; an identical version bump is dropped by rebase as already-applied, reporting success while the commit bumps nothing; verifying a GitHub write against raw.githubusercontent reporting a phantom lost update; refreshing the blob SHA just before a contents-API PUT defeats the lost-update protection it appears to provide; an interrupted rebase leaves HEAD detached so the next commit lands on no branch while the push reports "Everything up-to-date"; and staging by a content filter rather than `git add -A` still sweeps a concurrent session's in-progress work, because your own repo-wide rename writes the filter's match string into their files, after which a green local build only reflects their uncommitted file sitting in the shared tree (11 entries)
-
-
-
-
-
-### Linux
-
-
-- [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas: systemd service management, daemon restart policies, package-update restart races, post-reboot verification that only checks the front door and misses units that died at boot; XWayland reporting a viewable root window of the right size while refusing XGetImage for every region, because it never composites Wayland surfaces into the X root -- and setting both WAYLAND_DISPLAY and DISPLAY so detection that checks DISPLAY first picks a backend that connects and captures nothing; Xlib's default error handler calling exit(1) from inside a library, so one BadMatch kills a daemon with no panic, no stack trace and nothing in its own log; and dpkg, rpm and pacman each signalling "this is an upgrade" differently, so a maintainer script tested on Debian runs `systemctl disable` on every rpm upgrade and takes a distro family off the fleet with a zero exit status (6 entries)
-
-
-
-
-
-### cmd.exe (Windows)
-
-
-- [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
-
-
-
-
-
-### Windows
-
-
-- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas: disk-full remediation (Installer orphan cleanup with all-orphan guard, read-only attribute silently blocking deletes, DISM 0x800f080a pending-servicing, OneDrive placeholder size inflation; Dell SupportAssist SARemediation snapshot bloat + unbounded VSS; DeviceMetadataRetrievalClient dllhost CPU spin fixed by disabling DsmSvc); the NDIS HardwareInterface flag is not a physical-adapter test (Wi-Fi Direct virtuals set it, Bluetooth PAN does not) so use Win32_NetworkAdapter.PhysicalAdapter ; and OpenInputDesktop(GENERIC_ALL) being refused on the Winlogon/secure desktop, where keeping the stale attachment leaves BitBlt returning valid all-black frames and SendInput silently dropping every event and disabling WinHttpAutoProxySvc to mitigate WPAD collapsing Wcmsvc and WlanSvc, so every Wi-Fi client goes Dormant on APIPA at its next reboot with a healthy adapter and no PnP problem code, invisibly on the wired hosts where the remediation gets verified (15 entries)
-
-
-
-
-
-### Media Foundation (Windows)
-
-
-- [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from: MFT_MESSAGE_NOTIFY_END_OF_STREAM (0x10000002) comes *before* START_OF_STREAM (0x10000003), and transposing them leaves a synchronous MFT working perfectly while an asynchronous one accepts every media type and then never queues METransformNeedInput; and MFT_MESSAGE_SET_D3D_MANAGER is a precondition for media-type negotiation on any MF_SA_D3D11_AWARE transform, not a GPU-residency optimisation -- AMD, Microsoft DX12 and NVIDIA each fail differently without it, NVIDIA silently; and rebuilding a transform for a settings change leaks it unless the old one is closed first (dropping the reference releases nothing), while adding that close introduces a race unless every rebuild path is serialized, because a nil encoder pointer is what a capture loop on another thread reads as "build one" ; plus MF_MT_MAX_KEYFRAME_SPACING counting submitted frames rather than time, so a variable-rate screen capture fed by a 1fps repaint floor gets one keyframe a minute instead of one every two seconds (4 entries)
-
-
-
-
-
-### WebRTC
-
-- [WebRTC index](kb/webrtc/llms.txt): WebRTC negotiation gotchas: the profile-level-id everyone copies (42e01f) is Level 3.1, MaxFS 3600 macroblocks, which is exactly 1280x720 -- a screen-share declaring it while encoding a real display advertises a smaller picture than it sends (1280x1024 is 42% over, 1080p 127%, 4K 800%), and a hardware decoder sized from the negotiated level produces no frames at all, silently, giving a fully connected session with bytesReceived climbing and framesDecoded stuck at zero ; plus a paired signaling relay where evicting a duplicate peer fires the incumbent's own teardown and closes the pairing, ending the session for everybody rather than handing it to the newcomer; plus one-to-many screen share needing no SFU, since a single pion local track fans out to N PeerConnections from one capture and one encode, which is the only workable arrangement when the capture device is exclusive (3 entries)
-
-
-
-### Chrome
-
-
-- [Chrome index](kb/chrome/llms.txt): Google Chrome / Chromium gotchas: a staged-but-not-relaunched auto-update leaves the running instance unable to spawn service workers, so OWA hangs on skeleton placeholders while other sites load fine and it reads as a network/DNS/M365 fault (1 entry)
-
-
-
-
-
-### Teams & SharePoint
-
-
-- [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
-
-
-
-
-
-### Cloudflare
-
-
-- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap: a TURN key's secret is returned only in the creation response and is unrecoverable afterwards, plus an upload trap: a presigned R2/S3 PUT from Go sends chunked transfer encoding unless ContentLength is set explicitly, and the Content-Type must match what was signed, plus a certificate trap: Universal SSL's wildcard matches exactly one label, so proxying a two-label subdomain aborts TLS with alert 40 and needs ACM to fix, plus a deploy trap: `wrangler deploy --dry-run` bundles but never EVALUATES the module, so an initialisation-order error passes typecheck, lint, build and the whole test suite and is rejected only at upload (15 entries)
-
-
-
-
-
-### Docker
-
-
-- [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas: postgres:18 rejects the classic /var/lib/postgresql/data mount; `docker compose exec -T` drains an ssh heredoc's stdin and silently skips later commands (2 entries)
-
-
-
-
-
-### NinjaOne
-
-
-- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (10 entries)
-
-
-
-
-
-### SupportForge
-
-
-- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent heartbeat/executor pitfalls, ticket-API defaults that silently return the wrong rows (solved tickets in open queues, oldest-first message truncation, id-vs-MSP-number collisions), plus platform patterns like the portal backend outpacing its UI, dual-keyed ticket and membership queries that undercount when scoped by a single key, and org "user" counts that actually mean recent requesters, plus session rows and ownership records that outlive the process holding the socket they describe, and dual-key scoping rules that expire when the PSA they were written for is retired, plus integration-sync scoping and observability traps: a vendor with no per-record key cannot be fanned out over the org-mapping table without leaking every tenant's data, a "Connected" badge that only proves a credential row exists hides a sync that never ran, and a credential's updated_at stops meaning "a human saved this" once any path rotates the secret, plus a BFF trap on the dashboard side: it proxies per endpoint with no root catch-all, so a mounted, tested API route still returns Next's own 404 in the browser and never reaches the API, plus a multi-tenancy trap that only fires on rollout: a client row with NULL msp_id never matches `msp_id = $x`, so every agent on the shipped template clients is rejected with a logless 400 and silently leaves the fleet, plus a deployment trap: MigrationRunner applies any numbered .sql in database/migrations/, so a dry-run copy of a pending migration saved beside the original is applied for real and untransacted on the next boot, plus a settings trap that is worse than an unimplemented feature: the policy registry renders, saves and resolves a key that no code reads, so a customer records a decision, is told it took effect, and nothing acts on it, plus an error-mapping trap where the audited-write wrapper flattens a package's own typed refusal into a generic 500, so a policy decision the operator could fix reads as a platform fault, plus a pagination trap that only fires past a cap: a list endpoint that clamps limit and a detail page that scans one of its pages lose every record below the cut, so server-side search finds a person while the record it links to reports "Person not found" and blames tenancy or a missing profile, plus two silent-claim traps: a migration numbered from the repo's highest filename rather than the deployed schema_migrations high-water mark is merged, deployed and never applied, and a route module's `rmm-<nnn>-*` id in src/routes/rmm.ts is what the release gates read as "this package shipped", so a plausible name can report an unshipped transport as delivered, plus a dead-code trap that a hand-written test fixture certifies as working: a detection rule keyed on an attribute the inbound sanitizer strips (`class`) can never fire on a stored body, so Gmail quoted-reply collapsing never once ran in production while its unit test passed on markup the system never stores (25 entries)
-
-
-
-
-
-### Tauri
-
-
-- [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
-
-
-
-
-
-### NAudio
-
-
-- [NAudio index](kb/naudio/llms.txt): NAudio/WASAPI gotchas: MMDevice COM objects are apartment-bound with no marshaling proxy, so a UI-thread read of a background-thread device throws InvalidCastException E_NOINTERFACE and kills the app (1 entry)
-
-
-
-
-
-### Voicemeeter
-
-
-- [Voicemeeter index](kb/voicemeeter/llms.txt): VB-Audio Voicemeeter (Standard/Banana/Potato) and MacroButtons gotchas: the script language has no error channel, so bad requests are clamped or discarded silently -- Strip[i].Pan_x is documented -0.5 to +0.5 while third-party docs and AI answers repeat ±1.0, and because out-of-range values clamp rather than error the wrong range still sounds correct at the extremes and is only wrong in between, making "half left" fully left and stalling a stepped sweep at its midpoint (1 entry)
-
-
-
-
-
-### WPF
-
-
-- [WPF index](kb/wpf/llms.txt): WPF/XAML gotchas: TemplateBinding does no type conversion (templated controls render silently empty); Topmost=True overlays silently lose their Win32 z-band when another app window activates; SizeToContent windows positioned after Show() land at the default cascade spot on first show; DispatcherTimer is capped near 64 Hz by the default ~15.6 ms timer resolution unless timeBeginPeriod(1) is requested (4 entries)
-
-
-
-
-
-### Svelte
-
-
-- [Svelte index](kb/svelte/llms.txt): Svelte 5 component and runes gotchas (4 entries)
-
-
-
-
-
-### React
-
-
-- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright: when a query key changes, `data ?? []` mints a new array each render and, once it reaches useReactTable, the grid re-renders forever without ever committing a frame -- React throws nothing, nothing is logged, and screenshots keep serving the last painted frame; and the TanStack Table v8->v9 upgrade moving column/row/header/cell APIs onto a shared prototype that reads its receiver from `this`, so a long-idiomatic detached `column.setFilterValue` reference is called with `this` undefined and throws inside the feature -- the signature is unchanged so tsc, lint and a stub-based test suite all stay green while every filter in the app silently stops applying (9 entries)
-
-
-
-
-
-### Rust
-
-
-- [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, and Windows process-spawning gotchas: blocking std::fs on the Tokio executor; GUI-subsystem console-child window flashing (CREATE_NO_WINDOW); reqwest multipart masking connect/timeout errors as body errors; reqwest 0.13 TLS feature rename; cargo update silently holding a crate back when a newer version drops a required feature; rubato 4.0 API restructure and the process_all whole-clip contract; Double Metaphone code collisions requiring a string-similarity confirm guard; libsqlite3-sys 0.38 hidden MSRV (opaque E0658, toolchain 1.95+); eframe 0.34/0.35 App trait split + panel unification; egui companion-crate version lag; startup set_theme clobbering the persisted theme preference; CollapsingHeader controlled-open one-frame latch; ScrollArea::show_rows uniform-height assumption; join-on-drop JoinHandle deadlock via sender-holding field drop order; mean-RMS silence gate over a padded audio window being utterance-length dependent; cargo check skipping test targets so breaking renames look clean; egui's monitor_size being unusable for window placement (no monitor origin, no per-monitor DPI) so overlays land off-screen on multi-monitor/mixed-DPI desktops; winit keeping WS_CAPTION on "undecorated" windows, so SetWindowRgn makes Windows paint caption buttons over a borderless overlay; an egui deferred viewport being torn down only by a parent pass, so a self-repainting child strands an always-on-top window when the parent sleeps; edition-2021 disjoint closure capture taking the bare non-Send field out of a `unsafe impl Send` newtype when the closure destructures it; sibling ScrollAreas sharing one stored scroll offset because the default id salt is a literal and the id comes off the parent Ui, so a page switch opens scrolled where the previous page was; a self-animating child viewport starving its parent of WM_PAINT on Windows so the parent stops running passes entirely -- fine minimized (eframe paints those directly) but broken with the window open, and winit's request_redraw IS RedrawWindow(RDW_INTERNALPAINT) so kicking it yourself is a no-op; a hotkey chord tracker fed only by hook callbacks demoting itself to a single key when one key-up goes missing (Fn-layer F-key breaks, lock screen/UAC, sleep/resume), because the GetAsyncKeyState watchdog is armed only during a hold and a release lost after disengage leaves that member stuck held forever; and a WH_KEYBOARD_LL hook going silent while the app's OWN window has focus -- measured at 0 edges from the hook vs 22 from a GetAsyncKeyState poller with the window focused, and 41 from the hook once focus moved away -- while every diagnostic reports healthy and the same callback keeps working for a consumer exercised unfocused, so treat the hook as an incomplete record and poll real key state alongside it rather than hunting a mechanism Win32 does not document (24 entries)
-
-
-
-
-
-### Python
-
-
-- [Python index](kb/python/llms.txt): Python runtime and virtualenv gotchas: an old-style venv whose stdlib was removed by a distro release upgrade still passes `python -V` (which short-circuits before Py_Initialize), so it reads as healthy while every real invocation dies, and the breakage surfaces only at the next restart months after its cause (1 entry)
-
-
-
-
-
-### SQLite
-
-
-- [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
-
-
-
-
-
-### Postgres
-
-
-- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL and query gotchas: boot-applied schema.sql not retrofitting constraints onto existing tables; ORDER BY ... DESC defaulting to NULLS FIRST, silently inverting a boolean preference/tie-break over a nullable column; a column that is NULL corpus-wide making any filter on it silently match zero rows; an empty cached column being upstream-null with the real signal in a sibling field the ETL drops; an empty API result turning a `NOT (col = ANY($1))` reconciliation sweep into a full-table delete on a successful HTTP 200; a negated comparison dropping NULL rows out of both a filter and its inverse; a forward-only migration runner silently skipping a duplicate version forever once one of the colliding files has been applied; a nested BEGIN/COMMIT committing the outer transaction, so a "rolled back" verification harness silently writes to production; and a forward-only runner's high-water mark being stranded either by a concurrent session's higher number or by a rollback that drops its tables without retracting its schema_migrations row; avg(avg) silently dropping the sample weight when a tiered rollup is built from the tier below; and a nullable column in a composite unique key disabling ON CONFLICT dedup because NULL never equals NULL ; and a CHECK constraint or VARCHAR width narrower than the type it stores, which no typechecker can see and no fake-DB test suite can catch -- seen as a VARCHAR(16) whose own CHECK listed a 17-character value, so every row of the one class the column existed to distinguish would have failed to store; and a stranded migration being treated as a pending one -- giving it the next free version so it "finally runs" executes DDL written against a schema that has since moved on, and cleanup migrations are both the likeliest to lose a version race and the only kind whose late application deletes data, seen live as a year-old DROP TABLE against a re-adopted table holding ~3,944 rows and 15 code references; and a search predicate that matches a row not making it findable -- an exact-key arm ORed with fuzzy FTS/ILIKE arms is correct on membership and silent on ordering, so the caller's ORDER BY buries the exact match past the LIMIT and the search box returns unrelated rows, worst for the shortest most-typed terms (term `1` matched 4,078 rows with the exact match 378th); and rows in a DEFAULT partition making their own range partition uncreatable -- Postgres refuses `CREATE ... PARTITION OF ... FOR VALUES FROM (D)` while the default holds a row belonging to D, so a partition-maintenance job that fails once for ANY reason is self-perpetuating: the next run fails on a different error than the original, and the hole widens by one day every midnight with nothing in the running system able to clear it, since the drain needs ACCESS EXCLUSIVE on the parent (seen live at 348,730 rows / 72 MB across eight days and ten days of hourly runs with zero successes, hidden because the job asserted "no query threw" instead of reading the runway back, and had no entry in the scheduled-task registry the ops page renders from); and a partial unique index -- the `UNIQUE (a, b) WHERE deleted_at IS NULL` soft-delete idiom -- being unusable as an ON CONFLICT arbiter unless the statement repeats the predicate, raising 42P10 while `\d` and pg_indexes both show the index present and UNIQUE on exactly the listed columns, so it reads as a missing migration rather than an incomplete statement (on drizzle-orm the predicate is `where` inside `onConflictDoNothing`, not a row filter despite the name), and firing only when a row is really inserted, so it hides in seed/backfill paths until a rebuild aborts midway with earlier stages already committed (19 entries)
-
-
-
-
-
-### M365 Admin Center
-
-
-- [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
-
-
-
-
-
-### Intune
-
-
-- [Intune index](kb/intune/llms.txt): Microsoft Intune endpoint-policy + app-management gotchas: Azure VM Entra-ID RDP tenant-wide oauth2PermissionGrant; Autodesk ODIS Win32 packaging + cert app-only upload; Managed Google Play apps need interactive iframe approval (not app-only POST); mobileApp assignment needs publishingState=published; iosStoreApp can wedge in processing; win32LobApp create needs the unified `rules` collection (not the legacy `detectionRules`); windowsMobileMSI content files need a base64 MobileMsiData manifest; useDeviceContext must be omitted (not false) for per-System MSIs (8 entries)
-
-
-
-
-
-### Azure
-
-
-- [Azure index](kb/azure/llms.txt): Azure ARM and Az PowerShell gotchas: VNet gateway deploys, GatewaySubnet, service principal RBAC vs Graph scopes (2 entries)
-
-
-
-
-
-### Hyper-V
-
-
-- [Hyper-V index](kb/hyper-v/llms.txt): Hyper-V virtualization gotchas: Dynamic Memory's Startup RAM (not Minimum) is the host's boot-time allocation, so a VM still fails to start (event 3122) if Startup is left high (1 entry)
-
-
-
-
-
-### Architecture
-
-
-- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift, derived-cache currency, precondition gates that measure a different collection than the consumer processes, and conservation checks that cannot detect a misread source because both sides derive from it, and a singular field left writable on records whose consumer reads a per-variant array instead -- a 200 that changes nothing, after which auto-derived defaults produce plausible wrong content and the job reports zero failures ; plus evolving a 1:1 relay into 1:N with no flag day, by stamping the sender's address server-side (the relay already knows which socket a frame came from) and broadcasting anything unaddressed, which makes all four deploy orders work from one change (13 entries)
-
-
-
-
-
-### Research
-
-
-- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas: an audiobook-derived fan wiki reconstructs every proper noun by ear (duplicate pages under variant spellings, an infobox name disagreeing with its own page title, a page admitting it is a misspelling while its body text keeps using the wrong name), and cross-checking a second fan source is false corroboration because it may have copied the first -- fix by scraping a verbatim-text corpus (Goodreads quotes + Kindle Notes & Highlights) and by proving corpus coverage with a control query before trusting any zero-hit result as disconfirmation; and, documenting an ADAPTATION, a model quotes the source novel verbatim and presents it as sourced, so every quoted line needs an 8-word fragment grepped back to the scraped corpus (2 entries)
-
-
-
-
-
-### Cisco Meraki
-
-
-- [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (4 entries)
-
-
-
-
-
-### UniFi (Ubiquiti)
-
-
-- [UniFi index](kb/unifi/llms.txt): Ubiquiti UniFi Site Manager API coverage gotchas (1 entry)
-
-
-
-
-
-### Northflank
-
-
-- [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, the Postgres addon app role can't run DDL, deleting a "CI-only" secret from an unrestricted secret group silently disables the runtime feature that also reads it, a service's own pinned runtime env silently shadows the inherited group, and a GitHub org transfer updates vcsData.projectUrl (via GitHub's redirect) while leaving accountLogin on the old linked account that no longer has repo access, so auto-deploy stays broken and invisible until the next push, plus a networking trap that only surfaces from outside: a UDP load balancer source-NATs, so a STUN/TURN relay behind one answers correctly while reporting every client's address as the balancer's private one (11 entries)
-
-
-
-
-
-### Railway
-
-
-- [Railway index](kb/railway/llms.txt): Railway platform gotchas: `railway ssh` host-key verification hangs in non-TTY shells; service *source* writes (`checkSuites` / Wait for CI) report `"status": "applied"` through the Railway agent and silently never persist, while the agent's own read-back omits the key so absence reads as success -- that setting is dashboard-only; and `update-service` returning `updatedFields` that echo the REQUEST rather than the result, so a PARTLY-ignored write (preDeployCommand landed, restartPolicyType did not) reads as a full success and spot-checking one field confirms the wrong conclusion. Every config write needs verifying by re-reading each field by name, treating a missing key as not-written; plus `curl -I` (HEAD) reporting `x-cache: DYNAMIC` on a URL the edge caches fine over GET, so the reflexive way to check caching gives a confident false negative on every retry and sends you to fix a setting that was already correct (4 entries)
-
-
-
-
-
-### Claude Code
-
-
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas: hooks, skill frontmatter, settings.json, sandboxed Bash failures imitating a missing system dependency, worktree-isolated subagents silently working against stale content, scripted bulk edits landing on the wrong occurrence, mid-line @imports in CLAUDE.md being silently just prose, regex self-filters in Bash hooks misparsing git argv, blocking hooks losing their refusal message to discarded stdout, hook env vars that do not exist silently disabling a gate, PreToolUse guards that validate command text instead of file state, hooks resolving git state from the session's cwd rather than the repo the command targets, and a shared-template sync replacing settings.json wholesale so every repo-specific hook is unwired while its script stays on disk and fails open, and an argv-walking guard whose while-read loop never iterates because printf omitted the trailing newline, so the gate allows everything while looking healthy plus a concurrency trap where another session's git checkout moves the branch under you and reads as destroyed work, and a hook never inheriting the environment set on the command it is judging, so a documented `VAR=1 cmd` bypass is unreachable and the refusal keeps advertising it, and an incremental doc run whose base commit is recorded in two files that silently disagree, so the run either regenerates weeks of correct pages or skips the ones that changed while reporting success, and -- driving the CLI itself as a subprocess -- `--permission-prompt-tool` doing nothing without the SDK's `initialize` control_request, so a fully wired approval path can ship unable to fire once, (22 entries)
-
-
-
-
-
-### DNS
-
-
-- [DNS index](kb/dns/llms.txt): Provider-agnostic DNS gotchas: a dangling CNAME is not the same as a takeover-able one -- the test is whether a third party can make the target resolve to something they control, so NXDOMAIN targets inside a provider's own zone (lync.com, r2.dev) are harmless and grading on resolvability buries the one record that matters; and `NOERROR` from a zone's AUTHORITATIVE nameservers proves a name exists even when the queried type does not, reconstructing TXT/MX-only names that A/CNAME enumeration misses -- public recursors blur this and make every probe look like a hit (2 entries)
-
-
-
-
-
-### Windows DNS
-
-
-- [Windows DNS index](kb/windows-dns/llms.txt): Windows / Active Directory DNS gotchas: Legacy-scope AD-integrated zones serve stale records on other DCs until forced reload; aging enabled without scavenging lets client registrations pile up at the zone root until the bare domain resolves to 100+ addresses and DC location becomes a coin flip (NETLOGON 5719) (2 entries)
-
-
-
-
-
-### Active Directory
-
-
-- [Active Directory index](kb/active-directory/llms.txt): AD domain-controller and Group Policy gotchas: multi-homed DC + stale DNS corrupts a newly promoted DC's local KDC (sc_verify OK but klist 0x52e), unrepairable, rebuild required; OU names lie, so an OU-scoped GPO can both miss its targets and hit POS/kiosk machines, use an include-group filter and keep Authenticated Users at Read (MS16-072) (2 entries)
-
-
-
-
-
-### Prisma
-
-
-- [Prisma index](kb/prisma/llms.txt): Prisma ORM migration and drift-detection gotchas (1 entry)
-
-
-
-
-
-### WiX / MSI
-
-
-- [WiX index](kb/wix/llms.txt): WiX Toolset / Windows Installer gotchas: major-upgrade RemoveExistingProducts scheduling can wipe runtime-modified data files (config.json) despite NeverOverwrite (1 entry)
-
-
-
-
-
-### Antigravity CLI
-
-
-- [Antigravity CLI index](kb/antigravity-cli/llms.txt): Antigravity CLI (`agy`) gotchas: hangs headless without empty stdin, print mode has no machine-readable stdout, blog-documented flags don't exist, and a clean exit 0 does not mean the plan completed (2 entries)
-
-
-
-
-
-### Lumen (NaaS)
-
-
-- [Lumen index](kb/lumen/llms.txt): Lumen NaaS API gotchas: price-qualify (/Product/v1/price) 422s if partnerId is sent with masterSiteId, while quote still needs partnerId for DC circuits; customer-port qualify now also needs serviceId; the same "Not a NaaS Enabled Location" 422 is also a transient provider-wide fault that must be retried, not believed; EoD EVC bandwidth modify is UNI-to-UNI only (4 entries)
-
-
-
-
-
-### .NET Framework
-
-
-- [.NET Framework index](kb/dotnet-framework/llms.txt): Legacy .NET Framework (CLR 2.0/3.0/3.5, WCF, GAC) gotchas: a Server 2025 in-place upgrade can leave System.ServiceModel 3.0.0.0 staged in WinSxS but un-GAC'd, so legacy WCF services crash at launch with SCM 1053 and no app log; fix = DISM disable/enable NetFx3 from media + reboot (1 entry)
-
-
-
-
-
-### Drizzle ORM (drizzle-kit)
-
-
-- [drizzle-kit index](kb/drizzle-kit/llms.txt): drizzle-kit migration-generation gotchas: an explicit `schema` file array (not a glob) makes db:generate ignore barrel re-exports and silently emit no migration for a new table file (1 entry)
-
-
-
-
-
-### React Native
-
-
-- [React Native index](kb/react-native/llms.txt): React Native + Expo gotchas: TanStack Query interval polling never pauses in the background unless focusManager is wired to AppState; nesting a VirtualizedList in a ScrollView warns and defeats windowing (2 entries)
-
-
-
-
-
-### GitHub Actions
-
-
-- [GitHub Actions index](kb/github-actions/llms.txt): CI workflow gotchas: the Azure Trusted Signing action reads service-principal creds from its own inputs (not step env:, which it clobbers); adding a tag trigger changes the OIDC subject claim so no federated identity credential matches (AADSTS700213); and a tag-triggered release workflow that is independent of CI builds, signs and publishes on a commit whose tests are failing while reporting green, with `workflow_run` unable to gate it (CI has no tag trigger, and the job loses the tag to default-branch context) so the checks belong inline in the release job; and a repo transferred or renamed between GitHub orgs switching to immutable OIDC subject claims with numeric org/repo IDs, so a credential updated to the new plain org name still never matches (5 entries)
-
-
-
-
-
-### Zod
-
-
-- [Zod index](kb/zod/llms.txt): Zod schema-validation gotchas: .passthrough() relaxes unknown KEYS only, so a declared z.enum still rejects a newly supported value and the route handler never runs behind a generic 400 (1 entry)
-
-
-
-
-
-### Jonas
-
-
-- [Jonas index](kb/jonas/llms.txt): Jonas Club Management / Activity Management (JAM) gotchas: JAM users are provisioned in Club Management and pulled across by a manual gear import, never created in JAM, and a full active-user seat cap greys out New/Delete with no error message (1 entry)
-
-
-
-
-
-### npm
-
-
-- [npm index](kb/npm/llms.txt): npm workspace gotchas: `npm run <script> --workspaces` runs alphabetically, not in dependency order (npm sorts installs topologically but not script runs), so a workspace importing a sibling's build output can build before it exists; gitignored `dist/` surviving from earlier local runs hides it until a clean tree (CI, fresh clone, Docker) (1 entry)
-
-
-
-
-
-### Jest
-
-
-- [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus two test-double traps that both end in a false green: a hand-written DB fake that omits a column makes the resulting bug look like correct behaviour, and a fake routing on a loose substring answers the wrong statement so the assertions pass against a query that never ran; plus a dependency trap where a patch bump of a direct dependency swaps a transitive onto an ESM-only major and Jest is the only consumer that breaks (4 entries)
-
-
-
-
-
-### Vitest
-
-
-- [Vitest index](kb/vitest/llms.txt): Vitest gotchas: a dynamic `await import()` inside a test body charges Vite's resolve+transform of the whole module graph to that test's own per-test timeout, so a case doing a millisecond of work fails randomly under full-suite parallel load (import time can be 26x test time) while passing alone -- and the timed-out test keeps running, landing its calls on the next test's spies so one timeout reports as several unrelated failures; coverage without an explicit `include` measures only the files the tests imported, so untested files leave the denominator entirely and the percentage RISES when a module is dropped from the import graph (one repo read 84% over 91 of 284 files, 28% once set), and with no `thresholds` block the run cannot fail at all (2 entries)
-
-
-
-
-
-### Go
-
-
-- [Go index](kb/go/llms.txt): Go concurrency gotchas: reassigning a `sync.Once` to invalidate a compute-once cache hands an in-flight `Do()` a zeroed mutex and kills the process with `fatal error: sync: unlock of unlocked mutex` -- unrecoverable, timing-dependent, stack trace names the victim goroutine rather than the reassigning one, and `go vet` plus `gofmt` stay clean ; and a `_darwin`/`_windows` filename applying an implicit build constraint that `_test` stripping preserves, so a test file runs on no machine at all when CI has no runner for that GOOS -- go test says ok, vet is clean, and a test that never ran is indistinguishable from one that passes; plus two from writing a container muxer: sequence assertions ("element N+1 follows element N") are vacuously true on a one-element fixture and report PASS while hiding a real bug, and `stsd`/`dref` are ISO-BMFF full boxes that a generic box walker cannot descend into; plus a Wails binding marshalling with encoding/json, so the webview sees struct tags rather than Go field names and a mapper reading `URLs` silently drops every entry ; plus cgo's pkg-config flag allowlist rejecting ordinary flags shipped by well-known libraries (libpipewire's `-fno-strict-overflow`), failing the build with a flag name you never wrote and no hint that `CGO_CFLAGS_ALLOW` -- a regex, needed on build AND vet AND test AND wrappers like `wails build` -- is the remedy ; plus a pion video track created with an empty SDPFmtpLine, which can never exact-match (h264FMTP.Match needs packetization-mode on both sides) so it binds to the offerer's first H.264 and a packetization-mode=0 pick yields a connected track that decodes nothing, black forever with no error, taking the mouse with it ; plus an IPC client that writes inside its OnConnect callback before the read loop has started, which deadlocks a full-duplex pipe on Windows and loses the server's reply with nothing logged on either side ; plus the bill that arrives when you apply that `_darwin`/`_windows` fix to a package holding C: moving the pure logic into an untagged file makes a linux-only package build on every GOOS, its unconstrained `.c`/`.h` come with it, and on any cgo-enabled host where no selected Go file imports "C" that is a hard error naming a file you never touched -- while the cgo-free cross-compile you were fixing still passes, so the broken Mac build ships behind a green check (13 entries)
-
-
-
-
-
-### Web Security
-
-
-- [Web Security index](kb/web-security/llms.txt): Framework-agnostic browser/HTTP security-header gotchas: `Referrer-Policy: no-referrer` also strips the `Origin` header from navigational form POSTs (Fetch sends `Origin: null`), so pairing it with an Origin-matching CSRF guard refuses every form on your own site while GETs keep working -- `curl` cannot reproduce it and tests that set `Origin` by hand never see it; check `Sec-Fetch-Site` first; and once an app has more than one response-header map, the template and the headers are independent choices nothing ties together, so a route can return byte-perfect HTML in an envelope whose CSP blocks its own stylesheet (page renders unstyled), its own inline script (dead button), or that script's fetch -- 200 everywhere, one route affected, the only error in the user's console, and tests that check the header map and the rendered markup separately both stay green (2 entries)
-
-
-
-
-
-### Supabase
-
-
-- [Supabase index](kb/supabase/llms.txt): Supabase auth/sync gotchas: `onAuthStateChange` is not a login hook -- `_initialize()` emits `SIGNED_IN` from a detached `setTimeout` while `_emitInitialSession` emits `INITIAL_SESSION` on the microtask queue, so one OAuth login delivers both ~0ms apart deterministically (refocus and BroadcastChannel re-emit again), and because `_notifyAllSubscribers` awaits every callback, blocking one on a network call or a modal click stalls the emitter into the LockManager timeouts that tempt people into a no-op `lock` -- which removes the only serialization preventing the concurrent re-entry in the first place (1 entry)
-
-
-
-
-
-### DOM
-
-
-- [DOM index](kb/dom/llms.txt): Framework-agnostic DOM gotchas: a modal builder that wires its buttons with `document.getElementById` puts BOTH handler sets on the first (buried) overlay when it runs twice and leaves the second -- painted on top at equal z-index and swallowing every click -- with zero listeners, so real `<button>`s visibly depress via `:active` while nothing runs, nothing is logged, and the unsettled Promise skips every `finally` after the await (1 entry)
-
+# LL-G Lessons Learned & Gotchas
+
+
+
+
+
+> Machine-readable knowledge base of coding gotchas. Before scripting, load this file, then load the llms.txt for each technology you are about to use. Load only HIGH-severity entries unless a specific topic is relevant.
+
+
+
+
+
+## Severity Legend
+
+
+
+
+
+HIGH = silent wrong output or hard-to-debug errors -- always load these
+
+
+MEDIUM = obvious failures (build errors, test failures) -- load when relevant
+
+
+LOW = style/convention, caught by linter -- skip unless explicitly asked
+
+
+
+
+
+## Technologies
+
+
+
+
+
+### PowerShell
+
+
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (27 entries)
+
+
+
+
+
+### Outlook
+
+
+- [Outlook index](kb/outlook/llms.txt): All Outlook gotchas (1 entry)
+
+
+
+
+
+### Email Triage
+
+
+- [Email Triage index](kb/email-triage/llms.txt): Platform-agnostic mail-classification tradecraft (Gmail, Graph, Exchange Online, IMAP): phishing tells are all negative, so a triage pass can never clear a message and falls back on urgency language that legitimate account-lifecycle mail shares with phishing by design -- unrendered ESP template tags (Braze/Liquid merge syntax) are the positive counter-tell that a message traversed a real campaign pipeline, the exact mirror of hashbuster padding (1 entry)
+
+
+
+
+
+### React Router
+
+
+- [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
+
+
+
+
+
+### Next.js
+
+
+- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (28 entries)
+
+
+
+
+
+### Express
+
+
+- [Express index](kb/express/llms.txt): Express (Node.js) gotchas: compression buffering SSE, rate-limit skips keyed on unvalidated headers, state-mutating GETs fired by email link scanners, routers left unauthenticated because a path-prefix list was read as enforcement, per-IP rate limits that throttle an entire NAT'd customer site rather than the abusive client, staying invisible until a restart makes the whole fleet reconnect at once, and literal routes made unreachable by a parameterised sibling registered above them, surfacing as a generic 500 that names nothing involved plus a guard chosen from the request body, which runs correctly while the route reads as unguarded to any census or reviewer, (7 entries)
+
+
+
+
+
+### Fastify
+
+
+- [Fastify index](kb/fastify/llms.txt): Fastify CORS and plugin-chain gotchas, both of which fail only in a browser while curl and server-side tests pass: writing through `reply.raw` hijacks the reply so `@fastify/cors`/helmet/compression stop applying to that route, and `@fastify/cors` defaults `methods` to GET,HEAD,POST so every PATCH/PUT/DELETE is refused at the preflight and never reaches the server -- no log, no network entry, just "Failed to fetch" (2 entries)
+
+
+
+
+
+### SSE
+
+
+- [SSE index](kb/sse/llms.txt): Server-Sent Events gotchas on both sides of the wire: closing EventSource in onerror permanently disables its automatic reconnect, and a deploy's 503 is terminal per spec, so real-time dies on every release with nothing thrown and no failed request -- the page simply stops updating until someone reloads (1 entry)
+
+
+
+
+
+### Node.js
+
+
+- [Node.js index](kb/nodejs/llms.txt): All Node.js runtime gotchas, including that process.exit() discards buffered stdout so a graceful shutdown that worked reads as one that was cut off -- and that wrappers rewrite the exit code, so neither the log nor the code proves what happened, while npx never forwards SIGTERM at all, so the handler never runs and the drain is skipped on every deploy behind a grace period that looks deliberately used; plus wiring attached per HTTP listener that is really per process, which delivers every message to an agent twice, and `npm run` as a start command doing exactly what npx does -- the default shape in every scaffolded project, where the `pid` field your logger already prints is the tell (17 entries)
+
+
+
+
+
+### pnpm
+
+
+- [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas: legacy bundled types fail tsc under the symlinked store + nodenext; npm install in a pnpm repo leaves stale physical packages that shadow pnpm's versions until a full node_modules wipe; pnpm v11 silently ignores package.json `pnpm.overrides` (they moved to pnpm-workspace.yaml) and DOES re-resolve range overrides, unlike v10; the `--` that npm needs to pass flags through `run` is what breaks pass-through in pnpm, turning the flag into a positional argument ; and a stale workspace `dist/` producing a tsc "has no exported member" for a name plainly present in the package source, because bare npx gates skip the build the package script runs; and `--ignore-workspace` scoping `pnpm install` but NOT `pnpm run`, whose pre-run dep check resolves the nearest pnpm-workspace.yaml above cwd and installs the whole monorepo before a nested non-member package's build script; and `pnpm update` leaving the OLD version linked via orphaned `.pnpm` store dirs and the hoisted fallback, so the suite passes green against the package you just replaced; and pnpm 12 recording the package manager ITSELF inside the lockfile (a new first YAML document pinning pnpm plus all eight @pnpm/exe.* binaries), coupling pnpm-lock.yaml to `packageManager` in package.json -- so bumping the pnpm pin without regenerating the lockfile fails every `--frozen-lockfile` install, which is CI and every Docker stage, while a plain local `pnpm install` silently fixes it and reports success (8 entries)
+
+
+
+
+
+### LLM Integration
+
+
+- [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas: reasoning models spiral silently in delta.reasoning, looking like an empty hang; confirmed actions must persist an idempotent continuation turn or the chat silently stops after the tool succeeds; a tool-argument type error is often the client stringifying it or a bound the schema never published, not the parameter (3 entries)
+
+
+
+
+
+### MCP (Model Context Protocol)
+
+
+- [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas: a process-global stdio server (state built from process.env) must be spawned one child per session in a multi-tenant host or it leaks tenant data; partial credential updates wipe OAuth-captured hidden keys; a tool can be defined+deployed yet never named in the tools/list the server advertises, so grepping the source is a false negative -- and the route it wraps usually still accepts X-API-Key; a tool description that calls a missing feature a filter ("excluded by default") so the gap reads as a switchable setting nobody examines; a streamable-HTTP session has no TTL and ends only on an explicit DELETE (a dropped SSE stream does not close it), so a vanished client pins its session and, for a stdio provider, its spawned child -- those live outside the V8 heap, so the container dies by cgroup OOM at exit 137 with no "JavaScript heap out of memory" banner, and that absence is the tell that heap profiling is the wrong tool; MCP-Protocol-Version arrived three revisions before the `_meta`/Mcp-Method rules it appears to gate, so gating on the header being PRESENT 400s most clients shipping today ("connected, but no tools"); a 404 for an unimplemented method is correct for 2026-07-28 and fatal for older clients, which read it as the cue to fall back to a transport a modern-only server does not serve; a protected resource must not advertise `openid` or `offline_access` in RFC 9728 metadata; and the v2 server SDK is `@modelcontextprotocol/server` -- `@modelcontextprotocol/sdk` is the v1 monolith, which is why hand-rolling the transport looks necessary and is not (9 entries)
+
+
+
+
+
+### Tailwind CSS
+
+
+- [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (10 entries)
+
+
+
+
+
+### Base UI
+
+
+- [Base UI index](kb/base-ui/llms.txt): Base UI (@base-ui-components/react) gotchas: rc.0 imports from @base-ui-components/react, not the renamed @base-ui/react the docs already show — copied imports fail to resolve; verify parts/props from the installed types (1 entry)
+
+
+
+
+
+### Accessibility
+
+
+- [Accessibility index](kb/accessibility/llms.txt): Accessibility gotchas: `aria-modal` is a declaration the browser does not enforce and a JS Tab trap does not satisfy it (use `inert`, refcounted); `forced-colors` discards backgrounds so any state carried by a tint -- active nav, selection, focus, status pills -- goes invisible (2 entries)
+
+
+
+
+
+### CSS
+
+
+- [CSS index](kb/css/llms.txt): CSS rendering gotchas: @font-face never renders in iframes; runtime-injected sheets resolve equal specificity by load order; a canvas preview must mirror drawImage rather than object-fit:cover; a global `zoom` scale is media-gated so phone CSS is in real px; `:where()` has zero specificity so a rule written with it guarantees nothing; an undefined custom property is silent and resolves to `unset`, so color merely inherits while `transition` resets to none and never animates; a class borrowed from another section's code-split stylesheet resolves to nothing at all (7 entries)
+
+
+
+
+
+### Data Viz
+
+
+- [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas: one shared divisor across mixed-scale metrics silently clamps the larger-scale ones (1 entry)
+
+
+
+
+
+### QuickBooks Online (Intuit)
+
+
+- [QuickBooks index](kb/quickbooks/llms.txt): QuickBooks Online OAuth integration gotchas: production apps reject http://localhost redirect URIs (host the callback on a public HTTPS origin); authorize/token endpoints are identical for sandbox and production and realmId arrives as a callback query param, not in the token response (2 entries)
+
+
+
+
+
+### Stripe
+
+
+- [Stripe index](kb/stripe/llms.txt): Stripe Connect billing gotchas: stored catalog product and price IDs can belong to a previous connected account, so validate and repair ownership through the current account and make customer/subscription retries idempotent (1 entry)
+
+
+
+
+
+### TypeScript
+
+
+- [TypeScript index](kb/typescript/llms.txt): All TypeScript gotchas ; an entrypoint-style `include` leaving any file nothing imports entirely out of the program, so tsc reports success on code it never parsed; a glob `include` silently skipping every dot-directory, so config-as-code under `.railway/` or `.github/` is unchecked while tsconfig.json looks correct; a date-only string parsing as UTC midnight, so a DATE column renders a day early for every user west of Greenwich while UTC-based CI stays green; and `npx tsc` resolving the hoisted TypeScript rather than the second compiler a repo pins and its `type-check` script invokes by path, so a locally-green file fails CI on strictness the local binary never had (55 entries)
+
+
+
+
+
+### Biome
+
+
+- [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas: the useOptionalChain autofix is not behavior-preserving (`a && a.b` keeps a falsy receiver, `a?.b` yields undefined); a repo-wide reformat reflows enough lines to break an unrelated line-count CI gate; `check --only=<rule>` still runs the formatter and assists, so a rule-scoped CI guard that treats a non-zero exit as "my rule fired" confidently blames a provably clean rule for every formatting drift (3 entries)
+
+
+
+
+
+### Graph API (Microsoft)
+
+
+- [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (44 entries)
+
+
+
+
+
+### Exchange Online
+
+
+- [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas: app-only cert connects but cmdlets 401 until role propagation, Get-Mailbox masks it as a GetResponseHeader error; Get-InboxRule, Get-MessageTraceV2 and Get-EXOMailbox return a literal $null rather than an empty collection so @(...).Count is 1 on zero results -- and 1 on a genuine single result too, so the count cannot tell "no phishing mail from this sender" from "exactly one" -- which in compromised-account triage either invents a phantom rule or reports a mailbox holding a real malicious rule, or a real phishing message, as CLEAN ; removing a leaver from a distribution list can silently cut off the successor when the leaver mailbox forward was their only path to that mail; EXO membership/permission reads are replica-inconsistent and disagree with Graph seconds apart, so never gate a destructive action on an EXO pre-read; New-Mailbox -Shared takes the Entra UPN from the tenant DEFAULT accepted domain rather than -PrimarySmtpAddress, which stays invisible until the mailbox is converted to a sign-in account and the user is handed a login on the wrong org's domain; New-TenantAllowBlockListItems -Notes is capped at 100 characters and rejects the whole call rather than truncating, atomically across the -Entries array, so an unverified script reports a phishing domain as blocked while it stays fully deliverable ; Get-MessageTraceV2 rejects any window longer than 10 days and the usual try/catch turns that rejection into "this mailbox is dormant", which is the exact conclusion a usage audit was trying to reach; and the same $null-instead-of-empty-collection shape applies to PROPERTIES of returned objects, so a guard written as @($r.ForwardTo).Count -gt 0 is true for every inbox rule and inverts the safety gate it was meant to be (8 entries)
+
+
+
+
+
+### Salesforce
+
+
+- [Salesforce index](kb/salesforce/llms.txt): Salesforce SAML SSO, Experience Cloud, and JIT gotchas: SP entity ID is the org while ACS is per-site (AADSTS700016/50011); sandbox username suffix forces Federation ID matching; community JIT needs custom Apex and custom IdP attributes must map from the extension source or arrive empty (3 entries)
+
+
+
+
+
+### Entra External ID (CIAM)
+
+
+- [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas: workforce-blade lookalike trap, no email account-linking, MSA via custom OIDC only, fixed custom-IdP icons, branding asset limits (5 entries)
+
+
+
+
+
+### Godot / GDScript
+
+
+- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (11 entries)
+
+
+
+
+
+### Better Auth
+
+
+- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (37 entries)
+
+
+
+
+
+### Hono
+
+
+- [Hono index](kb/hono/llms.txt): Hono routing and middleware gotchas (1 entry)
+
+
+
+
+
+### Bash
+
+
+- [Bash index](kb/bash/llms.txt): All bash shell gotchas (13 entries)
+
+
+
+
+
+### Git
+
+
+- [Git index](kb/git/llms.txt): Git tooling gotchas: `git ls-files`-based check guards skip untracked files (false green); concurrent agents sharing one working tree silently revert your uncommitted edits, so isolate your commit in a worktree; `git clone --branch` rejects a bare commit SHA (exit 128) and dies silently under set -e, use init+fetch+checkout FETCH_HEAD; a hook tracked as mode 100644 is silently skipped so the guard never runs on any clone; a hand-assigned version read at task start goes stale mid-session, and a duplicate version can merge cleanly with no error; an identical version bump is dropped by rebase as already-applied, reporting success while the commit bumps nothing; verifying a GitHub write against raw.githubusercontent reporting a phantom lost update; refreshing the blob SHA just before a contents-API PUT defeats the lost-update protection it appears to provide; an interrupted rebase leaves HEAD detached so the next commit lands on no branch while the push reports "Everything up-to-date"; and staging by a content filter rather than `git add -A` still sweeps a concurrent session's in-progress work, because your own repo-wide rename writes the filter's match string into their files, after which a green local build only reflects their uncommitted file sitting in the shared tree (11 entries)
+
+
+
+
+
+### Linux
+
+
+- [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas: systemd service management, daemon restart policies, package-update restart races, post-reboot verification that only checks the front door and misses units that died at boot; XWayland reporting a viewable root window of the right size while refusing XGetImage for every region, because it never composites Wayland surfaces into the X root -- and setting both WAYLAND_DISPLAY and DISPLAY so detection that checks DISPLAY first picks a backend that connects and captures nothing; Xlib's default error handler calling exit(1) from inside a library, so one BadMatch kills a daemon with no panic, no stack trace and nothing in its own log; and dpkg, rpm and pacman each signalling "this is an upgrade" differently, so a maintainer script tested on Debian runs `systemctl disable` on every rpm upgrade and takes a distro family off the fleet with a zero exit status (6 entries)
+
+
+
+
+
+### cmd.exe (Windows)
+
+
+- [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
+
+
+
+
+
+### Windows
+
+
+- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas: disk-full remediation (Installer orphan cleanup with all-orphan guard, read-only attribute silently blocking deletes, DISM 0x800f080a pending-servicing, OneDrive placeholder size inflation; Dell SupportAssist SARemediation snapshot bloat + unbounded VSS; DeviceMetadataRetrievalClient dllhost CPU spin fixed by disabling DsmSvc); the NDIS HardwareInterface flag is not a physical-adapter test (Wi-Fi Direct virtuals set it, Bluetooth PAN does not) so use Win32_NetworkAdapter.PhysicalAdapter ; and OpenInputDesktop(GENERIC_ALL) being refused on the Winlogon/secure desktop, where keeping the stale attachment leaves BitBlt returning valid all-black frames and SendInput silently dropping every event and disabling WinHttpAutoProxySvc to mitigate WPAD collapsing Wcmsvc and WlanSvc, so every Wi-Fi client goes Dormant on APIPA at its next reboot with a healthy adapter and no PnP problem code, invisibly on the wired hosts where the remediation gets verified (16 entries)
+
+
+
+
+
+### Media Foundation (Windows)
+
+
+- [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from: MFT_MESSAGE_NOTIFY_END_OF_STREAM (0x10000002) comes *before* START_OF_STREAM (0x10000003), and transposing them leaves a synchronous MFT working perfectly while an asynchronous one accepts every media type and then never queues METransformNeedInput; and MFT_MESSAGE_SET_D3D_MANAGER is a precondition for media-type negotiation on any MF_SA_D3D11_AWARE transform, not a GPU-residency optimisation -- AMD, Microsoft DX12 and NVIDIA each fail differently without it, NVIDIA silently; and rebuilding a transform for a settings change leaks it unless the old one is closed first (dropping the reference releases nothing), while adding that close introduces a race unless every rebuild path is serialized, because a nil encoder pointer is what a capture loop on another thread reads as "build one" ; plus MF_MT_MAX_KEYFRAME_SPACING counting submitted frames rather than time, so a variable-rate screen capture fed by a 1fps repaint floor gets one keyframe a minute instead of one every two seconds (4 entries)
+
+
+
+
+
+### WebRTC
+
+- [WebRTC index](kb/webrtc/llms.txt): WebRTC negotiation gotchas: the profile-level-id everyone copies (42e01f) is Level 3.1, MaxFS 3600 macroblocks, which is exactly 1280x720 -- a screen-share declaring it while encoding a real display advertises a smaller picture than it sends (1280x1024 is 42% over, 1080p 127%, 4K 800%), and a hardware decoder sized from the negotiated level produces no frames at all, silently, giving a fully connected session with bytesReceived climbing and framesDecoded stuck at zero ; plus a paired signaling relay where evicting a duplicate peer fires the incumbent's own teardown and closes the pairing, ending the session for everybody rather than handing it to the newcomer; plus one-to-many screen share needing no SFU, since a single pion local track fans out to N PeerConnections from one capture and one encode, which is the only workable arrangement when the capture device is exclusive (3 entries)
+
+
+
+### Chrome
+
+
+- [Chrome index](kb/chrome/llms.txt): Google Chrome / Chromium gotchas: a staged-but-not-relaunched auto-update leaves the running instance unable to spawn service workers, so OWA hangs on skeleton placeholders while other sites load fine and it reads as a network/DNS/M365 fault (1 entry)
+
+
+
+
+
+### Teams & SharePoint
+
+
+- [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
+
+
+
+
+
+### Cloudflare
+
+
+- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap: a TURN key's secret is returned only in the creation response and is unrecoverable afterwards, plus an upload trap: a presigned R2/S3 PUT from Go sends chunked transfer encoding unless ContentLength is set explicitly, and the Content-Type must match what was signed, plus a certificate trap: Universal SSL's wildcard matches exactly one label, so proxying a two-label subdomain aborts TLS with alert 40 and needs ACM to fix, plus a deploy trap: `wrangler deploy --dry-run` bundles but never EVALUATES the module, so an initialisation-order error passes typecheck, lint, build and the whole test suite and is rejected only at upload (15 entries)
+
+
+
+
+
+### Docker
+
+
+- [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas: postgres:18 rejects the classic /var/lib/postgresql/data mount; `docker compose exec -T` drains an ssh heredoc's stdin and silently skips later commands (2 entries)
+
+
+
+
+
+### NinjaOne
+
+
+- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (10 entries)
+
+
+
+
+
+### SupportForge
+
+
+- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent heartbeat/executor pitfalls, ticket-API defaults that silently return the wrong rows (solved tickets in open queues, oldest-first message truncation, id-vs-MSP-number collisions), plus platform patterns like the portal backend outpacing its UI, dual-keyed ticket and membership queries that undercount when scoped by a single key, and org "user" counts that actually mean recent requesters, plus session rows and ownership records that outlive the process holding the socket they describe, and dual-key scoping rules that expire when the PSA they were written for is retired, plus integration-sync scoping and observability traps: a vendor with no per-record key cannot be fanned out over the org-mapping table without leaking every tenant's data, a "Connected" badge that only proves a credential row exists hides a sync that never ran, and a credential's updated_at stops meaning "a human saved this" once any path rotates the secret, plus a BFF trap on the dashboard side: it proxies per endpoint with no root catch-all, so a mounted, tested API route still returns Next's own 404 in the browser and never reaches the API, plus a multi-tenancy trap that only fires on rollout: a client row with NULL msp_id never matches `msp_id = $x`, so every agent on the shipped template clients is rejected with a logless 400 and silently leaves the fleet, plus a deployment trap: MigrationRunner applies any numbered .sql in database/migrations/, so a dry-run copy of a pending migration saved beside the original is applied for real and untransacted on the next boot, plus a settings trap that is worse than an unimplemented feature: the policy registry renders, saves and resolves a key that no code reads, so a customer records a decision, is told it took effect, and nothing acts on it, plus an error-mapping trap where the audited-write wrapper flattens a package's own typed refusal into a generic 500, so a policy decision the operator could fix reads as a platform fault, plus a pagination trap that only fires past a cap: a list endpoint that clamps limit and a detail page that scans one of its pages lose every record below the cut, so server-side search finds a person while the record it links to reports "Person not found" and blames tenancy or a missing profile, plus two silent-claim traps: a migration numbered from the repo's highest filename rather than the deployed schema_migrations high-water mark is merged, deployed and never applied, and a route module's `rmm-<nnn>-*` id in src/routes/rmm.ts is what the release gates read as "this package shipped", so a plausible name can report an unshipped transport as delivered, plus a dead-code trap that a hand-written test fixture certifies as working: a detection rule keyed on an attribute the inbound sanitizer strips (`class`) can never fire on a stored body, so Gmail quoted-reply collapsing never once ran in production while its unit test passed on markup the system never stores (25 entries)
+
+
+
+
+
+### Tauri
+
+
+- [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
+
+
+
+
+
+### NAudio
+
+
+- [NAudio index](kb/naudio/llms.txt): NAudio/WASAPI gotchas: MMDevice COM objects are apartment-bound with no marshaling proxy, so a UI-thread read of a background-thread device throws InvalidCastException E_NOINTERFACE and kills the app (1 entry)
+
+
+
+
+
+### Voicemeeter
+
+
+- [Voicemeeter index](kb/voicemeeter/llms.txt): VB-Audio Voicemeeter (Standard/Banana/Potato) and MacroButtons gotchas: the script language has no error channel, so bad requests are clamped or discarded silently -- Strip[i].Pan_x is documented -0.5 to +0.5 while third-party docs and AI answers repeat ±1.0, and because out-of-range values clamp rather than error the wrong range still sounds correct at the extremes and is only wrong in between, making "half left" fully left and stalling a stepped sweep at its midpoint (1 entry)
+
+
+
+
+
+### WPF
+
+
+- [WPF index](kb/wpf/llms.txt): WPF/XAML gotchas: TemplateBinding does no type conversion (templated controls render silently empty); Topmost=True overlays silently lose their Win32 z-band when another app window activates; SizeToContent windows positioned after Show() land at the default cascade spot on first show; DispatcherTimer is capped near 64 Hz by the default ~15.6 ms timer resolution unless timeBeginPeriod(1) is requested (4 entries)
+
+
+
+
+
+### Svelte
+
+
+- [Svelte index](kb/svelte/llms.txt): Svelte 5 component and runes gotchas (4 entries)
+
+
+
+
+
+### React
+
+
+- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright: when a query key changes, `data ?? []` mints a new array each render and, once it reaches useReactTable, the grid re-renders forever without ever committing a frame -- React throws nothing, nothing is logged, and screenshots keep serving the last painted frame; and the TanStack Table v8->v9 upgrade moving column/row/header/cell APIs onto a shared prototype that reads its receiver from `this`, so a long-idiomatic detached `column.setFilterValue` reference is called with `this` undefined and throws inside the feature -- the signature is unchanged so tsc, lint and a stub-based test suite all stay green while every filter in the app silently stops applying (9 entries)
+
+
+
+
+
+### Rust
+
+
+- [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, and Windows process-spawning gotchas: blocking std::fs on the Tokio executor; GUI-subsystem console-child window flashing (CREATE_NO_WINDOW); reqwest multipart masking connect/timeout errors as body errors; reqwest 0.13 TLS feature rename; cargo update silently holding a crate back when a newer version drops a required feature; rubato 4.0 API restructure and the process_all whole-clip contract; Double Metaphone code collisions requiring a string-similarity confirm guard; libsqlite3-sys 0.38 hidden MSRV (opaque E0658, toolchain 1.95+); eframe 0.34/0.35 App trait split + panel unification; egui companion-crate version lag; startup set_theme clobbering the persisted theme preference; CollapsingHeader controlled-open one-frame latch; ScrollArea::show_rows uniform-height assumption; join-on-drop JoinHandle deadlock via sender-holding field drop order; mean-RMS silence gate over a padded audio window being utterance-length dependent; cargo check skipping test targets so breaking renames look clean; egui's monitor_size being unusable for window placement (no monitor origin, no per-monitor DPI) so overlays land off-screen on multi-monitor/mixed-DPI desktops; winit keeping WS_CAPTION on "undecorated" windows, so SetWindowRgn makes Windows paint caption buttons over a borderless overlay; an egui deferred viewport being torn down only by a parent pass, so a self-repainting child strands an always-on-top window when the parent sleeps; edition-2021 disjoint closure capture taking the bare non-Send field out of a `unsafe impl Send` newtype when the closure destructures it; sibling ScrollAreas sharing one stored scroll offset because the default id salt is a literal and the id comes off the parent Ui, so a page switch opens scrolled where the previous page was; a self-animating child viewport starving its parent of WM_PAINT on Windows so the parent stops running passes entirely -- fine minimized (eframe paints those directly) but broken with the window open, and winit's request_redraw IS RedrawWindow(RDW_INTERNALPAINT) so kicking it yourself is a no-op; a hotkey chord tracker fed only by hook callbacks demoting itself to a single key when one key-up goes missing (Fn-layer F-key breaks, lock screen/UAC, sleep/resume), because the GetAsyncKeyState watchdog is armed only during a hold and a release lost after disengage leaves that member stuck held forever; and a WH_KEYBOARD_LL hook going silent while the app's OWN window has focus -- measured at 0 edges from the hook vs 22 from a GetAsyncKeyState poller with the window focused, and 41 from the hook once focus moved away -- while every diagnostic reports healthy and the same callback keeps working for a consumer exercised unfocused, so treat the hook as an incomplete record and poll real key state alongside it rather than hunting a mechanism Win32 does not document (24 entries)
+
+
+
+
+
+### Python
+
+
+- [Python index](kb/python/llms.txt): Python runtime and virtualenv gotchas: an old-style venv whose stdlib was removed by a distro release upgrade still passes `python -V` (which short-circuits before Py_Initialize), so it reads as healthy while every real invocation dies, and the breakage surfaces only at the next restart months after its cause (1 entry)
+
+
+
+
+
+### SQLite
+
+
+- [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
+
+
+
+
+
+### Postgres
+
+
+- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL and query gotchas: boot-applied schema.sql not retrofitting constraints onto existing tables; ORDER BY ... DESC defaulting to NULLS FIRST, silently inverting a boolean preference/tie-break over a nullable column; a column that is NULL corpus-wide making any filter on it silently match zero rows; an empty cached column being upstream-null with the real signal in a sibling field the ETL drops; an empty API result turning a `NOT (col = ANY($1))` reconciliation sweep into a full-table delete on a successful HTTP 200; a negated comparison dropping NULL rows out of both a filter and its inverse; a forward-only migration runner silently skipping a duplicate version forever once one of the colliding files has been applied; a nested BEGIN/COMMIT committing the outer transaction, so a "rolled back" verification harness silently writes to production; and a forward-only runner's high-water mark being stranded either by a concurrent session's higher number or by a rollback that drops its tables without retracting its schema_migrations row; avg(avg) silently dropping the sample weight when a tiered rollup is built from the tier below; and a nullable column in a composite unique key disabling ON CONFLICT dedup because NULL never equals NULL ; and a CHECK constraint or VARCHAR width narrower than the type it stores, which no typechecker can see and no fake-DB test suite can catch -- seen as a VARCHAR(16) whose own CHECK listed a 17-character value, so every row of the one class the column existed to distinguish would have failed to store; and a stranded migration being treated as a pending one -- giving it the next free version so it "finally runs" executes DDL written against a schema that has since moved on, and cleanup migrations are both the likeliest to lose a version race and the only kind whose late application deletes data, seen live as a year-old DROP TABLE against a re-adopted table holding ~3,944 rows and 15 code references; and a search predicate that matches a row not making it findable -- an exact-key arm ORed with fuzzy FTS/ILIKE arms is correct on membership and silent on ordering, so the caller's ORDER BY buries the exact match past the LIMIT and the search box returns unrelated rows, worst for the shortest most-typed terms (term `1` matched 4,078 rows with the exact match 378th); and rows in a DEFAULT partition making their own range partition uncreatable -- Postgres refuses `CREATE ... PARTITION OF ... FOR VALUES FROM (D)` while the default holds a row belonging to D, so a partition-maintenance job that fails once for ANY reason is self-perpetuating: the next run fails on a different error than the original, and the hole widens by one day every midnight with nothing in the running system able to clear it, since the drain needs ACCESS EXCLUSIVE on the parent (seen live at 348,730 rows / 72 MB across eight days and ten days of hourly runs with zero successes, hidden because the job asserted "no query threw" instead of reading the runway back, and had no entry in the scheduled-task registry the ops page renders from); and a partial unique index -- the `UNIQUE (a, b) WHERE deleted_at IS NULL` soft-delete idiom -- being unusable as an ON CONFLICT arbiter unless the statement repeats the predicate, raising 42P10 while `\d` and pg_indexes both show the index present and UNIQUE on exactly the listed columns, so it reads as a missing migration rather than an incomplete statement (on drizzle-orm the predicate is `where` inside `onConflictDoNothing`, not a row filter despite the name), and firing only when a row is really inserted, so it hides in seed/backfill paths until a rebuild aborts midway with earlier stages already committed (19 entries)
+
+
+
+
+
+### M365 Admin Center
+
+
+- [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
+
+
+
+
+
+### Intune
+
+
+- [Intune index](kb/intune/llms.txt): Microsoft Intune endpoint-policy + app-management gotchas: Azure VM Entra-ID RDP tenant-wide oauth2PermissionGrant; Autodesk ODIS Win32 packaging + cert app-only upload; Managed Google Play apps need interactive iframe approval (not app-only POST); mobileApp assignment needs publishingState=published; iosStoreApp can wedge in processing; win32LobApp create needs the unified `rules` collection (not the legacy `detectionRules`); windowsMobileMSI content files need a base64 MobileMsiData manifest; useDeviceContext must be omitted (not false) for per-System MSIs (8 entries)
+
+
+
+
+
+### Azure
+
+
+- [Azure index](kb/azure/llms.txt): Azure ARM and Az PowerShell gotchas: VNet gateway deploys, GatewaySubnet, service principal RBAC vs Graph scopes (2 entries)
+
+
+
+
+
+### Hyper-V
+
+
+- [Hyper-V index](kb/hyper-v/llms.txt): Hyper-V virtualization gotchas: Dynamic Memory's Startup RAM (not Minimum) is the host's boot-time allocation, so a VM still fails to start (event 3122) if Startup is left high (1 entry)
+
+
+
+
+
+### Architecture
+
+
+- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas: data ownership, redundant stores, source-of-truth drift, derived-cache currency, precondition gates that measure a different collection than the consumer processes, and conservation checks that cannot detect a misread source because both sides derive from it, and a singular field left writable on records whose consumer reads a per-variant array instead -- a 200 that changes nothing, after which auto-derived defaults produce plausible wrong content and the job reports zero failures ; plus evolving a 1:1 relay into 1:N with no flag day, by stamping the sender's address server-side (the relay already knows which socket a frame came from) and broadcasting anything unaddressed, which makes all four deploy orders work from one change (13 entries)
+
+
+
+
+
+### Research
+
+
+- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas: an audiobook-derived fan wiki reconstructs every proper noun by ear (duplicate pages under variant spellings, an infobox name disagreeing with its own page title, a page admitting it is a misspelling while its body text keeps using the wrong name), and cross-checking a second fan source is false corroboration because it may have copied the first -- fix by scraping a verbatim-text corpus (Goodreads quotes + Kindle Notes & Highlights) and by proving corpus coverage with a control query before trusting any zero-hit result as disconfirmation; and, documenting an ADAPTATION, a model quotes the source novel verbatim and presents it as sourced, so every quoted line needs an 8-word fragment grepped back to the scraped corpus (2 entries)
+
+
+
+
+
+### Cisco Meraki
+
+
+- [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (4 entries)
+
+
+
+
+
+### UniFi (Ubiquiti)
+
+
+- [UniFi index](kb/unifi/llms.txt): Ubiquiti UniFi Site Manager API coverage gotchas (1 entry)
+
+
+
+
+
+### Northflank
+
+
+- [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas: external-image upgrades don't auto-run Rails migrations, the Postgres addon app role can't run DDL, deleting a "CI-only" secret from an unrestricted secret group silently disables the runtime feature that also reads it, a service's own pinned runtime env silently shadows the inherited group, and a GitHub org transfer updates vcsData.projectUrl (via GitHub's redirect) while leaving accountLogin on the old linked account that no longer has repo access, so auto-deploy stays broken and invisible until the next push, plus a networking trap that only surfaces from outside: a UDP load balancer source-NATs, so a STUN/TURN relay behind one answers correctly while reporting every client's address as the balancer's private one (11 entries)
+
+
+
+
+
+### Railway
+
+
+- [Railway index](kb/railway/llms.txt): Railway platform gotchas: `railway ssh` host-key verification hangs in non-TTY shells; service *source* writes (`checkSuites` / Wait for CI) report `"status": "applied"` through the Railway agent and silently never persist, while the agent's own read-back omits the key so absence reads as success -- that setting is dashboard-only; and `update-service` returning `updatedFields` that echo the REQUEST rather than the result, so a PARTLY-ignored write (preDeployCommand landed, restartPolicyType did not) reads as a full success and spot-checking one field confirms the wrong conclusion. Every config write needs verifying by re-reading each field by name, treating a missing key as not-written; plus `curl -I` (HEAD) reporting `x-cache: DYNAMIC` on a URL the edge caches fine over GET, so the reflexive way to check caching gives a confident false negative on every retry and sends you to fix a setting that was already correct (4 entries)
+
+
+
+
+
+### Claude Code
+
+
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas: hooks, skill frontmatter, settings.json, sandboxed Bash failures imitating a missing system dependency, worktree-isolated subagents silently working against stale content, scripted bulk edits landing on the wrong occurrence, mid-line @imports in CLAUDE.md being silently just prose, regex self-filters in Bash hooks misparsing git argv, blocking hooks losing their refusal message to discarded stdout, hook env vars that do not exist silently disabling a gate, PreToolUse guards that validate command text instead of file state, hooks resolving git state from the session's cwd rather than the repo the command targets, and a shared-template sync replacing settings.json wholesale so every repo-specific hook is unwired while its script stays on disk and fails open, and an argv-walking guard whose while-read loop never iterates because printf omitted the trailing newline, so the gate allows everything while looking healthy plus a concurrency trap where another session's git checkout moves the branch under you and reads as destroyed work, and a hook never inheriting the environment set on the command it is judging, so a documented `VAR=1 cmd` bypass is unreachable and the refusal keeps advertising it, and an incremental doc run whose base commit is recorded in two files that silently disagree, so the run either regenerates weeks of correct pages or skips the ones that changed while reporting success, and -- driving the CLI itself as a subprocess -- `--permission-prompt-tool` doing nothing without the SDK's `initialize` control_request, so a fully wired approval path can ship unable to fire once, (22 entries)
+
+
+
+
+
+### DNS
+
+
+- [DNS index](kb/dns/llms.txt): Provider-agnostic DNS gotchas: a dangling CNAME is not the same as a takeover-able one -- the test is whether a third party can make the target resolve to something they control, so NXDOMAIN targets inside a provider's own zone (lync.com, r2.dev) are harmless and grading on resolvability buries the one record that matters; and `NOERROR` from a zone's AUTHORITATIVE nameservers proves a name exists even when the queried type does not, reconstructing TXT/MX-only names that A/CNAME enumeration misses -- public recursors blur this and make every probe look like a hit (2 entries)
+
+
+
+
+
+### Windows DNS
+
+
+- [Windows DNS index](kb/windows-dns/llms.txt): Windows / Active Directory DNS gotchas: Legacy-scope AD-integrated zones serve stale records on other DCs until forced reload; aging enabled without scavenging lets client registrations pile up at the zone root until the bare domain resolves to 100+ addresses and DC location becomes a coin flip (NETLOGON 5719) (2 entries)
+
+
+
+
+
+### Active Directory
+
+
+- [Active Directory index](kb/active-directory/llms.txt): AD domain-controller and Group Policy gotchas: multi-homed DC + stale DNS corrupts a newly promoted DC's local KDC (sc_verify OK but klist 0x52e), unrepairable, rebuild required; OU names lie, so an OU-scoped GPO can both miss its targets and hit POS/kiosk machines, use an include-group filter and keep Authenticated Users at Read (MS16-072) (2 entries)
+
+
+
+
+
+### Prisma
+
+
+- [Prisma index](kb/prisma/llms.txt): Prisma ORM migration and drift-detection gotchas (1 entry)
+
+
+
+
+
+### WiX / MSI
+
+
+- [WiX index](kb/wix/llms.txt): WiX Toolset / Windows Installer gotchas: major-upgrade RemoveExistingProducts scheduling can wipe runtime-modified data files (config.json) despite NeverOverwrite (1 entry)
+
+
+
+
+
+### Antigravity CLI
+
+
+- [Antigravity CLI index](kb/antigravity-cli/llms.txt): Antigravity CLI (`agy`) gotchas: hangs headless without empty stdin, print mode has no machine-readable stdout, blog-documented flags don't exist, and a clean exit 0 does not mean the plan completed (2 entries)
+
+
+
+
+
+### Lumen (NaaS)
+
+
+- [Lumen index](kb/lumen/llms.txt): Lumen NaaS API gotchas: price-qualify (/Product/v1/price) 422s if partnerId is sent with masterSiteId, while quote still needs partnerId for DC circuits; customer-port qualify now also needs serviceId; the same "Not a NaaS Enabled Location" 422 is also a transient provider-wide fault that must be retried, not believed; EoD EVC bandwidth modify is UNI-to-UNI only (4 entries)
+
+
+
+
+
+### .NET Framework
+
+
+- [.NET Framework index](kb/dotnet-framework/llms.txt): Legacy .NET Framework (CLR 2.0/3.0/3.5, WCF, GAC) gotchas: a Server 2025 in-place upgrade can leave System.ServiceModel 3.0.0.0 staged in WinSxS but un-GAC'd, so legacy WCF services crash at launch with SCM 1053 and no app log; fix = DISM disable/enable NetFx3 from media + reboot (1 entry)
+
+
+
+
+
+### Drizzle ORM (drizzle-kit)
+
+
+- [drizzle-kit index](kb/drizzle-kit/llms.txt): drizzle-kit migration-generation gotchas: an explicit `schema` file array (not a glob) makes db:generate ignore barrel re-exports and silently emit no migration for a new table file (1 entry)
+
+
+
+
+
+### React Native
+
+
+- [React Native index](kb/react-native/llms.txt): React Native + Expo gotchas: TanStack Query interval polling never pauses in the background unless focusManager is wired to AppState; nesting a VirtualizedList in a ScrollView warns and defeats windowing (2 entries)
+
+
+
+
+
+### GitHub Actions
+
+
+- [GitHub Actions index](kb/github-actions/llms.txt): CI workflow gotchas: the Azure Trusted Signing action reads service-principal creds from its own inputs (not step env:, which it clobbers); adding a tag trigger changes the OIDC subject claim so no federated identity credential matches (AADSTS700213); and a tag-triggered release workflow that is independent of CI builds, signs and publishes on a commit whose tests are failing while reporting green, with `workflow_run` unable to gate it (CI has no tag trigger, and the job loses the tag to default-branch context) so the checks belong inline in the release job; and a repo transferred or renamed between GitHub orgs switching to immutable OIDC subject claims with numeric org/repo IDs, so a credential updated to the new plain org name still never matches (5 entries)
+
+
+
+
+
+### Zod
+
+
+- [Zod index](kb/zod/llms.txt): Zod schema-validation gotchas: .passthrough() relaxes unknown KEYS only, so a declared z.enum still rejects a newly supported value and the route handler never runs behind a generic 400 (1 entry)
+
+
+
+
+
+### Jonas
+
+
+- [Jonas index](kb/jonas/llms.txt): Jonas Club Management / Activity Management (JAM) gotchas: JAM users are provisioned in Club Management and pulled across by a manual gear import, never created in JAM, and a full active-user seat cap greys out New/Delete with no error message (1 entry)
+
+
+
+
+
+### npm
+
+
+- [npm index](kb/npm/llms.txt): npm workspace gotchas: `npm run <script> --workspaces` runs alphabetically, not in dependency order (npm sorts installs topologically but not script runs), so a workspace importing a sibling's build output can build before it exists; gitignored `dist/` surviving from earlier local runs hides it until a clean tree (CI, fresh clone, Docker) (1 entry)
+
+
+
+
+
+### Jest
+
+
+- [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus two test-double traps that both end in a false green: a hand-written DB fake that omits a column makes the resulting bug look like correct behaviour, and a fake routing on a loose substring answers the wrong statement so the assertions pass against a query that never ran; plus a dependency trap where a patch bump of a direct dependency swaps a transitive onto an ESM-only major and Jest is the only consumer that breaks (4 entries)
+
+
+
+
+
+### Vitest
+
+
+- [Vitest index](kb/vitest/llms.txt): Vitest gotchas: a dynamic `await import()` inside a test body charges Vite's resolve+transform of the whole module graph to that test's own per-test timeout, so a case doing a millisecond of work fails randomly under full-suite parallel load (import time can be 26x test time) while passing alone -- and the timed-out test keeps running, landing its calls on the next test's spies so one timeout reports as several unrelated failures; coverage without an explicit `include` measures only the files the tests imported, so untested files leave the denominator entirely and the percentage RISES when a module is dropped from the import graph (one repo read 84% over 91 of 284 files, 28% once set), and with no `thresholds` block the run cannot fail at all (2 entries)
+
+
+
+
+
+### Go
+
+
+- [Go index](kb/go/llms.txt): Go concurrency gotchas: reassigning a `sync.Once` to invalidate a compute-once cache hands an in-flight `Do()` a zeroed mutex and kills the process with `fatal error: sync: unlock of unlocked mutex` -- unrecoverable, timing-dependent, stack trace names the victim goroutine rather than the reassigning one, and `go vet` plus `gofmt` stay clean ; and a `_darwin`/`_windows` filename applying an implicit build constraint that `_test` stripping preserves, so a test file runs on no machine at all when CI has no runner for that GOOS -- go test says ok, vet is clean, and a test that never ran is indistinguishable from one that passes; plus two from writing a container muxer: sequence assertions ("element N+1 follows element N") are vacuously true on a one-element fixture and report PASS while hiding a real bug, and `stsd`/`dref` are ISO-BMFF full boxes that a generic box walker cannot descend into; plus a Wails binding marshalling with encoding/json, so the webview sees struct tags rather than Go field names and a mapper reading `URLs` silently drops every entry ; plus cgo's pkg-config flag allowlist rejecting ordinary flags shipped by well-known libraries (libpipewire's `-fno-strict-overflow`), failing the build with a flag name you never wrote and no hint that `CGO_CFLAGS_ALLOW` -- a regex, needed on build AND vet AND test AND wrappers like `wails build` -- is the remedy ; plus a pion video track created with an empty SDPFmtpLine, which can never exact-match (h264FMTP.Match needs packetization-mode on both sides) so it binds to the offerer's first H.264 and a packetization-mode=0 pick yields a connected track that decodes nothing, black forever with no error, taking the mouse with it ; plus an IPC client that writes inside its OnConnect callback before the read loop has started, which deadlocks a full-duplex pipe on Windows and loses the server's reply with nothing logged on either side ; plus the bill that arrives when you apply that `_darwin`/`_windows` fix to a package holding C: moving the pure logic into an untagged file makes a linux-only package build on every GOOS, its unconstrained `.c`/`.h` come with it, and on any cgo-enabled host where no selected Go file imports "C" that is a hard error naming a file you never touched -- while the cgo-free cross-compile you were fixing still passes, so the broken Mac build ships behind a green check (13 entries)
+
+
+
+
+
+### Web Security
+
+
+- [Web Security index](kb/web-security/llms.txt): Framework-agnostic browser/HTTP security-header gotchas: `Referrer-Policy: no-referrer` also strips the `Origin` header from navigational form POSTs (Fetch sends `Origin: null`), so pairing it with an Origin-matching CSRF guard refuses every form on your own site while GETs keep working -- `curl` cannot reproduce it and tests that set `Origin` by hand never see it; check `Sec-Fetch-Site` first; and once an app has more than one response-header map, the template and the headers are independent choices nothing ties together, so a route can return byte-perfect HTML in an envelope whose CSP blocks its own stylesheet (page renders unstyled), its own inline script (dead button), or that script's fetch -- 200 everywhere, one route affected, the only error in the user's console, and tests that check the header map and the rendered markup separately both stay green (2 entries)
+
+
+
+
+
+### Supabase
+
+
+- [Supabase index](kb/supabase/llms.txt): Supabase auth/sync gotchas: `onAuthStateChange` is not a login hook -- `_initialize()` emits `SIGNED_IN` from a detached `setTimeout` while `_emitInitialSession` emits `INITIAL_SESSION` on the microtask queue, so one OAuth login delivers both ~0ms apart deterministically (refocus and BroadcastChannel re-emit again), and because `_notifyAllSubscribers` awaits every callback, blocking one on a network call or a modal click stalls the emitter into the LockManager timeouts that tempt people into a no-op `lock` -- which removes the only serialization preventing the concurrent re-entry in the first place (1 entry)
+
+
+
+
+
+### DOM
+
+
+- [DOM index](kb/dom/llms.txt): Framework-agnostic DOM gotchas: a modal builder that wires its buttons with `document.getElementById` puts BOTH handler sets on the first (buried) overlay when it runs twice and leaves the second -- painted on top at equal z-index and swallowing every click -- with zero listeners, so real `<button>`s visibly depress via `:active` while nothing runs, nothing is logged, and the unsettled Promise skips every `finally` after the await (1 entry)
+
