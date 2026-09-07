@@ -580,7 +580,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 
 
-- [Bash index](kb/bash/llms.txt): All bash shell gotchas (13 entries)
+- [Bash index](kb/bash/llms.txt): All bash shell gotchas (14 entries)
 
 
 
