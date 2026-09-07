@@ -47,3 +47,9 @@
 - [A connected capture host does not mean its session UI is ready](session-ui-startup-readiness-race.md): Saved frame preferences race the user-session window startup; queue the latest toggle until ui.ready with a bounded timeout and teardown cancellation, while preserving immediate privacy refusals. MEDIUM.
 
 - [A double-NUL-only REG_MULTI_SZ reader drops empty lists written by x/sys](multi-sz-empty-list-single-terminator.md): A strict double-NUL reader drops the empty array written by x/sys SetStringsValue; accept the single empty-list terminator and test the established writer. HIGH.
+
+- [Setting O_NONBLOCK after os.File construction can leave PTY reads outside the poller](pty-nonblock-after-file-construction.md): PTY Read returns EAGAIN before the prompt; construct a new File on a nonblocking descriptor and avoid later Fd calls. HIGH.
+
+- [macOS directory group membership can exceed the setgroups limit](macos-directory-groups-exceed-setgroups.md): Root-only credential switching fails EINVAL even though user-run tests pass; use native initgroups and verify the actual UID. HIGH.
+
+- [A strict symlink guard rejects macOS system directory aliases](macos-system-aliases-trip-symlink-guards.md): Normalize only the fixed var/tmp/etc aliases before handle-relative checks, while refusing customer-controlled links. HIGH.
