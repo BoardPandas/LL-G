@@ -1532,3 +1532,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 
 
+
+### macOS
+- [macOS index](kb/macos/llms.txt): Native macOS command and monitoring gotchas (1 entry)
