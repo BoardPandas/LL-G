@@ -55,3 +55,5 @@
 - [A strict symlink guard rejects macOS system directory aliases](macos-system-aliases-trip-symlink-guards.md): Normalize only the fixed var/tmp/etc aliases before handle-relative checks, while refusing customer-controlled links. HIGH.
 
 - [Fake installers still reach production staging unless tests override the directory](fake-provider-production-staging.md): Fake providers still reach protected ProgramData staging, causing unrelated outcome tests to fail or elevated tests to touch live ACLs; use a per-test directory and verify bytes and cleanup. MEDIUM.
+
+- [Parse observed softwareupdate history rather than invented status columns](softwareupdate-history-native-format.md): macOS 26 history has no Status column; invented fixtures hide unknown installed updates, while substring checks classify Install failed as installed. Verify observed headers, exact completion state and dates. HIGH.
