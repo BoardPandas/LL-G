@@ -40,3 +40,4 @@
 
 - [Go ModeSymlink does not identify every Windows reparse point](go-mode-symlink-misses-windows-reparse-points.md): Directory junctions can pass ModeSymlink checks; inspect FILE_ATTRIBUTE_REPARSE_POINT and test real junctions across browsing and mutation paths. HIGH.
 - [WinGet CLI is unsupported under LocalSystem](winget-system-powershell-module.md): An interactive winget.exe check does not validate service execution; use the supported Microsoft.WinGet.Client module for machine-wide packages under LocalSystem. HIGH.
+- [Package-manager identity is not installed Windows product identity](package-manager-versus-installed-product-identity.md): Source versions and locale publishers are not ARP identity; an outer bootstrapper digest does not pin its downloaded product. HIGH.
