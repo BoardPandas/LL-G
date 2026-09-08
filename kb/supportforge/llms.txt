@@ -33,3 +33,5 @@
 - [Capability name coverage misses schema-version filtering](capability-name-coverage-misses-schema-version.md): A heartbeat allowlist flattened to schema 1 silently discards an updated agent's schema 2 terminal capability; name-only tests and mocks pass while live launch asks for an upgrade. HIGH.
 
 - [Leased job batches can starve interactive device reads](leased-job-batches-starve-interactive-reads.md): Long-lived terminals block sequential leased batches while aggregate jobs say running; use bounded, separately authorized read streams and acknowledge batches. HIGH.
+
+- [Inventory and deployment detection disagree on the identity of the same application](inventory-detection-identity-drift.md): Independent identity normalization makes inventory-authored rules miss the same application on the endpoint, causing repeated installs and false post-install failures; share the production mapper and test rules through both consumers. HIGH.
