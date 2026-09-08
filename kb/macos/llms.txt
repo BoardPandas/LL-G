@@ -1,0 +1,7 @@
+# macOS Gotchas
+
+> Known macOS patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Unified log NDJSON includes completion and loss records](unified-log-ndjson-completion-and-loss.md): Recognize the completion summary and retain loss events before advancing monitoring cursors or accepting zero matches as healthy. HIGH.
