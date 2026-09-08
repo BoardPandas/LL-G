@@ -39,3 +39,4 @@
 - [ConPTY children can inherit redirected parent standard handles](conpty-inherits-parent-stdio.md): A valid pseudoconsole launch can send output to redirected parent stdout; explicitly use null standard handles and test native prompts. HIGH.
 
 - [Go ModeSymlink does not identify every Windows reparse point](go-mode-symlink-misses-windows-reparse-points.md): Directory junctions can pass ModeSymlink checks; inspect FILE_ATTRIBUTE_REPARSE_POINT and test real junctions across browsing and mutation paths. HIGH.
+- [WinGet CLI is unsupported under LocalSystem](winget-system-powershell-module.md): An interactive winget.exe check does not validate service execution; use the supported Microsoft.WinGet.Client module for machine-wide packages under LocalSystem. HIGH.
