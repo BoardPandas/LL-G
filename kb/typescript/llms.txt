@@ -74,3 +74,5 @@
 - [Zod 4.5 changes string bounds from UTF-16 units to code points](zod-45-string-length-code-points.md): A minor update silently changes string validation and breaks Go validators mirroring old UTF-16 bounds; pin exactly or migrate both sides with shared Unicode boundary fixtures. HIGH.
 
 - [Base64 character counts skip bytes in chunked transfers](base64-character-counts-skip-transfer-bytes.md): Padded Base64 overcounts decoded length and skips source bytes on the next read; advance by decoded bytes and verify the complete checksum. HIGH.
+
+- [Hash the persisted JSON representation, not the original JS object](hash-persisted-json-representation.md): Separate hashing and JSON storage serializers disagree on undefined properties, Dates, and sparse arrays; serialize once, hash the parsed stored value, and preserve legacy evidence. HIGH.
