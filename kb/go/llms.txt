@@ -57,3 +57,5 @@
 - [Fake installers still reach production staging unless tests override the directory](fake-provider-production-staging.md): Fake providers still reach protected ProgramData staging, causing unrelated outcome tests to fail or elevated tests to touch live ACLs; use a per-test directory and verify bytes and cleanup. MEDIUM.
 
 - [Parse observed softwareupdate history rather than invented status columns](softwareupdate-history-native-format.md): macOS 26 history has no Status column; invented fixtures hide unknown installed updates, while substring checks classify Install failed as installed. Verify observed headers, exact completion state and dates. HIGH.
+
+- [Live Windows event logs make cursor regression tests flaky and sometimes vacuous](live-event-log-cursor-test-flake.md): Live provider queries time out on CI while passing locally and may never exercise pagination; use fixed multi-page records with sub-millisecond timestamps against the production script and mutation-test the comparison. MEDIUM.
