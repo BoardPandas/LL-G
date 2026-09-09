@@ -25,3 +25,5 @@
 - [Reusing a parameter in a VARCHAR assignment and CASE comparison rejects completion](shared-parameter-case-varchar-inference.md): Mixed inference raises 42P08 and rolls terminal reports back while mocked tests pass; cast consistently and test real SQL against the original column types. HIGH.
 
 - [JavaScript timestamps are not durable event identities or revision tokens](javascript-timestamp-identity.md): Date truncates PostgreSQL microseconds, silently breaking optimistic guards and deduplication; retain exact revisions and use source event IDs. HIGH.
+
+- [Foreign-key inserts can deadlock a parent FOR UPDATE rollup](foreign-key-parent-rollup-deadlock.md): Concurrent child inserts hold KEY SHARE and deadlock when both upgrade the parent; use NO KEY UPDATE for non-key state changes. HIGH.
