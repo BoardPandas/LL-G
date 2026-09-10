@@ -1,6 +1,6 @@
 ---
-tech: graph-api
-tags: [teams, sharepoint, permissions, private-channels]
+tech: teams-sharepoint
+tags: [teams, sharepoint, permissions, private-channels, graph-api]
 severity: medium
 ---
 # Site permissions and channel permissions are separate

@@ -1,6 +1,6 @@
 ---
-tech: graph-api
-tags: [teams, sharepoint, files, copy, async, migration]
+tech: teams-sharepoint
+tags: [teams, sharepoint, files, copy, async, migration, graph-api]
 severity: medium
 ---
 # File copy between channels is async and folder-unaware

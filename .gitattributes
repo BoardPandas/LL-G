@@ -1,3 +1,17 @@
+# Normalize every text file to LF in the repository and on checkout.
+#
+# Without this rule the master index doubles in size every few commits. A Windows
+# write turns llms.txt into CRLF (one CR per line); a later tool that treats a lone
+# CR as a line terminator then rewrites it with LF only, and every CR becomes a real
+# blank line. llms.txt went 257 -> 768 -> 1537 -> 3071 lines that way while its
+# actual content stayed at ~173 lines, and "update one entry count" landed as a
+# 768-insertion/257-deletion diff that made blame on the index useless.
+#
+# eol=lf (not just text=auto) is the half that matters: it pins the CHECKOUT, so a
+# Windows clone with core.autocrlf=true cannot reintroduce the CRs.
+* text=auto eol=lf
+
 # Shell scripts must use LF line endings, or the shebang breaks on
-# Git Bash/macOS/Linux with "bad interpreter: bash\r".
+# Git Bash/macOS/Linux with "bad interpreter: bash
+".
 *.sh text eol=lf

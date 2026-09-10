@@ -62,15 +62,20 @@ if (!exists(MASTER) || !exists(KB)) {
 
 // Both bullet shapes. The optional severity prefix is what ninjaone and
 // teams-sharepoint use; everything else omits it.
-const BULLET = /^- (?:(?:HIGH|MEDIUM|LOW)\s+)?\[/gm;
+const BULLET = /^- (?:(?:HIGH|MEDIUM|LOW)\s+)?\[/;
+// A bullet whose link target leaves this folder is a deliberate cross-shelf
+// pointer, not an entry of this shelf. kb/hono/llms.txt carries one to
+// ../web-security/ and annotates it "Not counted as a Hono entry" -- counting it
+// made the reconciler demand a 2 the master index was right to call 1.
+const CROSS_SHELF = /\]\(\.\.\//;
 // Self-header some indexes carry: "## Entries (7)".
 const SELF_HEADER = /^## Entries \((\d+)\)/m;
 
 const plural = (n) => `(${n} ${n === 1 ? "entry" : "entries"})`;
 
-/** Count entries in one kb/<tech>/llms.txt. Returns null when the file is unreadable. */
+/** Count the entries a kb/<tech>/llms.txt owns, ignoring cross-shelf pointers. */
 function countEntries(text) {
-	return (text.match(BULLET) || []).length;
+	return text.split(/\r?\n/).filter((l) => BULLET.test(l) && !CROSS_SHELF.test(l)).length;
 }
 
 // ---- gather kb/ state -------------------------------------------------------

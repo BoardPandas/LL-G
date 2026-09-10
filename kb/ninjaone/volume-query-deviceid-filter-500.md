@@ -1,8 +1,9 @@
 ---
-title: ninjaone_query_volumes with deviceId filter returns HTTP 500
-severity: HIGH
+tech: ninjaone
+severity: high
 tags: [ninjaone, volumes, disks, api, rmm]
 ---
+# ninjaone_query_volumes with deviceId filter returns HTTP 500
 
 ## Problem
 

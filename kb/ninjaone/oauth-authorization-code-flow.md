@@ -1,8 +1,9 @@
 ---
-title: NinjaOne OAuth Authorization Code flow requires specific endpoint paths, client type, scopes, and query params
-severity: HIGH
+tech: ninjaone
+severity: high
 tags: [ninjaone, oauth, authorization-code, refresh-token, api, rmm]
 ---
+# NinjaOne OAuth Authorization Code flow requires specific endpoint paths, client type, scopes, and query params
 
 ## Problem
 

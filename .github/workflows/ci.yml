@@ -1,0 +1,32 @@
+name: CI
+
+# The knowledge base has no build and no tests, so nothing used to fail when an
+# entry stopped being reachable. Both guards below catch only SILENT defects --
+# an orphaned entry, a dangling shelf link, prose severity that no filter sees,
+# a master-index count that drifted, CR bloat doubling the index. Each one is
+# invisible from inside a session, which is why they accumulated unnoticed.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Knowledge-base guards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # No dependencies -- both scripts are Node built-ins only, so there is
+      # nothing to install and no lockfile to cache.
+      - name: Structure, reachability and frontmatter
+        run: node scripts/check-kb.mjs
+
+      - name: Master index counts agree with kb/
+        run: node scripts/check-index-counts.mjs
