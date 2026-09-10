@@ -1162,7 +1162,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 
 
-- [Bash index](kb/bash/llms.txt): All bash shell gotchas (14 entries)
+- [Bash index](kb/bash/llms.txt): All bash shell gotchas, including a `|` alternation stored in a variable being a literal pipe to `case` so the pattern matches nothing and a blocking gate silently stops gating (15 entries)
 
 
 
