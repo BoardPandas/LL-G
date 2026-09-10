@@ -1,5 +1,5 @@
 ---
-tech: tailwind-css
+tech: tailwind
 tags: [v4, vite, workspace, monorepo, pnpm, import, resolution]
 severity: high
 ---

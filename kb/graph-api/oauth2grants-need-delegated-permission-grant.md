@@ -1,7 +1,9 @@
+---
+tech: graph-api
+tags: [admin-consent, oauth2PermissionGrants, app-permissions, delegated-permissions, authorization-requestdenied]
+severity: high
+---
 # oauth2PermissionGrants writes need DelegatedPermissionGrant.ReadWrite.All
-
-**Severity**: HIGH
-**Tags**: graph-api, admin-consent, oauth2PermissionGrants, app-permissions
 
 ## Problem
 

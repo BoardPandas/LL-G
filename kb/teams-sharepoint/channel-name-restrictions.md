@@ -1,6 +1,6 @@
 ---
-tech: graph-api
-tags: [teams, channels, naming, rate-limits, migration]
+tech: teams-sharepoint
+tags: [teams, channels, naming, rate-limits, migration, graph-api]
 severity: medium
 ---
 # Channel display name restrictions and rate limits

@@ -1,0 +1,13 @@
+{
+  "name": "ll-g",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lessons Learned & Gotchas -- machine-readable knowledge base of coding gotchas",
+  "scripts": {
+    "check": "node scripts/check-kb.mjs && node scripts/check-index-counts.mjs",
+    "check:kb": "node scripts/check-kb.mjs",
+    "check:counts": "node scripts/check-index-counts.mjs",
+    "fix:counts": "node scripts/check-index-counts.mjs --fix"
+  },
+  "license": "MIT"
+}

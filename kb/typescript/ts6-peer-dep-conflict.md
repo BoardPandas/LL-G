@@ -1,7 +1,10 @@
+---
+tech: typescript
+tags: [typescript-eslint, eslint, peer-dependencies, npm-ci, eresolve, docker]
+severity: high
+---
 # TypeScript 6 peer dependency conflict with typescript-eslint
 
-**Severity:** HIGH
-**Tech:** TypeScript, ESLint, Docker
 **Added:** 2026-03-25
 
 ## The gotcha

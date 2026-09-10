@@ -1,6 +1,9 @@
+---
+tech: cmd
+tags: [wildcards, paths, for-loop, del, rd, user-profiles, disk-cleanup]
+severity: high
+---
 # cmd.exe does not support wildcards in the middle of a path
-
-## Severity: HIGH
 
 ## PROBLEM
 

@@ -1,8 +1,9 @@
 ---
-title: Script execution has TWO separate blockers - inline content (400) and a key without user context (403)
-severity: HIGH
+tech: ninjaone
+severity: high
 tags: [ninjaone, scripting, api, rmm, oauth, client-credentials, permissions]
 ---
+# Script execution has TWO separate blockers - inline content (400) and a key without user context (403)
 
 ## Problem
 

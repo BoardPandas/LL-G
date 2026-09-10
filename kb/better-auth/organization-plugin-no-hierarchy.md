@@ -1,7 +1,7 @@
 ---
 tech: better-auth
-severity: HIGH
-applies-to: [better-auth, multi-tenant-saas, hierarchical-tenancy]
+tags: [organization-plugin, multi-tenant-saas, hierarchical-tenancy, member-table, setActive, permissions]
+severity: high
 ---
 # BetterAuth organization plugin doesn't model hierarchical tenancy
 
