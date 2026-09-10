@@ -101,7 +101,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Bash index](kb/bash/llms.txt): bash shell scripting and pattern-matching gotchas (15 entries)
 
 ### Git
-- [Git index](kb/git/llms.txt): Git tooling gotchas (11 entries)
+- [Git index](kb/git/llms.txt): Git tooling gotchas (12 entries)
 
 ### Linux
 - [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (6 entries)
