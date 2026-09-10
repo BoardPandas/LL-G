@@ -107,7 +107,12 @@ for (const tech of techs) {
 		if (!linked.has(file)) errors.push(`${rel}: on disk but not listed in ${idxPath}, so it never loads.`);
 		entryCount++;
 
-		const body = readFileSync(rel, "utf8");
+		// Check the ENTRY files for CRs too, not just the indexes. An earlier version of
+		// this guard inspected only llms.txt, so a CR written into an entry passed clean --
+		// and entries are where almost all the content lives.
+		const rawEntry = readFileSync(rel);
+		if (rawEntry.includes(13)) errors.push(`${rel}: contains CR bytes (see .gitattributes).`);
+		const body = rawEntry.toString("utf8");
 		const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(body);
 		if (!fm) {
 			errors.push(`${rel}: no YAML frontmatter. Severity written as prose is invisible to "load all HIGH entries".`);
