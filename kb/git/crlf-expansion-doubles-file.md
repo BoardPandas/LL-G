@@ -79,6 +79,14 @@ git add --renormalize .
 
 ## NOTES
 
+- **`.gitattributes` governs git clients, not API writes.** A write through the GitHub
+  contents API (`PUT /repos/:owner/:repo/contents/:path`) stores the bytes you send
+  verbatim -- no clean filter runs -- so `eol=lf` cannot stop CRs entering that way.
+  Observed the day after the attribute was added to this repo: a knowledge-base helper
+  base64-encoded a Windows-written scratch file and put 24 CRs straight into a shelf
+  index, and only the CI check caught it. Normalize inside whatever tool performs the
+  API write (`tr -d '\r' < file | base64`), because the repo's own rules do not apply
+  on that path.
 - Verify with bytes, not appearance: `tr -cd '\r' < f | wc -c` and
   `grep -c '^[[:space:]]*$' f`. Any file whose blank lines outnumber its content lines has
   been through at least one cycle.
