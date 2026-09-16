@@ -14,7 +14,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ## Technologies
 
 ### PowerShell
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (27 entries)
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (28 entries)
 
 ### Outlook
 - [Outlook index](kb/outlook/llms.txt): All Outlook gotchas (1 entry)
