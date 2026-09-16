@@ -48,3 +48,5 @@
 
 - [A shared partition maximum does not enforce tenant deletion deadlines](shared-partition-maximum-retention.md): MAX retention preserves shorter-lived tenants too long; enforce tenant row expiry and drop only locked empty partitions. HIGH.
 - [Exact evidence counts can time out on a partitioned parent](bounded-partition-evidence-counts.md): Parallel-unsafe hold guards and parent-wide aggregates strand large tenants; count exact physical leaves in one read-only snapshot outside audit locks. HIGH.
+
+- [PGBouncer session mode holds an orphaned transaction's locks until something reaps it](pgbouncer-session-mode-orphaned-transaction.md): A client dying without a disconnect the pooler observes leaves its transaction and locks held indefinitely (client_idle_timeout and idle_transaction_timeout both default to 0); waiters then consume the app's entire connection pool and every feature fails at once while the server itself sits healthy and far below max_connections. HIGH.
