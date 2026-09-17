@@ -44,7 +44,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas (8 entries)
 
 ### LLM Integration
-- [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas (3 entries)
+- [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas (4 entries)
 
 ### MCP (Model Context Protocol)
 - [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas (9 entries)
