@@ -62,9 +62,10 @@ the DDL by taking the *same* lock the guard took:
 await withTransaction(pool, async tx => {
   await tx.query(`SET LOCAL lock_timeout = '3s'`);
 
-  // try, NOT pg_advisory_xact_lock -- see the deadlock below
-  const lock = await tx.query('SELECT pg_try_advisory_xact_lock($1,$2) AS ok', [NS, ID]);
-  if (lock.rows[0]?.ok !== true) return 'lock';
+  // Blocking, bounded by the lock_timeout above. NOT the `try` form: the batch
+  // job holds this lock for tens of seconds and a try is refused every time.
+  // A 55P03 here means stop working this table, not retry the next object.
+  await tx.query('SELECT pg_advisory_xact_lock($1,$2)', [NS, ID]);
 
   const held = await tx.query(
     `SELECT 1 FROM legal_holds
@@ -85,16 +86,29 @@ loses exactly the data it was created to preserve.
 
 ## NOTES
 
-**The ABBA deadlock this introduces.** The row sweep's `DELETE` takes
-RowExclusive on the table and *then* takes the advisory lock from inside the
-trigger. The DDL path wants the reverse: advisory lock first, then a table lock
-that conflicts with RowExclusive. Two jobs on the same schedule will deadlock.
-Postgres detects it and aborts one side with `40P01`, so it is survivable but
-recurring. Do not queue for either lock: `pg_try_advisory_xact_lock` plus
-`SET LOCAL lock_timeout`, and classify `55P03`, `40P01` and `42P01` as skips to
-be retried next pass rather than failures. Leave the acquisition-order reasoning
-in a comment -- it is exactly the kind of thing a later reader "simplifies" back
-into a blocking acquire.
+**Check the lock order before defending against a deadlock, and never with a
+try-lock.** The obvious worry is ABBA: the trigger takes the advisory lock from
+*inside* a `DELETE` that already holds RowExclusive, while the DDL path wants
+advisory first. But the batch job that does the deleting usually takes the
+advisory lock itself, up front, before it touches the table -- the same order as
+the DDL path -- so those two cannot deadlock at all. Read the sweep before
+believing the diagram. The real inversion is only a *bare* `DELETE` that fires
+the trigger without pre-acquiring.
+
+Defending against the imagined deadlock with `pg_try_advisory_xact_lock` is
+worse than the deadlock. Shipped exactly that: the batch job holds the shared
+lock through bulk deletion for tens of seconds per tenant, so a non-blocking
+acquire was refused on every one of 24 due partitions, every pass, permanently --
+and the job reported success each time, because refusing to act is not an error.
+Two hours of a correct-looking green job reclaiming nothing.
+
+Use `pg_advisory_xact_lock` under `SET LOCAL lock_timeout`, which does bound a
+waiting advisory lock and raises `55P03` (verified on PG 18). Classify `55P03`,
+`40P01` and `42P01` as skips retried next pass rather than failures, and on a
+`55P03` abandon the whole table rather than re-attempting per object -- the lock
+is held against all of them. Leave the acquisition-order reasoning in a comment,
+including which job takes what first, so the next reader checks rather than
+re-derives it.
 
 **Testing.** A pass-level check placed before the loop will mask a missing
 in-transaction one: every ordinary test passes with the atomic check deleted.
