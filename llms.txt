@@ -152,7 +152,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Svelte index](kb/svelte/llms.txt): Svelte 5 component and runes gotchas (4 entries)
 
 ### React
-- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright (10 entries)
+- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright (11 entries)
 
 ### Rust
 - [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, and Windows process-spawning gotchas (27 entries)
