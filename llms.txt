@@ -50,7 +50,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas (9 entries)
 
 ### Tailwind CSS
-- [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (9 entries)
+- [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (10 entries)
 
 ### Base UI
 - [Base UI index](kb/base-ui/llms.txt): Base UI (@base-ui-components/react) gotchas (1 entry)
