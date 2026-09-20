@@ -59,7 +59,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Accessibility index](kb/accessibility/llms.txt): Accessibility gotchas (2 entries)
 
 ### CSS
-- [CSS index](kb/css/llms.txt): CSS rendering gotchas (8 entries)
+- [CSS index](kb/css/llms.txt): CSS rendering gotchas (9 entries)
 
 ### Data Viz
 - [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas (1 entry)
