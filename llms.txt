@@ -134,7 +134,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (10 entries)
 
 ### SupportForge
-- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent execution and ticket-API behaviour (28 entries)
+- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent execution and ticket-API behaviour (29 entries)
 
 ### Tauri
 - [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
@@ -248,7 +248,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Vitest index](kb/vitest/llms.txt): Vitest gotchas (2 entries)
 
 ### Go
-- [Go index](kb/go/llms.txt): Go concurrency gotchas (21 entries)
+- [Go index](kb/go/llms.txt): Go concurrency gotchas (22 entries)
 
 ### Web Security
 - [Web Security index](kb/web-security/llms.txt): Framework-agnostic browser/HTTP security-header gotchas (2 entries)
