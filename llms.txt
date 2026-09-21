@@ -110,7 +110,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
 
 ### Windows
-- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (18 entries)
+- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (19 entries)
 
 ### Media Foundation (Windows)
 - [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from (4 entries)
