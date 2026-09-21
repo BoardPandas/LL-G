@@ -63,3 +63,13 @@ secure-desktop access, or EDR compatibility.
 - [OpenSCManager](https://learn.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-openscmanagerw)
 - [Windows errors 1300–1699](https://learn.microsoft.com/en-us/windows/win32/debug/system-error-codes--1300-1699-)
 - [CreateProcessWithTokenW](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithtokenw)
+
+Account spelling is another independent boundary. In the same lab, Scheduler
+registration with `.\\Admin` returned HRESULT 0x80070534 (ERROR_NONE_MAPPED).
+Using the verified full `MACHINE\\Admin` identity with the same binary advanced
+to registration access denied (0x80070005). The explicit-credential Scheduler
+connection also returned access denied before registration. Qualify local
+shorthand and resolve the account SID before requesting a password. Preserve
+the initial mapping failure as setup evidence instead of counting it as an
+elevation-policy verdict; never automatically retry a credential after a setup
+or transport error.
