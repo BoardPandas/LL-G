@@ -248,7 +248,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Vitest index](kb/vitest/llms.txt): Vitest gotchas (2 entries)
 
 ### Go
-- [Go index](kb/go/llms.txt): Go concurrency gotchas (22 entries)
+- [Go index](kb/go/llms.txt): Go concurrency gotchas (23 entries)
 
 ### Web Security
 - [Web Security index](kb/web-security/llms.txt): Framework-agnostic browser/HTTP security-header gotchas (2 entries)
