@@ -179,7 +179,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Hyper-V index](kb/hyper-v/llms.txt): Hyper-V virtualization gotchas (1 entry)
 
 ### Architecture
-- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas (14 entries)
+- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas (15 entries)
 
 ### Research
 - [Research index](kb/research/llms.txt): Source-verification and web-research gotchas (2 entries)
