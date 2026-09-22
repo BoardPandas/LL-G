@@ -73,3 +73,25 @@ shorthand and resolve the account SID before requesting a password. Preserve
 the initial mapping failure as setup evidence instead of counting it as an
 elevation-policy verdict; never automatically retry a credential after a setup
 or transport error.
+
+
+A separate attended-vendor observation on the same workgroup host demonstrated
+another path. From a genuine standard-user desktop, a helper started under the
+supplied ordinary administrator at medium integrity with Limited elevation.
+After the operator approved Windows UAC, a high-integrity Full administrator
+helper appeared, followed by a LocalSystem service and SYSTEM agents in the
+standard user's console session. The operator could then view and dismiss a
+subsequent UAC prompt remotely. The temporary service was removed at session end;
+the standard user's token and recorded UAC policy remained unchanged.
+
+This is behavioral evidence for an attended consent path, not identification of
+the vendor's exact API calls. Failed impersonation-only or no-prompt probes do
+not disprove this path. Evaluate a supplied-credential process launch followed
+by a Windows consent transition separately, with native token, service,
+secure-desktop and cleanup checks. Do not infer a no-interaction mechanism from
+technician-side credential entry when the endpoint user still approves UAC.
+[CreateProcessWithLogonW](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createprocesswithlogonw)
+and the [Shell runas verb](https://learn.microsoft.com/en-us/windows/win32/shell/launch)
+provide documented candidate building blocks, not proof of the observed vendor
+implementation. No-prompt support and other account/policy matrices remain
+separate unanswered questions.
