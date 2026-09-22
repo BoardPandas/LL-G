@@ -261,3 +261,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### macOS
 - [macOS index](kb/macos/llms.txt): Native macOS command and monitoring gotchas (1 entry)
+
+### Redis
+- [Redis index](kb/redis/llms.txt): Redis concurrency and shared-key ownership gotchas (1 entry)
