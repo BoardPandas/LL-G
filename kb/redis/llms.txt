@@ -1,0 +1,7 @@
+# Redis Gotchas
+
+> Known Redis patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Shared-key ownership checks must be atomic with deletion](atomic-owned-key-deletion.md): Separate ownership reads and deletes can erase a newer request during consumption or cleanup; test replacement between operations. HIGH.
