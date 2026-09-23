@@ -43,3 +43,5 @@
 - [Reinstatement does not refresh the agent's cached revoked certificate](reinstatement-keeps-revoked-certificate-cache.md): Server eligibility and legacy connections recover while an unexpired revoked certificate remains cached; refresh the approved device's public certificate cache and verify a new active serial plus old-certificate invalidity. HIGH.
 
 - [A cached certificate can survive a change to the canonical device identity](certificate-cache-survives-device-identity-change.md): An unexpired local certificate can belong to an older device while the current binding has none; compare serial ownership, perform approved public-cache recovery, and verify the exact current device. HIGH.
+
+- [Authentication acknowledgment must precede session discovery](authentication-ack-before-session-discovery.md): Slow preparation spends the auth window, late frames register dead sockets, and publication before acknowledgment lets commands overtake authentication; validate both sides and clean up late publication. HIGH.
