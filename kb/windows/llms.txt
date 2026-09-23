@@ -39,3 +39,5 @@
 - [Package-manager identity is not installed Windows product identity](package-manager-versus-installed-product-identity.md): Source versions and locale publishers are not ARP identity; an outer bootstrapper digest does not pin its downloaded product. HIGH.
 
 - [A full Admin logon token does not prove SCM access](full-admin-token-scm-access.md): Preserve token properties and each impersonation/SCM error; a full NETWORK token can still encounter error 1346, which is not a UAC-filtering diagnosis. HIGH.
+
+- [Stopping an already observed crashed service can falsely fail cleanup](service-stop-after-observed-crash.md): A redundant stop returned 1067 after the bound service exited; skip only the proved redundant control and still verify child exit and service absence. MEDIUM.
