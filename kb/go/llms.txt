@@ -52,3 +52,4 @@
 
 - [A transport cannot deliver its own rollback when it is unreachable](transport-cannot-deliver-own-rollback.md): Persisted endpoint selection cuts off configuration withdrawal and update discovery; verify independent recovery before rollout and never downgrade after authentication refusal. HIGH.
 - [Newest pion sub-modules need transport/v5 but webrtc/v4 4.2.20 does not build against it](pion-transport-v5-split.md): `go get -u` pulls v5-based ice/dtls/sctp/srtp/stun/mdns/datachannel/interceptor/turn that look like plain minor/patch updates and break compilation inside webrtc; `go get github.com/pion/transport/v5@none` rolls every dependent back to its newest v4-compatible release. HIGH.
+- [Successful JSON decoding does not establish HTTP success](http-status-before-json.md): HTTP error JSON silently decodes into a zero-valued success struct; check status first and verify refusals survive IPC while valid pending/empty results remain successful. HIGH.
