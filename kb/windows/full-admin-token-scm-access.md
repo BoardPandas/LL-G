@@ -95,3 +95,22 @@ and the [Shell runas verb](https://learn.microsoft.com/en-us/windows/win32/shell
 provide documented candidate building blocks, not proof of the observed vendor
 implementation. No-prompt support and other account/policy matrices remain
 separate unanswered questions.
+
+
+When staging a pre-consent helper, keep its executable protected against
+standard-user replacement while granting read/execute through an enabled SID.
+An Administrators-only allow ACE does not grant access to a filtered token whose
+Administrators group is deny-only. Granting authenticated users read/execute on
+a non-secret lab binary, while retaining SYSTEM/Administrators-only write access
+under a protected parent directory, permits the standard caller and the filtered
+helper to load the same artifact. Inspect the effective ACLs during native
+verification. This follows the documented
+[SID access-check rules](https://learn.microsoft.com/en-us/windows/win32/secauthz/sid-attributes-in-an-access-token);
+it is not a claim that the new consent probe has already passed on hardware.
+
+Keep cleanup evidence separate from request timeout. Killing an initiating
+helper does not establish that a broker-owned Windows UAC dialog was dismissed.
+An expiring fixed helper must refuse a late approval, and a timeout must remain
+inconclusive/cleanup-unverified until the operator checks the prompt and process
+exits. A process-local lifetime guard also cannot run while its new process is
+left suspended; avoid a suspended launch if startup does not require one.
