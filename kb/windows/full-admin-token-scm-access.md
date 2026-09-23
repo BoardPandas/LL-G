@@ -114,3 +114,23 @@ An expiring fixed helper must refuse a late approval, and a timeout must remain
 inconclusive/cleanup-unverified until the operator checks the prompt and process
 exits. A process-local lifetime guard also cannot run while its new process is
 left suspended; avoid a suspended launch if startup does not require one.
+
+A subsequent domain-joined Windows 11 build 26200 lab used
+CreateProcessWithLogonW(LOGON_WITH_PROFILE) from a verified standard-user
+console process. The selected domain Administrator account (domain SID ending
+in 500) produced an already elevated primary helper token: high integrity,
+Default elevation type, Administrators enabled, and the expected SID/session.
+A probe requiring a filtered Admin helper correctly stopped before its runas
+stage and terminated the owned helper. No Windows-consent response or elevated
+SCM access was measured. This is a successful credential-based process launch
+with an out-of-scope token for that consent experiment, not a credential failure,
+UAC denial, or proof of SCM/service feasibility. Do not predict this result for
+all domain accounts or assign its policy cause from an account name alone.
+
+For a filtered-to-elevated consent comparison, select an existing ordinary
+administrator subject to filtering and inspect the actual helper token again.
+Keep an already elevated launch as a separate measured branch; never silently
+relax the consent test's guard and label the resulting path consent-approved.
+Record PromptOnSecureDesktop as well: a host with value 0 cannot provide
+secure-desktop control evidence without a separately authorized configuration
+change and a new measurement.
