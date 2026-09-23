@@ -134,3 +134,21 @@ relax the consent test's guard and label the resulting path consent-approved.
 Record PromptOnSecureDesktop as well: a host with value 0 cannot provide
 secure-desktop control evidence without a separately authorized configuration
 change and a new measurement.
+
+The follow-up measured that already elevated domain-credential path separately.
+A fixed helper launched by CreateProcessWithLogonW(LOGON_WITH_PROFILE), from the
+same genuine standard user's console session, successfully opened and closed
+local SCM with SC_MANAGER_CREATE_SERVICE. Expected domain RID-500 SID/session,
+primary high-integrity elevated token, enabled Administrators, protected artifact
+hash and OS pipe peer PID were checked before authorizing the fixed access call.
+The helper exited zero, all handle cleanup passed, and an independent post-run
+baseline still had the standard token and SCM denied. Temporary launchers and
+helper processes were absent after cleanup.
+
+This is a positive credential-process/SCM result for one configuration, distinct
+from a filtered-to-elevated Windows-consent result. Keep a dedicated experiment
+and verdict for each branch. A consent-only guard can correctly reject an already
+elevated origin while the account remains usable for a separately authorized
+measurement. The positive handle now supports a scoped service-lifecycle lab;
+it still does not establish service startup, SYSTEM execution, desktop handoff,
+secure-desktop control, other account-policy matrices or production readiness.
