@@ -41,7 +41,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Node.js index](kb/nodejs/llms.txt): Node.js runtime gotchas: process exit and signal forwarding, stdout draining, per-process vs per-listener wiring (17 entries)
 
 ### pnpm
-- [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas (8 entries)
+- [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas (9 entries)
 
 ### LLM Integration
 - [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas (4 entries)
