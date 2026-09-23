@@ -1,6 +1,6 @@
 ---
 tech: pnpm
-tags: [pnpm, update, lockfile, node_modules, store, hoisting, stale, false-green, testing, monorepo]
+tags: [pnpm, update, prune, orphan, lockfile, node_modules, store, hoisting, stale, false-green, testing, monorepo]
 severity: high
 ---
 # `pnpm update` leaves the old version resolvable, so the suite passes green against the package you just replaced
@@ -51,7 +51,11 @@ ls node_modules/.pnpm | grep -oE '^prosemirror-model@[0-9.]+' | sort -u
 grep -oE 'prosemirror-model@[0-9.]+' pnpm-lock.yaml | sort -u
 readlink node_modules/.pnpm/node_modules/prosemirror-model   # hoisted fallback
 
-# If they disagree, --force will not help. Only a wipe + lockfile install will.
+# If they disagree, --force will not help. Try prune first: on pnpm 12.5.1 it
+# removed orphaned .pnpm dirs even while printing "Already up to date".
+pnpm prune
+# Re-run the comparison above. Still an orphan, or the hoisted fallback still
+# points at the old version? Then only a wipe + lockfile install will do:
 rm -rf node_modules */node_modules packages/*/node_modules
 pnpm install --frozen-lockfile      # exactly what CI does
 pnpm test                           # NOW the result means something
@@ -59,8 +63,18 @@ pnpm test                           # NOW the result means something
 
 ## NOTES
 
-- **Rule of thumb: after any `pnpm update` that changes a version you intend to test, re-run the suite from a wiped `node_modules`.** A green run on a partially-relinked tree carries no information, and you cannot tell the two apart from the output.
-- Tell it apart from the sibling entry [npm install in a pnpm repo leaves stale physical packages](npm-install-contaminates-pnpm-node-modules.md): that one is caused by running `npm` in a pnpm repo, leaves **physical directories** at the `node_modules` root, and surfaces as version-mismatch *errors*. This one is caused by `pnpm update` itself, leaves **symlinks** into orphaned `.pnpm` store dirs, and surfaces as a **false pass**. Both share the misleading `Already up to date`, and both are fixed only by a full wipe.
+- **Rule of thumb: after any `pnpm update` that changes a version you intend to test, re-run the suite only from a tree with zero orphans** (prune, re-scan, wipe if anything is left). A green run on a partially-relinked tree carries no information, and you cannot tell the two apart from the output.
+- Tell it apart from the sibling entry [npm install in a pnpm repo leaves stale physical packages](npm-install-contaminates-pnpm-node-modules.md): that one is caused by running `npm` in a pnpm repo, leaves **physical directories** at the `node_modules` root, and surfaces as version-mismatch *errors*. This one is caused by `pnpm update` itself, leaves **symlinks** into orphaned `.pnpm` store dirs, and surfaces as a **false pass**. Both share the misleading `Already up to date`. The npm one needs a full wipe; this one may clear with `pnpm prune` first (see below).
 - Partial upgrades hide it best. If every workspace relinks, you get the new version everywhere and never notice; the damage comes when the root store updates and a workspace's links do not, which is exactly what a `-r` update across a subset of packages produces.
 - A related smell in the same install: `Failed to create bin at <workspace>/node_modules/.bin/<tool>. ENOENT ... no such file or directory` naming a path under `.pnpm`. That is the linker reporting it could not complete, and it is worth treating as "the tree is now inconsistent" rather than as cosmetic noise.
 - `--frozen-lockfile` is deliberate in the fix: it reproduces CI exactly, so a tree that installs clean locally is a tree CI can also build. A plain `pnpm install` may re-resolve and mask the very disagreement you are trying to observe.
+- **`pnpm prune` is the gentler first fix (verified on pnpm 12.5.1, 2026-09-23).** A four-package bump (edit the `package.json` ranges, then `pnpm install`) left four store dirs with zero lockfile references: openai 7.18.0 and 7.19.0, tsx 4.23.13, @types/node 26.4.1. `pnpm prune` printed `Already up to date` yet removed all four, and a scan of every `.pnpm` dir name against `pnpm-lock.yaml` then found none left. Prefer it in a **shared working tree**, where `rm -rf node_modules` breaks other sessions' in-flight builds and tests. Scan again after it and fall back to the wipe if anything remains. Not re-tested against the hoisted-fallback relink in the tiptap incident above, so still check the `readlink` line.
+- **Orphans pile up across bumps.** Two of those four (openai 7.18.0, @types/node 26.4.1) were left by earlier bumps days before, which had not cleaned up after themselves. Scan after every version change, not only when a result looks suspicious. A whole-store check:
+  ```bash
+  # Heuristic: substring match on name@version, so 1.2.3 also "matches" 1.2.34, and
+  # pnpm hashes over-long dir names. Treat hits as leads to check, not proof.
+  for d in $(ls node_modules/.pnpm | grep -vE '^(node_modules|lock\.yaml)$'); do
+    k=$(echo "$d" | sed -E 's/^@([^+]+)\+/@\1\//; s/_.*$//')
+    grep -qF "$k" pnpm-lock.yaml || echo "ORPHAN $d"
+  done
+  ```
