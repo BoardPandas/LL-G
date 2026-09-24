@@ -55,3 +55,48 @@ verifyOwnedCleanup()
   returns 1067. It documents one measured failure and a narrower control flow.
 - Microsoft documents [ControlService](https://learn.microsoft.com/en-us/windows/win32/api/winsvc/nf-winsvc-controlservice)
   and the [system error codes](https://learn.microsoft.com/en-us/windows/win32/debug/system-error-codes--1000-1299-).
+
+## NORMAL FINISH REQUESTS NEED THE SAME EXIT OBSERVATION
+
+A later Windows 11 own-process service lab used a pipe finish request followed
+immediately by SCM Stop. At viewer expiry the original run recorded Win32 109,
+a still-live process despite stopped service state, and eventual hard exit 124.
+Source inspection of Go x/sys v0.47.0 found a control callback forwarding through
+an unbuffered channel while the dispatcher can finish. This is consistent with a
+redundant-control/dispatcher-exit race, not a captured native proof of that race.
+
+The correction waits on the original bound service process for a short grace
+period only after a successful pipe finish request. If the process exits, preserve
+its actual exit code and skip SCM Stop. If it remains alive, use the fallback
+control within the watchdog's remaining lifetime. A wrong normal exit still fails.
+Never turn Win32 109, timeout, or a stopped-status snapshot into cleanup success.
+
+```go
+// Pseudocode: the helper validates wait results and returns errors explicitly.
+grace := time.Duration(0)
+if finishRequestSentSuccessfully {
+    grace = 5 * time.Second
+}
+exited, code, err := observeBoundProcess(serviceProcess, grace)
+if err != nil {
+    recordCleanupFailure(err)
+} else if exited {
+    recordExitCode(code) // Normal success still requires zero.
+} else {
+    recordStopResult(stopExactOwnedService())
+}
+verifyChildExitServiceAbsenceAndCleanupOwnerExits()
+```
+
+Native mechanics covered exit codes 0, 139 and 124, live-process fallback, and
+invalid-handle refusal. The corrected live viewer regression recorded service
+exit 0, skipped the redundant stop, confirmed child/installer/watchdog exit and
+actual service absence, and returned success. The operator confirmed that the
+viewer remained open until automatic expiry. The original failed receipt remains
+unchanged. This is one tested configuration, not a guarantee across all service
+implementations. No credentials, machine identities or invitation data are needed
+to reproduce the shutdown contract.
+
+ControlService can itself block while the control handler is busy; account for
+that when budgeting a watchdog. The bounded observation does not make SCM Stop
+nonblocking. Keep an independent hard lifetime owner.
