@@ -29,7 +29,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (29 entries)
 
 ### Express
-- [Express index](kb/express/llms.txt): Express (Node.js) gotchas (8 entries)
+- [Express index](kb/express/llms.txt): Express (Node.js) gotchas (9 entries)
 
 ### Fastify
 - [Fastify index](kb/fastify/llms.txt): Fastify CORS and plugin-chain gotchas, both of which fail only in a browser while curl and server-side tests pass (2 entries)
