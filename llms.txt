@@ -134,7 +134,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (10 entries)
 
 ### SupportForge
-- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent execution and ticket-API behaviour (33 entries)
+- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent execution and ticket-API behaviour (34 entries)
 
 ### Tauri
 - [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
@@ -264,3 +264,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Redis
 - [Redis index](kb/redis/llms.txt): Redis concurrency and shared-key ownership gotchas (1 entry)
+
+### Resend
+- [Resend index](kb/resend/llms.txt): Resend email API delivery and idempotency gotchas (1 entry)
