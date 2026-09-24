@@ -49,3 +49,5 @@
 - [Certificate bootstrap checks inherit the trust of every binding writer](bootstrap-trusts-all-binding-writers.md): Weak heartbeat creation or fingerprint updates can manufacture the evidence strict certificate bootstrap checks; restrict registration and fingerprint writes, then test the multi-request attack. HIGH.
 
 - [A job module that records task runs boots the whole API server when imported outside Jest](task-registry-import-boots-server.md): task-registry.ts imports ../server, so importing any job that records runs from a standalone script fails on JWT_SECRET (or starts a real server); import the job's queryable-taking parts instead. MEDIUM.
+
+- [A retired proxy fallback stays active when deployment omits its variable](retired-proxy-fallback-remains-active.md): A leftover internal hostname can break only one dashboard proxy while direct API calls and other proxies work; test the unset-variable destination and probe both hosts. MEDIUM.
