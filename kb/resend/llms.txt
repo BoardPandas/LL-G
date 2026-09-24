@@ -1,0 +1,7 @@
+# Resend Gotchas
+
+> Known Resend (transactional email API) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [A Resend idempotency key suppresses a duplicate only if the retry is byte-identical](idempotency-key-requires-identical-payload.md): A reused key with a different payload is refused with 409, so per-recipient values minted per attempt (unsubscribe tokens, tracking ids) turn a crash-retry of a delivered email into a false failure or a duplicate; fix them before the first attempt. HIGH.
