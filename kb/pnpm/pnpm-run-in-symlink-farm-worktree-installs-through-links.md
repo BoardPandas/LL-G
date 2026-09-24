@@ -27,6 +27,13 @@ Nothing errors. The script you ran succeeds. The other checkout now quietly
 resolves phantom/hoisted deps to the wrong versions, and its next `pnpm`
 command sees a node_modules state that does not match its own lockfile.
 
+
+A symlink for the entire `node_modules` directory has the same hazard. On pnpm
+12.5.1, `pnpm exec jest` in a worktree with a different lockfile also triggered
+installation through that link. Do not assume `exec` is read-only. This caused
+runtime contract exports to disappear in route tests even though the source
+exports existed; the other checkout's dependency tree had been reconfigured.
+
 ## WRONG
 ```bash
 # worktree with a node_modules symlink farm pointing at ../other-checkout
@@ -35,6 +42,24 @@ pnpm run check:all        # silently installs into ../other-checkout
 ```
 
 ## RIGHT
+For different lockfiles, give each checkout its own dependency tree. The pnpm
+content-addressed cache may be shared; the mutable `node_modules` trees may not.
+In the worktree you own, remove only the whole-directory symlink after checking
+it is a symlink, then install that checkout's frozen lockfile:
+```bash
+python3 - <<'PYTHON'
+from pathlib import Path
+p = Path('node_modules')
+assert p.is_symlink(), 'Refuse to remove an ordinary directory'
+p.unlink()
+PYTHON
+pnpm install --offline --frozen-lockfile
+pnpm --filter @scope/contracts build
+```
+Use the direct-binary workaround below only when the dependency tree actually
+matches the tested checkout. Avoiding reinstallation does not make mismatched
+package versions a valid release test.
+
 ```bash
 # in a symlink-farm worktree, call binaries directly -- never pnpm
 node node_modules/typescript/bin/tsc --noEmit
