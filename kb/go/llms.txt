@@ -1,6 +1,5 @@
 # Go Gotchas
 
-
 > Known Go patterns that cause silent failures or hard-to-debug errors.
 
 ## Entries

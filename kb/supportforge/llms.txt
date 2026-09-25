@@ -1,6 +1,5 @@
 # SupportForge Gotchas
 
-
 > Known SupportForge (remote endpoint agent) patterns that cause silent failures or hard-to-debug errors.
 
 ## Entries

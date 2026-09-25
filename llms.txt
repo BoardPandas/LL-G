@@ -76,6 +76,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Stripe
 - [Stripe index](kb/stripe/llms.txt): Stripe Connect billing gotchas (1 entry)
 
+### Resend
+- [Resend index](kb/resend/llms.txt): Resend transactional email API gotchas (1 entry)
+
 ### TypeScript
 - [TypeScript index](kb/typescript/llms.txt): TypeScript gotchas: tsconfig include/exclude scoping, date parsing, and which tsc binary actually runs (56 entries)
 
