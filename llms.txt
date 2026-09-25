@@ -17,10 +17,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Plex index](kb/plex/llms.txt): Plex Media Server API and spec gotchas (2 entries)
 
 ### Doppler
-- [Doppler index](kb/doppler/llms.txt): Doppler secrets CLI and API gotchas (1 entry)
+- [Doppler index](kb/doppler/llms.txt): Doppler secrets CLI and API gotchas (2 entries)
 
 ### PowerShell
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (32 entries)
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (33 entries)
 
 ### Outlook
 - [Outlook index](kb/outlook/llms.txt): All Outlook gotchas (1 entry)
@@ -113,7 +113,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Git index](kb/git/llms.txt): Git tooling gotchas (12 entries)
 
 ### Linux
-- [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (6 entries)
+- [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (7 entries)
 
 ### cmd.exe (Windows)
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
@@ -167,7 +167,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, and Windows process-spawning gotchas (27 entries)
 
 ### Python
-- [Python index](kb/python/llms.txt): Python runtime and virtualenv gotchas (1 entry)
+- [Python index](kb/python/llms.txt): Python runtime and virtualenv gotchas (3 entries)
 
 ### SQLite
 - [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
@@ -206,7 +206,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Railway index](kb/railway/llms.txt): Railway platform gotchas (4 entries)
 
 ### Claude Code
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas (22 entries)
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas (23 entries)
 
 ### DNS
 - [DNS index](kb/dns/llms.txt): Provider-agnostic DNS gotchas (2 entries)

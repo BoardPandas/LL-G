@@ -5,3 +5,4 @@
 ## Entries
 
 - [Renaming a Doppler secret without exposing its value](rename-secret-without-exposing-value.md): Doppler's API rename needs the value; pipe get --plain --raw into set --no-interactive, cmp, then delete the old name, discarding output. MEDIUM.
+- [doppler configs tokens --json prints null for a config with no tokens](configs-tokens-json-null.md): iterate `json.load(...) or []`. LOW.
