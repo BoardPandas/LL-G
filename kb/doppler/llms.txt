@@ -1,0 +1,7 @@
+# Doppler Gotchas
+
+> Known Doppler patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Renaming a Doppler secret without exposing its value](rename-secret-without-exposing-value.md): Doppler's API rename needs the value; pipe get --plain --raw into set --no-interactive, cmp, then delete the old name, discarding output. MEDIUM.
