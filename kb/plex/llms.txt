@@ -1,0 +1,8 @@
+# Plex Gotchas
+
+> Known Plex patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Plex's official OpenAPI spec omits /library/metadata/{ids}/children](official-openapi-spec-omits-children.md): The official PMS spec lacks GET /library/metadata/{ids}/children, which python-plexapi uses for seasons and episodes; do not treat it as the full API surface. MEDIUM.
+- [developer.plex.tv/pms has no spec download: extract it from __redoc_state](pms-spec-embedded-in-redoc-state.md): The PMS spec lives in the docs page's __redoc_state; json.dump(indent=2, ensure_ascii=False) reproduces openapi.json byte for byte; info.version has a trailing newline. LOW.

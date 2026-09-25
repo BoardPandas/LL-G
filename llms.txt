@@ -13,8 +13,14 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ## Technologies
 
+### Plex
+- [Plex index](kb/plex/llms.txt): Plex Media Server API and spec gotchas (2 entries)
+
+### Doppler
+- [Doppler index](kb/doppler/llms.txt): Doppler secrets CLI and API gotchas (1 entry)
+
 ### PowerShell
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (30 entries)
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (32 entries)
 
 ### Outlook
 - [Outlook index](kb/outlook/llms.txt): All Outlook gotchas (1 entry)
@@ -98,7 +104,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Hono index](kb/hono/llms.txt): Hono routing and middleware gotchas (1 entry)
 
 ### Bash
-- [Bash index](kb/bash/llms.txt): bash shell scripting and pattern-matching gotchas; gh api printing the HTTP error body on STDOUT so the idiomatic `x=$(gh api ... --jq .field 2>/dev/null || true)` captures 404 JSON instead of an empty string (--jq does not filter an error body), which a forgiving endpoint can then swallow -- the contents API ignores a bogus sha when creating a file; and a base64 payload passed as an argv element outgrowing the ~32 KB Windows/msys command-line limit as the target file grows, failing with exit 126 that names the interpreter rather than the payload (17 entries)
+- [Bash index](kb/bash/llms.txt): bash shell scripting and pattern-matching gotchas; gh api printing the HTTP error body on STDOUT so the idiomatic `x=$(gh api ... --jq .field 2>/dev/null || true)` captures 404 JSON instead of an empty string (--jq does not filter an error body), which a forgiving endpoint can then swallow -- the contents API ignores a bogus sha when creating a file; and a base64 payload passed as an argv element outgrowing the ~32 KB Windows/msys command-line limit as the target file grows, failing with exit 126 that names the interpreter rather than the payload (18 entries)
 
 ### Git
 - [Git index](kb/git/llms.txt): Git tooling gotchas (12 entries)
@@ -134,7 +140,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (10 entries)
 
 ### SupportForge
-- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent execution and ticket-API behaviour (35 entries)
+- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent execution and ticket-API behaviour (36 entries)
 
 ### Tauri
 - [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
