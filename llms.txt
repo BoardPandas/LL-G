@@ -274,3 +274,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Redis
 - [Redis index](kb/redis/llms.txt): Redis concurrency and shared-key ownership gotchas (1 entry)
 
+
+### Magic: The Gathering
+- [Magic: The Gathering index](kb/magic-tcg/llms.txt): Magic card-data, legality, rules-engine, and deckbuilding gotchas (1 entry)
+
