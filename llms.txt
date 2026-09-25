@@ -65,7 +65,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Accessibility index](kb/accessibility/llms.txt): Accessibility gotchas (2 entries)
 
 ### CSS
-- [CSS index](kb/css/llms.txt): CSS rendering gotchas (9 entries)
+- [CSS index](kb/css/llms.txt): CSS rendering gotchas (10 entries)
 
 ### Data Viz
 - [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas (1 entry)
@@ -273,3 +273,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Redis
 - [Redis index](kb/redis/llms.txt): Redis concurrency and shared-key ownership gotchas (1 entry)
+
