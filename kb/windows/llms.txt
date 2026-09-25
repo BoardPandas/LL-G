@@ -41,3 +41,4 @@
 - [A full Admin logon token does not prove SCM access](full-admin-token-scm-access.md): Preserve token properties and each impersonation/SCM error; a full NETWORK token can still encounter error 1346, which is not a UAC-filtering diagnosis. HIGH.
 
 - [Stopping an already observed crashed service can falsely fail cleanup](service-stop-after-observed-crash.md): A redundant stop returned 1067 after observed crash; normal pipe-finish also needs bounded process-exit observation before fallback SCM Stop, with exit codes, deadlines and actual absence preserved. MEDIUM.
+- [Task Scheduler XML crosses a UTF-16 COM boundary](task-scheduler-com-xml-encoding.md): RegisterTask BSTR encoding differs from Go bytes, exported XML is already decoded on readback, and the service-account COM enum is not an XML LogonType value. HIGH.
