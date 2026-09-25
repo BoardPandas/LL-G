@@ -51,3 +51,5 @@
 
 - [A retired proxy fallback stays active when deployment omits its variable](retired-proxy-fallback-remains-active.md): A leftover internal hostname can break only one dashboard proxy while direct API calls and other proxies work; test the unset-variable destination and probe both hosts. MEDIUM.
 - ["Session is held by API instance ..., which did not respond" clears with disconnect and reconnect](session-held-by-unresponsive-api-instance.md): 'Session is held by API instance ... which did not respond' needs disconnect_agent then connect_agent; retrying the call keeps failing. MEDIUM.
+
+- [Nullable native links hide valid NinjaOne recovery candidates](nullable-native-links-hide-ninjaone-recovery.md): A canonical-ID-only join silently misses scoped hostname links; verify unique identity, live serials and independent recovery before rollout. HIGH.
