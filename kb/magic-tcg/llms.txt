@@ -1,0 +1,7 @@
+# Magic: The Gathering Gotchas
+
+> Known Magic card-data, legality, rules-engine, and deckbuilding patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Future-set cards are not format-illegal](future-set-cards-are-not-format-illegal.md): Current Scryfall legality and missing third-party coverage must not silently exclude a qualifying future paper preview from Commander deckbuilding. HIGH.
