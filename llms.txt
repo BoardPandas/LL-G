@@ -167,7 +167,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, and Windows process-spawning gotchas (27 entries)
 
 ### Python
-- [Python index](kb/python/llms.txt): Python runtime and virtualenv gotchas (3 entries)
+- [Python index](kb/python/llms.txt): Python runtime and virtualenv gotchas (6 entries)
 
 ### SQLite
 - [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
