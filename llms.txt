@@ -163,8 +163,11 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### React
 - [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright (12 entries)
 
+### Gemini
+- [Gemini index](kb/gemini/llms.txt): Google Gemini API gotchas, including long-audio transcription (1 entry)
+
 ### Rust
-- [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, and Windows process-spawning gotchas (27 entries)
+- [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, Windows process-spawning, and COM/audio FFI gotchas (30 entries)
 
 ### Python
 - [Python index](kb/python/llms.txt): Python runtime and virtualenv gotchas (6 entries)
