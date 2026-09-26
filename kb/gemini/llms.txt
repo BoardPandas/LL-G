@@ -1,0 +1,7 @@
+# Gemini Gotchas
+
+> Known Gemini API patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Gemini stops early on long audio and returns a complete-looking transcript](long-audio-early-stop.md): a 30-min transcription request returned valid JSON covering ~2 min with no error; Gemini also downmixes stereo and renumbers speakers per request. Send one track per request in ~5-min windows and validate coverage. HIGH.
