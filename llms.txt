@@ -276,4 +276,3 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Magic: The Gathering
 - [Magic: The Gathering index](kb/magic-tcg/llms.txt): Magic card-data, legality, rules-engine, and deckbuilding gotchas (1 entry)
-
