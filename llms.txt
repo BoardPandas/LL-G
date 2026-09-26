@@ -65,7 +65,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Accessibility index](kb/accessibility/llms.txt): Accessibility gotchas (2 entries)
 
 ### CSS
-- [CSS index](kb/css/llms.txt): CSS rendering gotchas (10 entries)
+- [CSS index](kb/css/llms.txt): CSS rendering gotchas (11 entries)
 
 ### Data Viz
 - [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas (1 entry)
@@ -276,3 +276,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Magic: The Gathering
 - [Magic: The Gathering index](kb/magic-tcg/llms.txt): Magic card-data, legality, rules-engine, and deckbuilding gotchas (1 entry)
+
