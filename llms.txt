@@ -203,7 +203,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas (11 entries)
 
 ### Railway
-- [Railway index](kb/railway/llms.txt): Railway platform gotchas (4 entries)
+- [Railway index](kb/railway/llms.txt): Railway platform gotchas (5 entries)
 
 ### Claude Code
 - [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas (23 entries)
