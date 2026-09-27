@@ -55,3 +55,5 @@
 - [Nullable native links hide valid NinjaOne recovery candidates](nullable-native-links-hide-ninjaone-recovery.md): A canonical-ID-only join silently misses scoped hostname links; verify unique identity, live serials and independent recovery before rollout. HIGH.
 
 - [Endpoint clock skew invalidates cross-machine recovery chronology](endpoint-clock-skew-invalidates-recovery-chronology.md): Endpoint timestamps can falsely reject fresh baselines or accept old processes; use coordinator receipt freshness, same-clock process ordering and independent server evidence. HIGH.
+
+- [Hardware serial fallback can change identity comparisons without changing the device](hardware-serial-fallback-changes-identity-comparisons.md): BIOS serial and hardware UUID can occupy the same reported field; preserve scoped guards and verify both live before independent recovery. HIGH.
