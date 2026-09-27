@@ -44,7 +44,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [SSE index](kb/sse/llms.txt): Server-Sent Events gotchas on both sides of the wire (1 entry)
 
 ### Node.js
-- [Node.js index](kb/nodejs/llms.txt): Node.js runtime gotchas: process exit and signal forwarding, stdout draining, per-process vs per-listener wiring (18 entries)
+- [Node.js index](kb/nodejs/llms.txt): Node.js runtime gotchas: process exit and signal forwarding, stdout draining, per-process vs per-listener wiring (19 entries)
 
 ### pnpm
 - [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas (9 entries)
@@ -279,4 +279,3 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Magic: The Gathering
 - [Magic: The Gathering index](kb/magic-tcg/llms.txt): Magic card-data, legality, rules-engine, and deckbuilding gotchas (1 entry)
-
