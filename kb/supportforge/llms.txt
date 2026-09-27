@@ -53,3 +53,5 @@
 - ["Session is held by API instance ..., which did not respond" clears with disconnect and reconnect](session-held-by-unresponsive-api-instance.md): 'Session is held by API instance ... which did not respond' needs disconnect_agent then connect_agent; retrying the call keeps failing. MEDIUM.
 
 - [Nullable native links hide valid NinjaOne recovery candidates](nullable-native-links-hide-ninjaone-recovery.md): A canonical-ID-only join silently misses scoped hostname links; verify unique identity, live serials and independent recovery before rollout. HIGH.
+
+- [Endpoint clock skew invalidates cross-machine recovery chronology](endpoint-clock-skew-invalidates-recovery-chronology.md): Endpoint timestamps can falsely reject fresh baselines or accept old processes; use coordinator receipt freshness, same-clock process ordering and independent server evidence. HIGH.
