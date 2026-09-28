@@ -30,7 +30,7 @@
 
 - [Disabling WinHttpAutoProxySvc to mitigate WPAD takes Wi-Fi down domain-wide, and is invisible on wired machines](wpad-service-disable-breaks-wlan.md): The standard WPAD-spoofing remediation sets `WinHttpAutoProxySvc\Start=4`, but that service is a hard dependency of Wcmsvc, which is a hard dependency of WlanSvc, so every Wi-Fi client loses wireless at its next reboot with a healthy adapter, no PnP problem code, a Dormant interface on APIPA, and zero association attempts at the AP. Latent (policy does not stop a running service), invisible on wired hosts where remediation is usually verified, and `Start-Service` hides the cause: only `sc.exe` reports error 1068 and the dependency list. Use `DisableWpad=1` under Internet Settings\WinHttp and leave the service at demand-start. HIGH.
 
-- [A thread-owned power request must not depend on a user-session window](thread-power-request-must-not-depend-on-session-window.md): Routing Windows keep-awake through a consent-window readiness gate rejects it on connection and at the sign-in screen; run the thread-owned power request in the capture host, serialize cleanup, and do not infer sign-in state from a missing UI. HIGH.
+- [A thread-owned power request must not depend on a user-session window](thread-power-request-must-not-depend-on-session-window.md): Routing Windows keep-awake through a consent-window gate rejects it without that optional UI; the same ownership mistake disables shared commands when an optional worker cannot start. Keep each operation with its actual owner and serialize cleanup. HIGH.
 
 - [ConPTY children can inherit redirected parent standard handles](conpty-inherits-parent-stdio.md): A valid pseudoconsole launch can send output to redirected parent stdout; explicitly use null standard handles and test native prompts. HIGH.
 
@@ -48,3 +48,5 @@
 - [Google Meet can hold the microphone before the user joins the call](meet-prejoin-mic-is-not-call-membership.md): Microphone activity in Chrome can describe the lobby rather than call membership. MEDIUM.
 
 - [MSI success and product version do not prove service binary replacement](msi-success-does-not-prove-service-upgrade.md): Successful maintenance-mode MSI runs can schedule no service-file replacement while product metadata already shows the target; verify executable/process and fresh server build evidence. HIGH.
+
+- [Registry notifications do not drive debounce or grace-period deadlines](registry-notifications-do-not-drive-time-deadlines.md): Schedule detector deadlines independently of change events, take a fresh snapshot when they expire, and explicitly stop sender-owning watchers. HIGH.

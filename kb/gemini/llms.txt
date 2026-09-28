@@ -6,3 +6,5 @@
 
 - [Gemini stops early on long audio and returns a complete-looking transcript](long-audio-early-stop.md): a 30-min transcription request returned valid JSON covering ~2 min with no error; Gemini also downmixes stereo and renumbers speakers per request. Send one track per request in ~5-min windows and validate coverage. HIGH.
 - [Gemini Live meeting chunks need an explicit policy for wordless turns](wordless-meeting-chunks-need-explicit-empty-policy.md): An opted-in meeting policy can accept wordless expirations without treating every empty response as proof of silence. HIGH.
+
+- [Allocate a file name before upload so a lost finalize reply cannot hide cleanup ownership](allocate-file-name-before-upload-for-cleanup.md): Choose the owned resource name before sending bytes and attempt cleanup even when finalization metadata is lost or malformed. HIGH.

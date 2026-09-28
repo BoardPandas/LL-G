@@ -119,7 +119,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
 
 ### Windows
-- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (25 entries)
+- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (26 entries)
 
 ### Media Foundation (Windows)
 - [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from (4 entries)
@@ -164,10 +164,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright (12 entries)
 
 ### Gemini
-- [Gemini index](kb/gemini/llms.txt): Google Gemini API gotchas, including long-audio transcription (2 entries)
+- [Gemini index](kb/gemini/llms.txt): Google Gemini API gotchas, including long-audio transcription (3 entries)
 
 ### Rust
-- [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, Windows process-spawning, and COM/audio FFI gotchas, plus Windows toolchain traps (34 entries)
+- [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, Windows process-spawning, and COM/audio FFI gotchas, plus Windows toolchain traps (35 entries)
 
 ### Python
 - [Python index](kb/python/llms.txt): Python runtime and virtualenv gotchas (9 entries)
