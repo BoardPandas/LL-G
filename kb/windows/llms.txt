@@ -46,3 +46,5 @@
 
 - [Native Windows acceptance must reconcile reboot state and scope MSI evidence](native-windows-acceptance-reconcile-state-scope-msi-evidence.md): Reconcile recovery records idempotently after reboot, pin the exact MSI ProductCode, and scope deferred QuietExec proof to the action interval so unrelated later errors do not create false failures. HIGH.
 - [Google Meet can hold the microphone before the user joins the call](meet-prejoin-mic-is-not-call-membership.md): Microphone activity in Chrome can describe the lobby rather than call membership. MEDIUM.
+
+- [MSI success and product version do not prove service binary replacement](msi-success-does-not-prove-service-upgrade.md): Successful maintenance-mode MSI runs can schedule no service-file replacement while product metadata already shows the target; verify executable/process and fresh server build evidence. HIGH.
