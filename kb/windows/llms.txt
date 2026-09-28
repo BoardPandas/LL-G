@@ -45,3 +45,4 @@
 - [Windows SDK resource conversion is not necessarily Go linker compatible](go-coff-resource-conversion.md): rc plus MSVC cvtres can emit COFF symbols rejected by Go; use target-matched GNU windres conversion and verify the completed EXE before signing. MEDIUM.
 
 - [Native Windows acceptance must reconcile reboot state and scope MSI evidence](native-windows-acceptance-reconcile-state-scope-msi-evidence.md): Reconcile recovery records idempotently after reboot, pin the exact MSI ProductCode, and scope deferred QuietExec proof to the action interval so unrelated later errors do not create false failures. HIGH.
+- [Google Meet can hold the microphone before the user joins the call](meet-prejoin-mic-is-not-call-membership.md): Microphone activity in Chrome can describe the lobby rather than call membership. MEDIUM.
