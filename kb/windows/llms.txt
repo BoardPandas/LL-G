@@ -50,3 +50,5 @@
 - [MSI success and product version do not prove service binary replacement](msi-success-does-not-prove-service-upgrade.md): Successful maintenance-mode MSI runs can schedule no service-file replacement while product metadata already shows the target; verify executable/process and fresh server build evidence. HIGH.
 
 - [Registry notifications do not drive debounce or grace-period deadlines](registry-notifications-do-not-drive-time-deadlines.md): Schedule detector deadlines independently of change events, take a fresh snapshot when they expire, and explicitly stop sender-owning watchers. HIGH.
+
+- [Relay-only ICE can still open an mDNS listener](relay-only-ice-mdns-listener.md): Pion initializes mDNS separately from candidate gathering and UDP TURN still binds a socket; use TCP/TLS TURN, explicitly disable mDNS, and test real gathering with listeners refused. HIGH.
