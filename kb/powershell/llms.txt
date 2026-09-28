@@ -38,4 +38,4 @@
 - [WinRT collections in Windows PowerShell 5.1: .Count and [0] do not do what they look like](winrt-collections-member-enumeration.md): WinRT vectors (OcrResult.Lines, Words) member-enumerate in PS 5.1: .Count and [0] misbehave; copy with foreach first. OCR from a OneDrive path under SYSTEM failed silently. MEDIUM.
 - [Filtering Win32_Process by CommandLine matches the shell running the filter](win32-process-filter-matches-own-shell.md): a script passed on the command line contains its own pattern, so Stop-Process kills the shell mid-script; exclude $PID or match ExecutablePath. HIGH.
 - [query.exe session can return exit code 1 with valid output](query-session-nonzero-valid-output.md): query.exe can print the complete active-session table while setting $LASTEXITCODE to 1; validate the pinned row and treat the code as diagnostic. MEDIUM.
-
+- [query.exe user polling aborts when no session exists](query-exe-user-no-session.md): Under ErrorActionPreference Stop, a no-user query.exe poll can throw before a reboot verifier gets to wait; suppress native stderr locally, parse rows first, and separately provision the expected login. HIGH.
