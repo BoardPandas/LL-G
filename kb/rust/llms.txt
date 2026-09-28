@@ -40,3 +40,5 @@
 - [A hidden deferred viewport cannot reliably reveal itself from its own callback](egui-hidden-deferred-viewport-self-reveal.md): eframe 0.36 wgpu can skip a hidden child's UI callback; the root must issue the show command and request its repaint. HIGH.
 
 - [Cargo release does not configure a bundled Meson library](cargo-release-does-not-configure-bundled-meson.md): A native build script can leave Meson's debugoptimized default active under Cargo release; explicitly select and verify native buildtype, optimization, and assertion settings before benchmarking. HIGH.
+
+- [Standalone LAME MP3 files need a final PCM flush and a gapless tag that fits](mp3lame-standalone-files-need-final-flush-and-gapless-tag.md): FlushNoGap can leave buffered PCM unencoded; standalone files need FlushGap and a verified timing tag, which 16 kHz mono CBR at 32 kbps silently omits. HIGH.

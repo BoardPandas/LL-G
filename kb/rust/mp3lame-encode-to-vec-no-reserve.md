@@ -12,7 +12,7 @@ severity: high
 ```rust
 let mut out = Vec::new();
 enc.encode_to_vec(MonoPcm(chunk), &mut out)?; // spare capacity 0 -> unbounded write
-enc.flush_to_vec::<FlushNoGap>(&mut out)?;
+enc.flush_to_vec::<FlushGap>(&mut out)?;
 ```
 
 ## RIGHT
@@ -21,8 +21,10 @@ let mut out = Vec::new();
 out.reserve(mp3lame_encoder::max_required_buffer_size(chunk.len()));
 enc.encode_to_vec(MonoPcm(chunk), &mut out)?;
 out.reserve(7200); // LAME's documented worst case for a flush
-enc.flush_to_vec::<FlushNoGap>(&mut out)?;
+enc.flush_to_vec::<FlushGap>(&mut out)?;
 ```
 
 ## NOTES
 Reserve before EVERY call, not once. The raw `encode`/`flush` taking `&mut [MaybeUninit<u8>]` have the same trap: never pass an empty slice. Once fixed, 1 h of 16 kHz stereo at 64 kbps encodes in ~5 s.
+
+For a standalone file, `FlushGap` completes the buffered PCM tail; `FlushNoGap` is for a stream that can continue. Exact decoded timing also requires a gapless tag that fits the selected encoding configuration. See [standalone MP3 finalization and gapless-tag requirements](mp3lame-standalone-files-need-final-flush-and-gapless-tag.md). These requirements are separate from reserving output capacity.
