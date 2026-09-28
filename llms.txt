@@ -20,7 +20,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Doppler index](kb/doppler/llms.txt): Doppler secrets CLI and API gotchas (2 entries)
 
 ### PowerShell
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (34 entries)
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (35 entries)
 
 ### Outlook
 - [Outlook index](kb/outlook/llms.txt): All Outlook gotchas (1 entry)
@@ -279,4 +279,3 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Magic: The Gathering
 - [Magic: The Gathering index](kb/magic-tcg/llms.txt): Magic card-data, legality, rules-engine, and deckbuilding gotchas (1 entry)
-
