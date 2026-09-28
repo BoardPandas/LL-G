@@ -42,3 +42,5 @@
 - [Cargo release does not configure a bundled Meson library](cargo-release-does-not-configure-bundled-meson.md): A native build script can leave Meson's debugoptimized default active under Cargo release; explicitly select and verify native buildtype, optimization, and assertion settings before benchmarking. HIGH.
 
 - [Standalone LAME MP3 files need a final PCM flush and a gapless tag that fits](mp3lame-standalone-files-need-final-flush-and-gapless-tag.md): FlushNoGap can leave buffered PCM unencoded; standalone files need FlushGap and a verified timing tag, which 16 kHz mono CBR at 32 kbps silently omits. HIGH.
+
+- [Equal-length AEC frames can hide fixed delay and discard the recording tail](aec3-fixed-output-delay-can-hide-a-lost-recording-tail.md): Compensate the pinned graph output delay, retain originals until aligned output arrives, and flush retained audio before pending mic samples; reset before resuming to avoid replay. HIGH.
