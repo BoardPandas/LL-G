@@ -279,3 +279,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Magic: The Gathering
 - [Magic: The Gathering index](kb/magic-tcg/llms.txt): Magic card-data, legality, rules-engine, deckbuilding, and proxy-rendering gotchas (2 entries)
+
+### docx (Word OOXML)
+- [docx index](kb/docx/llms.txt): Word OOXML / docx generation gotchas (1 entry)
