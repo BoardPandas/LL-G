@@ -14,7 +14,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ## Technologies
 
 ### Plex
-- [Plex index](kb/plex/llms.txt): Plex Media Server API and spec gotchas (10 entries)
+- [Plex index](kb/plex/llms.txt): Plex Media Server API and spec gotchas (11 entries)
 
 ### Doppler
 - [Doppler index](kb/doppler/llms.txt): Doppler secrets CLI and API gotchas (2 entries)
