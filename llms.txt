@@ -272,7 +272,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [DOM index](kb/dom/llms.txt): Framework-agnostic DOM gotchas (1 entry)
 
 ### macOS
-- [macOS index](kb/macos/llms.txt): Native macOS command and monitoring gotchas (1 entry)
+- [macOS index](kb/macos/llms.txt): Native macOS command and monitoring gotchas (2 entries)
 
 ### Redis
 - [Redis index](kb/redis/llms.txt): Redis concurrency and shared-key ownership gotchas (1 entry)
