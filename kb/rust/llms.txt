@@ -44,3 +44,5 @@
 - [Standalone LAME MP3 files need a final PCM flush and a gapless tag that fits](mp3lame-standalone-files-need-final-flush-and-gapless-tag.md): FlushNoGap can leave buffered PCM unencoded; standalone files need FlushGap and a verified timing tag, which 16 kHz mono CBR at 32 kbps silently omits. HIGH.
 
 - [Equal-length AEC frames can hide fixed delay and discard the recording tail](aec3-fixed-output-delay-can-hide-a-lost-recording-tail.md): Compensate the pinned graph output delay, retain originals until aligned output arrives, and flush retained audio before pending mic samples; reset before resuming to avoid replay. HIGH.
+
+- [A socket accepted from a non-blocking TcpListener is non-blocking on Windows](accepted-socket-inherits-nonblocking-on-windows.md): Accepted TcpStreams inherit the listener's non-blocking mode on Windows only, so reads fail at random with WouldBlock (10035) and set_read_timeout is ignored; call set_nonblocking(false) after accept. HIGH.
