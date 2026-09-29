@@ -1,0 +1,7 @@
+# docx Gotchas
+
+> Known Word OOXML / docx generation patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Bold is a toggle: a bold run inside a bold style renders regular](bold-is-a-toggle-a-bold-run-inside-a-bold-style-renders-regular.md): w:b from styles toggles, so a bold character style inside a bold paragraph style renders NOT bold -- valid XML, every layer says bold, tests pass -- and with a bold-only display font (Poppins) Word silently substitutes another font. Set bold in exactly one style layer or put direct w:b on the run (direct formatting is not toggled), and verify by rendering in Word. HIGH.
