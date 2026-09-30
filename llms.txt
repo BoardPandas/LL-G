@@ -113,7 +113,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Git index](kb/git/llms.txt): Git tooling gotchas (14 entries)
 
 ### Linux
-- [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (9 entries)
+- [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (10 entries)
 
 ### cmd.exe (Windows)
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
