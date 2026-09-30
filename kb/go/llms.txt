@@ -54,3 +54,4 @@
 - [Successful JSON decoding does not establish HTTP success](http-status-before-json.md): HTTP error JSON silently decodes into a zero-valued success struct; check status first and verify refusals survive IPC while valid pending/empty results remain successful. HIGH.
 
 - [Collect slow metadata before opening an authenticated WebSocket](collect-metadata-before-websocket-auth.md): Slow inventory collection after dialing spends the server authentication window; late auth can advertise an already-closed socket. Collect first and guard server publication after awaits. HIGH.
+- [kardianos/service restarts a daemon named after Config.Name, not the one your installer loaded](kardianos-service-restart-wrong-daemon.md): On darwin Restart/Stop/Start address a plist named for Config.Name; a PKG-installed job under another label is never restarted. Use launchctl kickstart -k / systemctl restart on the packaged name. HIGH.
