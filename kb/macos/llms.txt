@@ -8,3 +8,4 @@
 
 - [Unified log NDJSON includes completion and loss records](unified-log-ndjson-completion-and-loss.md): Recognize the completion summary and retain loss events before advancing monitoring cursors or accepting zero matches as healthy. HIGH.
 - [Closing an infostealer incident does not undo the credential theft](infostealer-resolved-without-credential-rotation.md): Removing an AMOS-style LaunchAgent leaves every browser-saved password, cookie and keychain item stolen; rotate all of them from a clean device before resolving. HIGH.
+- [Permission setup can outlive a startup credential](permission-setup-outlives-startup-credential.md): Human TCC approval and restart can outlast a short-lived connection token; exchange the unused startup proof once under live session authority after setup. HIGH.
