@@ -113,7 +113,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Git index](kb/git/llms.txt): Git tooling gotchas (14 entries)
 
 ### Linux
-- [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (8 entries)
+- [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (9 entries)
 
 ### cmd.exe (Windows)
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
@@ -134,7 +134,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
 
 ### Cloudflare
-- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (15 entries)
+- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (16 entries)
 
 ### Docker
 - [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas (2 entries)
@@ -260,7 +260,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Vitest index](kb/vitest/llms.txt): Vitest gotchas (3 entries)
 
 ### Go
-- [Go index](kb/go/llms.txt): Go HTTP and concurrency gotchas (27 entries)
+- [Go index](kb/go/llms.txt): Go HTTP and concurrency gotchas (28 entries)
 
 ### Web Security
 - [Web Security index](kb/web-security/llms.txt): Framework-agnostic browser/HTTP security-header gotchas (3 entries)
