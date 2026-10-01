@@ -79,3 +79,4 @@
 
 - [Loose structural loads preserve nullable nested values](loose-structural-loads-preserve-nullable-nested-values.md): A loose envelope check plus `return raw as T` preserves legacy nested nulls even when the schema would coerce them, so downstream array methods crash; model and normalize the raw field at the exact consumer boundary. HIGH.
 - [A type predicate narrows its FALSE branch too, so an extra condition makes the else branch `never`](type-predicate-narrows-false-branch.md): a guard returning s is T that also checks a status sends real Ts to an else branch typed undefined; predicate the exact refinement (T & { status: ... }). MEDIUM.
+- [Rounding display units in an edit draft silently changes saved values](rounding-display-units-mutates-edit-drafts.md): Rounding seconds to whole minutes in editable state silently rewrites valid durations on an unrelated save; preserve canonical precision and test non-unit-aligned round trips. HIGH.
