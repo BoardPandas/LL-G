@@ -78,3 +78,4 @@
 - [Hash the persisted JSON representation, not the original JS object](hash-persisted-json-representation.md): Separate hashing and JSON storage serializers disagree on undefined properties, Dates, and sparse arrays; serialize once, hash the parsed stored value, and preserve legacy evidence. HIGH.
 
 - [Loose structural loads preserve nullable nested values](loose-structural-loads-preserve-nullable-nested-values.md): A loose envelope check plus `return raw as T` preserves legacy nested nulls even when the schema would coerce them, so downstream array methods crash; model and normalize the raw field at the exact consumer boundary. HIGH.
+- [A type predicate narrows its FALSE branch too, so an extra condition makes the else branch `never`](type-predicate-narrows-false-branch.md): a guard returning s is T that also checks a status sends real Ts to an else branch typed undefined; predicate the exact refinement (T & { status: ... }). MEDIUM.
