@@ -44,7 +44,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [SSE index](kb/sse/llms.txt): Server-Sent Events gotchas on both sides of the wire (1 entry)
 
 ### Node.js
-- [Node.js index](kb/nodejs/llms.txt): Node.js runtime gotchas: process exit and signal forwarding, stdout draining, per-process vs per-listener wiring (20 entries)
+- [Node.js index](kb/nodejs/llms.txt): Node.js runtime gotchas: process exit and signal forwarding, stdout draining, per-process vs per-listener wiring (21 entries)
 
 ### pnpm
 - [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas (9 entries)
@@ -68,7 +68,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas (14 entries)
 
 ### Data Viz
-- [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas (1 entry)
+- [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas (2 entries)
 
 ### QuickBooks Online (Intuit)
 - [QuickBooks index](kb/quickbooks/llms.txt): QuickBooks Online OAuth integration gotchas (2 entries)
@@ -80,7 +80,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Resend index](kb/resend/llms.txt): Resend transactional email API gotchas (1 entry)
 
 ### TypeScript
-- [TypeScript index](kb/typescript/llms.txt): TypeScript gotchas: tsconfig include/exclude scoping, date parsing, and which tsc binary actually runs (57 entries)
+- [TypeScript index](kb/typescript/llms.txt): TypeScript gotchas: tsconfig include/exclude scoping, date parsing, and which tsc binary actually runs (58 entries)
 
 ### Biome
 - [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas (3 entries)
@@ -176,7 +176,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
 
 ### Postgres
-- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL, query and connection-pooling gotchas (27 entries)
+- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL, query and connection-pooling gotchas (28 entries)
 
 ### M365 Admin Center
 - [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
