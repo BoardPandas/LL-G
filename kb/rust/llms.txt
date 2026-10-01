@@ -46,3 +46,9 @@
 - [Equal-length AEC frames can hide fixed delay and discard the recording tail](aec3-fixed-output-delay-can-hide-a-lost-recording-tail.md): Compensate the pinned graph output delay, retain originals until aligned output arrives, and flush retained audio before pending mic samples; reset before resuming to avoid replay. HIGH.
 
 - [A socket accepted from a non-blocking TcpListener is non-blocking on Windows](accepted-socket-inherits-nonblocking-on-windows.md): Accepted TcpStreams inherit the listener's non-blocking mode on Windows only, so reads fail at random with WouldBlock (10035) and set_read_timeout is ignored; call set_nonblocking(false) after accept. HIGH.
+
+- [reqwest 0.13.2+ dropped webpki-roots; keep static roots with tls_certs_only](reqwest-0132-static-roots-tls-certs-only.md): dropping the feature to unblock the update silently switches to the OS cert store; pass webpki-root-certs DER certs to tls_certs_only on every client builder. HIGH.
+
+- [symphonia 0.6 moved gapless trimming from FormatOptions to the decoder](symphonia-06-gapless-moved-to-decoder.md): enable_gapless is gone; use AudioDecoderOptions::gapless or decoded audio gains leading silence and wrong length; plus the probe/decoder/next_packet API renames. HIGH.
+
+- [windows-core 0.100 is a separate windows-rs line from windows 0.62](windows-core-0100-separate-line.md): following the "latest" bump on a direct windows-core dep duplicates it and breaks #[implement], only on Windows targets; keep it matched to the windows crate. MEDIUM.
