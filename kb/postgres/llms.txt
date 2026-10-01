@@ -56,3 +56,5 @@
 
 - [Awaiting a concurrent index build inside a request transaction can stall itself](concurrent-index-awaits-caller-transaction.md): A second-connection lazy initializer can wait for the caller transaction snapshot while the caller awaits the index; move schema work into migrations and keep authorization plus INSERT atomic. HIGH.
 - [A rolled-back dry run holds the FK's lock on the parent table for as long as the job runs](a-rolled-back-dry-run-holds-the-fk-lock-on-the-parent.md): validating a migration plus its writer job inside one BEGIN…ROLLBACK keeps the REFERENCES parent SHARE ROW EXCLUSIVE-locked for the whole job, blocking its writes; validate the DDL alone, then run the job against a CREATE TEMP TABLE copy without the FK. HIGH.
+
+- [A rolling heartbeat cutoff silently makes stale-device views impossible](rolling-heartbeat-cutoff-hides-stale-devices.md): Building a fleet from recent heartbeats excludes the very devices an offline view should select and gives health summaries a different population; start from canonical inventory, scope once, and filter before pagination. HIGH.
