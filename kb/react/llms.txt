@@ -17,3 +17,4 @@
 - [Mixing draft filters with immediate selectors silently discards pending edits](mixed-draft-and-applied-filters-discard-edits.md): Immediate selector navigation merges old applied filters and can remount an editor, silently dropping pending date/search changes; use one draft and explicit Apply, with safe option validation. HIGH.
 
 - [Escape can dismiss a portal and also trigger page navigation](escape-portal-dismissal-page-navigation.md): A portal may unmount before a window shortcut queries for overlays; respect defaultPrevented and the original menu/dialog target before navigating. HIGH.
+- [react-hooks/purity rejects Date.now() and new Date() during render](react-hooks-purity-date-in-render.md): A dialog that validates "a minute from now" or seeds a default time in render fails lint; mount the form per opening and capture the clock in a lazy useState initializer. MEDIUM.

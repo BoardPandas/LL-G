@@ -161,7 +161,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Svelte index](kb/svelte/llms.txt): Svelte 5 component and runes gotchas (4 entries)
 
 ### React
-- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright (12 entries)
+- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright (13 entries)
 
 ### Gemini
 - [Gemini index](kb/gemini/llms.txt): Google Gemini API gotchas, including long-audio transcription (3 entries)
@@ -254,7 +254,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [npm index](kb/npm/llms.txt): npm workspace gotchas (1 entry)
 
 ### Jest
-- [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus two test-double traps that both end in a false green (4 entries)
+- [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus two test-double traps that both end in a false green (5 entries)
 
 ### Vitest
 - [Vitest index](kb/vitest/llms.txt): Vitest gotchas (4 entries)
