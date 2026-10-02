@@ -53,3 +53,5 @@
 
 - [Relay-only ICE can still open an mDNS listener](relay-only-ice-mdns-listener.md): Pion initializes mDNS separately from candidate gathering and UDP TURN still binds a socket; use TCP/TLS TURN, explicitly disable mDNS, and test real gathering with listeners refused. HIGH.
 - [Signing an Inno Setup setup.exe after compilation leaves the extracted .tmp engine unsigned](inno-setup-unsigned-tmp-engine.md): setup.exe is a loader that extracts and runs %TEMP%\is-*.tmp\<name>.tmp; a post-build signature covers the loader only, so Smart App Control blocks the engine on every install/update while Get-AuthenticodeSignature on setup.exe still says Valid. Sign inside ISCC via SignTool (+ SignedUninstaller) and verify the running engine in CI. HIGH.
+
+- [Unlettered volumes can produce false disk-full health alerts](unlettered-volumes-false-disk-full-alerts.md): Fixed-drive inventory includes hidden partitions; filter operational volumes before health and storage aggregation, preserve Unix mounts, and refresh cached health. HIGH.
