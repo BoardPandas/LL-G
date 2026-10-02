@@ -55,3 +55,5 @@
 - [Signing an Inno Setup setup.exe after compilation leaves the extracted .tmp engine unsigned](inno-setup-unsigned-tmp-engine.md): setup.exe is a loader that extracts and runs %TEMP%\is-*.tmp\<name>.tmp; a post-build signature covers the loader only, so Smart App Control blocks the engine on every install/update while Get-AuthenticodeSignature on setup.exe still says Valid. Sign inside ISCC via SignTool (+ SignedUninstaller) and verify the running engine in CI. HIGH.
 
 - [Unlettered volumes can produce false disk-full health alerts](unlettered-volumes-false-disk-full-alerts.md): Fixed-drive inventory includes hidden partitions; filter operational volumes before health and storage aggregation, preserve Unix mounts, and refresh cached health. HIGH.
+
+- [Hyper-V TurnOff before a VHD evidence copy can expose unflushed NTFS](hyper-v-turnoff-before-vhd-evidence-copy-can-expose-unflushed-ntfs.md): Hard-powering off immediately after evidence writes can make the offline VHD mount report a readable guest directory as corrupted; gracefully shut down the guest before the read-only copy. MEDIUM.
