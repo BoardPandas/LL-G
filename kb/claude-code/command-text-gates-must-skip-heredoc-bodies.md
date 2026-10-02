@@ -83,3 +83,4 @@ CMD=$(strip_heredoc_bodies "$CMD")
 - Build the deploy words in the test from parts (`["dep","loy"].join("")`) so running the tests through the session's own Bash does not trip the live gate.
 - Prefer the Write/Edit tools for file content anyway: they never pass through a Bash gate, and on Windows they avoid heredoc CRLF surprises.
 - Related on this shelf: `hook-argv-walk-zero-iterations-printf-newline.md` (why the `printf '%s\n'` above matters), `hook-does-not-inherit-command-env.md` (collapsing quoted regions), `hook-git-commit-filter-needs-argv-walk.md`.
+- **Not for a delete gate.** A body fed to bash, ssh or `| sh` is executed, so a recursive-delete gate must keep bodies whenever the command can run one: see `delete-gate-cannot-skip-heredoc-bodies.md`.
