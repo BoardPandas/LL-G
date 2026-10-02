@@ -69,5 +69,15 @@ cp dashboard/package.json "$R/dashboard/"; cp proxy-pipeline/package.json "$R/pr
   `pnpm-workspace.yaml`.
 - A `--filter <pkg>...` install still needs every importer's manifest on disk.
 - Best confirmation before pushing: build each image locally (podman works).
+- Seen again 2026-10-02 in BoardPandas/supportforge-platform: the admin and portal images skipped
+  `packages/rmm-contracts/package.json`. Railway failed both builds while every GitHub CI job stayed
+  green, because CI's `next build` jobs build from the checkout and never go through the Dockerfiles.
+  A green CI is no evidence here.
+- Enforce it rather than remembering: supportforge-platform's `scripts/check-dockerfile-manifests.mjs`
+  reads `pnpm-workspace.yaml` `packages:`, then fails any tracked Dockerfile whose frozen-install stage
+  has not copied the root and every project manifest (from the build context, not `--from=`, before
+  the `RUN`). It fails closed on a workspace glob it cannot expand, and when no Dockerfile runs a
+  frozen install at all, so it cannot pass while guarding nothing. Node built-ins only, so it fits an
+  install-free CI job.
 - Related: [v12-lockfile-pins-the-package-manager.md](v12-lockfile-pins-the-package-manager.md),
   which covers the other pnpm-12 bump hazard that also fails only in CI and Docker.
