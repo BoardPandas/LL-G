@@ -53,7 +53,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas (5 entries)
 
 ### MCP (Model Context Protocol)
-- [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas (10 entries)
+- [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas (11 entries)
 
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (10 entries)
