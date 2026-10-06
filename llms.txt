@@ -47,7 +47,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Node.js index](kb/nodejs/llms.txt): Node.js runtime gotchas: process exit and signal forwarding, stdout draining, per-process vs per-listener wiring (23 entries)
 
 ### pnpm
-- [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas (10 entries)
+- [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas (11 entries)
 
 ### LLM Integration
 - [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas (5 entries)
@@ -68,7 +68,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas (14 entries)
 
 ### Data Viz
-- [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas (2 entries)
+- [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas (4 entries)
 
 ### QuickBooks Online (Intuit)
 - [QuickBooks index](kb/quickbooks/llms.txt): QuickBooks Online OAuth integration gotchas (2 entries)
@@ -83,7 +83,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [TypeScript index](kb/typescript/llms.txt): TypeScript gotchas: tsconfig include/exclude scoping, date parsing, and which tsc binary actually runs (61 entries)
 
 ### Biome
-- [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas (3 entries)
+- [Biome index](kb/biome/llms.txt): Biome linter/formatter gotchas (4 entries)
 
 ### Graph API (Microsoft)
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (44 entries)
@@ -128,13 +128,13 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [WebRTC index](kb/webrtc/llms.txt): WebRTC negotiation gotchas (3 entries)
 
 ### Chrome
-- [Chrome index](kb/chrome/llms.txt): Google Chrome / Chromium gotchas (2 entries)
+- [Chrome index](kb/chrome/llms.txt): Google Chrome / Chromium gotchas (3 entries)
 
 ### Teams & SharePoint
 - [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
 
 ### Cloudflare
-- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (16 entries)
+- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (18 entries)
 
 ### Docker
 - [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas (2 entries)
@@ -161,7 +161,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Svelte index](kb/svelte/llms.txt): Svelte 5 component and runes gotchas (4 entries)
 
 ### React
-- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright (13 entries)
+- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright (15 entries)
 
 ### Gemini
 - [Gemini index](kb/gemini/llms.txt): Google Gemini API gotchas, including long-audio transcription (3 entries)
@@ -191,10 +191,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Hyper-V index](kb/hyper-v/llms.txt): Hyper-V virtualization gotchas (1 entry)
 
 ### Architecture
-- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas (19 entries)
+- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas (20 entries)
 
 ### Research
-- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas (2 entries)
+- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas (3 entries)
 
 ### Cisco Meraki
 - [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (4 entries)
@@ -209,7 +209,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Railway index](kb/railway/llms.txt): Railway platform gotchas (5 entries)
 
 ### Claude Code
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas (31 entries)
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas (32 entries)
 
 ### DNS
 - [DNS index](kb/dns/llms.txt): Provider-agnostic DNS gotchas (2 entries)
@@ -257,7 +257,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus two test-double traps that both end in a false green (5 entries)
 
 ### Vitest
-- [Vitest index](kb/vitest/llms.txt): Vitest gotchas (4 entries)
+- [Vitest index](kb/vitest/llms.txt): Vitest gotchas (5 entries)
 
 ### Go
 - [Go index](kb/go/llms.txt): Go HTTP and concurrency gotchas (28 entries)
