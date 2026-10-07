@@ -5,3 +5,4 @@
 ## Entries
 
 - [Base UI rc.0 imports from `@base-ui-components/react`, not the renamed `@base-ui/react` the docs show](package-rename-import-path.md): the docs already reference the post-rc.0 package rename, so a copied import fails to resolve; use `@base-ui-components/react/<component>` and verify parts/props from the installed types. HIGH.
+- [Base UI RadioGroup fires onValueChange on arrow-key focus, so a decision wired to it commits on one keystroke](radio-group-arrow-keys-fire-onvaluechange.md): `@base-ui/react` 1.7.0 selects each radio arrow-key focus lands on (selection follows focus), so an irreversible action in onValueChange fires from navigation alone; stage the value, commit only from a button with no autoFocus, and prove it with a real-DOM keyboard test. HIGH.
