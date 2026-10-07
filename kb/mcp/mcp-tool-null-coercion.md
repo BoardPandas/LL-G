@@ -47,9 +47,9 @@ if (!resourceId) {
 }
 ```
 
-Alternatively, clear via the direct REST API (`PATCH /api/decks/:slug/cards/:index` with JSON null) rather than the MCP tool, or document the workaround explicitly in the tool description.
+Alternatively, clear via the direct REST API (`PATCH /api/resource/:id` with JSON null) rather than the MCP tool, or document the workaround explicitly in the tool description.
 
 ## NOTES
-A dangling id degrades quietly—the downstream JSON-RPC consumer guards on `existsSync(.resource/:id/approved.png)` and falls through to the default art when the id does not resolve. This quiet degradation makes the bug invisible: the workaround appears to work while leaving junk in the manifest. If a real id lands instead, the shared art outranks generated art at render time, so perfect prompts still print generic catalog art.
+A dangling id degrades quietly—the downstream JSON-RPC consumer guards on `existsSync(.resource/:id/approved.png)` and falls through to the default art when the id does not resolve. This quiet degradation makes the bug invisible: the workaround appears to work while leaving junk in the manifest. If a real id lands instead, shared art outranks generated art at render time, so perfect prompts still print generic catalog art.
 
 MCP tool encoding always coerces falsy values. The trailing transport layer normalizes them again BEFORE the handler receives them, so the coercion is a surprise only to logic that branches inside the handler. Check the boundaries: what does the MCP encoding layer actually send, and where does normalization happen?

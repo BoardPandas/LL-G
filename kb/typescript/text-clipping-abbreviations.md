@@ -38,39 +38,27 @@ const ABBREVIATIONS = new Set(['a.k.a', 'e.g', 'i.e', 'etc', 'vs', 'Mrs', 'Dr', 
 function clipAtSentence(text: string, maxLength: number): string {
   if (text.length <= maxLength) return text;
   
-  // Split on ". " only when followed by capital letter AND not preceded by abbreviation
-  const sentencePattern = /\.(?:\s+|$)/g;
-  const sentences: string[] = [];
-  let lastIndex = 0;
-  let match;
-  
-  const regex = new RegExp(sentencePattern);
-  while ((match = regex.exec(text)) !== null) {
-    const beforeDot = text.substring(Math.max(0, match.index - 10), match.index);
-    const word = beforeDot.trim().split(/\s+/).pop() || '';
-    
-    // Skip if this is a known abbreviation
-    if (ABBREVIATIONS.has(word)) continue;
-    
-    // Only split if next char is space + capital or end of string
-    const nextChar = text[match.index + 1];
-    if (nextChar && !/[A-Z]/.test(text[match.index + 2])) continue;
-    
-    sentences.push(text.substring(lastIndex, match.index + 1));
-    lastIndex = match.index + 1;
-  }
-  if (lastIndex < text.length) {
-    sentences.push(text.substring(lastIndex));
-  }
-  
+  // Split on ". " only when NOT preceded by abbreviation
   let result = '';
-  for (const sentence of sentences) {
-    const trimmed = sentence.trim();
-    if ((result + trimmed + ' ').length > maxLength) break;
-    result += (result ? ' ' : '') + trimmed;
+  let lastEnd = 0;
+  
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] === '.' && text[i + 1] === ' ' && i + 2 < text.length && /[A-Z]/.test(text[i + 2])) {
+      const beforeDot = text.substring(Math.max(0, i - 10), i).trim().split(/\s+/).pop() || '';
+      if (ABBREVIATIONS.has(beforeDot)) continue;
+      
+      const sentence = text.substring(lastEnd, i + 1);
+      if ((result + sentence).length > maxLength) break;
+      result += sentence + ' ';
+      lastEnd = i + 2;
+    }
   }
   
-  return result.slice(0, maxLength);
+  if (lastEnd < text.length && result.length < maxLength) {
+    result += text.substring(lastEnd).slice(0, maxLength - result.length);
+  }
+  
+  return result.trim().slice(0, maxLength);
 }
 
 // "Jane Doe a.k.a. Jane Smith, tall with red hair."

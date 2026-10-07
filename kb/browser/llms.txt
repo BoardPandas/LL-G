@@ -6,4 +6,3 @@
 
 - [Pointer event handoff between trigger and popup requires explicit handling](pointer-event-relatedtarget.md): Chromium sends mouseout after pointerleave even within the same layout; check relatedTarget to know if pointer entered a related element. MEDIUM.
 - [Browser tests miss rendering-order and lazy-stylesheet bugs](browser-tests-visual-vs-markup.md): DOM tests pass for unstyled markup; lazy-loaded stylesheets, computed layout, and text wrapping require visual harnesses with real browser rendering. HIGH.
-- [Mobile audit evidence must wait for loaded content](browser-audit-loaded-content.md): An audit check that runs before content populates measures the loading placeholder, so a non-empty "Loading" state reads as ready and the check passes on the wrong UI; wait for a loaded-content signal, not for a non-empty element. HIGH.
