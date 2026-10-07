@@ -1,0 +1,7 @@
+# Vite Gotchas
+
+> Known Vite/Rolldown build patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Sharing a heavy component between two lazy routes moves the library into a new shared chunk](shared-component-moves-library-chunk.md): prefix-based bundle budgets then guard the wrong file and apply the small default ceiling. MEDIUM.
