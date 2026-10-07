@@ -19,9 +19,9 @@ screen stayed on "Press Ctrl+Alt+Delete". Repeating with both processes kept
 alive for a bounded observation window had the same result. A separate,
 non-impersonating service-console control moved that same VM to sign-in.
 
-That comparison proves a meaningful caller-path difference on the tested
-artifact. It does not prove why the targeted path failed, nor that a
-console-wide call safely addresses every requested Windows session.
+That initial comparison proves a meaningful caller-path difference on the tested
+artifact. Alone, it does not explain the failure or establish that a console-wide
+call safely addresses every requested Windows session.
 
 ## WRONG
 
@@ -52,6 +52,36 @@ Keep the runtime submission receipt distinct from native acceptance evidence:
 4. Preserve failed runs. Keep the native gate failed or unknown until both
    effect and targeting pass. A diagnostic control is not a production fallback.
 5. Restore explicitly approved lab preparation and verify actual cleanup.
+
+## Follow-up: caller identity and UIAccess
+
+A later same-binary A/B/A test retained impersonation and changed only its token
+source: the service's own session-0 SYSTEM token opened sign-in, the child session-1
+SYSTEM token did not, and the service token worked again. Do not conflate SYSTEM
+identity, process session, and effective thread-token session.
+
+Read-only inspection of the matching Winlogon public symbols on that Windows
+build supports the distinction: the active-console Services eligibility branch
+checks the effective token's session 0; the UIAccess branch checks actual UIAccess
+and the target session. Earlier branches exist, so this is a build-specific
+observation, not a universal private-API contract or implementation recipe.
+
+A separate, signed, protected-location helper launched by Windows with real
+UIAccess=1 visibly reached sign-in under policy 2/3 and Windows Security from an
+unlocked desktop. Its session-1 request did not disturb active session 2; explicitly
+targeting session 2 opened its sign-in screen. The disconnected session-1 effect
+was not observed. Policy 0/1 was refused before submission. The lab helper has no
+production authentication and must not be promoted as-is.
+
+For a UIAccess design, retain exact session authority and process authentication,
+bounded lifetime, and per-request input permission. Require real Windows-granted
+UIAccess, signing and protected installation; never mutate token UIAccess bits,
+elevate the whole viewer, or toggle policy automatically to make a test pass.
+A Services-only policy classifier cannot be reused unchanged for UIAccess.
+
+Capture immediately: a screenshot several minutes later can show the lock screen
+again and cannot establish whether an earlier SAS opened sign-in. Keep API
+submission, visual effect, native targeting, and product deployment separate.
 
 ## NOTES
 
