@@ -1,0 +1,8 @@
+# Browser Testing Gotchas
+
+> Known browser testing and pointer event patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Pointer event handoff between trigger and popup requires explicit handling](pointer-event-relatedtarget.md): Chromium sends mouseout after pointerleave even within the same layout; check relatedTarget to know if pointer entered a related element. MEDIUM.
+- [Browser tests miss rendering-order and lazy-stylesheet bugs](browser-tests-markup-vs-visual.md): DOM tests pass for unstyled markup; lazy-loaded stylesheets, computed layout, and text wrapping require visual harnesses with real browser rendering. HIGH.
