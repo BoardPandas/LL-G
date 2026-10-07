@@ -64,19 +64,11 @@ test('both implementations agree', () => {
 });
 
 // Use a probe/spy to validate module-load side effects
-const moduleReadLog: Record<string, unknown> = {};
-const probeGlobals = () => ({
-  env: process.env.NODE_ENV,
-  hasWindow: typeof window !== 'undefined',
-  cwd: process.cwd(),
-});
-
-// After hoisting imports, verify product modules read what they expected
 test('module initialization', async () => {
-  const initial = probeGlobals();
+  const initial = { env: process.env.NODE_ENV, hasWindow: typeof window !== 'undefined' };
   // Import the product
   const product = await import('../src/product.js');
-  const final = probeGlobals();
+  const final = { env: process.env.NODE_ENV, hasWindow: typeof window !== 'undefined' };
   
   // Module did NOT re-read globals
   expect(initial).toEqual(final);

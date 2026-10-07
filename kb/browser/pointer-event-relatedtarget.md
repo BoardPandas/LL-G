@@ -50,7 +50,6 @@ card.addEventListener('pointerleave', (event) => {
   if (!isPointerOverPopup(event)) {
     hideTimer = setTimeout(() => popup.hidden = true, 200);
   } else {
-    // Keep the grace timer active for crossing the gap
     clearTimeout(hideTimer);
     hideTimer = setTimeout(() => popup.hidden = true, 200);
   }
