@@ -125,7 +125,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from (5 entries)
 
 ### WebRTC
-- [WebRTC index](kb/webrtc/llms.txt): WebRTC negotiation gotchas (3 entries)
+- [WebRTC index](kb/webrtc/llms.txt): WebRTC negotiation gotchas (4 entries)
 
 ### Chrome
 - [Chrome index](kb/chrome/llms.txt): Google Chrome / Chromium gotchas (3 entries)
@@ -288,4 +288,3 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Image Generation
 - [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (1 entry)
-
