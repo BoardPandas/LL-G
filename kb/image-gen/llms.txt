@@ -1,0 +1,7 @@
+# Image Generation Gotchas
+
+> Known AI image generation patterns that trigger safety filters or produce unexpected results.
+
+## Entries
+
+- [Innocent scene descriptions can trigger image safety filters](image-safety-composition.md): Standing figure over prone figure is the risky shape; reposition revived figures as active/moving and avoid prone poses in context of standing figures. HIGH.
