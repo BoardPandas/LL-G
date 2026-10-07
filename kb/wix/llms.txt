@@ -6,3 +6,4 @@
 
 - [Major upgrade wipes runtime-modified data files (config.json) despite NeverOverwrite](major-upgrade-config-wipe.md): RemoveExistingProducts scheduled early deletes the old product's runtime-modified config before the new install, orphaning the app; schedule afterInstallExecute + Permanent component. HIGH.
 - [MSI ProductVersion limits differ from four-part executable versions](productversion-limits-and-upgrade-order.md): EXE versions allow fields that MSI rejects or ignores; use a bounded monotonic mapping and preserve application identity. HIGH.
+- [MSI norestart does not preserve running applications](norestart-does-not-preserve-running-apps.md): Silent MSI upgrades can close active viewers through Restart Manager and custom cleanup despite no-reboot flags; remove both paths and separately prove full session continuity. HIGH.

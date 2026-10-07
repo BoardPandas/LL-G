@@ -224,7 +224,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Prisma index](kb/prisma/llms.txt): Prisma ORM migration and drift-detection gotchas (1 entry)
 
 ### WiX / MSI
-- [WiX index](kb/wix/llms.txt): WiX Toolset / Windows Installer gotchas (2 entries)
+- [WiX index](kb/wix/llms.txt): WiX Toolset / Windows Installer gotchas (3 entries)
 
 ### Antigravity CLI
 - [Antigravity CLI index](kb/antigravity-cli/llms.txt): Antigravity CLI (`agy`) gotchas (2 entries)
