@@ -5,3 +5,4 @@
 ## Entries
 
 - [drizzle-kit "No schema changes" when a new schema file isn't registered in an explicit drizzle.config schema list](config-explicit-schema-list.md): With an explicit `schema` file array (not a glob), db:generate ignores the barrel re-export and silently emits no migration for a new table file. HIGH.
+- [Two branches claim the same migration number: regenerate the unapplied one, don't renumber it](branch-migration-number-collision.md): hand-renaming leaves the journal and snapshot chain wrong; delete and regenerate. MEDIUM.

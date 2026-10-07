@@ -191,10 +191,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Hyper-V index](kb/hyper-v/llms.txt): Hyper-V virtualization gotchas (1 entry)
 
 ### Architecture
-- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas (22 entries)
+- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas (25 entries)
 
 ### Research
-- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas (3 entries)
+- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas (4 entries)
 
 ### Cisco Meraki
 - [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (4 entries)
@@ -235,8 +235,11 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### .NET Framework
 - [.NET Framework index](kb/dotnet-framework/llms.txt): Legacy .NET Framework (CLR 2.0/3.0/3.5, WCF, GAC) gotchas (1 entry)
 
+### Vite
+- [Vite index](kb/vite/llms.txt): Vite/Rolldown build and chunking gotchas (1 entry)
+
 ### Drizzle ORM (drizzle-kit)
-- [drizzle-kit index](kb/drizzle-kit/llms.txt): drizzle-kit migration-generation gotchas (1 entry)
+- [drizzle-kit index](kb/drizzle-kit/llms.txt): drizzle-kit migration-generation gotchas (2 entries)
 
 ### React Native
 - [React Native index](kb/react-native/llms.txt): React Native + Expo gotchas (2 entries)
