@@ -122,7 +122,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (32 entries)
 
 ### Media Foundation (Windows)
-- [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from (4 entries)
+- [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from (5 entries)
 
 ### WebRTC
 - [WebRTC index](kb/webrtc/llms.txt): WebRTC negotiation gotchas (3 entries)
