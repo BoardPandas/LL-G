@@ -1,15 +1,28 @@
 ---
 tech: better-auth
-tags: [better-auth, cli, migrations, schema-drift, postgres, kysely, ci, oauth-provider, jwt]
+tags: [better-auth, cli, auth-cli, npx, migrations, schema-drift, postgres, kysely, ci, oauth-provider, jwt]
 severity: high
 ---
-# better-auth 1.7 ships no CLI -- generate with getMigrations(), diff with getAuthTables()
+# better-auth's 1.7 CLI is the `auth` package -- `npx better-auth` finds no bin, and a hand-written schema still drifts
 
 ## PROBLEM
 
-`better-auth generate` cannot run on 1.7.x. The `better-auth` package declares **no `bin` entry**, and the separate `@better-auth/cli` package stopped publishing at `1.5.0-beta.13` (`latest` is `1.4.21`). A `package.json` script calling `better-auth generate` therefore looks configured, passes review, and fails only when someone actually runs it -- which nobody does, because it is a once-a-year command.
+**Corrected 2026-10-07.** This entry used to say 1.7 ships no CLI. It does: the CLI is the npm
+package **`auth`**, built from `packages/cli` in the better-auth repo and released in lockstep
+with it (`auth@1.7.0` and `1.7.1` shipped 2026-08-18, the same day as `better-auth` 1.7.0/1.7.1).
+It provides `generate`, `migrate` and `check schema`, under two bin names: `auth` and
+`better-auth`. Run it as `npx auth generate`, or add `auth` (same version as `better-auth`) as
+a devDependency so a script's `better-auth generate` resolves.
 
-That is the setup. The damage is what happens next: with no working way to regenerate the schema, a hand-written SQL schema silently falls behind the library on every version bump. Better Auth writes the new columns on **every INSERT**, Postgres rejects the statement, and the failure lands in production as a bare HTTP 500 with an empty body. Nothing catches it -- not the changelog, not the build, not `tsc`, not the test suite -- because no code path compares the migrations against what the library declares.
+What is true, and is the trap: the `better-auth` package itself declares **no `bin`**, so
+`npx better-auth generate` (which resolves the package NAMED `better-auth`) fails, and the old
+`@better-auth/cli` package is deprecated on npm and stops at `1.5.0-beta.13` (`latest` is
+`1.4.21`). A `package.json` script calling `better-auth generate` without `auth` installed
+looks configured, passes review, and fails only when someone runs it -- which nobody does,
+because it is a once-a-year command.
+
+The damage is what happens next: a hand-written SQL schema that nothing compares with the
+library silently falls behind it on every version bump. Better Auth writes the new columns on **every INSERT**, Postgres rejects the statement, and the failure lands in production as a bare HTTP 500 with an empty body. Nothing catches it -- not the changelog, not the build, not `tsc`, not the test suite -- because no code path compares the migrations against what the library declares.
 
 A single 1.6 -> 1.7 bump produced three separate outages this way, each found only after the previous fix shipped:
 
@@ -27,7 +40,8 @@ The second-order gotcha: `getMigrations()` needs a live database (it diffs again
 // package.json -- cannot run on 1.7.x, and points at an APPLIED migration
 {
   "scripts": {
-    // 1. better-auth 1.7 has no bin; @better-auth/cli stops at 1.5.0-beta.13.
+    // 1. Resolves only if the `auth` package is installed; better-auth itself has
+    //    no bin, and @better-auth/cli is deprecated at 1.5.0-beta.13.
     // 2. --output overwrites 0001, already applied and recorded in _migrations,
     //    so a "successful" run silently desyncs the file from what the DB ran.
     "auth:generate": "better-auth generate --config src/auth.ts --output src/db/migrations/0001_better_auth.sql -y"
@@ -73,8 +87,9 @@ for (const model of Object.values(declared)) {
 ```
 
 ```ts
-// scripts/auth-generate-migration.mts -- the supported 1.7 replacement for the CLI.
-// Same entry point the old CLI drove. Emits a DELTA, so it belongs in a NEW file.
+// scripts/auth-generate-migration.mts -- the programmatic equivalent of `npx auth generate`
+// (same entry point the CLI drives), useful when you want the file naming and placement under
+// your own control. Emits a DELTA, so it belongs in a NEW file.
 import { getMigrations } from "better-auth/db/migration";
 
 const { toBeCreated, toBeAdded, unsafeChanges, compileMigrations } =
@@ -96,9 +111,17 @@ fs.writeFileSync(`migrations/${next}_${slug}.sql`, await compileMigrations());
 
 ## NOTES
 
-- **Verify the claim yourself, it changes per release:**
-  `node -e "console.log(require('better-auth/package.json').bin)"` -> `undefined` on 1.7.1.
-  `npm view @better-auth/cli dist-tags` -> `latest: 1.4.21`, `beta: 1.5.0-beta.13`.
+- **Verify the claims yourself, they change per release:**
+  `npm view auth@<your better-auth version> bin repository.directory` -> `{ auth, better-auth }`,
+  `packages/cli` (checked on 1.7.7).
+  `node -e "console.log(require('better-auth/package.json').bin)"` -> `undefined` (1.7.1-1.7.7).
+  `npm view @better-auth/cli dist-tags` -> `latest: 1.4.21`, `beta: 1.5.0-beta.13`, deprecated.
+- `npx auth generate` / `migrate` on the Kysely adapter introspect a LIVE database
+  ([generate-needs-live-db.md](generate-needs-live-db.md)), so neither replaces an offline CI
+  gate. `npx auth check schema` also needs the database. Since 1.7.5 the same comparison runs at
+  runtime before every auth endpoint and refuses them all on a finding -- see
+  [patch-bump-new-table-schema-check-500s-auth.md](patch-bump-new-table-schema-check-500s-auth.md)
+  for gating on it in CI.
 - `getAuthTables()` returns `{ [key]: { modelName, fields, indexes } }`. Use `modelName` for the
   table (it can differ from the key) and `attr.fieldName ?? key` for the column. `id` is implicit
   and absent from `fields`.
