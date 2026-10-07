@@ -242,7 +242,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React Native index](kb/react-native/llms.txt): React Native + Expo gotchas (2 entries)
 
 ### GitHub Actions
-- [GitHub Actions index](kb/github-actions/llms.txt): GitHub Actions CI workflow gotchas (6 entries)
+- [GitHub Actions index](kb/github-actions/llms.txt): GitHub Actions CI workflow gotchas (7 entries)
 
 ### Zod
 - [Zod index](kb/zod/llms.txt): Zod schema-validation gotchas (1 entry)
