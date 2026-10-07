@@ -62,7 +62,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Base UI index](kb/base-ui/llms.txt): Base UI (@base-ui-components/react) gotchas (2 entries)
 
 ### Accessibility
-- [Accessibility index](kb/accessibility/llms.txt): Accessibility gotchas (2 entries)
+- [Accessibility index](kb/accessibility/llms.txt): Accessibility gotchas (3 entries)
 
 ### CSS
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas (14 entries)
