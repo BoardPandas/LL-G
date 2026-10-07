@@ -194,7 +194,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas (25 entries)
 
 ### Research
-- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas (4 entries)
+- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas (5 entries)
 
 ### Cisco Meraki
 - [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (4 entries)
