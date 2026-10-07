@@ -209,7 +209,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Railway index](kb/railway/llms.txt): Railway platform gotchas (5 entries)
 
 ### Claude Code
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas (32 entries)
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas (35 entries)
 
 ### DNS
 - [DNS index](kb/dns/llms.txt): Provider-agnostic DNS gotchas (2 entries)
