@@ -98,193 +98,25 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas (5 entries)
 
 ### Godot / GDScript
-- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (11 entries)
+- [Godot index](kb/godot/llms.txt): Godot 4 gotchas: editor state, async patterns, and C# type mapping (6 entries)
 
 ### Better Auth
-- [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (40 entries)
-
-### Hono
-- [Hono index](kb/hono/llms.txt): Hono routing and middleware gotchas (1 entry)
+- [Better Auth index](kb/better-auth/llms.txt): Better Auth configuration and OAuth middleware gotchas (7 entries)
 
 ### Bash
-- [Bash index](kb/bash/llms.txt): bash shell scripting and pattern-matching gotchas; gh api printing the HTTP error body on STDOUT so the idiomatic `x=$(gh api ... --jq .field 2>/dev/null || true)` captures 404 JSON instead of an empty string (--jq does not filter an error body), which a forgiving endpoint can then swallow -- the contents API ignores a bogus sha when creating a file; and a base64 payload passed as an argv element outgrowing the ~32 KB Windows/msys command-line limit as the target file grows, failing with exit 126 that names the interpreter rather than the payload (21 entries)
+- [Bash index](kb/bash/llms.txt): Bash subshell, pipe, and variable-scope gotchas (13 entries)
 
-### Git
-- [Git index](kb/git/llms.txt): Git tooling gotchas (14 entries)
-
-### Linux
-- [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (10 entries)
-
-### cmd.exe (Windows)
-- [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
-
-### Windows
-- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (32 entries)
-
-### Media Foundation (Windows)
-- [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from (4 entries)
-
-### WebRTC
-- [WebRTC index](kb/webrtc/llms.txt): WebRTC negotiation gotchas (3 entries)
-
-### Chrome
-- [Chrome index](kb/chrome/llms.txt): Google Chrome / Chromium gotchas (3 entries)
-
-### Teams & SharePoint
-- [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
-
-### Cloudflare
-- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (18 entries)
+### claude-code
+- [claude-code index](kb/claude-code/llms.txt): Claude Code hook matchers, frontmatter, settings and skills (16 entries)
 
 ### Docker
 - [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas (4 entries)
 
-### NinjaOne
-- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (10 entries)
-
-### SupportForge
-- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent execution and ticket-API behaviour (43 entries)
-
-### Tauri
-- [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
-
-### NAudio
-- [NAudio index](kb/naudio/llms.txt): NAudio/WASAPI gotchas (1 entry)
-
-### Voicemeeter
-- [Voicemeeter index](kb/voicemeeter/llms.txt): VB-Audio Voicemeeter (Standard/Banana/Potato) and MacroButtons gotchas (1 entry)
-
-### WPF
-- [WPF index](kb/wpf/llms.txt): WPF/XAML gotchas (4 entries)
-
-### Svelte
-- [Svelte index](kb/svelte/llms.txt): Svelte 5 component and runes gotchas (4 entries)
-
-### React
-- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright (15 entries)
-
-### Gemini
-- [Gemini index](kb/gemini/llms.txt): Google Gemini API gotchas, including long-audio transcription (3 entries)
-
-### Rust
-- [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, Windows process-spawning, and COM/audio FFI gotchas, plus Windows toolchain traps (41 entries)
-
-### Python
-- [Python index](kb/python/llms.txt): Python runtime and virtualenv gotchas (10 entries)
-
-### SQLite
-- [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
-
-### Postgres
-- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL, query and connection-pooling gotchas (31 entries)
-
-### M365 Admin Center
-- [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
-
-### Intune
-- [Intune index](kb/intune/llms.txt): Microsoft Intune endpoint-policy + app-management gotchas (8 entries)
-
-### Azure
-- [Azure index](kb/azure/llms.txt): Azure ARM and Az PowerShell gotchas (2 entries)
-
-### Hyper-V
-- [Hyper-V index](kb/hyper-v/llms.txt): Hyper-V virtualization gotchas (1 entry)
-
-### Architecture
-- [Architecture index](kb/architecture/llms.txt): Cross-service and system-design gotchas (21 entries)
-
-### Research
-- [Research index](kb/research/llms.txt): Source-verification and web-research gotchas (3 entries)
-
-### Cisco Meraki
-- [Meraki index](kb/meraki/llms.txt): Cisco Meraki Dashboard API and licensing gotchas (4 entries)
-
-### UniFi (Ubiquiti)
-- [UniFi index](kb/unifi/llms.txt): Ubiquiti UniFi Site Manager API coverage gotchas (1 entry)
-
-### Northflank
-- [Northflank index](kb/northflank/llms.txt): Northflank deployment + addon gotchas (11 entries)
-
-### Railway
-- [Railway index](kb/railway/llms.txt): Railway platform gotchas (5 entries)
-
-### Claude Code
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas (35 entries)
-
-### DNS
-- [DNS index](kb/dns/llms.txt): Provider-agnostic DNS gotchas (2 entries)
-
-### Windows DNS
-- [Windows DNS index](kb/windows-dns/llms.txt): Windows / Active Directory DNS gotchas (2 entries)
-
-### Active Directory
-- [Active Directory index](kb/active-directory/llms.txt): AD domain-controller and Group Policy gotchas (2 entries)
-
-### Prisma
-- [Prisma index](kb/prisma/llms.txt): Prisma ORM migration and drift-detection gotchas (1 entry)
-
-### WiX / MSI
-- [WiX index](kb/wix/llms.txt): WiX Toolset / Windows Installer gotchas (2 entries)
-
-### Antigravity CLI
-- [Antigravity CLI index](kb/antigravity-cli/llms.txt): Antigravity CLI (`agy`) gotchas (2 entries)
-
-### Lumen (NaaS)
-- [Lumen index](kb/lumen/llms.txt): Lumen NaaS API gotchas (4 entries)
-
-### .NET Framework
-- [.NET Framework index](kb/dotnet-framework/llms.txt): Legacy .NET Framework (CLR 2.0/3.0/3.5, WCF, GAC) gotchas (1 entry)
-
-### Drizzle ORM (drizzle-kit)
-- [drizzle-kit index](kb/drizzle-kit/llms.txt): drizzle-kit migration-generation gotchas (1 entry)
-
-### React Native
-- [React Native index](kb/react-native/llms.txt): React Native + Expo gotchas (2 entries)
-
-### GitHub Actions
-- [GitHub Actions index](kb/github-actions/llms.txt): GitHub Actions CI workflow gotchas (7 entries)
-
-### Zod
-- [Zod index](kb/zod/llms.txt): Zod schema-validation gotchas (1 entry)
-
-### Jonas
-- [Jonas index](kb/jonas/llms.txt): Jonas Club Management / Activity Management (JAM) gotchas (1 entry)
-
-### npm
-- [npm index](kb/npm/llms.txt): npm workspace gotchas (1 entry)
-
-### Jest
-- [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus two test-double traps that both end in a false green (5 entries)
-
 ### Vitest
-- [Vitest index](kb/vitest/llms.txt): Vitest gotchas (6 entries)
+- [Vitest index](kb/vitest/llms.txt): Vitest test isolation, mocking and coverage gotchas (6 entries)
 
-### Go
-- [Go index](kb/go/llms.txt): Go HTTP and concurrency gotchas (28 entries)
-
-### Web Security
-- [Web Security index](kb/web-security/llms.txt): Framework-agnostic browser/HTTP security-header gotchas (3 entries)
-
-### Supabase
-- [Supabase index](kb/supabase/llms.txt): Supabase auth/sync gotchas (1 entry)
-
-### DOM
-- [DOM index](kb/dom/llms.txt): Framework-agnostic DOM gotchas (2 entries)
-
-### macOS
-- [macOS index](kb/macos/llms.txt): Native macOS command, monitoring, and permission-state gotchas (4 entries)
-
-### Redis
-- [Redis index](kb/redis/llms.txt): Redis concurrency and shared-key ownership gotchas (1 entry)
-
-### Magic: The Gathering
-- [Magic: The Gathering index](kb/magic-tcg/llms.txt): Magic card-data, legality, rules-engine, deckbuilding, and proxy-rendering gotchas (2 entries)
-
-### docx (Word OOXML)
-- [docx index](kb/docx/llms.txt): Word OOXML / docx generation gotchas (2 entries)
-
-### Browser Testing
-- [Browser Testing index](kb/browser/llms.txt): Browser test harness gotchas: pointer events, loaded-content readiness and markup-vs-rendered checks (3 entries)
+### Browser
+- [Browser index](kb/browser/llms.txt): Browser testing and pointer event handling gotchas (2 entries)
 
 ### Image Generation
-- [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (1 entry)
+- [Image Gen index](kb/image-gen/llms.txt): AI image generation safety filters and composition (1 entry)
