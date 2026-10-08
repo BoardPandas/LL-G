@@ -86,3 +86,4 @@
 - [Pre-write busy repaints can consume FLIP state](pre-write-busy-repaints-consume-flip-state.md): A content-identical pre-write busy notification can consume a pending FLIP measurement before the changed document paints, silently removing the animation; key the ticket to authoritative document identity and suppress irrelevant repaints. HIGH.
 
 - [Copied API types hide runtime contract drift](copied-api-types-hide-runtime-contract-drift.md): Separate server and browser types plus self-consistent mocks hide renamed JSON fields; bind a rendered UI fixture to real server output and enforce shared contract compatibility. HIGH.
+- [Accepted writes must await revision-paired projections](accepted-writes-must-await-revision-paired-projections.md): Finishing an interaction before its exact derived view settles leaks background work into the next gesture, while sharing the write catch can make an accepted operation retryable. HIGH.
