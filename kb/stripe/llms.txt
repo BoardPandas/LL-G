@@ -5,3 +5,5 @@
 ## Entries
 
 - [Catalog Stripe IDs do not prove Connect account ownership](catalog-ids-do-not-prove-connect-account-ownership.md): Stored product and price IDs can belong to a previous connected account; validate and repair them through the current account, and make customer/subscription retries idempotent. MEDIUM.
+
+- [Pending invoice items are excluded from new invoices](pending-invoice-items-are-excluded.md): Creating an unattached line item first can produce a paid zero-dollar invoice while the actual charge stays pending; create the invoice first, attach its items, and reuse idempotency keys. HIGH.

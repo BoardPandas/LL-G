@@ -84,3 +84,5 @@
 - [Sorting by a nullable rank (a.rank - b.rank) silently scrambles the order](nullable-rank-sort-comparator.md): null rank gives a NaN comparator and engine-defined order; sort on an always-present position. HIGH.
 - [Sentence-safe text clipping needs abbreviation protection](text-clipping-abbreviations.md): Naive sentence splitters treat a.k.a., e.g., etc. as terminators; protect known abbreviations and verify no references become orphaned after clipping. HIGH.
 - [Pre-write busy repaints can consume FLIP state](pre-write-busy-repaints-consume-flip-state.md): A content-identical pre-write busy notification can consume a pending FLIP measurement before the changed document paints, silently removing the animation; key the ticket to authoritative document identity and suppress irrelevant repaints. HIGH.
+
+- [Copied API types hide runtime contract drift](copied-api-types-hide-runtime-contract-drift.md): Separate server and browser types plus self-consistent mocks hide renamed JSON fields; bind a rendered UI fixture to real server output and enforce shared contract compatibility. HIGH.
