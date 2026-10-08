@@ -242,7 +242,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [drizzle-kit index](kb/drizzle-kit/llms.txt): drizzle-kit migration-generation gotchas (2 entries)
 
 ### React Native
-- [React Native index](kb/react-native/llms.txt): React Native + Expo gotchas (2 entries)
+- [React Native index](kb/react-native/llms.txt): React Native + Expo gotchas (3 entries)
 
 ### GitHub Actions
 - [GitHub Actions index](kb/github-actions/llms.txt): GitHub Actions CI workflow gotchas (7 entries)
@@ -291,3 +291,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Image Generation
 - [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (1 entry)
+
