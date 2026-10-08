@@ -287,7 +287,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [docx index](kb/docx/llms.txt): Word OOXML / docx generation gotchas (2 entries)
 
 ### Browser Testing
-- [Browser Testing index](kb/browser/llms.txt): Browser test harness gotchas: pointer events, loaded-content readiness and markup-vs-rendered checks (5 entries)
+- [Browser Testing index](kb/browser/llms.txt): Browser test harness gotchas: pointer events, loaded-content readiness and markup-vs-rendered checks (6 entries)
 
 ### Image Generation
 - [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (1 entry)
