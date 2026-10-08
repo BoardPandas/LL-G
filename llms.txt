@@ -272,7 +272,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Supabase index](kb/supabase/llms.txt): Supabase auth/sync gotchas (1 entry)
 
 ### DOM
-- [DOM index](kb/dom/llms.txt): Framework-agnostic DOM gotchas (2 entries)
+- [DOM index](kb/dom/llms.txt): Framework-agnostic DOM gotchas (3 entries)
 
 ### macOS
 - [macOS index](kb/macos/llms.txt): Native macOS command, monitoring, and permission-state gotchas (4 entries)
@@ -291,3 +291,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Image Generation
 - [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (1 entry)
+
