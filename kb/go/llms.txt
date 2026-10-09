@@ -57,3 +57,5 @@
 - [kardianos/service restarts a daemon named after Config.Name, not the one your installer loaded](kardianos-service-restart-wrong-daemon.md): On darwin Restart/Stop/Start address a plist named for Config.Name; a PKG-installed job under another label is never restarted. Use launchctl kickstart -k / systemctl restart on the packaged name. HIGH.
 
 - [Do not add a base tick after a capture interval has elapsed](ticker-deliveries-do-not-extend-elapsed-capture-intervals.md): Dropped ticker deliveries do not extend an already elapsed selected interval; remove the extra base-tick wait and verify fixed buckets without catch-up bursts. HIGH.
+
+- [A join deadline excludes synchronous cleanup after the wait](join-deadline-excludes-synchronous-cleanup.md): A context-bounded worker wait still hangs when release runs synchronously afterward; one lifetime-owned completion goroutine must include cleanup before closing the joined signal. HIGH.
