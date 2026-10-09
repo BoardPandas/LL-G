@@ -61,3 +61,6 @@
 - [A join deadline excludes synchronous cleanup after the wait](join-deadline-excludes-synchronous-cleanup.md): A context-bounded wait still hangs when a join or release runs synchronously after it, or before it (e.g. closing a go-winio pipe that waits for in-flight reads); one lifetime-owned completion goroutine must do every close and join before closing the joined signal. HIGH.
 
 - [A retirement request that closes synchronously defeats the deadline select after it](retire-request-joins-before-deadline-select.md): A "request" step that calls a joining Close before the ctx select makes Retire and Stop unbounded; the request must only fence and cancel, and one completion goroutine owns every join. HIGH.
+
+- [Join protocol outcomes before publishing one-time completion](join-protocol-outcomes-before-completion.md): A nil retirement caller can win sync.Once and erase a later protocol failure; join the outcome producer before closing Done without blocking the deadline select. HIGH.
+
