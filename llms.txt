@@ -263,7 +263,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Vitest index](kb/vitest/llms.txt): Vitest gotchas (6 entries)
 
 ### Go
-- [Go index](kb/go/llms.txt): Go HTTP and concurrency gotchas (31 entries)
+- [Go index](kb/go/llms.txt): Go HTTP and concurrency gotchas (32 entries)
 
 ### Web Security
 - [Web Security index](kb/web-security/llms.txt): Framework-agnostic browser/HTTP security-header gotchas (4 entries)
@@ -291,3 +291,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Image Generation
 - [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (1 entry)
+
