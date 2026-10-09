@@ -176,7 +176,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
 
 ### Postgres
-- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL, query and connection-pooling gotchas (32 entries)
+- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL, query and connection-pooling gotchas (33 entries)
 
 ### M365 Admin Center
 - [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
@@ -291,3 +291,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Image Generation
 - [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (1 entry)
+
