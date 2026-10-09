@@ -63,4 +63,3 @@
 - [A case-insensitive UUID lookup plus a TEXT polymorphic sweep orphans child rows](uuid-lookup-text-sweep-orphans-rows.md): The parent resolves an upper-cased id via uuid compare, but entity_id TEXT sweeps are case-sensitive, so the delete orphans every child and the preview counts zero; use the id the database returned after the first read. HIGH.
 
 - [UUID array casts must match text identifier columns](uuid-array-casts-must-match-text-columns.md): Validated UUID strings still fail at execution when a uuid[] parameter is compared to a TEXT identifier column; cast the array to the column type and exercise generated SQL against real PostgreSQL. MEDIUM.
-
