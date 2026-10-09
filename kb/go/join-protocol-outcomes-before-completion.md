@@ -116,4 +116,3 @@ the same `Once.Do`.
 - This is a behavioral Go concurrency defect, not a configuration defect.
   Deterministic regression tests enforce the ownership contract; no static Codex
   or Claude configuration guard is appropriate.
-
