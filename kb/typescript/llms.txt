@@ -87,3 +87,5 @@
 
 - [Copied API types hide runtime contract drift](copied-api-types-hide-runtime-contract-drift.md): Separate server and browser types plus self-consistent mocks hide renamed JSON fields; bind a rendered UI fixture to real server output and enforce shared contract compatibility. HIGH.
 - [Accepted writes must await revision-paired projections](accepted-writes-must-await-revision-paired-projections.md): Finishing an interaction before its exact derived view settles leaks background work into the next gesture, while sharing the write catch can make an accepted operation retryable. HIGH.
+- [Helper-level tests can preserve the wrong cross-screen handoff](helper-level-tests-can-preserve-the-wrong-cross-screen-handoff.md): Unit tests that separately bless a producer exclusion and a consumer fallback can stay green while the complete workflow discards valid intent and returns plausible global results; pin the producer-to-consumer query and visible scope receipt in one integration test. HIGH.
+
