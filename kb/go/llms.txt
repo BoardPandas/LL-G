@@ -63,3 +63,5 @@
 - [A retirement request that closes synchronously defeats the deadline select after it](retire-request-joins-before-deadline-select.md): A "request" step that calls a joining Close before the ctx select makes Retire and Stop unbounded; the request must only fence and cancel, and one completion goroutine owns every join. HIGH.
 
 - [Join protocol outcomes before publishing one-time completion](join-protocol-outcomes-before-completion.md): A nil retirement caller can win sync.Once and erase a later protocol failure; join the outcome producer before closing Done without blocking the deadline select. HIGH.
+
+- [Keep historical test policies independent of current implementations](historical-test-policy-must-not-follow-current-implementation.md): Reusing today's guarded controller as a historical raw-budget comparator changes the expected policy; freeze the narrow counterfactual and separately observe real current-policy outcomes. MEDIUM.
