@@ -1,0 +1,7 @@
+# FFmpeg Gotchas
+
+> Known FFmpeg patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Passthrough frame timing does not preserve the output time base](passthrough-output-time-base.md): Preserve the demuxer clock during full-file decode checks so distinct variable-rate timestamps are not rounded into duplicate output DTS. HIGH.
