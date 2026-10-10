@@ -50,7 +50,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas (11 entries)
 
 ### LLM Integration
-- [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas (7 entries)
+- [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas (8 entries)
 
 ### MCP (Model Context Protocol)
 - [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas (13 entries)
@@ -294,3 +294,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Image Generation
 - [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (1 entry)
+
