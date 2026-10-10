@@ -124,6 +124,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Media Foundation (Windows)
 - [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from (5 entries)
 
+### FFmpeg
+- [FFmpeg index](kb/ffmpeg/llms.txt): FFmpeg media timing and verification gotchas (1 entry)
+
 ### WebRTC
 - [WebRTC index](kb/webrtc/llms.txt): WebRTC negotiation gotchas (4 entries)
 
