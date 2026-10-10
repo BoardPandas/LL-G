@@ -68,7 +68,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [CSS index](kb/css/llms.txt): CSS rendering gotchas (14 entries)
 
 ### Data Viz
-- [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas (5 entries)
+- [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas (6 entries)
 
 ### QuickBooks Online (Intuit)
 - [QuickBooks index](kb/quickbooks/llms.txt): QuickBooks Online OAuth integration gotchas (2 entries)
