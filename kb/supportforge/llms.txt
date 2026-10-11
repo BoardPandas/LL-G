@@ -67,3 +67,5 @@
 - [Preserve registered UI identifiers during visual refactors](preserve-registered-ui-identifiers-during-visual-refactors.md): Replacing markup can pass tests and build while dropping registered IDs; preserve equivalent elements and run the separate registry guard before committing. MEDIUM.
 
 - [Partition distributor invoices by invoice and customer](partition-distributor-invoices-by-customer.md): A shared distributor invoice can span customers; partition list totals and carry the selected customer through authorized detail reads. HIGH.
+
+- [Preserve saved scope and intersect every board column](preserve-saved-scope-and-intersect-every-board-column.md): A board must retain the saved predicate and AND it with column status and active refinements; forwarding only the saved-view ID can duplicate every match into every column. HIGH.
