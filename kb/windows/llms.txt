@@ -63,3 +63,5 @@
 - [SendSAS submission is not session-specific visual acceptance](sendsas-submission-not-session-acceptance.md): A void return and SYSTEM identity do not prove SAS caller eligibility; distinguish effective token session, signed UIAccess, immediate visual effect, and non-target-session evidence. HIGH.
 
 - [Per-user secrets in ProgramData are readable by every account, and a pre-planted file survives a DACL fix](programdata-per-user-secrets-acl.md): ProgramData inherits Users:read and lets users pre-create paths, so key per-person state by SID, give the dir an Administrators owner + protected SY/BA DACL, write via temp+rename, and identify pipe callers from the client process token. HIGH.
+
+- [Capture helpers need their own embedded DPI-awareness manifest](capture-helper-dpi-manifest.md): Mixing DPI-virtualized monitor geometry with WGC physical pixels rejects capture on scaled displays; embed and inspect each helper EXE's manifest, retain strict geometry checks, and verify native startup and cleanup. HIGH.
