@@ -67,3 +67,6 @@
 - [Compare JSON values before database serialization](compare-json-values-before-database-serialization.md): Pre-encoding incoming attributes makes object-shaped JSONB readback appear changed on every ingestion and double-encodes audit values; compare native domain values and serialize at the write boundary. HIGH.
 
 - [Preserve independent alternatives when translating saved filters](preserve-independent-filter-alternatives.md): Flattening several fields into one OR group or silently dropping unfinished conditions broadens saved results; retain field membership intersections and validate every predicate. HIGH.
+
+- [An indexed count does not prove ordered pagination uses the search index](indexed-count-does-not-prove-ordered-search-is-fast.md): ORDER BY/LIMIT can scan the date index and time out even when the count uses search indexes; measure both and resolve scoped matching keys before pagination when warranted. HIGH.
+
