@@ -294,3 +294,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Image Generation
 - [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (1 entry)
+
+### OpenAI Sites
+- [OpenAI Sites index](kb/openai-sites/llms.txt): OpenAI Sites publishing and asset-packaging gotchas (1 entry)
