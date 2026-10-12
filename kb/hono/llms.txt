@@ -5,6 +5,7 @@
 ## Entries
 
 - [Splitting a monolith Hono route file: registration order is semantic](route-registration-order-on-split.md): Overlapping patterns match in registration order and app.use only covers routes registered after it, so splitting a big route file into sub-routers can silently change which handler wins or drop middleware. Preserve order, hoist middleware to the parent, and diff app.routes before/after. HIGH.
+- [Filtering app.routes on method ALL hides app.all routes from auth tests](app-routes-all-method-hides-app-all.md): app.use(fn), app.use(path, fn) and app.all(path, h) are all method ALL in app.routes; only path `/*` marks global middleware, so a method filter drops app.all routes from 'every route needs auth' tests. Assert the auth middleware's index too. HIGH.
 
 ## See also
 

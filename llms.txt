@@ -104,7 +104,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (42 entries)
 
 ### Hono
-- [Hono index](kb/hono/llms.txt): Hono routing and middleware gotchas (1 entry)
+- [Hono index](kb/hono/llms.txt): Hono routing and middleware gotchas (2 entries)
 
 ### Bash
 - [Bash index](kb/bash/llms.txt): bash shell scripting and pattern-matching gotchas; gh api printing the HTTP error body on STDOUT so the idiomatic `x=$(gh api ... --jq .field 2>/dev/null || true)` captures 404 JSON instead of an empty string (--jq does not filter an error body), which a forgiving endpoint can then swallow -- the contents API ignores a bogus sha when creating a file; and a base64 payload passed as an argv element outgrowing the ~32 KB Windows/msys command-line limit as the target file grows, failing with exit 126 that names the interpreter rather than the payload (24 entries)
@@ -137,7 +137,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
 
 ### Cloudflare
-- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (18 entries)
+- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (20 entries)
 
 ### Docker
 - [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas (4 entries)
