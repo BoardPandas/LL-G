@@ -176,7 +176,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Python index](kb/python/llms.txt): Python runtime and virtualenv gotchas (10 entries)
 
 ### SQLite
-- [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (5 entries)
+- [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (6 entries)
 
 ### Postgres
 - [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL, query and connection-pooling gotchas (39 entries)
