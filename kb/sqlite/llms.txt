@@ -6,3 +6,4 @@
 
 - [Upsert by display name silently merges unrelated records](upsert-by-name-collision.md): Using a human-readable name as upsert key causes collisions when two entities share the same name. Use unique paths or compound keys. MEDIUM.
 - [FTS5 integrity-check ignores the content table unless rank is 1](fts5-integrity-check-needs-rank-1.md): for external-content tables, `integrity-check` without rank 1 passes on a broken delete trigger; use `(f, rank) VALUES('integrity-check', 1)`. HIGH.
+- [A TEXT column stores a written integer as text, so a "wrong type" fixture is not wrong](text-affinity-converts-integer-fixture.md): `SET repo = 42` stores '42' and `z.string()` still parses it, so the error path under test is never reached; corrupt with a blob literal `X'01'` and confirm with `typeof()`. MEDIUM.
