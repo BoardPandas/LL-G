@@ -1,0 +1,7 @@
+# OpenAI Sites Gotchas
+
+> Known OpenAI Sites publishing patterns that cause obvious deployment failures.
+
+## Entries
+
+- [Sites deployments reject oversized archive inputs](sites-deployments-reject-oversized-archive-inputs.md): Preflight compressed and expanded publish inputs; source-only remote builds do not bypass the 256 MiB Sites cap. MEDIUM.
