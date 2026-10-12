@@ -30,7 +30,7 @@ const pixels = await sharp(png).ensureAlpha().raw().toBuffer();
 ## RIGHT
 
 ```ts
-const png = await renderCard({ ...options, transparentLayer: true });
+const png = await renderCard({ ...options, artLayer: "transparent" });
 expect((await sharp(png).metadata()).format).toBe("png");
 const pixels = await sharp(png).ensureAlpha().raw().toBuffer();
 // Compare lossless opaque interiors for exact source-color placement.
