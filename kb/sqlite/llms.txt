@@ -5,3 +5,4 @@
 ## Entries
 
 - [Upsert by display name silently merges unrelated records](upsert-by-name-collision.md): Using a human-readable name as upsert key causes collisions when two entities share the same name. Use unique paths or compound keys. MEDIUM.
+- [FTS5 integrity-check ignores the content table unless rank is 1](fts5-integrity-check-needs-rank-1.md): for external-content tables, `integrity-check` without rank 1 passes on a broken delete trigger; use `(f, rank) VALUES('integrity-check', 1)`. HIGH.

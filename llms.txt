@@ -44,7 +44,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [SSE index](kb/sse/llms.txt): Server-Sent Events gotchas on both sides of the wire (1 entry)
 
 ### Node.js
-- [Node.js index](kb/nodejs/llms.txt): Node.js runtime gotchas: process exit and signal forwarding, stdout draining, per-process vs per-listener wiring (24 entries)
+- [Node.js index](kb/nodejs/llms.txt): Node.js runtime gotchas: process exit and signal forwarding, stdout draining, per-process vs per-listener wiring (25 entries)
 
 ### pnpm
 - [pnpm index](kb/pnpm/llms.txt): pnpm workspace + linker + override gotchas (13 entries)
@@ -110,7 +110,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Bash index](kb/bash/llms.txt): bash shell scripting and pattern-matching gotchas; gh api printing the HTTP error body on STDOUT so the idiomatic `x=$(gh api ... --jq .field 2>/dev/null || true)` captures 404 JSON instead of an empty string (--jq does not filter an error body), which a forgiving endpoint can then swallow -- the contents API ignores a bogus sha when creating a file; and a base64 payload passed as an argv element outgrowing the ~32 KB Windows/msys command-line limit as the target file grows, failing with exit 126 that names the interpreter rather than the payload (24 entries)
 
 ### Git
-- [Git index](kb/git/llms.txt): Git tooling gotchas (15 entries)
+- [Git index](kb/git/llms.txt): Git tooling gotchas (16 entries)
 
 ### Linux
 - [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (10 entries)
@@ -176,7 +176,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Python index](kb/python/llms.txt): Python runtime and virtualenv gotchas (10 entries)
 
 ### SQLite
-- [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (1 entry)
+- [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (2 entries)
 
 ### Postgres
 - [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL, query and connection-pooling gotchas (39 entries)
@@ -263,7 +263,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus two test-double traps that both end in a false green (6 entries)
 
 ### Vitest
-- [Vitest index](kb/vitest/llms.txt): Vitest gotchas (6 entries)
+- [Vitest index](kb/vitest/llms.txt): Vitest gotchas (7 entries)
 
 ### Go
 - [Go index](kb/go/llms.txt): Go HTTP and concurrency gotchas (33 entries)
