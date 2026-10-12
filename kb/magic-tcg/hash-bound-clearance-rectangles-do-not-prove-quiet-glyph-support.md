@@ -33,3 +33,5 @@ for (const pixel of actualPtGlyphs.opaquePixels()) {
 ## NOTES
 
 Keep hash-bound clearance evidence, but treat it as provenance rather than proof that the annotation describes the quiet painted surface. For dark custom P/T ink, require each actual glyph pixel to sit on a near-opaque, high-luminance plate field (or on an independently hash-bound quiet mask). Add a negative fixture whose opaque dark strip crosses only the first rows of a digit: it must fail even when its full rectangle and mean contrast pass. Fix the plate art around fixed renderer coordinates; do not move text to accommodate the art.
+
+A current package hash is also not proof of the bytes that produced an earlier review render. Preserve and compare the review manifest's bound style hash and complete asset-set hash against the selected family at handoff; if either differs, treat the gallery as stale and render a fresh proof. This is a snapshot-mismatch finding, not evidence of any particular cache cause.
