@@ -27,4 +27,3 @@ text. If the mutator on top removes Forest, that intrinsic ability is absent.
 
 ## NOTES
 Ground the result in CR 702.140e and 730.2a-c. For Station hosts, apply the retained station-symbol static ability under CR 721.2a-b without restoring the lower card's name, artifact type, or Spacecraft subtype. For basic land types, check CR 305.6 before labeling an intrinsic mana ability as inherited text.
-

@@ -8,4 +8,3 @@
 - [Complete source art can still fail card-frame visibility](complete-source-art-can-still-fail-card-frame-visibility.md): A byte-correct source and successful render can still hide required subject landmarks beneath card-frame overlays. HIGH.
 - [Hash-bound clearance rectangles do not prove quiet glyph support](hash-bound-clearance-rectangles-do-not-prove-quiet-glyph-support.md): P/T glyphs can visibly cross a dark plate rail while a hash-bound rectangle and mean contrast both pass. HIGH.
 - [Mutate separates top characteristics from component abilities](mutate-top-characteristics-component-abilities.md): Mutate keeps every component ability while taking characteristics from the top, except subtype-intrinsic abilities that disappear with the subtype. HIGH.
-
