@@ -284,7 +284,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Redis index](kb/redis/llms.txt): Redis concurrency and shared-key ownership gotchas (1 entry)
 
 ### Magic: The Gathering
-- [Magic: The Gathering index](kb/magic-tcg/llms.txt): Magic card-data, legality, rules-engine, deckbuilding, and proxy-rendering gotchas (3 entries)
+- [Magic: The Gathering index](kb/magic-tcg/llms.txt): Magic card-data, legality, rules-engine, deckbuilding, and proxy-rendering gotchas (4 entries)
 
 ### docx (Word OOXML)
 - [docx index](kb/docx/llms.txt): Word OOXML / docx generation gotchas (2 entries)
@@ -294,3 +294,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Image Generation
 - [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (1 entry)
+
