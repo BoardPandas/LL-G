@@ -293,7 +293,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Browser Testing index](kb/browser/llms.txt): Browser test harness gotchas: pointer events, loaded-content readiness and markup-vs-rendered checks (10 entries)
 
 ### Image Generation
-- [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (1 entry)
+- [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (2 entries)
 
 ### OpenAI Sites
 - [OpenAI Sites index](kb/openai-sites/llms.txt): OpenAI Sites publishing and asset-packaging gotchas (1 entry)

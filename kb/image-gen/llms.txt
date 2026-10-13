@@ -5,3 +5,4 @@
 ## Entries
 
 - [Innocent scene descriptions can trigger image safety filters](image-safety-composition.md): Standing figure over prone figure is the risky shape; reposition revived figures as active/moving and avoid prone poses in context of standing figures. HIGH.
+- [A source-preservation wrapper can contradict an included art style](source-preservation-wrapper-contradicts-style.md): A complete edit request can forbid restyling while including an authoritative style; derive coherent instructions from the materialized plan and version the semantic treatment. HIGH.
