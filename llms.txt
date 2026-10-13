@@ -32,7 +32,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
 
 ### Next.js
-- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (30 entries)
+- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (31 entries)
 
 ### Express
 - [Express index](kb/express/llms.txt): Express (Node.js) gotchas (9 entries)
@@ -290,7 +290,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [docx index](kb/docx/llms.txt): Word OOXML / docx generation gotchas (2 entries)
 
 ### Browser Testing
-- [Browser Testing index](kb/browser/llms.txt): Browser test harness gotchas: pointer events, loaded-content readiness and markup-vs-rendered checks (10 entries)
+- [Browser Testing index](kb/browser/llms.txt): Browser test harness gotchas: pointer events, loaded-content readiness and markup-vs-rendered checks (11 entries)
 
 ### Image Generation
 - [Image Generation index](kb/image-gen/llms.txt): AI image generation gotchas: safety-filter triggers and unexpected output (2 entries)
