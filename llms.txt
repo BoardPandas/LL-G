@@ -17,7 +17,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Plex index](kb/plex/llms.txt): Plex Media Server API and spec gotchas (16 entries)
 
 ### Doppler
-- [Doppler index](kb/doppler/llms.txt): Doppler secrets CLI and API gotchas (2 entries)
+- [Doppler index](kb/doppler/llms.txt): Doppler secrets CLI and API gotchas (3 entries)
 
 ### PowerShell
 - [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (40 entries)
@@ -137,7 +137,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
 
 ### Cloudflare
-- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (22 entries)
+- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (26 entries)
 
 ### Docker
 - [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas (4 entries)
@@ -248,7 +248,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React Native index](kb/react-native/llms.txt): React Native + Expo gotchas (3 entries)
 
 ### GitHub Actions
-- [GitHub Actions index](kb/github-actions/llms.txt): GitHub Actions CI workflow gotchas (7 entries)
+- [GitHub Actions index](kb/github-actions/llms.txt): GitHub Actions CI workflow gotchas (9 entries)
 
 ### Zod
 - [Zod index](kb/zod/llms.txt): Zod schema-validation gotchas (1 entry)
