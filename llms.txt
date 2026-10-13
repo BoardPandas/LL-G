@@ -137,7 +137,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
 
 ### Cloudflare
-- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (21 entries)
+- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (22 entries)
 
 ### Docker
 - [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas (4 entries)
