@@ -15,3 +15,4 @@
 - [Package managers never tell install scripts which file they came from](package-managers-hide-package-path.md): dpkg/rpm/pacman scripts get no package path, so a filename-carried token cannot work on Linux; macOS passes $1 and MSI exposes OriginalDatabase. Carry the token in a one-line install script. HIGH.
 
 - [PipeWire development packages can leave runtime modules missing in minimal CI images](pipewire-dev-package-misses-runtime-modules.md): Minimal Debian/Ubuntu CI can compile with libpipewire-0.3-dev but fail ContextRc::new because protocol-native is missing; explicitly install libpipewire-0.3-modules in every job that runs the test. MEDIUM.
+- [File length does not enforce a physical disk cap on XFS](file-length-does-not-enforce-physical-disk-cap-xfs.md): Buffered appends can allocate beyond logical EOF; reserve fixed capacity, validate actual st_blocks charges, and include temporary files and metadata in physical storage budgets. HIGH.
