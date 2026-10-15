@@ -140,7 +140,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (26 entries)
 
 ### Docker
-- [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas (4 entries)
+- [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas (5 entries)
 
 ### NinjaOne
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (10 entries)
