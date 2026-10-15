@@ -66,3 +66,5 @@
 
 - [Capture helpers need their own embedded DPI-awareness manifest](capture-helper-dpi-manifest.md): Mixing DPI-virtualized monitor geometry with WGC physical pixels rejects capture on scaled displays; embed and inspect each helper EXE's manifest, retain strict geometry checks, and verify native startup and cleanup. HIGH.
 - [Closing a capture session does not join native apartment work](capture-close-does-not-join-native-apartment-work.md): A successful WGC Close is not a native apartment shutdown join; keep process infrastructure bounded and verify real child exits. HIGH.
+
+- [Browser push registration and registry settings do not prove visible notifications](browser-push-registration-does-not-prove-display.md): Provider acceptance and a registry Enabled value can coexist with hidden banners; verify interactive display and use Windows Settings for the app permission. HIGH.
