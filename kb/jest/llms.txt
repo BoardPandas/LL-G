@@ -14,3 +14,4 @@
 
 - [jsdom has no TextEncoder, so byte-counting helpers crash the suite](jsdom-no-textencoder.md): Production code using new TextEncoder() (e.g. .ics octet folding) throws a ReferenceError under jest-environment-jsdom; count UTF-8 octets from code points instead. MEDIUM.
 - [Case-normalisation tests pass vacuously when fixture ids are all digits](case-tests-vacuous-with-digit-ids.md): toUpperCase() of an all-digit UUID is identical, so upper-cased-id tests pass whatever the code does; use hex-letter fixtures and assert the upper-cased id differs. MEDIUM.
+- [Jest path filters also match worktree directory names](path-filters-match-worktree-directory-names.md): A filter matching the checkout name selects every test through its absolute path; use exact runTestsByPath inputs and inspect listTests. MEDIUM.
