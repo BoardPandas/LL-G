@@ -169,6 +169,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Gemini
 - [Gemini index](kb/gemini/llms.txt): Google Gemini API gotchas, including long-audio transcription (3 entries)
 
+### Java
+- [Java index](kb/java/llms.txt): All java gotchas (1 entry)
+
 ### Rust
 - [Rust index](kb/rust/llms.txt): Rust async-runtime, HTTP-client, Windows process-spawning, and COM/audio FFI gotchas, plus Windows toolchain traps (44 entries)
 

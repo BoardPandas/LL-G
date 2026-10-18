@@ -1,0 +1,7 @@
+# Java Gotchas
+
+> Known java patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [A harness with its own main must call System.exit, or a timed-out task keeps the JVM alive](harness-main-must-system-exit.md): returning from main waits on non-daemon threads; an interrupt never stops CPU-bound code, so an outer wall-clock kill discards a printed result. HIGH.
