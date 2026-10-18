@@ -21,7 +21,7 @@ never used.
 
 This is not theoretical. Production evidence, 2026-07-22: Microsoft Defender for
 O365 **Safe Links** prefetched a magic link seconds after issuance from rotating
-Azure IPs (`74.179.x`, `72.152.x`, `72.153.x`, `[redacted]`) with Windows Chrome
+Azure IPs (`74.179.x`, `72.152.x`, `72.153.x`, `135.232.x`) with Windows Chrome
 user agents (including `Windows NT 6.1`), consumed the token, and got the session.
 The user's own click then failed. Every corporate mail security product does this
 — Safe Links, Proofpoint URL Defense, Mimecast, Barracuda — plus Slack/Teams/iMessage

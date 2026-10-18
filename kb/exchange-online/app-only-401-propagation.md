@@ -33,7 +33,7 @@ $canDevice = (Get-Command Connect-ExchangeOnline).Parameters.ContainsKey('Device
 if ($canDevice) {
     Connect-ExchangeOnline -Device -ShowBanner:$false   # prints a code; sign in as a Global/Exchange admin
 } else {
-    Connect-ExchangeOnline -UserPrincipalName [redacted]  # browser fallback
+    Connect-ExchangeOnline -UserPrincipalName admin@contoso.com  # browser fallback
 }
 Get-EXOMailbox -RecipientTypeDetails RoomMailbox   # works now
 ```

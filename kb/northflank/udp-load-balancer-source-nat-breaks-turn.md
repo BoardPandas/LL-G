@@ -36,7 +36,7 @@ for and built on.
 # Deploy coturn behind a Northflank UDP load balancer, confirm the service is
 # healthy and the balancer says "created", and treat that as working.
 #
-#   lb state:      created, endpoint [redacted]
+#   lb state:      created, endpoint 198.51.100.57
 #   service state: COMPLETED, TCP health check on 3478 passing
 #   coturn log:    "Relay ports initialization done"
 #
@@ -61,9 +61,9 @@ txid.copy(req, 8);
 //   xip   = msg.readUInt32BE(off + 8) ^ 0x2112a442
 
 // Against the relay behind the balancer:
-//   OK — it saw us as [redacted]:57588      <-- private: BROKEN
+//   OK — it saw us as 10.x.y.z:57588          <-- private: BROKEN
 // Against stun.cloudflare.com:3478 from the same host:
-//   OK — it saw us as [redacted]:58673       <-- the real public address
+//   OK — it saw us as 203.0.113.10:58673      <-- the real public address
 ```
 
 ## NOTES

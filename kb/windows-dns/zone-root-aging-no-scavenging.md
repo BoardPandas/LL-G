@@ -57,7 +57,7 @@ $root | Select-Object HostName,
     Export-Csv "$dir\zoneroot-$stamp.csv" -NoTypeInformation
 
 # 4. Purge ONLY dynamic records, and keep every DC IP.
-$keep = @('[redacted]')          # every real DC, verify with: nltest /dclist:$zone
+$keep = @('192.0.2.8')          # every real DC, verify with: nltest /dclist:$zone
 $del  = @($root | Where-Object {
     $_.Timestamp -ne $null -and $keep -notcontains $_.RecordData.IPv4Address.IPAddressToString })
 $del | ForEach-Object {

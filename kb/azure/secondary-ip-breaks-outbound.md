@@ -17,8 +17,8 @@ Three things make this a silent trap:
 ```powershell
 # Single NIC that also carries the default route + the only egress (public IP).
 # Adding guest secondaries here can hijack the host's outbound source -> total offline.
-$if = (Get-NetIPAddress -IPAddress [redacted] -AddressFamily IPv4).InterfaceAlias  # primary NIC
-'[redacted]','[redacted]','[redacted]' | ForEach-Object {
+$if = (Get-NetIPAddress -IPAddress 192.0.2.8 -AddressFamily IPv4).InterfaceAlias  # primary NIC
+'192.0.2.12','192.0.2.13','192.0.2.14' | ForEach-Object {
     New-NetIPAddress -InterfaceAlias $if -IPAddress $_ -PrefixLength 24 -SkipAsSource $true
 }
 # ...run over the RMM/RDP data-plane channel, which the adapter reset also kills mid-command.
@@ -30,8 +30,8 @@ $if = (Get-NetIPAddress -IPAddress [redacted] -AddressFamily IPv4).InterfaceAlia
 # gateway, so its IPs can never be selected as the host's outbound source. Host internet
 # stays on NIC1 (.8); emulator/app IPs live on NIC2. Bind + verify atomically via Azure
 # Run Command (fabric path), not RDP/RMM.
-$emuIf = (Get-NetIPAddress -IPAddress [redacted] -AddressFamily IPv4).InterfaceAlias  # 2nd NIC
-'[redacted]','[redacted]','[redacted]','[redacted]' | ForEach-Object {
+$emuIf = (Get-NetIPAddress -IPAddress 192.0.2.19 -AddressFamily IPv4).InterfaceAlias  # 2nd NIC
+'192.0.2.12','192.0.2.13','192.0.2.14','192.0.2.15' | ForEach-Object {
     New-NetIPAddress -InterfaceAlias $emuIf -IPAddress $_ -PrefixLength 24 -SkipAsSource $true -EA SilentlyContinue
     Set-NetIPAddress  -IPAddress $_ -SkipAsSource $true -EA SilentlyContinue   # make SkipAsSource actually stick
 }

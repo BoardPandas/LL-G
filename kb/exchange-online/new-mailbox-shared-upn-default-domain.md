@@ -7,7 +7,7 @@ severity: high
 
 ## PROBLEM
 
-`New-Mailbox -Shared -PrimarySmtpAddress [redacted]` creates the mailbox with
+`New-Mailbox -Shared -PrimarySmtpAddress grants@fabrikam.com` creates the mailbox with
 exactly the primary SMTP address you asked for, but the underlying Entra user object gets its
 `userPrincipalName` from the tenant's **default accepted domain**, ignoring the domain in
 `-PrimarySmtpAddress`.
@@ -27,7 +27,7 @@ handed a login on the wrong domain.
 This bites hardest in a tenant hosting many domains, which is the normal shape for association
 management companies, nonprofit umbrellas, and MSP-consolidated tenants. In a tenant with 21
 verified domains, a contractor hired by one subsidiary ends up signing in as
-`[redacted]` to work a different organization's mail. That is confusing to the
+`grants@contoso.com` to work a different organization's mail. That is confusing to the
 user, wrong on the audit trail, and needlessly discloses the parent tenant's domain to an
 outsider.
 
@@ -35,29 +35,29 @@ outsider.
 
 ```powershell
 New-Mailbox -Shared -Name 'Grants' -DisplayName 'Grants' -Alias grants `
-    -PrimarySmtpAddress [redacted]
+    -PrimarySmtpAddress grants@fabrikam.com
 
 # Everything you would normally check agrees:
-#   PrimarySmtpAddress : [redacted]        <-- correct
-#   proxyAddresses     : SMTP:[redacted]   <-- correct
+#   PrimarySmtpAddress : grants@fabrikam.com        <-- correct
+#   proxyAddresses     : SMTP:grants@fabrikam.com   <-- correct
 #
 # But the Entra object silently holds:
-#   userPrincipalName  : [redacted] <-- tenant DEFAULT domain
+#   userPrincipalName  : grants@contoso.com         <-- tenant DEFAULT domain
 
 # Weeks later, the mailbox needs to become a sign-in account for a freelancer:
-Set-Mailbox -Identity [redacted] -Type Regular
-# No error. The external user is now told to sign in as [redacted].
+Set-Mailbox -Identity grants@fabrikam.com -Type Regular
+# No error. The external user is now told to sign in as grants@contoso.com.
 ```
 
 ## RIGHT
 
 ```powershell
 New-Mailbox -Shared -Name 'Grants' -DisplayName 'Grants' -Alias grants `
-    -PrimarySmtpAddress [redacted]
+    -PrimarySmtpAddress grants@fabrikam.com
 
 # The SMTP address and the sign-in name are populated from different sources.
 # Never infer one from the other -- compare them explicitly.
-$mbx = Get-Mailbox -Identity [redacted]
+$mbx = Get-Mailbox -Identity grants@fabrikam.com
 if ($mbx.UserPrincipalName -ne $mbx.PrimarySmtpAddress) {
     Write-Warning "UPN $($mbx.UserPrincipalName) does not match SMTP $($mbx.PrimarySmtpAddress)"
 

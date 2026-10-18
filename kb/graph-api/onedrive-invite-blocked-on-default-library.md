@@ -55,4 +55,4 @@ Add-PnPSiteCollectionAdmin -Owners 'delegate@contoso.com'
 - If you only need to grant access to a specific file/folder under the default doc library, `invite` on that subitem works -- the block is specific to the root document library.
 - `Set-PnPSiteCollectionAdmin` does not exist in modern PnP.PowerShell; use `Add-PnPSiteCollectionAdmin` / `Remove-PnPSiteCollectionAdmin`. (The SPO module equivalent is `Set-SPOUser -IsSiteCollectionAdmin $true`.)
 - Granting `Sites.FullControl.All` (SharePoint resource) requires admin consent. Don't expect it to be there by default on existing app registrations; check `requiredResourceAccess` for `resourceAppId = 00000003-0000-0ff1-ce00-000000000000` before assuming.
-- Discovered while offboarding [redacted] (May 2026). Three Graph invite variants all returned the same `invalidRequest` -- it was a platform restriction, not a permissions problem.
+- Discovered while offboarding a departing staff member (May 2026). Three Graph invite variants all returned the same `invalidRequest` -- it was a platform restriction, not a permissions problem.

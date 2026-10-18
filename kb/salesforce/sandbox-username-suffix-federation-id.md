@@ -8,16 +8,16 @@ severity: high
 ## PROBLEM
 SAML SSO with "SAML Identity Type = Assertion contains the User's Salesforce
 username" fails in a sandbox because Salesforce appends `.<sandboxname>` to EVERY
-username on refresh/creation. The IdP sends `[redacted]`, but the sandbox username
-is `[redacted]`, so they never match. The Assertion Validator reports
+username on refresh/creation. The IdP sends `chief@example.com`, but the sandbox username
+is `chief@example.com.test`, so they never match. The Assertion Validator reports
 "Unable to map the subject to a Salesforce user" with every SAML check green, which
 looks like a config error when it is really a value-mismatch.
 
 ## WRONG
 ```text
 SSO setting: SAML Identity Type = "...the User's Salesforce username"
-IdP Name ID: user's email ([redacted])
-Sandbox user's Username: [redacted]  (forced [redacted] suffix)
+IdP Name ID: user's email (chief@example.com)
+Sandbox user's Username: chief@example.com.test  (forced .test suffix)
 -> Assertion Validator: "Unable to map the subject to a Salesforce user"
 ```
 

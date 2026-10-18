@@ -15,7 +15,7 @@ Detect it: `Get-DnsServerZone -Name <zone>` -> `ReplicationScope: Legacy`, `Dire
 ## WRONG
 ```powershell
 # Add record on DC1, then assume repadmin success == all DCs serve it
-Add-DnsServerResourceRecordA -ZoneName 'corp.example.com' -Name 'nas' -IPv4Address '[redacted]'
+Add-DnsServerResourceRecordA -ZoneName 'corp.example.com' -Name 'nas' -IPv4Address '192.0.2.96'
 repadmin /syncall /AdeP          # "SyncAll terminated with no errors"
 # ...but DC2 still: Resolve-DnsName nas.corp.example.com -Server <DC2> -> NXDOMAIN
 # Wrongly chase an AD replication problem (repadmin /showrepl, FRS/DFSR, etc.)

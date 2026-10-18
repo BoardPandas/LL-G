@@ -11,7 +11,7 @@ For users synced from on-prem AD via Azure AD Connect (DirSync), certain Exchang
 ## WRONG
 ```powershell
 # FAILS for DirSync-synced users
-Set-Mailbox -Identity '[redacted]' -HiddenFromAddressListsEnabled $true
+Set-Mailbox -Identity 'user@contoso.com' -HiddenFromAddressListsEnabled $true
 # Error: "The operation on mailbox ... failed because it's out of the current user's write scope.
 # This action should be performed on the object in your on-premises organization."
 ```

@@ -29,7 +29,7 @@ curl -X POST ".../accounts/$ACCT/zerotrust/routes/hostname" \
   -d '{"hostname":"login.microsoftonline.com","tunnel_id":"'"$TUNNEL"'"}'
 
 curl -X POST ".../accounts/$ACCT/devices/policy" \
-  -d '{"name":"PILOT","match":"identity.email in {\"[redacted]\" \"[redacted]\"}"}'
+  -d '{"name":"PILOT","match":"identity.email in {\"a@example.com\" \"b@example.com\"}"}'
 
 # Meanwhile the fleet DEFAULT profile had its exclude list emptied
 # earlier so users could reach 10.0.0.0/8:

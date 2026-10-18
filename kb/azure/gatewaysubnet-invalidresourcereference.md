@@ -26,8 +26,8 @@ Diagnosis (read-only, works with just the `Az.Accounts` module via `Invoke-AzRes
 # Misreading it as a Graph/M365 problem, or trying to "repair" a gateway that
 # was never created. Also: a full-VNet PUT to add the subnet risks clobbering
 # existing subnets if the payload omits them.
-$body = '{ "properties": { "addressSpace": { "addressPrefixes": ["[redacted]"] },
-  "subnets": [ { "name": "GatewaySubnet", "properties": { "addressPrefix": "[redacted]" } } ] } }'
+$body = '{ "properties": { "addressSpace": { "addressPrefixes": ["192.0.2.0/24"] },
+  "subnets": [ { "name": "GatewaySubnet", "properties": { "addressPrefix": "192.0.2.224/27" } } ] } }'
 Invoke-AzRestMethod -Path "/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.Network/virtualNetworks/$vnet?api-version=2023-09-01" -Method PUT -Payload $body
 # ^ 'default' and any other existing subnets are now gone because they were not in the payload.
 ```
@@ -36,7 +36,7 @@ Invoke-AzRestMethod -Path "/subscriptions/$sub/resourceGroups/$rg/providers/Micr
 ```powershell
 # Surgical child-resource PUT: adds ONLY GatewaySubnet, cannot disturb existing subnets.
 $path = "/subscriptions/$sub/resourceGroups/$rg/providers/Microsoft.Network/virtualNetworks/$vnet/subnets/GatewaySubnet?api-version=2023-09-01"
-$body = '{ "properties": { "addressPrefix": "[redacted]" } }'
+$body = '{ "properties": { "addressPrefix": "192.0.2.224/27" } }'
 $r = Invoke-AzRestMethod -Path $path -Method PUT -Payload $body   # expect HTTP 201
 
 # Poll provisioningState until Succeeded, then re-run the gateway deployment.

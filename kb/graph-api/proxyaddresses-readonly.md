@@ -23,9 +23,9 @@ The trap: changing `mailNickname` via Graph DOES work and DOES auto-flip the pri
 ## WRONG
 
 ```powershell
-# Trying to remove the old smtp:[redacted] alias via Graph -- 400 Bad Request
+# Trying to remove the old smtp:oldname@contoso.com alias via Graph -- 400 Bad Request
 $body = @{
-    proxyAddresses = @("SMTP:[redacted]")
+    proxyAddresses = @("SMTP:national.secretary@contoso.com")
 } | ConvertTo-Json
 Invoke-MgGraphRequest -Method PATCH `
     -Uri "https://graph.microsoft.com/v1.0/users/$userId" `
@@ -41,16 +41,16 @@ Connect-ExchangeOnline -CertificateThumbprint $tenant.certThumbprint `
     -AppId $tenant.appId -Organization $tenant.domain -ShowBanner:$false
 
 # Remove a secondary alias
-Set-Mailbox -Identity "[redacted]" `
-    -EmailAddresses @{Remove = "smtp:[redacted]"}
+Set-Mailbox -Identity "national.secretary@contoso.com" `
+    -EmailAddresses @{Remove = "smtp:oldname@contoso.com"}
 
 # Or add a new alias
-Set-Mailbox -Identity "[redacted]" `
-    -EmailAddresses @{Add = "smtp:[redacted]"}
+Set-Mailbox -Identity "national.secretary@contoso.com" `
+    -EmailAddresses @{Add = "smtp:secretary@contoso.com"}
 
 # Or change the primary (uppercase SMTP wins)
-Set-Mailbox -Identity "[redacted]" `
-    -WindowsEmailAddress "[redacted]"
+Set-Mailbox -Identity "national.secretary@contoso.com" `
+    -WindowsEmailAddress "national.secretary@contoso.com"
 ```
 
 Verify with `Get-Mailbox <identity> | Select PrimarySmtpAddress, EmailAddresses`.
