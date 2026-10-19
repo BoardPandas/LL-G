@@ -16,8 +16,8 @@ reply URL, produces two different opaque errors and a long debugging loop.
 ## WRONG
 ```text
 IdP app (Entra) configuration:
-  Identifier (Entity ID): https://mydomain--sandbox.sandbox.my.site.com/[redacted]
-  Reply URL:              https://mydomain--sandbox.sandbox.my.site.com/[redacted]/login?so=00D...
+  Identifier (Entity ID): https://mydomain--sandbox.sandbox.my.site.com/MemberConnect
+  Reply URL:              https://mydomain--sandbox.sandbox.my.site.com/MemberConnect/login?so=00D...
 
 Result on login:
   AADSTS700016: Application with identifier
@@ -29,7 +29,7 @@ Result on login:
 ```text
 IdP app (Entra) configuration:
   Identifier (Entity ID): https://mydomain--sandbox.sandbox.my.salesforce.com   <- ORG
-  Reply URL(s):           https://mydomain--sandbox.sandbox.my.site.com/[redacted]/login?so=00D...  <- SITE ACS
+  Reply URL(s):           https://mydomain--sandbox.sandbox.my.site.com/MemberConnect/login?so=00D...  <- SITE ACS
   (add one reply URL per community site the same IdP app serves)
 
 Salesforce SSO setting Entity ID field: the ORG My Domain, not the site.

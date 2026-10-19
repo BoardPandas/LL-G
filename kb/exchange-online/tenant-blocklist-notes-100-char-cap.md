@@ -35,7 +35,7 @@ The same 100-character cap applies to `Set-TenantAllowBlockListItems -Notes`.
 
 ```powershell
 # 130 chars of Notes -> whole call rejected, domain NOT blocked
-$notes = 'BEC invoice fraud: spoofed [redacted], fake ServiceNow ACH invoice $49,465.90, SupportForge #429, blocked 2026-08-03'
+$notes = 'BEC invoice fraud: spoofed client staff (a manager), fake ServiceNow ACH invoice $49,465.90, SupportForge #429, blocked 2026-08-03'
 
 New-TenantAllowBlockListItems -ListType Sender -Block `
     -Entries 'uinsure.co.uk' -NoExpiration -Notes $notes

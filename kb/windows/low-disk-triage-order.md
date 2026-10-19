@@ -9,8 +9,8 @@ severity: medium
 On low-disk remediation it is tempting to assume the cause is Dell SupportAssist
 SARemediation snapshots, because that is the dominant pattern on club/POS Dell
 fleets. Acting on that assumption wastes the visit: on a real fleet sweep a Dell
-Latitude ([redacted]) had `C:\ProgramData\Dell\SARemediation` at only 0.27 GB
-while `C:\Windows\Temp` held 12.2 GB, and a Surface Laptop 5 ([redacted], not a
+Latitude (LAPTOP01) had `C:\ProgramData\Dell\SARemediation` at only 0.27 GB
+while `C:\Windows\Temp` held 12.2 GB, and a Surface Laptop 5 (LAPTOP02, not a
 Dell at all) had `C:\Windows\Installer` at 50 GB (20 GB orphaned). Stopping the
 Dell SupportAssist Remediation service would have freed nothing on either box.
 The hardware vendor does not predict the cause; only measurement does.
@@ -47,7 +47,7 @@ foreach ($p in $paths) {
   and the top user profiles. SAFE-tier cleanup (Temp / WU cache / recycle bin) often
   clears the 5% alert by itself without touching any vendor-specific store.
 - The `C:\Windows\Installer` orphaned-.msp bloat pattern is not limited to Dell or to
-  clubs: it appeared on an [redacted] Surface Laptop 5 (50 GB Installer, 120/192 files = 20 GB
+  clubs: it appeared on a non-club client's Surface Laptop 5 (50 GB Installer, 120/192 files = 20 GB
   orphaned). Detect via registry `LocalPackage` with an all-orphan guard and clear the
   ReadOnly attribute before `[IO.File]::Delete` (see installer-orphan-detection-registry.md).
 - Related: dell-supportassist-snapshot-bloat.md, installer-orphan-detection-registry.md,

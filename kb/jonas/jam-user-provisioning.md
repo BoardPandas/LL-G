@@ -30,7 +30,7 @@ Combined effect: a technician confirms the Club Management change is on disk, co
 
 /* Wrong assumption 3: bypass the UI and insert into SQL. */
 INSERT INTO tblPvxUsers (UserName, FirstName, LastName, UserGroupID, IsActive)
-VALUES ('[redacted]', [redacted], 1, 1);
+VALUES ('JSMITH', 'Jane', 'Smith', 1, 1);
 /* Passwords are application-encrypted, so a hand-inserted user cannot log in. */
 
 /* Wrong assumption 4: the Club Management edit did not save,
@@ -60,7 +60,7 @@ FROM tblPvxUsers;
    5. Verify it landed. */
 SELECT UserName, FirstName, LastName, UserGroupID, IsActive, LEN(Password) AS PwLen
 FROM tblPvxUsers
-WHERE UserName = '[redacted]';
+WHERE UserName = 'JSMITH';
 /* A synced user has an encrypted password of the same length as a working
    peer account. That is the tell that the record is usable, not a stub. */
 ```
@@ -69,7 +69,7 @@ WHERE UserName = '[redacted]';
 
 - `tblPvxUsers` ("Pvx" is PxPlus) is a **mirror** of the Club Management user list, filtered to users flagged for Activity Management. Club Management holds many more users than JAM does, so a name existing there does not mean it exists in JAM.
 - **Confirm which SQL instance JAM uses before querying or writing.** Read `HKLM\SOFTWARE\WOW6432Node\JonasNET` and use `WCF_IPAddress` plus `DBName`. These servers commonly carry a second, stale `JonasNET` on the default `MSSQLSERVER` instance that accepts writes with no error while JAM never reads it. Cross-check by comparing the user list against what the JAM UI shows.
-- Club Management user keys in `GJCWIN\DATA\GJUSERS` are **space-padded to fixed width**: numeric IDs are stored as `usr␣␣␣␣␣857`, names as `[redacted]␣␣`. Searching the file for `usr857` returns nothing and wrongly suggests the account is JAM-only.
+- Club Management user keys in `GJCWIN\DATA\GJUSERS` are **space-padded to fixed width**: numeric IDs are stored as `usr␣␣␣␣␣857`, names as `usrJSMITH␣␣`. Searching the file for `usr857` returns nothing and wrongly suggests the account is JAM-only.
 - The Integration screen's documented Options cover member and guest synchronization; users ride along with the same gear import.
 - Imported users leave **no entry in `tblSystemRecordUpdates`**. That table logs interactive edits only, so JAM's audit history shows nothing for synced accounts and looks untouched.
 - `GJCWIN\DATA\GJUSERS` is a flat PxPlus file that SQL backup jobs do not cover. Check that it is backed up separately before treating the environment as protected.

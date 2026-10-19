@@ -8,7 +8,7 @@ severity: high
 ## PROBLEM
 A single Cisco Meraki Dashboard API key usually has access to MANY organizations (often every client an MSP manages). `GET /organizations` returns ALL of them, not just one. Two failure modes follow:
 1. Code that assumes one-org-per-key grabs the wrong org (or treats the whole list as one).
-2. Matching the org by the client's name from another system fails, because the Meraki org name frequently differs (e.g. Meraki "[redacted]" vs Zendesk/NinjaOne "[redacted]").
+2. Matching the org by the client's name from another system fails, because the Meraki org name frequently differs (e.g. Meraki "Contoso Corporation of America" vs Zendesk/NinjaOne "Contoso Corp").
 
 ## WRONG
 ```powershell
@@ -20,7 +20,7 @@ $orgId = $org.id          # $org is an ARRAY of every client org -> wrong/corrup
 ## RIGHT
 ```powershell
 $orgs = Invoke-RestMethod -Uri "$base/organizations" -Headers $h
-$org  = @($orgs | Where-Object { $_.name -match '[redacted]' })[0]
+$org  = @($orgs | Where-Object { $_.name -match 'Contoso Corporation|Contoso Corp' })[0]
 if (-not $org) { throw "No Meraki org matched the client name/aliases" }
 $orgId = $org.id
 ```

@@ -36,4 +36,4 @@ GET /informationProtection/bitlocker/recoveryKeys/{id}?$select=key
 - `volumeType: "1"` is the OS/boot (C:) volume -- the one needed for a recovery-screen unlock.
 - The on-screen BitLocker Recovery Key ID matches the first 8 chars of the escrow record's `id`.
 - Retrieving the key writes an audit-log event in Entra; treat the value as sensitive.
-- Reproduced 2026-07-27 pulling the key for device [redacted] ([redacted] tenant) via app-only cert Graph.
+- Reproduced 2026-07-27 pulling the key for device LAPTOP01 (a client tenant) via app-only cert Graph.

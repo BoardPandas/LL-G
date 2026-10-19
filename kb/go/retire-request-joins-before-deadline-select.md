@@ -16,7 +16,7 @@ pipe read plus the process monitor, and go-winio's `Close` cancels and then
 before it closes the host's kill-on-close job.
 
 No error and no log appeared. After a Windows sign-out the remote-session
-supervisor simply went silent ([redacted], 2026-10-08): no close evidence, no
+supervisor simply went silent (WS01, 2026-10-08): no close evidence, no
 cleanup-debt warning, no re-host. This is a variant of
 `join-deadline-excludes-synchronous-cleanup.md`. There the unbounded join sits
 *after* the wait; here it sits *before* the select, hidden inside a step named

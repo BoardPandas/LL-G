@@ -43,4 +43,4 @@ $emuIf = (Get-NetIPAddress -IPAddress 192.0.2.19 -AddressFamily IPv4).InterfaceA
 - Alternative fix: add a **NAT Gateway** to the subnet — every IP then gets guaranteed outbound SNAT regardless of Windows source selection, so even secondaries on the primary NIC become safe.
 - Recovery when already stranded (box unreachable, reboot/redeploy won't clear it): swap in a fresh NIC (or use Azure **Serial Console**, which works over the COM port with no network). When moving NICs, remember the instance-level **public IP** and **Accelerated Networking** live on the old NIC, and the primary **private IP changes unless it was Static** — reassociate/re-enable as needed.
 - VM NIC cap is small (e.g. `Standard_D4as_v6` = 2 NICs), so "dedicated NIC" scales to one extra adapter; for more isolation use a NAT gateway.
-- Discovered on [redacted] VM [redacted] (Rockwell emulator host needing ~5-10 alternate IPs for emulated devices), 2026-07-06.
+- Discovered on a client's VM, VM01 (Rockwell emulator host needing ~5-10 alternate IPs for emulated devices), 2026-07-06.

@@ -49,4 +49,4 @@ pnputil.exe /add-driver $infPath /install
 - Durable alternative: serve a **WHQL-signed** driver from the print server (then no publisher trust is needed at all).
 - Fleet rollout: a GPO that imports the vendor cert into Computer Config > Public Key Policies > Trusted Publishers (or a computer **startup script** doing the `X509Store` add). Startup scripts apply at next boot only.
 - A SupportForge / PsExec session runs as `NT AUTHORITY\SYSTEM` (session 0) and cannot do an interactive Point-and-Print pull ("driver cannot be retrieved from the server, must be manually installed"); stage from `\\SERVER\print$\<arch>\<env>\<inf>_<arch>_<hash>.cab` with `expand` + `pnputil` instead.
-- Discovered: [redacted], Kyocera ECOSYS PA2600cwx KX, server v8.6 (Kyocera/DigiCert) vs client v8.3 (WHQL), Zendesk 16488, 2026-06-26.
+- Discovered: a client site, Kyocera ECOSYS PA2600cwx KX, server v8.6 (Kyocera/DigiCert) vs client v8.3 (WHQL), Zendesk 16488, 2026-06-26.

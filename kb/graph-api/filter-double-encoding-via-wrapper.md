@@ -20,7 +20,7 @@ Any wrapper that accepts `$filter` as a **structured parameter** (a Graph MCP se
 
 ```
 Invalid filter clause: Syntax error: character '%' is not valid at position 23 in
-'startswith(displayName,%27[redacted]%27)'
+'startswith(displayName,%27Adele%27)'
 ```
 
 Two things make this cost real time:
@@ -39,7 +39,7 @@ The same shape appears with spaces: pre-encoding `%20` through a parameter inter
   "method": "GET",
   "path": "/users",
   "query": {
-    "$filter": "startswith(displayName,%27[redacted]%27)"
+    "$filter": "startswith(displayName,%27Adele%27)"
   }
 }
 // 400: Invalid filter clause: Syntax error: character '%' is not valid at position 23
@@ -53,15 +53,15 @@ The same shape appears with spaces: pre-encoding `%20` through a parameter inter
   "method": "GET",
   "path": "/users",
   "query": {
-    "$filter": "startswith(displayName,'[redacted]') or [redacted]"
+    "$filter": "startswith(displayName,'Adele') or startswith(surname,'Vance')"
   }
 }
 ```
 
 ```powershell
 # Same rule in the PowerShell SDK: -Filter is a parameter, so plain quotes
-Get-MgUser -Filter "startswith(displayName,'[redacted]')"      # correct
-Get-MgUser -Filter "startswith(displayName,%27[redacted]%27)"  # 400, same cause
+Get-MgUser -Filter "startswith(displayName,'Adele')"      # correct
+Get-MgUser -Filter "startswith(displayName,%27Adele%27)"  # 400, same cause
 ```
 
 ## NOTES

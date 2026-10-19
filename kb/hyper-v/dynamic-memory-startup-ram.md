@@ -27,7 +27,7 @@ Result: VM fails to start, event 3122 "... with ram size 8192 megabytes"
 ```
 ```powershell
 # Only setting Min/Max leaves Startup untouched
-Set-VMMemory -VMName [redacted] -DynamicMemoryEnabled $true `
+Set-VMMemory -VMName FILEDC01 -DynamicMemoryEnabled $true `
   -MinimumBytes 2GB -MaximumBytes 8GB
 # StartupBytes is still 8GB -> still won't boot on a tight host
 ```
@@ -42,7 +42,7 @@ Result: boots at 2 GB, grows toward 8 GB on demand when host has spare RAM
 ```
 ```powershell
 # Set Startup low along with Min/Max (VM must be Off)
-Set-VMMemory -VMName [redacted] -DynamicMemoryEnabled $true `
+Set-VMMemory -VMName FILEDC01 -DynamicMemoryEnabled $true `
   -StartupBytes 2GB -MinimumBytes 2GB -MaximumBytes 8GB -Buffer 20
 
 # Diagnose a start failure: confirm physical free vs requested
@@ -56,4 +56,4 @@ Get-WinEvent -FilterHashtable @{LogName='Microsoft-Windows-Hyper-V-Worker-Admin'
 - Dynamic Memory is supported on virtualized **domain controllers** since Server 2012, but set Startup=Minimum (e.g. both 2 GB) so AD's ESE/NTDS cache is sized from a sane baseline and never squeezed below boot level. The old "never on a DC" advice is a Server 2008 R2 artifact.
 - Do NOT use Dynamic Memory for **SQL Server** VMs (it balloons the buffer pool; Standard edition doesn't hot-add). Keep SQL VMs on static RAM with `max server memory` capped.
 - Right-size vCPUs too: vCPU count does not reserve physical cores (Hyper-V time-slices logical processors), so an over-provisioned VM isn't "out of CPU," but excess idle vCPUs add co-scheduling overhead. A DC/file server runs fine on 2-4 vCPUs.
-- Real-world: [redacted] (Server 2025, 32 GB host already running a 16 GB static SQL VM) could not start the 8 GB [redacted] VM until Startup RAM was dropped to 2 GB via Dynamic Memory.
+- Real-world: HV01 (Server 2025, 32 GB host already running a 16 GB static SQL VM) could not start the 8 GB FILEDC01 VM until Startup RAM was dropped to 2 GB via Dynamic Memory.

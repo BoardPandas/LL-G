@@ -50,4 +50,4 @@ Start-Service 'CHO Jonas Service'
 ## NOTES
 Diagnostic tell: SCM 1053 + zero entries in the app's own log + the process never visibly spawns = a load-time assembly failure before logging init. Always run the service exe by hand from a console to capture the real exception and the exact assembly+version; do NOT chase the misleading "timeout/did not respond" wording, which suggests a hang rather than a missing dependency.
 
-The media source must match the OS build (e.g. Server 2025 = build 26100): mount the ISO and use `<drive>\sources\sxs`. Real case: [redacted] JONAS (Jonas Club Management timer + proxy services), Zendesk ticket 16302, 2026-06-16. Related: legacy WCF/.NET 3.5 line-of-business apps surviving a V2V + OS modernization.
+The media source must match the OS build (e.g. Server 2025 = build 26100): mount the ISO and use `<drive>\sources\sxs`. Real case: a client's JONAS server (Jonas Club Management timer + proxy services), Zendesk ticket 16302, 2026-06-16. Related: legacy WCF/.NET 3.5 line-of-business apps surviving a V2V + OS modernization.

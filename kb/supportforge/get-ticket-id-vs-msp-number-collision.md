@@ -12,7 +12,7 @@ The two namespaces overlap badly:
 - `msp_ticket_number` is the number in the dashboard URL (`/tickets/wellforce/195`) and is a **small integer** (87, 111, 177, 195 ...).
 - `id` is the internal primary key. Modern rows are large (226813, 227010), but **legacy Zendesk-imported rows have small ids in the exact same range**, with `msp_ticket_number: null`.
 
-So `get_ticket(195)` returns internal id 195 -- a closed [redacted] ticket from 2025 about a stuck Win+P dropdown -- when the operator meant `/tickets/wellforce/195`, which is "[redacted]" at [redacted] (id 227010).
+So `get_ticket(195)` returns internal id 195 -- a closed Fabrikam ticket from 2025 about a stuck Win+P dropdown -- when the operator meant `/tickets/wellforce/195`, which is a live workstation ticket at Contoso (id 227010).
 
 Nothing errors. You get a well-formed ticket for **the wrong client**. In an MSP context that is both a cross-tenant data exposure and a live remediation hazard: act on it and you are troubleshooting the wrong machine at the wrong company. The only reason it was caught was that the hostname in the request contradicted the organization on the returned ticket.
 
@@ -20,7 +20,7 @@ Nothing errors. You get a well-formed ticket for **the wrong client**. In an MSP
 ```
 get_ticket(195)
   -> { id: 195, msp_ticket_number: null, zendesk_ticket_id: "9654",
-       organization_name: "[redacted]", status: "closed",
+       organization_name: "Fabrikam", status: "closed",
        subject: "The lobby slideshow is playing but on the right of" }
 # Operator meant /tickets/wellforce/195. Different client. Different year. No warning.
 ```
@@ -30,7 +30,7 @@ get_ticket(195)
 # Resolve the display number to an internal id first, then fetch by that id.
 list_tickets(search: "#195")
   -> { id: 227010, msp_ticket_number: 195, display_number: "195",
-       organization_name: "[redacted]" }
+       organization_name: "Contoso" }
 
 get_ticket(227010)     # unambiguous: internal id
 
@@ -43,6 +43,6 @@ get_ticket(227010)     # unambiguous: internal id
 ## NOTES
 - **A URL number is an `msp_ticket_number`, never an `id`.** `/tickets/<msp>/<N>` always means `msp_ticket_number: N`. Treat any bare number a human gives you as the display number and resolve it via `list_tickets(search:"#N")`.
 - **Fingerprints of a wrong resolution:** `msp_ticket_number: null` (real ones always have it), a non-null `zendesk_ticket_id`, a `status: "closed"` on what should be a live request, a `created_at` months or years old, or an `organization_name` that is not the client you asked about. Any one of these means you got a legacy import, not the ticket you wanted.
-- **Cross-check before you act, always.** Before touching an endpoint, confirm the ticket's `organization_name`/`client_id` matches the machine's client. Here `[redacted]` is [redacted] while the returned ticket was [redacted] -- that contradiction was the only signal.
+- **Cross-check before you act, always.** Before touching an endpoint, confirm the ticket's `organization_name`/`client_id` matches the machine's client. Here `CTS-WS01` is Contoso's while the returned ticket was Fabrikam's -- that contradiction was the only signal.
 - The same ambiguity applies to any tool taking "id or number" for tickets (`get_ticket_messages`, `list_ticket_attachments`, `add_internal_note`). Pass the resolved internal id to all of them; an internal note posted to the wrong client's ticket is not retractable.
 - Collision space is wide, not a rare edge: every `msp_ticket_number` below the highest legacy imported id is a potential hit.

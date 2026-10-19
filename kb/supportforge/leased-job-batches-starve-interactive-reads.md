@@ -48,7 +48,7 @@ without opening every possible drive.
 
 ## NOTES
 
-Observed in SupportForge issue #158: [redacted] reported that a file read lease
+Observed in SupportForge issue #158: POS05 reported that a file read lease
 expired before the agent started. The previous file provider inspected only
 drive roots or immediate directory children, never the whole filesystem.
 Service/process/registry snapshots can share the independent read transport.

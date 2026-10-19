@@ -8,7 +8,7 @@ severity: high
 ## PROBLEM
 `C:\Users\<user>\Desktop` is not reliably the user's real Desktop. OneDrive Known
 Folder Move redirects it to `C:\Users\<user>\OneDrive - <Tenant>\Desktop`, and the
-profile folder itself can carry a domain suffix (`[redacted]`) when a
+profile folder itself can carry a domain suffix (`carol.CONTOSO`) when a
 profile was created against a domain that also exists locally.
 
 The failure is silent rather than loud. Writing to the non-redirected path still
@@ -64,9 +64,9 @@ on a 7-machine fleet (2026-09-16) where one script legitimately resolved three
 different real Desktops:
 
 ```
-C:\Users\[redacted]\Desktop                                        (no KFM)
-C:\Users\[redacted]\OneDrive - [redacted]\Desktop        (KFM)
-C:\Users\[redacted]\OneDrive - ...\Desktop             (KFM + domain suffix)
+C:\Users\alice\Desktop                                              (no KFM)
+C:\Users\bob\OneDrive - Contoso\Desktop                             (KFM)
+C:\Users\carol.CONTOSO\OneDrive - ...\Desktop                       (KFM + domain suffix)
 ```
 
 Without the echoed path, a "success" result is indistinguishable from a shortcut

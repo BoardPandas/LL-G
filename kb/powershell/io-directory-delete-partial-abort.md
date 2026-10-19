@@ -13,14 +13,14 @@ Real case: deleting a stale Windows user profile remotely as SYSTEM, the call th
 ## WRONG
 ```powershell
 # Assumes one call fully removes the tree; silently leaves a partial husk on first ACL-denied subdir
-[System.IO.Directory]::Delete("C:\Users\[redacted]", $true)
-if (Test-Path "C:\Users\[redacted]") { "still here??" }   # yes -- and you don't know how much got deleted
+[System.IO.Directory]::Delete("C:\Users\jdoe", $true)
+if (Test-Path "C:\Users\jdoe") { "still here??" }   # yes -- and you don't know how much got deleted
 ```
 
 ## RIGHT
 ```powershell
 # Preferred for user profiles: cleans the ProfileList registry entry AND the files
-$p = Get-CimInstance Win32_UserProfile -Filter "LocalPath='C:\\Users\\[redacted]'"
+$p = Get-CimInstance Win32_UserProfile -Filter "LocalPath='C:\\Users\\jdoe'"
 if ($p -and -not $p.Special -and -not $p.Loaded) { Remove-CimInstance -InputObject $p }
 
 # Or, for any stubborn tree, defeat the ACLs first, then recurse with per-item tolerance.

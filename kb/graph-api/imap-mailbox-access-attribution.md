@@ -45,5 +45,5 @@ Invoke-MgGraphRequest -Method GET -Uri (
 - Workflow: find the access window in MailItemsAccessed, then pivot to
   non-interactive sign-ins in the same window filtered to Exchange Online to name
   the app, IP, and consent.
-- Real-world: this is how "[redacted]" mailbox activity was traced to the
+- Real-world: this is how a user's mailbox activity was traced to the
   Salesforge cold-email app polling EXO every ~30 min despite empty audit AppIds.

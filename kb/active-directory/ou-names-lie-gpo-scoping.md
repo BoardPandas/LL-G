@@ -22,7 +22,7 @@ Net effect: the "obvious" OU link would have covered a minority of the live flee
 ```powershell
 # Assuming the OU name describes its contents, and linking a disruptive policy to it.
 New-GPLink -Name 'Force App Relaunch' `
-           -Target 'OU=Office Workstations,OU=Computers,[redacted],DC=corp,DC=com'
+           -Target 'OU=Office Workstations,OU=Computers,OU=Contoso,DC=corp,DC=com'
 # Silently hits live POS terminals sitting in that OU,
 # and silently misses every machine parked in CN=Computers.
 
@@ -34,7 +34,7 @@ New-GPLink -Name 'Force App Relaunch' -Target 'DC=corp,DC=com'
 ## RIGHT
 
 ```powershell
-$ou = 'OU=Office Workstations,OU=Computers,[redacted],DC=corp,DC=com'
+$ou = 'OU=Office Workstations,OU=Computers,OU=Contoso,DC=corp,DC=com'
 
 # 1. AUDIT the OU before trusting it. What is in there, and is any of it alive?
 $all = Get-ADComputer -Filter * -SearchBase $ou -SearchScope Subtree -Properties LastLogonDate,OperatingSystem

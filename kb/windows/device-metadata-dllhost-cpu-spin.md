@@ -40,4 +40,4 @@ Disable-ScheduledTask -TaskPath '\Microsoft\Windows\Device Setup\' -TaskName 'Me
 - Disabling `DsmSvc` only stops auto-fetching device metadata/icons and some driver-setup staging; safe on fixed-config / kiosk / HMI machines. Fully reversible.
 - The DeviceSetupManager Operational event log is often quiet during the spin (no per-loop events) and the local DeviceMetadataStore is tiny, so there's no single "bad device" to chase, it's the retrieval client itself spinning.
 - Suspected trigger on filtered networks (e.g. Cloudflare WARP / Zero Trust blocking the metadata endpoints), but the fix above holds regardless of cause.
-- First seen on [redacted] FactoryTalk/Rockwell HMI site laptops (Zendesk 16472). Reboot is the proper capstone once the service is disabled.
+- First seen on a client's FactoryTalk/Rockwell HMI site laptops (Zendesk 16472). Reboot is the proper capstone once the service is disabled.
