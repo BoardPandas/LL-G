@@ -233,7 +233,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [WiX index](kb/wix/llms.txt): WiX Toolset / Windows Installer gotchas (4 entries)
 
 ### Antigravity CLI
-- [Antigravity CLI index](kb/antigravity-cli/llms.txt): Antigravity CLI (`agy`) gotchas (2 entries)
+- [Antigravity CLI index](kb/antigravity-cli/llms.txt): Antigravity CLI (`agy`) gotchas (3 entries)
 
 ### Lumen (NaaS)
 - [Lumen index](kb/lumen/llms.txt): Lumen NaaS API gotchas (4 entries)
