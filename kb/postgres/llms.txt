@@ -75,3 +75,7 @@
 - [Detect rewritten rows with ctid, not xmin, inside one transaction](detect-rewrites-with-ctid-not-xmin.md): Rows inserted earlier in the same transaction keep the current xid on update, so xmin-based rewrite checks read zero; compare ctid. HIGH.
 
 - [Set-based upsert of a typed row set with jsonb_populate_recordset](jsonb-populate-recordset-set-based-upsert.md): One JSON parameter carries a whole row set in the table's own types; JSON.stringify it, cast select-list params, dedupe conflict keys, guard with IS DISTINCT FROM. MEDIUM.
+
+- [A UNION takes its column names from its first branch, so reordering branches renames columns](union-column-names-come-from-first-branch.md): Later branches' aliases are ignored, so splitting or reordering a multi-branch query to put an unaliased branch first renames the column and downstream ORDER BY fails with 42703 or sorts the wrong column; fake pools cannot see it -- alias every computed column in every branch and run the assembled SQL for real. HIGH.
+
+- [Rank real rows above placeholder rows BEFORE match quality](rank-placeholder-rows-before-match-quality.md): Ranking by match rule first lets an art-series/placeholder row beat the real record whenever it matches by a stronger rule (front face vs the real card's back face); fixtures that only test same-rule ties pass, and a multi-pass lookup that settles a name with a placeholder never runs the pass that finds the real row. HIGH.
