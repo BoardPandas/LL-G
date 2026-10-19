@@ -1,0 +1,10 @@
+# BlockNote Gotchas
+
+> Known BlockNote (ProseMirror/Tiptap-based block editor) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Duplicate ProseMirror next to a locked Tiptap](duplicate-prosemirror-next-to-locked-tiptap.md): Adding BlockNote beside an already-locked Tiptap leaves two prosemirror-model/view/transform copies that break editors silently; detect with pnpm why, fix with a targeted pnpm update. HIGH.
+- [BlockNote's CommonJS build breaks under Jest](commonjs-build-breaks-under-jest.md): Jest resolves the CJS build ("ee.default.extend is not a function"); map to the ESM dist, allow-list @blocknote/lib0/prosemirror-highlight/@handlewithcare matching pnpm's @scope+name paths. MEDIUM.
+- [@blocknote/server-util is unfit for a CommonJS Node API](server-util-unfit-for-commonjs-node-api.md): require() fails, peer deps missing, React custom blocks crash the process after return, HTML is class-based and not email-safe; use a pure-TS JSON walker. HIGH.
+- [@blocknote/shadcn styling traps under Tailwind 4](shadcn-styling-traps-tailwind-4.md): Needs @source on its dist, a --radius variable and tw-animate-css; built on Base UI not Radix; unscoped .ProseMirror table rules leak into other editors. MEDIUM.

@@ -265,6 +265,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Jest
 - [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus two test-double traps that both end in a false green (8 entries)
 
+### BlockNote
+- [BlockNote index](kb/blocknote/llms.txt): BlockNote block-editor gotchas (ProseMirror duplication, Jest/Node interop, shadcn styling) (4 entries)
+
 ### Vitest
 - [Vitest index](kb/vitest/llms.txt): Vitest gotchas (12 entries)
 
