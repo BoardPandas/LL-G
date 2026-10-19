@@ -44,12 +44,12 @@ Edge cases, related entries, cross-references.
 
 ## Adding a New Lesson
 
-Run `/add-lesson` from any repo session. The skill collects the details and writes the entry file, updates the tech `llms.txt`, and updates the master `llms.txt` entry count atomically.
+Run `/add-lesson` from any repo session. The skill collects the details and proposes the entry through Roundtable's `kb_propose`, which checks it for private details and duplicates, then writes the entry file, the tech `llms.txt` and the master `llms.txt` entry count as one commit.
 
-To add manually:
+Commit an entry directly only to create a new shelf, which `kb_propose` cannot do. Publish every other entry with `/add-lesson` (Roundtable's `kb_propose`). A new shelf is one commit:
 1. Create `kb/<tech>/<slug>.md` using the entry format above
-2. Append a bullet to `kb/<tech>/llms.txt` under `## Entries`
-3. Increment the entry count in the master `llms.txt` for that technology
+2. Create `kb/<tech>/llms.txt` with the entry's bullet under `## Entries`
+3. Add the shelf's line to the master `llms.txt`, with a count of 1 entry
 
 ## KB Location
 
