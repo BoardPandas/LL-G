@@ -89,7 +89,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Graph API index](kb/graph-api/llms.txt): All Microsoft Graph API gotchas (45 entries)
 
 ### Exchange Online
-- [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas (8 entries)
+- [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas (9 entries)
 
 ### Salesforce
 - [Salesforce index](kb/salesforce/llms.txt): Salesforce SAML SSO, Experience Cloud, and JIT gotchas (3 entries)
