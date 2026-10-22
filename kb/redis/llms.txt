@@ -5,3 +5,4 @@
 ## Entries
 
 - [Shared-key ownership checks must be atomic with deletion](atomic-owned-key-deletion.md): Separate ownership reads and deletes can erase a newer request during consumption or cleanup; test replacement between operations. HIGH.
+- [A passwordless ACL-era Redis accepts AUTH with any password, so clients with a password URL look healthy against an open server](a-passwordless-acl-era-redis-accepts-auth-with-any-password-so-clients-with-a.md): On Redis 6+ with no password set (the `default` user is `nopass`), `AUTH default <anything>` succeeds, so an app connecting with a password in its URL works fine even when the server enforces nothing. HIGH.

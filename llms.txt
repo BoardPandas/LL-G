@@ -287,7 +287,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [macOS index](kb/macos/llms.txt): Native macOS command, monitoring, and permission-state gotchas (6 entries)
 
 ### Redis
-- [Redis index](kb/redis/llms.txt): Redis concurrency and shared-key ownership gotchas (1 entry)
+- [Redis index](kb/redis/llms.txt): Redis concurrency and shared-key ownership gotchas (2 entries)
 
 ### Magic: The Gathering
 - [Magic: The Gathering index](kb/magic-tcg/llms.txt): Magic card-data, legality, rules-engine, deckbuilding, and proxy-rendering gotchas (4 entries)
