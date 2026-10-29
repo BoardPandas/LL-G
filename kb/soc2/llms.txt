@@ -1,0 +1,7 @@
+# SOC 2 Gotchas
+
+> Known SOC 2 audit-preparation patterns, and compliance-platform behaviors, that cause silent gaps or late audit exceptions.
+
+## Entries
+
+- [Oneleet SOC 2 framework can omit scoped categories while reading complete](oneleet-soc-2-framework-can-omit-scoped-categories-while-reading-complete.md): A tenant framework scoped for Security only reads as a complete "0 of 33 met" while Availability and Confidentiality have no requirements at all; diff its requirement codes against your scope on day one. HIGH.

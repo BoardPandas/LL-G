@@ -303,3 +303,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### OpenAI Sites
 - [OpenAI Sites index](kb/openai-sites/llms.txt): OpenAI Sites publishing and asset-packaging gotchas (1 entry)
+
+### SOC 2
+- [SOC 2 index](kb/soc2/llms.txt): SOC 2 audit-preparation and compliance-platform gotchas (1 entry)
