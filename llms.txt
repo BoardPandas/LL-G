@@ -116,7 +116,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (11 entries)
 
 ### cmd.exe (Windows)
-- [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (1 entry)
+- [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (2 entries)
 
 ### Windows
 - [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (36 entries)

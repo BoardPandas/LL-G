@@ -5,3 +5,4 @@
 ## Entries
 
 - [cmd.exe does not support wildcards in the middle of a path](mid-path-wildcards.md): `del C:\Users\*\AppData\...` fails -- use a `for /d` loop to enumerate the parent. HIGH.
+- [%ERRORLEVEL% on the same cmd line as the command shows the value from before it ran](errorlevel-on-the-same-cmd-line-as-the-command-shows-the-value-from-before-it.md): `cmd /c "tool & echo exit=%ERRORLEVEL%"` prints the ERRORLEVEL from before `tool` ran, because cmd expands `%VAR%` for the whole line when it parses it, so a failing command reports `exit=0`. HIGH.
