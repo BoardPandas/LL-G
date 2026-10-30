@@ -15,3 +15,4 @@
 - [No class_name on autoload scripts](no-class-name-autoload.md): Autoloads are accessed by node name. Adding class_name causes naming conflicts. MEDIUM.
 - [Area2D body_entered vs area_entered detect different node types](area2d-signals.md): body_entered detects PhysicsBody2D nodes. area_entered detects other Area2D nodes. Using the wrong signal silently fails. MEDIUM.
 - [project.godot input map serialization is fragile](input-map-serialization.md): Hand-written InputEventKey variant encoding is error-prone. Use the Godot editor or fall back to Input.is_key_pressed. MEDIUM.
+- [PowerShell does not wait for Godot's windowed exe on Windows, so a headless check run there tests nothing](powershell-does-not-wait-for-godot-s-windowed-exe-on-windows-so-a-headless-check.md): On Windows, PowerShell returns immediately from Godot's windowed exe (`Godot_v4.x-stable_win64.exe`) with no output and an empty `$LASTEXITCODE`, so a headless test or smoke check run that way… HIGH.

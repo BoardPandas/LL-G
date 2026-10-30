@@ -98,7 +98,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas (5 entries)
 
 ### Godot / GDScript
-- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (11 entries)
+- [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (12 entries)
 
 ### Better Auth
 - [Better Auth index](kb/better-auth/llms.txt): All Better Auth framework gotchas (43 entries)
