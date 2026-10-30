@@ -17,7 +17,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Plex index](kb/plex/llms.txt): Plex Media Server API and spec gotchas (16 entries)
 
 ### Doppler
-- [Doppler index](kb/doppler/llms.txt): Doppler secrets CLI and API gotchas (7 entries)
+- [Doppler index](kb/doppler/llms.txt): Doppler secrets CLI and API gotchas (8 entries)
 
 ### PowerShell
 - [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (40 entries)
