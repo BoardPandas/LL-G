@@ -188,7 +188,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
 
 ### Intune
-- [Intune index](kb/intune/llms.txt): Microsoft Intune endpoint-policy + app-management gotchas (8 entries)
+- [Intune index](kb/intune/llms.txt): Microsoft Intune endpoint-policy + app-management gotchas (9 entries)
 
 ### Azure
 - [Azure index](kb/azure/llms.txt): Azure ARM and Az PowerShell gotchas (2 entries)
