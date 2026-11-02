@@ -68,3 +68,4 @@
 - [Closing a capture session does not join native apartment work](capture-close-does-not-join-native-apartment-work.md): A successful WGC Close is not a native apartment shutdown join; keep process infrastructure bounded and verify real child exits. HIGH.
 
 - [Browser push registration and registry settings do not prove visible notifications](browser-push-registration-does-not-prove-display.md): Provider acceptance and a registry Enabled value can coexist with hidden banners; verify interactive display and use Windows Settings for the app permission. HIGH.
+- [Windows LAPS policy lives in four registry roots that never merge; check one and you fight LAPS silently](windows-laps-policy-lives-in-four-registry-roots-that-never-merge-check-one-and.md): A third-party agent that manages a local admin must detect Windows LAPS, and checking one registry key (or merging values across keys) misses it, so both rotate the same account. HIGH.
