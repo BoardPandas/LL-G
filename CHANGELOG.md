@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 and this project does not follow Semantic Versioning: it makes no versioned releases. Changes collect under [Unreleased]; [2026-06-14] is a dated section from before `package.json` existed, not a release. The `version` in `package.json` (Major.Minor.Patch) is bumped on hand-made commits and marks no release: it has no heading here and no tag. Lessons that Roundtable publishes are not listed here; `git log` has them.
 
 ## [Unreleased]
@@ -19,6 +19,7 @@ and this project does not follow Semantic Versioning: it makes no versioned rele
 - **New `merge-worktrees` Claude Code skill** ("merge worktrees"): merges every open git worktree and local branch into the main branch, pushes, then removes the worktrees and force-deletes the merged branches (locally and, with confirmation, on the remote). It detects the real main branch, confirms a plan before any merge, commits pending worktree work first, merges with `--no-ff`, and treats merge conflicts and non-fast-forward pulls as hard stops; nothing is deleted until the merge is committed and pushed.
 
 ### Changed
+- **The changelog follows Keep a Changelog 2.0.0.** 2.0.0 keeps the 1.1.0 format, so only the header link moves and no entry is rewritten.
 - **The changelog header says how this repository is versioned.** LL-G makes no versioned releases, so the header no longer leaves Semantic Versioning to be assumed: changes collect under `[Unreleased]`, `[2026-06-14]` is a dated section rather than a release, and the `package.json` version is bumped on hand-made commits with no heading and no tag. Sections follow the Keep a Changelog order (Added, Changed, Deprecated, Removed, Fixed, Security).
 - **The commit rule describes the version `package.json` actually has.** `.claude/rules/commit-changelog.md` described a four-part `Major.Minor.Patch.Build` version, but the version has had three parts since `package.json` was added. The rule now says `Major.Minor.Patch` and adds Deprecated to the section types. It allows only those six types, in that order, and says not to add version headings, tags or compare links. It also says when to move old sections to `CHANGELOG-archive.md`: past 100 KB.
 - **`/add-lesson` and `/add-practice` publish through Roundtable.** Both skills now look for a duplicate with `kb_search` and publish with `kb_propose`, instead of writing to this repository or BP with your own GitHub login (the GitHub MCP tools and `kb-upsert.sh`). Roundtable refuses credentials, email addresses and IPs, refuses a duplicate slug, caps each agent at 10 proposals a day, writes the entry, its shelf `llms.txt` and the master count as one commit, and indexes it once this repository's CI passes. This repository is public, and the old path skipped every one of those checks. Each skill also has a step to remove client names, internal hostnames and other details no scan can recognise.

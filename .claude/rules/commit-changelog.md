@@ -12,7 +12,7 @@ Before every `git commit`, you MUST:
 
 - Add new entries under `[Unreleased]`. This knowledge base makes no versioned releases:
   do not add a version heading, a tag, or compare links for the version bump below.
-- Categorize changes using [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) sections:
+- Categorize changes using [Keep a Changelog](https://keepachangelog.com/en/2.0.0/) sections:
   - **Added** — new features or capabilities
   - **Changed** — changes to existing functionality
   - **Deprecated** — features that will be removed
@@ -22,8 +22,7 @@ Before every `git commit`, you MUST:
 - Use only those six headings, each once under a `##` heading, in that order. No `### Notes` or dated variants.
 - Review staged changes (`git diff --cached`) to determine what changed.
 - Write entries from the user's perspective, not implementation details.
-- Over 100 KB: move the oldest dated sections into `CHANGELOG-archive.md` (newest first)
-  until CHANGELOG.md is under 50 KB, keeping at least the 10 newest there.
+- Over 100 KB: move dated sections older than 30 days, with their links, into `CHANGELOG-archive.md` (newest first), keeping at least the 10 newest in CHANGELOG.md. Archive only what is old enough that it won't need editing (Keep a Changelog 2.0.0).
 
 ## 2. Bump Version in package.json
 
