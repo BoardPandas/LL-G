@@ -47,6 +47,19 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git *)",
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/scripts/post-push-cleanup.sh",
+            "statusMessage": "Checking for merged worktrees and branches..."
+          }
+        ]
+      }
     ]
   }
 }
