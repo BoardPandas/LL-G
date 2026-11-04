@@ -95,7 +95,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Salesforce index](kb/salesforce/llms.txt): Salesforce SAML SSO, Experience Cloud, and JIT gotchas (3 entries)
 
 ### Entra External ID (CIAM)
-- [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas (5 entries)
+- [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas (6 entries)
 
 ### Godot / GDScript
 - [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (22 entries)
