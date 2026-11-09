@@ -143,7 +143,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas (7 entries)
 
 ### NinjaOne
-- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (10 entries)
+- [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (11 entries)
 
 ### SupportForge
 - [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent execution and ticket-API behaviour (53 entries)

@@ -2,7 +2,7 @@
 
 Lessons from NinjaOne REST API v2 and the NinjaOne MCP tools.
 
-## Entries (10)
+## Entries (11)
 
 - HIGH [no-adhoc-script-execution.md](no-adhoc-script-execution.md): Script execution has TWO separate blockers - inline scriptContent returns 400 (use a saved scriptId), but a client_credentials key returns 403 "Access key does not have user context" for BOTH inline AND saved scripts, so scripting is entirely unavailable until the key is re-minted via authorization_code. Service control (POST /device/{id}/windows-service/{name}/control) still works without user context.
 - HIGH [volume-query-deviceid-filter-500.md](volume-query-deviceid-filter-500.md): ninjaone_query_volumes with deviceId filter returns HTTP 500 -- use /device/{id}/volumes instead
@@ -14,3 +14,4 @@ Lessons from NinjaOne REST API v2 and the NinjaOne MCP tools.
 - HIGH [alert-severity-and-active-snapshot.md](alert-severity-and-active-snapshot.md): Alert severity is graded per-condition and is not inferable from urgency (AGENT_OFFLINE is CRITICAL/HIGH, disk-free<=5% is MODERATE/LOW, 30-day-no-reboot is NONE/NONE), and priority is an independent field. /v2/alerts returns only currently-ACTIVE alerts, not a history, so it carries a far smaller population than the email notification channel -- replacing email with polling silently drops alerts that fire and clear between polls.
 - HIGH [activities-lastactivityid-not-a-cursor.md](activities-lastactivityid-not-a-cursor.md): /v2/activities lastActivityId is the highest id in the tenant, not the last id on the page, so olderThan=lastActivityId returns an empty page and a report silently sees one day of data. Page backwards on the smallest id in the page you just received; sourceConfigUid is ignored, filter client-side.
 - MEDIUM [custom-field-definitions-ui-only.md](custom-field-definitions-ui-only.md): POST /v2/device-custom-fields returns 405; definitions are UI-only, values are PATCH-able. Resolve the API name from the label at runtime (newer fields are lowercased), read back after writing, and wrap Ninja-Property-Set in try/catch because it needs ninjarmm-cli.exe and Automations Read/Write.
+- HIGH [A script that runs reg add without /f loops its overwrite prompt into the NinjaOne output log until the disk is full](a-script-that-runs-reg-add-without-f-loops-its-overwrite-prompt-into-the.md): An unattended NinjaOne script that runs `reg add` on a value that already exists, without `/f`, hangs on `Value exists, overwrite(Yes/No)?` and the agent's captured output can loop that prompt…
