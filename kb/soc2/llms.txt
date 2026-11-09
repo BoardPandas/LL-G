@@ -5,3 +5,4 @@
 ## Entries
 
 - [Oneleet SOC 2 framework can omit scoped categories while reading complete](oneleet-soc-2-framework-can-omit-scoped-categories-while-reading-complete.md): A tenant framework scoped for Security only reads as a complete "0 of 33 met" while Availability and Confidentiality have no requirements at all; diff its requirement codes against your scope on day one. HIGH.
+- [Oneleet GCP setup script fails role grants on a new service account but ends looking successful](oneleet-gcp-setup-script-fails-role-grants-on-a-new-service-account-but-ends.md): Oneleet's Google Cloud setup script grants project roles to its new service account immediately after creating it, so the grants fail with "Service account ... does not exist" while the final step… HIGH.
