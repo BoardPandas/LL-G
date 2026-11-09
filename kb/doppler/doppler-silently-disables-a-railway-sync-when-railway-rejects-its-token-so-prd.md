@@ -17,8 +17,10 @@ doppler secrets set NEW_SECRET=... --project app --config prd
 
 ## RIGHT
 ```bash
-# Check sync state before relying on it (names only, no values)
-curl -s -u "$(doppler configure get token --plain):" https://api.doppler.com/v3/integrations \
+# Check sync state before relying on it (names only, no values).
+# The token reaches curl on stdin (-H @-), so it never appears in argv or the process list.
+doppler configure get token --plain | sed 's/^/Authorization: Bearer /' \
+  | curl -s -H @- https://api.doppler.com/v3/integrations \
   | jq '.integrations[] | {name, enabled, syncs: [.syncs[]? | {project, config, enabled}]}'
 # The activity log (GET /v3/logs) shows "Doppler Bot" disabling it.
 # Fix: re-authenticate the integration with a new Railway token, then re-enable the syncs.
