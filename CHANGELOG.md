@@ -46,6 +46,9 @@ and this project does not follow Semantic Versioning: it makes no versioned rele
 - **Three HIGH entries recorded severity as prose**, so "load all HIGH-severity entries" skipped exactly the entries it most needed: `kb/cmd/mid-path-wildcards.md`, `kb/graph-api/oauth2grants-need-delegated-permission-grant.md` and `kb/typescript/ts6-peer-dep-conflict.md` now carry real YAML frontmatter.
 - Corrected the Tailwind CSS entry count in the master index (claimed 10, folder has 9).
 
+### Security
+- **The Doppler sync-check example no longer passes the API token on curl's command line.** `kb/doppler/doppler-silently-disables-a-railway-sync-when-railway-rejects-its-token-so-prd.md` used `curl -u "$(doppler configure get token --plain):"`, which put the live token in curl's argv, where any local user can read it from the process list, and tripped Gitleaks' `curl-auth-user` rule (HIGH) in the code-security scan. No token was ever committed: the value was read at run time. The example now pipes the token into an `Authorization: Bearer` header that curl reads from stdin with `-H @-`, so it stays out of argv and the scanner no longer matches.
+
 ## [2026-06-14]
 
 ### Added

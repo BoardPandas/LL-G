@@ -1,6 +1,6 @@
 {
   "name": "ll-g",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "description": "Lessons Learned & Gotchas -- machine-readable knowledge base of coding gotchas",
   "scripts": {
