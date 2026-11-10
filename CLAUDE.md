@@ -44,9 +44,9 @@ Edge cases, related entries, cross-references.
 
 ## Adding a New Lesson
 
-Run `/add-lesson` from any repo session. The skill collects the details and proposes the entry through Roundtable's `kb_propose`, which checks it for private details and duplicates, then writes the entry file, the tech `llms.txt` and the master `llms.txt` entry count as one commit.
+Run `/add-lesson` from any repo session. The skill collects the details and proposes the entry through authenticated `gh`, after privacy and duplicate review, and writes the entry file, the tech `llms.txt` and the master `llms.txt` entry count as one commit.
 
-Commit an entry directly only to create a new shelf, which `kb_propose` cannot do. Publish every other entry with `/add-lesson` (Roundtable's `kb_propose`). A new shelf is one commit:
+Use the skill for both existing and new categories. Publish the entry and both indexes as one atomic GitHub commit. A new category requires:
 1. Create `kb/<tech>/<slug>.md` using the entry format above
 2. Create `kb/<tech>/llms.txt` with the entry's bullet under `## Entries`
 3. Add the shelf's line to the master `llms.txt`, with a count of 1 entry
