@@ -1,0 +1,483 @@
+#!/usr/bin/env node
+// sync-antigravity.mjs -- generate Google Antigravity's (.agents/) view of .claude/.
+//
+// Imported by scripts/sync-codex.mjs in repos that generate both Codex and Antigravity
+// mirrors from CLAUDE.md, OR invoked directly (`node scripts/sync-antigravity.mjs [--check]
+// [--with-skills]`) in repos that maintain a hand-authored AGENTS.md or custom .codex/ sync.
+
+import { execFileSync } from "node:child_process";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { dirname, join, relative, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
+
+export const AGY_DOC_CEILING = 24_000;
+export const AGY_SKILL_CEILING = 24_000;
+export const AGY_MODEL_MAP = { opus: "pro", sonnet: "pro", haiku: "flash" };
+
+const AGY_EVENTS = new Set(["SessionStart", "PreToolUse", "PostToolUse", "Stop"]);
+const AGY_TOOL_EVENTS = new Set(["PreToolUse", "PostToolUse"]);
+
+export const AGY_TOOL_MAP = {
+  Bash: ["run_command", "manage_task"],
+  Edit: ["replace_file_content"],
+  Write: ["write_to_file"],
+  MultiEdit: ["multi_replace_file_content"],
+  Agent: ["invoke_subagent"],
+  Task: ["invoke_subagent"],
+  Read: ["view_file"],
+  Glob: ["find_by_name", "list_dir"],
+  Grep: ["grep_search"],
+  WebFetch: ["read_url_content"],
+  WebSearch: ["search_web"],
+  AskUserQuestion: ["ask_question"],
+  ToolSearch: ["call_mcp_tool", "list_resources", "read_resource"],
+  EnterPlanMode: null,
+  ExitPlanMode: null,
+  NotebookEdit: null,
+  TodoWrite: null,
+};
+
+const AGY_HOOK_MATCHER_MAP = {
+  Bash: ["run_command"],
+  Edit: ["replace_file_content", "multi_replace_file_content"],
+  Write: ["write_to_file"],
+  MultiEdit: ["multi_replace_file_content"],
+  Agent: ["invoke_subagent"],
+  Task: ["invoke_subagent"],
+  Read: ["view_file"],
+  Glob: ["find_by_name", "list_dir"],
+  Grep: ["grep_search"],
+  WebFetch: ["read_url_content"],
+  WebSearch: ["search_web"],
+  AskUserQuestion: ["ask_question"],
+  EnterPlanMode: null,
+  ExitPlanMode: null,
+  NotebookEdit: null,
+  TodoWrite: null,
+};
+
+const SHELL_TOOL_RE = /^Bash(\(|$)|^\*$/;
+const SIMPLE_HOOK_RE =
+  /^\s*(?:bash|node)\s+(?:"?\$?\{?CLAUDE_PROJECT_DIR\}?"?\/)?(\.claude\/[\w./-]+\.(?:sh|mjs|js|cjs))\s*$/;
+const code = (s) => `\`${s}\``;
+const shSingle = (s) => `'${s.replace(/'/g, `'\\''`)}'`;
+
+export function mapAntigravityAgentTools(claudeTools, file, generator, failures) {
+  if (claudeTools === null || claudeTools.includes("*")) return null;
+  const out = [];
+  const add = (t) => {
+    if (!out.includes(t)) out.push(t);
+  };
+  for (const raw of claudeTools) {
+    const bare = raw.replace(/\(.*$/, "").trim();
+    if (/^mcp__/.test(bare)) {
+      add("call_mcp_tool");
+      continue;
+    }
+    if (!Object.hasOwn(AGY_TOOL_MAP, bare)) {
+      failures.push(`${file}: tool "${bare}" has no Antigravity mapping. Add it to AGY_TOOL_MAP in ${generator}.`);
+      continue;
+    }
+    for (const mapped of AGY_TOOL_MAP[bare] ?? []) add(mapped);
+  }
+  add("send_message");
+  return out;
+}
+
+export function generateAntigravityAgents({ agentSources, emit, failures, generator, syncCmd }) {
+  for (const { file, fileName, data, body, tools } of agentSources) {
+    const agyTools = mapAntigravityAgentTools(tools, file, generator, failures);
+    const canRunShell =
+      data.permissionMode !== "plan" && (tools === null || tools.some((t) => SHELL_TOOL_RE.test(t)));
+
+    const fm = [
+      "---",
+      `name: ${data.name}`,
+      `description: ${JSON.stringify(data.description)}`,
+      "subagent: true",
+      "mainAgent: true",
+    ];
+    if (AGY_MODEL_MAP[data.model]) fm.push(`model: ${AGY_MODEL_MAP[data.model]}`);
+    fm.push(`commandExecutionPolicy: ${canRunShell ? "sandbox" : '"off"'}`);
+    if (agyTools) {
+      fm.push("tools:");
+      for (const t of agyTools) fm.push(`  - ${t}`);
+    }
+    fm.push("---");
+
+    const notes = [
+      "Antigravity notes (generated):",
+      `- You are the Antigravity port of ${code(file)}; ${code("AGENTS.md")} and ${code(".agents/rules/")} apply.`,
+      `- Tool names above are Claude Code's. Map them to Antigravity tools (${code("view_file")}, ${code("replace_file_content")}, ${code("write_to_file")}, ${code("run_command")}, ${code("invoke_subagent")}).`,
+    ];
+    if (tools?.length) {
+      notes.push(`- Claude Code limits you to: ${tools.join(", ")}. Stay within that scope (including any command-prefix limits).`);
+    }
+    if (data.memory === "project") {
+      notes.push(
+        `- Read ${code(`.claude/agent-memory/${fileName}/MEMORY.md`)} (if it exists) and the shared files in ${code(".claude/agent-memory/")} before starting.`,
+      );
+    }
+    if (data.isolation === "worktree") {
+      notes.push(
+        `- Claude Code gives you an isolated git worktree. When spawned via ${code("invoke_subagent")}, use ${code('Workspace: "branch"')} when isolated checkout is needed; otherwise edit only the files you were assigned.`,
+      );
+    }
+
+    const header = `<!-- GENERATED by ${generator} from ${file}. Do not edit; run ${syncCmd}. -->`;
+    emit(`.agents/agents/${fileName}.md`, `${fm.join("\n")}\n\n${header}\n\n${body.trim()}\n\n${notes.join("\n")}\n`);
+  }
+}
+
+export function generateAntigravityRules({ rules, emit, generator, syncCmd, includeAlwaysOn = false }) {
+  let count = 0;
+  for (const r of rules) {
+    if (r.paths.length === 0 && !includeAlwaysOn) continue;
+    const fileName = r.path.split("/").pop();
+    const fm = [
+      "---",
+      `trigger: ${r.paths.length ? "glob" : "always_on"}`,
+      `description: ${JSON.stringify(r.description || fileName.replace(/\.md$/, ""))}`,
+    ];
+    if (r.paths.length) fm.push(`globs: ${JSON.stringify(r.paths.join(", "))}`);
+    fm.push("---");
+    const header = `<!-- GENERATED by ${generator} from ${r.path}. Do not edit; run ${syncCmd}. -->`;
+    emit(`.agents/rules/${fileName}`, `${fm.join("\n")}\n\n${header}\n\n${r.body.trim()}\n`);
+    count++;
+  }
+  return count;
+}
+
+export function generateAntigravityHooks({ settings, bellRe, gitRoot, scriptOf, emit, failures }) {
+  const group = { enabled: true };
+  const agyNotCarried = [];
+  let mirrored = 0;
+  let needsPreInvocationQueue = false;
+  let sawBell = false;
+
+  const adapterBase = `bash "${gitRoot}"/.claude/scripts/_antigravity-hook.sh`;
+  const buildAdapterCmd = (event, rawCmd) => {
+    if (!rawCmd) return `${adapterBase} ${event}`;
+    const simple = rawCmd.match(SIMPLE_HOOK_RE)?.[1] ?? scriptOf?.(rawCmd);
+    if (simple && SIMPLE_HOOK_RE.test(rawCmd)) return `${adapterBase} ${event} ${simple}`;
+    if (/\.claude\//.test(rawCmd)) return `${adapterBase} ${event} --eval ${shSingle(rawCmd)}`;
+    return null;
+  };
+
+  for (const [event, blocks] of Object.entries(settings.hooks ?? {})) {
+    for (const block of blocks) {
+      for (const handler of block.hooks ?? []) {
+        const label = `${event}${block.matcher ? ` [${block.matcher}]` : ""}: ${handler.command ?? handler.type}`;
+        if ((event === "Stop" || event === "Notification" || event === "SubagentStop") && bellRe.test((handler.command ?? "").trim())) {
+          sawBell = true;
+          continue;
+        }
+        if (!AGY_EVENTS.has(event)) {
+          agyNotCarried.push(`${label} -- Antigravity has no ${event} hook event.`);
+          continue;
+        }
+        if (handler.type !== "command") {
+          agyNotCarried.push(`${label} -- Antigravity runs only command hooks (type "${handler.type}").`);
+          continue;
+        }
+
+        let matcher = block.matcher;
+        if (AGY_TOOL_EVENTS.has(event) && matcher && matcher !== "*") {
+          const tokens = matcher.split("|");
+          const mapped = [];
+          for (const t of tokens) {
+            if (/^mcp__[\w.*-]+$/.test(t)) mapped.push(t);
+            else if (!Object.hasOwn(AGY_HOOK_MATCHER_MAP, t)) {
+              failures.push(
+                `.claude/settings.json: ${event} matcher token "${t}" has no Antigravity mapping. Add it to AGY_HOOK_MATCHER_MAP in scripts/sync-antigravity.mjs.`,
+              );
+            } else if (AGY_HOOK_MATCHER_MAP[t]) {
+              mapped.push(...AGY_HOOK_MATCHER_MAP[t]);
+            }
+          }
+          if (mapped.length === 0) {
+            agyNotCarried.push(`${label} -- Antigravity has no hookable ${tokens.join("/")} tool.`);
+            continue;
+          }
+          matcher = [...new Set(mapped)].join("|");
+        }
+
+        const command = buildAdapterCmd(event, handler.command ?? "");
+        if (!command) {
+          agyNotCarried.push(`${label} -- inline command without a .claude/ script path is not wrapped for Antigravity.`);
+          continue;
+        }
+
+        const timeout = typeof handler.timeout === "number" ? handler.timeout : 30;
+        const entry = { type: "command", command, timeout };
+
+        if (AGY_TOOL_EVENTS.has(event)) {
+          needsPreInvocationQueue = true;
+          const key = matcher ?? "*";
+          const list = (group[event] ??= []);
+          let target = list.find((g) => g.matcher === key);
+          if (!target) {
+            target = { matcher: key, hooks: [] };
+            list.push(target);
+          }
+          target.hooks.push(entry);
+        } else {
+          (group[event] ??= []).push(entry);
+        }
+        mirrored++;
+      }
+    }
+  }
+
+  if (needsPreInvocationQueue) {
+    group.PreInvocation = [{ type: "command", command: `${adapterBase} PreInvocation`, timeout: 10 }];
+  }
+  if (sawBell) {
+    agyNotCarried.push("Stop/Notification terminal bell -- Antigravity hooks require JSON on stdout.");
+  }
+
+  const ordered = { enabled: true };
+  for (const k of ["SessionStart", "PreInvocation", "PreToolUse", "PostToolUse", "Stop"]) {
+    if (group[k]) ordered[k] = group[k];
+  }
+
+  emit(".agents/hooks.json", `${JSON.stringify({ "claude-code-bootstrap": ordered }, null, 2)}\n`);
+  return { mirrored, agyNotCarried };
+}
+
+export function generateAntigravityReadme({ summary, agyNotCarried, emit, generator, syncCmd }) {
+  const docNote =
+    summary.agentsMdBytes !== undefined
+      ? `AGENTS.md ${summary.agentsMdBytes} B`
+      : "existing AGENTS.md preserved";
+  const lines = [
+    "# Antigravity configuration (generated)",
+    "",
+    `Everything generated under ${code(".agents/")} comes from ${code(".claude/")} via ${code(generator)}.`,
+    "Edit the Claude source, never these generated files, then run:",
+    "",
+    "```bash",
+    syncCmd,
+    "```",
+    "",
+    "| Claude Code source | Antigravity output |",
+    "|---|---|",
+    `| ${code(".claude/skills/<name>/**")} | ${code(".agents/skills/<name>/**")} (${code("SKILL.md")} <= ${AGY_SKILL_CEILING} B) |`,
+    `| ${code(".claude/agents/<name>.md")} | ${code(".agents/agents/<name>.md")} |`,
+    `| ${code(".claude/rules/*.md")} | ${code(".agents/rules/*.md")} (${code("glob")} / ${code("always_on")}) |`,
+    `| ${code(".claude/settings.json")} hooks | ${code(".agents/hooks.json")} via ${code(".claude/scripts/_antigravity-hook.sh")} |`,
+    "",
+    `Current output: ${summary.skills} skills, ${summary.agents} agents, ${summary.rules} rules, ${summary.agyHooks} hook handlers (${docNote}).`,
+    "",
+    "## How the Antigravity bridge works",
+    "",
+    `- **Models.** Claude tiers map to Antigravity tiers: ${Object.entries(AGY_MODEL_MAP).map(([k, v]) => `${code(k)} -> ${code(v)}`).join(", ")}.`,
+    `- **Command sandbox.** Agents without ${code("Bash")} get ${code('commandExecutionPolicy: "off"')}; agents with ${code("Bash")} get ${code("commandExecutionPolicy: sandbox")}.`,
+    `- **Hooks adapter (${code("_antigravity-hook.sh")}).** Antigravity runs hooks with ${code(".agents/")} as cwd, sends camelCase JSON (${code("toolCall.args.CommandLine")}, ${code("TargetFile")}, ${code("Cwd")}), and treats non-zero exits as fail-open errors. The adapter anchors at the git root, converts ${code("exit 2")} + stderr into ${code('{"decision":"deny","reason":"..."}')} (exit 0), emits ${code("SessionStart")} text as ${code("systemMessage")}, and queues ${code("PreToolUse")}/${code("PostToolUse")} ${code("additionalContext")} per ${code("conversationId")} so ${code("PreInvocation")} injects it as ${code("ephemeralMessage")} on the next step.`,
+  ];
+  if (agyNotCarried.length) {
+    lines.push("", "## Not carried over to Antigravity", "");
+    for (const n of agyNotCarried) lines.push(`- ${n}`);
+  }
+  emit(".agents/README.md", `${lines.join("\n")}\n`);
+}
+
+export function splitOversizedSkill(target, prefix, body) {
+  const full = `${prefix}${body.trim()}\n`;
+  if (Buffer.byteLength(full, "utf8") <= AGY_SKILL_CEILING) return { skillMd: full, overflow: null };
+  const refRel = "references/antigravity-overflow.md";
+  const tail = `\n\n> **Continued:** Read ${code(`${target}/${refRel}`)} in full for the remaining sections of this skill before proceeding.\n`;
+  const budget = AGY_SKILL_CEILING - Buffer.byteLength(prefix, "utf8") - Buffer.byteLength(tail, "utf8") - 64;
+  let cut = body.trim().slice(0, Math.max(1024, budget));
+  const nl = cut.lastIndexOf("\n## ");
+  const para = cut.lastIndexOf("\n\n");
+  cut = cut.slice(0, nl > budget * 0.5 ? nl : para > budget * 0.5 ? para : cut.length).trimEnd();
+  const rest = body.trim().slice(cut.length).trimStart();
+  return { skillMd: `${prefix}${cut}${tail}`, overflow: { path: `${target}/${refRel}`, content: `${rest}\n` } };
+}
+
+// ------------------------------------------------ standalone CLI entrypoint
+
+function runStandaloneCli() {
+  const root = process.cwd();
+  const check = process.argv.includes("--check");
+  const withSkills = process.argv.includes("--with-skills");
+  const generator = `scripts/sync-antigravity.mjs${withSkills ? " --with-skills" : ""}`;
+  const syncCmd = `node ${generator}`;
+  const eol = (s) => s.replace(/\r\n/g, "\n");
+  const posix = (p) => p.split("\\").join("/");
+  const read = (p) => eol(readFileSync(join(root, p), "utf8"));
+  const unq = (v) => (/^".*"$/.test(v) ? JSON.parse(v) : /^'.*'$/.test(v) ? v.slice(1, -1).replace(/''/g, "'") : v);
+  const asList = (v) => (Array.isArray(v) ? v : typeof v === "string" && v ? v.split(",").map((s) => s.trim()).filter(Boolean) : []);
+
+  function listFiles(dir) {
+    try {
+      const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", dir], {
+        cwd: root,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      });
+      return out.split("\0").filter(Boolean).map(posix).filter((p) => existsSync(join(root, p))).sort();
+    } catch {
+      const walk = (d) =>
+        existsSync(join(root, d))
+          ? readdirSync(join(root, d)).flatMap((n) => {
+              const relP = posix(relative(root, join(root, d, n)));
+              return statSync(join(root, relP)).isDirectory() ? walk(relP) : [relP];
+            })
+          : [];
+      return walk(dir).sort();
+    }
+  }
+
+  function parseFm(text, file) {
+    const src = eol(text);
+    const m = src.match(/^---\n([\s\S]*?)\n---(?:\n|$)/);
+    if (!m) throw new Error(`${file}: missing YAML frontmatter`);
+    const lines = m[1].split("\n");
+    const data = {};
+    for (let i = 0; i < lines.length; i++) {
+      const kv = lines[i].match(/^([A-Za-z][\w-]*):(?:\s+(.*))?$/);
+      if (!kv) continue;
+      const val = (kv[2] ?? "").trim();
+      if (!val) {
+        const items = [];
+        while (i + 1 < lines.length && /^\s+-\s+/.test(lines[i + 1])) items.push(unq(lines[++i].replace(/^\s+-\s+/, "").trim()));
+        data[kv[1]] = items.length ? items : "";
+      } else if (/^[>|][-+]?$/.test(val)) {
+        const parts = [];
+        while (i + 1 < lines.length && /^\s+\S/.test(lines[i + 1])) parts.push(lines[++i].trim());
+        data[kv[1]] = val.startsWith(">") ? parts.join(" ") : parts.join("\n");
+      } else if (/^\[.*\]$/.test(val)) {
+        data[kv[1]] = val.slice(1, -1).split(",").map((s) => unq(s.trim())).filter(Boolean);
+      } else {
+        let sc = val;
+        while (i + 1 < lines.length && /^\s+\S/.test(lines[i + 1]) && !/^\s+-\s/.test(lines[i + 1])) sc += ` ${lines[++i].trim()}`;
+        data[kv[1]] = unq(sc);
+      }
+    }
+    return { data, body: src.slice(m[0].length) };
+  }
+
+  const failures = [];
+  const expected = new Map();
+  const emit = (p, c) => expected.set(p, Buffer.isBuffer(c) ? c : Buffer.from(c, "utf8"));
+  if (!existsSync(join(root, ".claude/settings.json"))) {
+    console.error("FAIL: .claude/settings.json missing");
+    process.exit(1);
+  }
+  const settings = JSON.parse(read(".claude/settings.json"));
+  const agentSources = listFiles(".claude/agents")
+    .filter((p) => /^\.claude\/agents\/[^/]+\.md$/.test(p))
+    .map((file) => {
+      const { data, body } = parseFm(read(file), file);
+      const tools = data.tools === undefined ? null : asList(data.tools);
+      return { file, fileName: file.split("/").pop().replace(/\.md$/, ""), data, body, tools };
+    });
+  generateAntigravityAgents({ agentSources, emit, failures, generator, syncCmd });
+
+  const rules = listFiles(".claude/rules")
+    .filter((p) => /^\.claude\/rules\/[^/]+\.md$/.test(p))
+    .map((p) => {
+      const { data, body } = parseFm(read(p), p);
+      return { path: p, description: data.description, paths: asList(data.paths), body };
+    });
+  const agentsMdGenerated =
+    existsSync(join(root, "AGENTS.md")) && read("AGENTS.md").slice(0, 200).includes("GENERATED by scripts/sync-codex");
+  const ruleCount = generateAntigravityRules({ rules, emit, generator, syncCmd, includeAlwaysOn: !agentsMdGenerated });
+
+  const { mirrored, agyNotCarried } = generateAntigravityHooks({
+    settings,
+    bellRe: /^(printf|echo(\s+-e)?)\s+(['"])\\a\3$/,
+    gitRoot: "$(git rev-parse --show-toplevel)",
+    scriptOf: (c) => c.match(/(?:^|[\s"/])(\.claude\/[\w./-]+\.(?:sh|mjs|js|cjs|py))/)?.[1] ?? null,
+    emit,
+    failures,
+  });
+
+  let skillCount = listFiles(".agents/skills").filter((p) => /^\.agents\/skills\/[^/]+\/SKILL\.md$/.test(p)).length;
+  if (withSkills) {
+    const files = listFiles(".claude/skills");
+    const names = [...new Set(files.filter((p) => /^\.claude\/skills\/[^/]+\/SKILL\.md$/.test(p)).map((p) => p.split("/")[2]))];
+    skillCount = names.length;
+    for (const name of names) {
+      const src = `.claude/skills/${name}`;
+      const tgt = `.agents/skills/${name}`;
+      const { data, body } = parseFm(read(`${src}/SKILL.md`), `${src}/SKILL.md`);
+      const rawDesc = String(data.description ?? "").replace(/[<>]/g, "");
+      const explicitOnly = String(data["disable-model-invocation"]) === "true";
+      const desc = explicitOnly ? `Explicit command only (/${name} or $${name}) -- never invoke implicitly. ${rawDesc}` : rawDesc;
+      const notes = [`Generated from ${code(`${src}/SKILL.md`)} by ${code(generator)}. Edit the source, then run ${code(syncCmd)}.`];
+      if (explicitOnly) notes.push(`Explicit only: runs when the user invokes ${code(`$${name}`)} or ${code(`/${name}`)}, never implicitly.`);
+      if (data.agent) notes.push(`In Antigravity, call ${code("invoke_subagent")} with ${code(`TypeName: "${data.agent}"`)} (${code(`.agents/agents/${data.agent}.md`)}) and return its summary.`);
+      if (body.includes("$ARGUMENTS")) notes.push(`${code("$ARGUMENTS")} is the text the user supplied with the skill invocation.`);
+      const expand = (s) => s.replaceAll("${CLAUDE_SKILL_DIR}", tgt);
+      const prefix = `---\nname: ${name}\ndescription: ${JSON.stringify(desc.slice(0, 1024))}\n---\n\n${notes.map((n) => `> ${n}`).join("\n>\n")}\n\n`;
+      const { skillMd, overflow } = splitOversizedSkill(tgt, prefix, expand(body));
+      emit(`${tgt}/SKILL.md`, skillMd);
+      if (overflow) emit(overflow.path, overflow.content);
+      for (const f of files.filter((p) => p.startsWith(`${src}/`) && p !== `${src}/SKILL.md`)) {
+        const buf = readFileSync(join(root, f));
+        emit(`${tgt}/${f.slice(src.length + 1)}`, buf.includes(0) ? buf : expand(eol(buf.toString("utf8"))));
+      }
+      if (explicitOnly) {
+        emit(`${tgt}/agents/openai.yaml`, `# GENERATED by ${generator}\npolicy:\n  allow_implicit_invocation: false\n`);
+      }
+    }
+  }
+
+  generateAntigravityReadme({
+    summary: { skills: skillCount, agents: agentSources.length, rules: ruleCount, agyHooks: mirrored },
+    agyNotCarried,
+    emit,
+    generator,
+    syncCmd,
+  });
+
+  if (failures.length) {
+    for (const f of failures) console.error(`FAIL: ${f}`);
+    process.exit(1);
+  }
+
+  const owned = [".agents/agents", ".agents/rules", ...(withSkills ? [".agents/skills"] : [])];
+  let written = 0;
+  let removed = 0;
+  const same = (a, b) => (a.includes(0) || b.includes(0) ? a.equals(b) : eol(a.toString("utf8")) === eol(b.toString("utf8")));
+  for (const [p, content] of expected) {
+    const abs = join(root, p);
+    const cur = existsSync(abs) ? readFileSync(abs) : null;
+    if (cur && same(cur, content)) continue;
+    if (check) failures.push(`${p}: ${cur ? "stale" : "missing"}`);
+    else {
+      mkdirSync(dirname(abs), { recursive: true });
+      writeFileSync(abs, content);
+      written++;
+    }
+  }
+  for (const d of owned) {
+    for (const p of listFiles(d)) {
+      if (expected.has(p)) continue;
+      if (check) failures.push(`${p}: unexpected (no Claude source generates it)`);
+      else {
+        rmSync(join(root, p));
+        removed++;
+        let curD = dirname(join(root, p));
+        const stop = join(root, d);
+        while (curD.startsWith(stop) && curD !== stop && readdirSync(curD).length === 0) {
+          rmdirSync(curD);
+          curD = dirname(curD);
+        }
+      }
+    }
+  }
+  if (failures.length) {
+    for (const f of failures) console.error(`FAIL: ${f}`);
+    process.exit(1);
+  }
+  const msg = `${skillCount} skills, ${agentSources.length} agents, ${ruleCount} rules, ${mirrored} Antigravity hooks`;
+  console.log(check ? `OK -- Antigravity mirror current (${msg}).` : `Antigravity mirror regenerated (${msg}): ${written} written, ${removed} removed.`);
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  runStandaloneCli();
+}
