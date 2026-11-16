@@ -22,7 +22,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash .claude/scripts/check-changelog-staged.sh",
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/scripts/check-changelog-staged.sh",
             "statusMessage": "Checking changelog is staged...",
             "if": "Bash(git commit*)"
           }

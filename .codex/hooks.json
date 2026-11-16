@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$(git rev-parse --show-toplevel)/.claude/scripts/check-changelog-staged.sh\"",
+            "command": "bash \"$(git rev-parse --show-toplevel)\"/.claude/scripts/check-changelog-staged.sh",
             "commandWindows": "bash .claude/scripts/check-changelog-staged.sh",
             "statusMessage": "Checking changelog is staged..."
           }
