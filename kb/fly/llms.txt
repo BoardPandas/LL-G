@@ -1,0 +1,7 @@
+# Fly.io Gotchas
+
+> Known Fly.io (flyctl, Machines, secrets) patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [Staged Fly secrets reach hand-made Machines only through `fly deploy`](staged-secrets-reach-hand-made-machines-only-through-fly-deploy.md): `fly machine update --skip-start` leaves `fly secrets import --stage` secrets Staged, and `fly secrets deploy` refuses with "no machines available to deploy" on Machines made by `fly machine create`. One `fly deploy -c fly.toml -e KEY=VAL` applies them, but it may create a new Machine and volume, so find the data before destroying the leftovers. HIGH.

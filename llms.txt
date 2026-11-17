@@ -214,6 +214,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Railway
 - [Railway index](kb/railway/llms.txt): Railway platform gotchas (18 entries)
 
+### Fly.io
+- [Fly.io index](kb/fly/llms.txt): Fly.io Machines, secrets and flyctl deploy gotchas (1 entry)
+
 ### Claude Code
 - [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas (49 entries)
 
