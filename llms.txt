@@ -20,7 +20,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Doppler index](kb/doppler/llms.txt): Doppler secrets CLI and API gotchas (9 entries)
 
 ### PowerShell
-- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (40 entries)
+- [PowerShell index](kb/powershell/llms.txt): All PowerShell gotchas (41 entries)
 
 ### Outlook
 - [Outlook index](kb/outlook/llms.txt): All Outlook gotchas (1 entry)
@@ -92,10 +92,10 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Exchange Online index](kb/exchange-online/llms.txt): Exchange Online (EXO PowerShell / app-only auth) gotchas (9 entries)
 
 ### Salesforce
-- [Salesforce index](kb/salesforce/llms.txt): Salesforce SAML SSO, Experience Cloud, and JIT gotchas (4 entries)
+- [Salesforce index](kb/salesforce/llms.txt): Salesforce SAML SSO, Experience Cloud, and JIT gotchas (6 entries)
 
 ### Entra External ID (CIAM)
-- [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas (6 entries)
+- [Entra External ID index](kb/entra-external-id/llms.txt): Microsoft Entra External ID (external tenant / CIAM) gotchas (7 entries)
 
 ### Godot / GDScript
 - [Godot index](kb/godot/llms.txt): All Godot and GDScript gotchas (22 entries)
@@ -278,7 +278,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Go index](kb/go/llms.txt): Go HTTP and concurrency gotchas (37 entries)
 
 ### Web Security
-- [Web Security index](kb/web-security/llms.txt): Framework-agnostic browser/HTTP security-header gotchas (4 entries)
+- [Web Security index](kb/web-security/llms.txt): Framework-agnostic browser/HTTP security-header gotchas (5 entries)
 
 ### Supabase
 - [Supabase index](kb/supabase/llms.txt): Supabase auth/sync gotchas (1 entry)
