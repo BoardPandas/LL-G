@@ -218,7 +218,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Fly.io index](kb/fly/llms.txt): Fly.io Machines, secrets and flyctl deploy gotchas (1 entry)
 
 ### Claude Code
-- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas (49 entries)
+- [Claude Code index](kb/claude-code/llms.txt): Claude Code configuration and environment gotchas (50 entries)
 
 ### DNS
 - [DNS index](kb/dns/llms.txt): Provider-agnostic DNS gotchas (2 entries)
