@@ -1,0 +1,8 @@
+# gcloud Gotchas
+
+> Known Google Cloud CLI (gcloud) patterns that cause silent failures or hard-to-debug errors, especially from Git Bash on Windows.
+
+## Entries
+
+- [gcloud value() output on Windows ends in CRLF, so every looped ID but the last fails with "INVALID_ARGUMENT: Unknown error"](value-output-crlf-breaks-looped-ids.md): `$(gcloud ... --format="value(...)")` leaves a trailing `\r` on every item but the last under Git Bash, and gcloud reports the bad argument only as an opaque INVALID_ARGUMENT, so 15 of 16 failures look like a permissions problem; pipe through `tr -d '\r'`. HIGH.
+- [gcloud in Git Bash picks the Windows Store python stub and fails before running](git-bash-picks-windows-store-python-stub.md): the bash `gcloud` script resolves `python` to the Store alias and prints "Python was not found"; set `CLOUDSDK_PYTHON` to the SDK's `platform/bundledpython/python.exe`. MEDIUM.
