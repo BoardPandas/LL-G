@@ -53,7 +53,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [LLM Integration index](kb/llm-integration/llms.txt): LLM / reasoning-model streaming + tool-calling gotchas (12 entries)
 
 ### MCP (Model Context Protocol)
-- [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas (24 entries)
+- [MCP index](kb/mcp/llms.txt): Model Context Protocol server/host integration gotchas (25 entries)
 
 ### Tailwind CSS
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (11 entries)
@@ -311,4 +311,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [OpenAI Sites index](kb/openai-sites/llms.txt): OpenAI Sites publishing and asset-packaging gotchas (1 entry)
 
 ### SOC 2
-- [SOC 2 index](kb/soc2/llms.txt): SOC 2 audit-preparation and compliance-platform gotchas (2 entries)
+- [SOC 2 index](kb/soc2/llms.txt): SOC 2 audit-preparation and compliance-platform gotchas (3 entries)
