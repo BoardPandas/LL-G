@@ -42,4 +42,11 @@ if (!r.result.structuredContent || /Result truncated/.test(text)) {
 - Always check for `structuredContent` and the truncation marker before counting anything from a Hub result.
 - Results newest-first means a newly added row is still at the top of a truncated list, so the id of a vendor
   you just created can be read from it; the totals cannot.
+- Recovering ids from the kept prefix: the cut text is not valid JSON, so `JSON.parse` fails. Split it into rows
+  at each row start (`{"createdAt":` for `TenantVendorList`) and take the row-level `"id"` that comes just
+  before `"isCompleted"`. The first UUID in a row is often a linked evidence id, because the `evidence` array
+  comes first, not the tenant vendor id. Confirm each id with a per-item read (`TenantVendorGetAssessment`)
+  before passing it to a write such as `EvidenceUpdateLinkToVendor`.
+- The durable fix is to keep each item id in your own records when you create or first read the item, so later
+  work never needs the full list.
 - Related: [hub-execute-command-times-out-after-about-60-100s.md](hub-execute-command-times-out-after-about-60-100s.md).
