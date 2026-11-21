@@ -7,6 +7,11 @@ and this project does not follow Semantic Versioning: it makes no versioned rele
 
 ## [Unreleased]
 
+## [1.1.6] - 2026-11-21
+
+### Added
+- Dependabot version updates: weekly pull requests for github-actions, npm dependencies, with minor and patch updates grouped into one pull request per ecosystem. Dependabot alerts and security updates are enabled in the repository settings.
+
 ### Added
 - Two new Rust gotchas: grep-based unused-dependency checks miss crates used only by macro expansion (`windows-core` under `#[implement]`) (HIGH); bindgen cannot find `stdbool.h` when libclang is installed without the clang binary (MEDIUM).
 - **Google Antigravity (`agy`) and Codex mirror generation** (`scripts/sync-codex.mjs`, `scripts/sync-antigravity.mjs`, `.claude/scripts/_antigravity-hook.sh`, `AGENTS.md`, `.agents/`, `.codex/`), plus fixed `.claude/settings.json` (`matcher: "Bash"` + `if: "Bash(git commit*)"`) and upgraded `.claude/scripts/check-changelog-staged.sh` to filter non-commit commands and emit block reasons on stderr (`scripts/antigravity-hooks.test.mjs`, `scripts/sync-codex.test.mjs`).
