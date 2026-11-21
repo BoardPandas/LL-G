@@ -45,3 +45,4 @@
 - [Wait for child executable identity before taking a process snapshot](wait-for-child-executable-identity.md): Process.Start can precede executable-path readiness; refresh the exact owned process under a bounded deadline without weakening observer identity checks. MEDIUM.
 - [Validate scalar types before allowlist comparisons](validate-scalar-types-before-allowlist-comparisons.md): PowerShell comparison operators filter array operands, so an allowed-value array can pass a scalar string check unless its type is validated first. HIGH.
 - ["$var?query" reads a variable named var?query](variable-name-swallows-question-mark.md): write "${var}?query" in URLs. MEDIUM.
+- [Cmdlet output passed to COM InvokeMember fails with DISP_E_TYPEMISMATCH](com-invokemember-psobject-type-mismatch.md): Join-Path, Get-Item or pipeline values are PSObject-wrapped and IDispatch rejects them; cast each argument to [string]/[int] in the InvokeMember array and never catch-all the call. HIGH.
