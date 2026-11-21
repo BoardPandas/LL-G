@@ -13,7 +13,7 @@ It bites on a platform move. The new apps boot with the same service token, but 
 ## WRONG
 ```bash
 # From the new platform
-curl -s -o /dev/null -w '%{http_code}\n' -u "$DOPPLER_TOKEN:" https://api.doppler.com/v3/me
+curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $DOPPLER_TOKEN" https://api.doppler.com/v3/me
 # 200 -> "token is fine", so the 403 on download gets debugged as a token problem
 ```
 
@@ -24,15 +24,15 @@ fly ips allocate-egress -a <app> -r <region>
 
 # 2. Add each address to every config the app reads, as /32 and /128,
 #    with a token allowed to edit the config (not the app's service token)
-curl -s -X POST -u "$DOPPLER_ADMIN_TOKEN:" -H 'Content-Type: application/json' \
+curl -s -X POST -H "Authorization: Bearer $DOPPLER_ADMIN_TOKEN" -H 'Content-Type: application/json' \
   "https://api.doppler.com/v3/configs/config/trusted_ips?project=<project>&config=<config>" \
   -d '{"ip":"192.0.2.10/32"}'
-curl -s -X POST -u "$DOPPLER_ADMIN_TOKEN:" -H 'Content-Type: application/json' \
+curl -s -X POST -H "Authorization: Bearer $DOPPLER_ADMIN_TOKEN" -H 'Content-Type: application/json' \
   "https://api.doppler.com/v3/configs/config/trusted_ips?project=<project>&config=<config>" \
   -d '{"ip":"2001:db8::10/128"}'
 
 # 3. Test the call that actually failed, from the new platform -- not /v3/me
-curl -s -o /dev/null -w '%{http_code}\n' -u "$DOPPLER_TOKEN:" \
+curl -s -o /dev/null -w '%{http_code}\n' -H "Authorization: Bearer $DOPPLER_TOKEN" \
   "https://api.doppler.com/v3/configs/config/secrets/download?format=json"
 ```
 
