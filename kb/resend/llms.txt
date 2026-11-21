@@ -5,3 +5,4 @@
 ## Entries
 
 - [A Resend idempotency key suppresses a duplicate only if the retry is byte-identical](idempotency-key-requires-identical-payload.md): A reused key with a different payload is refused with 409, so per-recipient values minted per attempt (unsubscribe tokens, tracking ids) turn a crash-retry of a delivered email into a false failure or a duplicate; fix them before the first attempt. HIGH.
+- [Resend webhooks fire for every email on the account: allow-list events on your own sender](webhooks-are-account-wide-filter-by-sender.md): a bounce/complaint handler on a shared account suppresses recipients of other products' mail; ignore events whose `data.from` is not your sender address. HIGH.
