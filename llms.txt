@@ -250,6 +250,9 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 ### Drizzle ORM (drizzle-kit)
 - [drizzle-kit index](kb/drizzle-kit/llms.txt): drizzle-kit migration-generation gotchas (2 entries)
 
+### Kysely
+- [Kysely index](kb/kysely/llms.txt): Kysely query-builder and migrator gotchas (1 entry)
+
 ### React Native
 - [React Native index](kb/react-native/llms.txt): React Native + Expo gotchas (3 entries)
 

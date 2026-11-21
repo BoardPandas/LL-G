@@ -1,0 +1,7 @@
+# Kysely Gotchas
+
+> Known Kysely query-builder and migrator patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [migrateToLatest never throws -- an unchecked result.error boots the app with no migrations run](migratetolatest-never-throws-check-result-error.md): Every Migrator method returns `{ error, results }` and never throws, so `try/catch` around it is dead code. After a code revert removes an applied migration file, the migrator returns "corrupted migrations: previously executed migration <name> is missing" and runs nothing, pending migrations included; `allowUnorderedMigrations` does not skip that check. Treat `result.error` as fatal before starting the server, and never let a rollback delete applied migration files. HIGH.
