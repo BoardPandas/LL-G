@@ -1,30 +1,16 @@
 ---
 tech: semgrep
-tags: [semgrep, opengrep, nosemgrep, suppression, sast, jsx, react, dangerouslysetinnerhtml, false-positive]
+tags: [semgrep, opengrep, nosemgrep, suppression, sast, jsx, react, dangerouslysetinnerhtml, false-positive, partial-parsing]
 severity: high
 ---
-# A nosemgrep comment above a JSX conditional wrapper suppresses nothing
+# A paren-wrapped JSX match starts on the wrapper line, so nosemgrep goes above that line
 
 ## PROBLEM
-Semgrep and Opengrep honour an inline `nosemgrep` comment only on the finding's first line or the line directly before it. In JSX the flagged element often sits inside a conditional (`{cond && (`, `{x ? (`, `) : y ? (`). A suppression written above that wrapper reads naturally, passes code review, and is one or two lines too high, so the scanner ignores it.
+Semgrep and Opengrep honour an inline `nosemgrep` comment only on the finding's start line or the line directly before it. When the flagged JSX element is wrapped in parentheses (`{cond && (`, `{x ? (`, `) : y ? (`, `return (`), the match starts on the **wrapper line**, the one holding the opening `(`. It does not start on the `<div` line or on the `dangerouslySetInnerHTML=` prop line.
 
-Nothing reports the miss. The scanner does not warn about a comment that matched no finding. The code looks suppressed, so the finding still showing in the scan dashboard gets triaged again or bulk-suppressed by hand. The next code move or rename brings the finding back.
-
-A multi-line element has a second trap: depending on the rule, the finding can start on the element's opening line (`<div`) or on the prop line (`dangerouslySetInnerHTML=...`) a few lines below it. A comment that covers one of those lines can miss the other.
+A comment moved "closer" to the sink, inside the parens, is one or more lines too low and is silently ignored. Nothing reports it, because the scanner never warns about a comment that matched no finding. An earlier version of this entry recommended exactly that placement. Following it reopened three findings that had been correctly suppressed.
 
 ## WRONG
-```tsx
-{/* quoted is DOMPurify output, never raw html. */}
-{/* nosemgrep: javascript.react.dangerouslysetinnerhtml */}
-{showQuoted && (
-  <div
-    className="quoted"
-    dangerouslySetInnerHTML={{ __html: quoted }}
-  />
-)}
-```
-
-## RIGHT
 ```tsx
 {/* quoted is DOMPurify output, never raw html. */}
 {showQuoted && (
@@ -37,9 +23,27 @@ A multi-line element has a second trap: depending on the rule, the finding can s
 )}
 ```
 
-A `//` comment is valid JavaScript inside the `(` before the JSX and between JSX attributes. Covering both the element line and the prop line works whichever line the rule reports.
+## RIGHT
+```tsx
+{/* quoted is DOMPurify output, never raw html. */}
+{/* nosemgrep: javascript.react.dangerouslysetinnerhtml */}
+{showQuoted && (
+  <div
+    className="quoted"
+    dangerouslySetInnerHTML={{ __html: quoted }}
+  />
+)}
+```
+
+```tsx
+// nosemgrep: javascript.react.dangerouslysetinnerhtml
+return (
+  <div dangerouslySetInnerHTML={{ __html: safeHtml }} />
+)
+```
 
 ## NOTES
-- Check placement mechanically: for each `dangerouslySetInnerHTML=` (or other suppressed sink), walk back to the line that opens the tag and require `nosemgrep` on that line or the one above it, and on the prop line or the one above it.
-- The same rule applies to `# nosec` (Gosec) and `# gitleaks:allow`: the comment belongs on the flagged line itself, not above a wrapper or a block.
-- Seen in a 2026-11 code-security triage: several suppressions placed above conditional wrappers were inert. Which of them the scanner was still reporting was inferred from the code, because the platform's finding list was too large to read through the API.
+- Verify, don't eyeball. Run `opengrep scan --config <rule> --json --disable-nosem <file>` and read each result's `start.line` and `extra.is_ignored`. With a stand-in rule that has the hosted rule's id, the local start lines matched the hosted scanner's reported lines exactly.
+- **A backtick in a comment can hide the match.** A `//` comment containing backticks near a regex literal that also contains one (for example `` /`|^ {0,3}~{3}/ ``) can make Opengrep fail to parse that region (`PartialParsing` in the `errors` array) and drop the match. The finding then looks fixed only because the code is no longer parsed. Check `errors` for `PartialParsing` overlapping the match, and keep backticks out of suppression comments.
+- On a hosted dashboard, a moved line can show as a new finding ("alerting since 1 hour ago"), so a finding's age does not prove the old placement was failing.
+- Gosec's `#nosec` follows a different rule. See `kb/go/gosec-nosec-on-if-init-line-ignored.md`.

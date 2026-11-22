@@ -4,4 +4,4 @@
 
 ## Entries
 
-- [A nosemgrep comment above a JSX conditional wrapper suppresses nothing](nosemgrep-above-jsx-conditional-is-ignored.md): `nosemgrep` counts only on the finding's first line or the line directly above it, so a comment above `{cond && (` or a ternary is silently ignored and the finding stays open; put it directly above the element and above the prop line. HIGH.
+- [A paren-wrapped JSX match starts on the wrapper line, so nosemgrep goes above that line](nosemgrep-above-jsx-conditional-is-ignored.md): a `{cond && (` / `x ? (` / `return (` wrapped element is reported on the wrapper line, so `nosemgrep` belongs on or directly above it, not inside the parens; verify with `--json --disable-nosem` and watch for `PartialParsing` hiding the match. HIGH.
