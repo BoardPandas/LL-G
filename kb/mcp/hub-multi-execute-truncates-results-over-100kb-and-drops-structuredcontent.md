@@ -1,6 +1,6 @@
 ---
 tech: mcp
-tags: [mcp, hub, multi-execute, truncation, structuredcontent, oneleet, pagination]
+tags: [mcp, hub, multi-execute, truncation, structuredcontent, oneleet, pagination, monitors]
 severity: high
 ---
 # Hub MULTI_EXECUTE_TOOL truncates results over 100 KB and drops structuredContent
@@ -47,6 +47,14 @@ if (!r.result.structuredContent || /Result truncated/.test(text)) {
   before `"isCompleted"`. The first UUID in a row is often a linked evidence id, because the `evidence` array
   comes first, not the tenant vendor id. Confirm each id with a per-item read (`TenantVendorGetAssessment`)
   before passing it to a write such as `EvidenceUpdateLinkToVendor`.
+- Finding an older item that fell past the cut: newest-first means older rows are the ones lost, and a
+  read-only agent reading only the kept prefix will wrongly report the vendor as "not tracked". Search a
+  monitor whose asset type covers the items instead. For Oneleet vendors, the "All vendors are assessed"
+  monitor (asset type `oneleetVendor_v1`) works: `MonitorAssetResultList` with its monitor id and
+  `search: "<vendor name>"` returns one small row whose `assetInstanceId` ends in
+  `oneleetVendors-<tenantVendorId>` and whose `linkUrl` contains `/vendors/<tenantVendorId>/`. Get the monitor
+  id once from `MonitorList` (itself truncated, so search the kept text for the monitor name), then confirm
+  the vendor id with `TenantVendorGet`. Its row counts also give the true vendor total.
 - The durable fix is to keep each item id in your own records when you create or first read the item, so later
   work never needs the full list.
 - Related: [hub-execute-command-times-out-after-about-60-100s.md](hub-execute-command-times-out-after-about-60-100s.md).
