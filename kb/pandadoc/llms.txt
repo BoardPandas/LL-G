@@ -1,0 +1,7 @@
+# PandaDoc Gotchas
+
+> Known PandaDoc patterns that cause silent failures or hard-to-debug errors.
+
+## Entries
+
+- [PandaDoc edit that survives a reload can still be missing from the sent document](edit-survives-reload-but-missing-from-sent-document.md): an execCommand replacement looked saved after reload but the signed copy had the old text, and insertParagraph wipes a block; verify the generated PDF before sending. HIGH.
