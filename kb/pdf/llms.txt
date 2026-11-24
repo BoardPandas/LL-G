@@ -1,0 +1,7 @@
+# PDF Gotchas
+
+> Known PDF text-extraction patterns that fail silently or return incomplete content.
+
+## Entries
+
+- [pdftotext silently returns blank text for image-only pages](image-only-pages-extract-blank.md): pdftotext exits 0 with empty text for pages that have no text layer; count characters per page and render short pages to images. HIGH.

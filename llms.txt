@@ -321,3 +321,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### PandaDoc
 - [PandaDoc index](kb/pandadoc/llms.txt): PandaDoc document editor and signing gotchas (1 entry)
+
+### PDF
+- [PDF index](kb/pdf/llms.txt): PDF text-extraction gotchas, including pages that extract as blank with no error (1 entry)
