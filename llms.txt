@@ -122,7 +122,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (2 entries)
 
 ### Windows
-- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (42 entries)
+- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (43 entries)
 
 ### Media Foundation (Windows)
 - [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from (6 entries)
@@ -140,7 +140,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Teams/SharePoint index](kb/teams-sharepoint/llms.txt): Teams channel operations, file migrations, and SharePoint permissions (3 entries)
 
 ### Cloudflare
-- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (38 entries)
+- [Cloudflare index](kb/cloudflare/llms.txt): Cloudflare Workers, Hyperdrive, Pages, and Zero Trust / WARP (Cloudflare One) gotchas, plus a Realtime provisioning trap (39 entries)
 
 ### Docker
 - [Docker index](kb/docker/llms.txt): Docker / docker-compose image and orchestration gotchas (8 entries)
@@ -281,7 +281,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Vitest index](kb/vitest/llms.txt): Vitest gotchas (16 entries)
 
 ### Go
-- [Go index](kb/go/llms.txt): Go HTTP and concurrency gotchas (38 entries)
+- [Go index](kb/go/llms.txt): Go HTTP and concurrency gotchas (39 entries)
 
 ### Web Security
 - [Web Security index](kb/web-security/llms.txt): Framework-agnostic browser/HTTP security-header gotchas (5 entries)
@@ -293,7 +293,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [DOM index](kb/dom/llms.txt): Framework-agnostic DOM gotchas (6 entries)
 
 ### macOS
-- [macOS index](kb/macos/llms.txt): Native macOS command, monitoring, and permission-state gotchas (8 entries)
+- [macOS index](kb/macos/llms.txt): Native macOS command, monitoring, and permission-state gotchas (9 entries)
 
 ### Redis
 - [Redis index](kb/redis/llms.txt): Redis concurrency and shared-key ownership gotchas (2 entries)
