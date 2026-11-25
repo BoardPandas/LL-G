@@ -65,7 +65,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Accessibility index](kb/accessibility/llms.txt): Accessibility gotchas (3 entries)
 
 ### CSS
-- [CSS index](kb/css/llms.txt): CSS rendering gotchas (14 entries)
+- [CSS index](kb/css/llms.txt): CSS rendering gotchas (15 entries)
 
 ### Data Viz
 - [Data Viz index](kb/data-viz/llms.txt): Chart/visualization normalization gotchas (6 entries)
@@ -113,7 +113,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [gcloud index](kb/gcloud/llms.txt): Google Cloud CLI gotchas, especially from Git Bash on Windows (2 entries)
 
 ### Git
-- [Git index](kb/git/llms.txt): Git tooling gotchas (20 entries)
+- [Git index](kb/git/llms.txt): Git tooling gotchas (21 entries)
 
 ### Linux
 - [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (12 entries)
@@ -125,13 +125,13 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (42 entries)
 
 ### Media Foundation (Windows)
-- [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from (5 entries)
+- [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from (6 entries)
 
 ### FFmpeg
 - [FFmpeg index](kb/ffmpeg/llms.txt): FFmpeg media timing and verification gotchas (1 entry)
 
 ### WebRTC
-- [WebRTC index](kb/webrtc/llms.txt): WebRTC negotiation gotchas (4 entries)
+- [WebRTC index](kb/webrtc/llms.txt): WebRTC negotiation gotchas (6 entries)
 
 ### Chrome
 - [Chrome index](kb/chrome/llms.txt): Google Chrome / Chromium gotchas (5 entries)
@@ -293,7 +293,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [DOM index](kb/dom/llms.txt): Framework-agnostic DOM gotchas (6 entries)
 
 ### macOS
-- [macOS index](kb/macos/llms.txt): Native macOS command, monitoring, and permission-state gotchas (6 entries)
+- [macOS index](kb/macos/llms.txt): Native macOS command, monitoring, and permission-state gotchas (8 entries)
 
 ### Redis
 - [Redis index](kb/redis/llms.txt): Redis concurrency and shared-key ownership gotchas (2 entries)
