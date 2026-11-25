@@ -4,7 +4,7 @@
     "PreInvocation": [
       {
         "type": "command",
-        "command": "bash \"$(git rev-parse --show-toplevel)\"/.claude/scripts/_antigravity-hook.sh PreInvocation",
+        "command": "bash ../.claude/scripts/_antigravity-hook.sh PreInvocation",
         "timeout": 10
       }
     ],
@@ -14,7 +14,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$(git rev-parse --show-toplevel)\"/.claude/scripts/_antigravity-hook.sh PreToolUse .claude/scripts/check-changelog-staged.sh",
+            "command": "bash ../.claude/scripts/_antigravity-hook.sh PreToolUse .claude/scripts/check-changelog-staged.sh",
             "timeout": 30
           }
         ]
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$(git rev-parse --show-toplevel)\"/.claude/scripts/_antigravity-hook.sh PostToolUse .claude/scripts/post-push-cleanup.sh",
+            "command": "bash ../.claude/scripts/_antigravity-hook.sh PostToolUse .claude/scripts/post-push-cleanup.sh",
             "timeout": 30
           }
         ]

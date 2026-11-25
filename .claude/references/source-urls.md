@@ -14,6 +14,13 @@ Both the `init-repo` and `update-practices` skills read this file to get the lis
 - https://github.com/anthropics/courses
 - https://raw.githubusercontent.com/anthropics/courses/master/README.md
 
+## Official Antigravity Sources
+
+- https://antigravity.google/docs/changelog.md
+- https://antigravity.google/docs/hooks.md
+- https://antigravity.google/docs/subagents.md
+- https://antigravity.google/docs/rules.md
+
 ## Community Knowledge Bases
 
 - https://github.com/shanraisshan/claude-code-best-practice

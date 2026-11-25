@@ -3,12 +3,13 @@ name: reviewer
 description: "Use PROACTIVELY for code review focused on correctness, maintainability, naming, DRY violations, and adherence to project standards."
 subagent: true
 mainAgent: true
-model: pro
-commandExecutionPolicy: "off"
+model: inherit
+commandExecutionPolicy: sandbox
 tools:
   - view_file
   - find_by_name
   - list_dir
+  - run_command
   - grep_search
   - send_message
 ---
@@ -57,5 +58,6 @@ Format each finding as:
 
 Antigravity notes (generated):
 - You are the Antigravity port of `.claude/agents/reviewer.md`; `AGENTS.md` and `.agents/rules/` apply.
-- Tool names above are Claude Code's. Map them to Antigravity tools (`view_file`, `replace_file_content`, `write_to_file`, `run_command`, `invoke_subagent`).
+- Tool names above are Claude Code's. Map them to Antigravity tools (`read_file`/`view_file`, `edit_file`/`replace_file_content`, `write_file`/`write_to_file`, `run_command`, `invoke_subagent`).
 - Claude Code limits you to: Read, Glob, Grep. Stay within that scope (including any command-prefix limits).
+- `run_command` is granted solely for read-only search/fetch (`rg`, `find`, `ls`, `git status/log/diff`, `curl -fsSL`) because Antigravity CLI/ACP omits standalone Glob/Grep/WebFetch tools; never edit files or run state-changing commands.

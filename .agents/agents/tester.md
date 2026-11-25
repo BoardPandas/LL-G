@@ -3,14 +3,14 @@ name: tester
 description: "Use PROACTIVELY to run tests, interpret failures, and report pass/fail status. Pairs with the builder agent in cross-layer teams (one teammate builds, one verifies). Detects the test runner from the project rather than assuming one."
 subagent: true
 mainAgent: true
-model: pro
+model: inherit
 commandExecutionPolicy: sandbox
 tools:
   - view_file
   - find_by_name
   - list_dir
-  - grep_search
   - run_command
+  - grep_search
   - manage_task
   - send_message
 ---
@@ -51,5 +51,5 @@ Coverage gaps (if any):
 
 Antigravity notes (generated):
 - You are the Antigravity port of `.claude/agents/tester.md`; `AGENTS.md` and `.agents/rules/` apply.
-- Tool names above are Claude Code's. Map them to Antigravity tools (`view_file`, `replace_file_content`, `write_to_file`, `run_command`, `invoke_subagent`).
+- Tool names above are Claude Code's. Map them to Antigravity tools (`read_file`/`view_file`, `edit_file`/`replace_file_content`, `write_file`/`write_to_file`, `run_command`, `invoke_subagent`).
 - Claude Code limits you to: Read, Glob, Grep, Bash. Stay within that scope (including any command-prefix limits).

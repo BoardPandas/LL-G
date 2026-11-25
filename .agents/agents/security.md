@@ -3,14 +3,14 @@ name: security
 description: "Use PROACTIVELY for security-focused analysis covering OWASP Top 10, secrets detection, dependency vulnerabilities, and input validation gaps."
 subagent: true
 mainAgent: true
-model: pro
-commandExecutionPolicy: "off"
+model: inherit
+commandExecutionPolicy: sandbox
 tools:
   - view_file
   - find_by_name
   - list_dir
-  - grep_search
   - run_command
+  - grep_search
   - manage_task
   - send_message
 ---
@@ -75,5 +75,6 @@ Format each finding as:
 
 Antigravity notes (generated):
 - You are the Antigravity port of `.claude/agents/security.md`; `AGENTS.md` and `.agents/rules/` apply.
-- Tool names above are Claude Code's. Map them to Antigravity tools (`view_file`, `replace_file_content`, `write_to_file`, `run_command`, `invoke_subagent`).
+- Tool names above are Claude Code's. Map them to Antigravity tools (`read_file`/`view_file`, `edit_file`/`replace_file_content`, `write_file`/`write_to_file`, `run_command`, `invoke_subagent`).
 - Claude Code limits you to: Read, Glob, Grep, Bash(npm audit*), Bash(pip audit*), Bash(cargo audit*). Stay within that scope (including any command-prefix limits).
+- `run_command` is granted solely for read-only search/fetch (`rg`, `find`, `ls`, `git status/log/diff`, `curl -fsSL`) because Antigravity CLI/ACP omits standalone Glob/Grep/WebFetch tools; never edit files or run state-changing commands.

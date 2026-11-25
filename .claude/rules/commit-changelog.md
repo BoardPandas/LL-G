@@ -49,6 +49,11 @@ After updating, stage both files before committing:
 git add CHANGELOG.md package.json
 ```
 
+End every agent-authored commit message with a dynamic trailer identifying the active
+agent and model: `Co-Authored-By: {Agent} {Model}` (e.g., `Co-Authored-By: Gemini 4 Neon`,
+`Co-Authored-By: Claude Opus 5.5`, `Co-Authored-By: Codex GPT-6 Sol`). Never hardcode
+another runtime's name.
+
 ## Workflow
 
 1. Run `git diff --cached --stat` to see what's staged

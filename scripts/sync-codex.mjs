@@ -509,10 +509,10 @@ function generateAgentsMd(settings, skills, rules) {
     `| ${code(".claude/agents/<name>.md")} | ${code(".codex/agents/<name>.toml")} | ${code(".agents/agents/<name>.md")} |`,
     `| ${code(".claude/settings.json")} hooks | ${code(".codex/hooks.json")} | ${code(".agents/hooks.json")} (${code("_antigravity-hook.sh")}) |`,
     `| ${code(".claude/rules/*.md")} | inlined or indexed below | ${code(".agents/rules/*.md")} (${code("glob")}) + always-on below |`,
-    `| Read / Glob / Grep | shell reads and ${code("rg")} | ${code("view_file")} / ${code("find_by_name")}, ${code("list_dir")} / ${code("grep_search")} |`,
-    `| Edit / Write / Bash | ${code("apply_patch")} / ${code("Bash")} | ${code("replace_file_content")} / ${code("write_to_file")} / ${code("run_command")} |`,
-    `| WebFetch / WebSearch | web tools | ${code("read_url_content")} / ${code("search_web")} |`,
-    `| Agent / Task, ${code("SendMessage")} | spawn / message a subagent | ${code("invoke_subagent")}, ${code("send_message")} |`,
+    `| Read / Glob / Grep | shell reads and ${code("rg")} | ${code("read_file")} (${code("view_file")} IDE) / ${code("rg")}, ${code("find")}, ${code("ls")} via ${code("run_command")} |`,
+    `| Edit / Write / Bash | ${code("apply_patch")} / ${code("Bash")} | ${code("edit_file")} / ${code("write_file")} (${code("replace_file_content")} / ${code("write_to_file")} IDE) / ${code("run_command")} |`,
+    `| WebFetch / WebSearch | web tools | ${code("curl -fsSL")} via ${code("run_command")} (${code("read_url_content")} IDE) / ${code("search_web")} |`,
+    `| Agent / Task, ${code("SendMessage")} | spawn / message a subagent | ${code("invoke_subagent")} (${code('Workspace: "branch"')}), ${code("send_message")} (by ${code("conversationId")}) |`,
     `| AskUserQuestion / Plan mode | ask in chat / save plans to ${code(`${settings.plansDirectory ?? "tasks"}/`)} | ${code("ask_question")} / save plans to ${code(`${settings.plansDirectory ?? "tasks"}/`)} |`,
     "",
     `${code("AGENTS.md")}, ${code(".agents/")}, and ${code(".codex/")} are generated. Never hand-edit them: change`,
@@ -527,7 +527,7 @@ function generateAgentsMd(settings, skills, rules) {
   const edits = denyList(settings, ["Edit", "Write"]);
   const runs = denyList(settings, ["Bash"]);
   if (reads.length || edits.length || runs.length) {
-    section.push("", "### Denied paths and commands", "", "Claude Code enforces these; Codex and Antigravity do not, so treat them as hard rules.", "");
+    section.push("", "### Denied paths and commands", "", "Claude Code enforces these natively and Antigravity mirrors them via `.agents/hooks.json` (`--enforce-deny`); Codex does not, so treat them as hard rules.", "");
     if (reads.length) section.push(`- Never read: ${reads.join(", ")}`);
     if (edits.length) section.push(`- Never edit: ${edits.join(", ")}`);
     if (runs.length) section.push(`- Never run: ${runs.join(", ")}`);
@@ -538,13 +538,13 @@ function generateAgentsMd(settings, skills, rules) {
     for (const n of notCarried) section.push(`- ${n}`);
     section.push(
       "",
-      "Antigravity mirrors Write/Edit hooks (`pre-write-kb-check.sh`, `post-edit-format.sh`) via `TargetFile`",
-      "and delivers advisory context on `PreInvocation`, but neither Codex nor Antigravity hooks `EnterPlanMode`.",
+      "Antigravity mirrors Write/Edit hooks (`write_file`/`edit_file` and legacy IDE names) via `Path`/`TargetFile`",
+      "and delivers queued advisory context on `PreInvocation` (`systemMessage`), but neither Codex nor Antigravity hooks `EnterPlanMode`.",
     );
   }
 
   if (scoped.length) {
-    section.push("", "### Path-scoped rules", "", "Antigravity loads `.agents/rules/*.md` by glob; in Codex, read a matching rule before editing:", "");
+    section.push("", "### Path-scoped rules", "", "Antigravity loads `.agents/rules/*.md` by glob (it never loads subfolder `CLAUDE.md`/`AGENTS.md` below the workspace root -- use `.claude/rules/*.md` instead); in Codex, read a matching rule before editing:", "");
     for (const r of scoped) {
       section.push(`- ${code(r.path)}${r.description ? ` -- ${r.description}` : ""}. Paths: ${r.paths.map(code).join(", ")}`);
     }

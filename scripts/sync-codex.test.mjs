@@ -87,7 +87,11 @@ before(() => {
   for (const s of ["start", "gate", "plan", "edit"]) w(`.claude/scripts/${s}.sh`, "#!/usr/bin/env bash\nexit 0\n");
   w(
     ".claude/agents/reader.md",
-    "---\nname: reader\ndescription: Reads things.\nmodel: sonnet\neffort: high\nmemory: project\ntools:\n  - Read\n  - Grep\n---\n\nRead only.\n",
+    "---\nname: reader\ndescription: Reads things.\nmodel: sonnet\neffort: high\nmemory: project\nskills:\n  - auto\ntools:\n  - Read\n  - Grep\n---\n\nRead only.\n",
+  );
+  w(
+    ".claude/agents/minimal.md",
+    "---\nname: minimal\ndescription: Reads one file.\nmodel: haiku\ntools:\n  - Read\n---\n\nSingle file reader.\n",
   );
   w(
     ".claude/agents/writer.md",
@@ -112,7 +116,7 @@ test("a fresh generation passes --check", () => {
   assert.equal(r.status, 0, r.stderr);
   assert.match(
     r.stdout,
-    /OK -- Codex & Antigravity mirrors current \(2 skills, 2 agents, 1 glob rules, 2 Codex \/ 3 Antigravity hooks/,
+    /OK -- Codex & Antigravity mirrors current \(2 skills, 3 agents, 1 glob rules, 2 Codex \/ 6 Antigravity hooks/,
   );
 });
 
@@ -258,15 +262,23 @@ test("agents: Codex .toml and Antigravity .md preserve model tier, sandbox polic
   assert.match(agyReader, /^name: reader$/m);
   assert.match(agyReader, /^subagent: true$/m);
   assert.match(agyReader, /^mainAgent: true$/m);
-  assert.match(agyReader, /^model: pro$/m);
-  assert.match(agyReader, /^commandExecutionPolicy: "off"$/m);
-  assert.match(agyReader, /^tools:\n  - view_file\n  - grep_search\n  - send_message$/m);
+  assert.match(agyReader, /^model: inherit$/m);
+  assert.match(agyReader, /^commandExecutionPolicy: sandbox$/m);
+  assert.match(agyReader, /^tools:\n  - view_file\n  - grep_search\n  - run_command\n  - send_message$/m);
+  assert.match(agyReader, /^skills:\n  - skills\/auto$/m);
+  assert.match(agyReader, /run_command` is granted solely for read-only search\/fetch/);
   assert.match(agyReader, /\.claude\/agent-memory\/reader\/MEMORY\.md/);
 
+  const agyMinimal = read(dir, ".agents/agents/minimal.md");
+  assert.match(agyMinimal, /^model: flash$/m);
+  assert.match(agyMinimal, /^commandExecutionPolicy: "off"$/m);
+  assert.match(agyMinimal, /^tools:\n  - view_file\n  - send_message$/m);
+
   const agyWriter = read(dir, ".agents/agents/writer.md");
-  assert.match(agyWriter, /^model: pro$/m);
+  assert.match(agyWriter, /^model: inherit$/m);
   assert.match(agyWriter, /^commandExecutionPolicy: sandbox$/m);
   assert.match(agyWriter, /  - replace_file_content\n  - run_command\n  - manage_task\n  - send_message/);
+  assert.doesNotMatch(agyWriter, /granted solely for read-only/);
   assert.match(agyWriter, /Workspace: "branch"/);
 });
 
@@ -294,15 +306,22 @@ test("hooks: Codex and Antigravity hooks.json generated cleanly", () => {
   const agyHooks = JSON.parse(read(dir, ".agents/hooks.json"))["claude-code-bootstrap"];
   assert.equal(agyHooks.enabled, true);
   assert.equal(agyHooks.SessionStart.length, 1);
-  assert.match(agyHooks.SessionStart[0].command, /_antigravity-hook\.sh SessionStart \.claude\/scripts\/start\.sh$/);
+  assert.equal(
+    agyHooks.SessionStart[0].command,
+    "bash ../.claude/scripts/_antigravity-hook.sh SessionStart .claude/scripts/start.sh",
+  );
   assert.equal(agyHooks.PreInvocation.length, 1);
-  assert.match(agyHooks.PreInvocation[0].command, /_antigravity-hook\.sh PreInvocation$/);
-  assert.equal(agyHooks.PreToolUse.length, 2);
+  assert.equal(agyHooks.PreInvocation[0].command, "bash ../.claude/scripts/_antigravity-hook.sh PreInvocation");
+  assert.equal(agyHooks.PreToolUse.length, 3);
   assert.equal(agyHooks.PreToolUse[0].matcher, "run_command");
+  assert.equal(agyHooks.PreToolUse[0].hooks[0].command, "bash ../.claude/scripts/_antigravity-hook.sh PreToolUse --enforce-deny");
   assert.equal(
     agyHooks.PreToolUse[1].matcher,
-    "write_to_file|replace_file_content|multi_replace_file_content",
+    "write_file|write_to_file|edit_file|replace_file_content|multi_replace_file_content",
   );
+  assert.equal(agyHooks.PreToolUse[1].hooks[0].command, "bash ../.claude/scripts/_antigravity-hook.sh PreToolUse --enforce-deny");
+  assert.equal(agyHooks.PreToolUse[2].matcher, "read_file|view_file");
+  assert.equal(agyHooks.PreToolUse[2].hooks[0].command, "bash ../.claude/scripts/_antigravity-hook.sh PreToolUse --enforce-deny");
   assert.equal(agyHooks.Stop, undefined);
   assert.match(read(dir, ".agents/README.md"), /# Antigravity configuration \(generated\)/);
 

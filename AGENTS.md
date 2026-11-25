@@ -85,10 +85,10 @@ was written for Claude Code; read it through this mapping.
 | `.claude/agents/<name>.md` | `.codex/agents/<name>.toml` | `.agents/agents/<name>.md` |
 | `.claude/settings.json` hooks | `.codex/hooks.json` | `.agents/hooks.json` (`_antigravity-hook.sh`) |
 | `.claude/rules/*.md` | inlined or indexed below | `.agents/rules/*.md` (`glob`) + always-on below |
-| Read / Glob / Grep | shell reads and `rg` | `view_file` / `find_by_name`, `list_dir` / `grep_search` |
-| Edit / Write / Bash | `apply_patch` / `Bash` | `replace_file_content` / `write_to_file` / `run_command` |
-| WebFetch / WebSearch | web tools | `read_url_content` / `search_web` |
-| Agent / Task, `SendMessage` | spawn / message a subagent | `invoke_subagent`, `send_message` |
+| Read / Glob / Grep | shell reads and `rg` | `read_file` (`view_file` IDE) / `rg`, `find`, `ls` via `run_command` |
+| Edit / Write / Bash | `apply_patch` / `Bash` | `edit_file` / `write_file` (`replace_file_content` / `write_to_file` IDE) / `run_command` |
+| WebFetch / WebSearch | web tools | `curl -fsSL` via `run_command` (`read_url_content` IDE) / `search_web` |
+| Agent / Task, `SendMessage` | spawn / message a subagent | `invoke_subagent` (`Workspace: "branch"`), `send_message` (by `conversationId`) |
 | AskUserQuestion / Plan mode | ask in chat / save plans to `tasks/` | `ask_question` / save plans to `tasks/` |
 
 `AGENTS.md`, `.agents/`, and `.codex/` are generated. Never hand-edit them: change
@@ -101,8 +101,8 @@ Explicit-only skills (never start them implicitly): `$mermaid-diagram`, `$plan-r
 
 - Stop/Notification terminal bell -- replaced by [tui] notifications in .codex/config.toml.
 
-Antigravity mirrors Write/Edit hooks (`pre-write-kb-check.sh`, `post-edit-format.sh`) via `TargetFile`
-and delivers advisory context on `PreInvocation`, but neither Codex nor Antigravity hooks `EnterPlanMode`.
+Antigravity mirrors Write/Edit hooks (`write_file`/`edit_file` and legacy IDE names) via `Path`/`TargetFile`
+and delivers queued advisory context on `PreInvocation` (`systemMessage`), but neither Codex nor Antigravity hooks `EnterPlanMode`.
 
 ### Always-on rules
 
@@ -165,6 +165,11 @@ After updating, stage both files before committing:
 ```bash
 git add CHANGELOG.md package.json
 ```
+
+End every agent-authored commit message with a dynamic trailer identifying the active
+agent and model: `Co-Authored-By: {Agent} {Model}` (e.g., `Co-Authored-By: Gemini 4 Neon`,
+`Co-Authored-By: Claude Opus 5.5`, `Co-Authored-By: Codex GPT-6 Sol`). Never hardcode
+another runtime's name.
 
 ##### Workflow
 

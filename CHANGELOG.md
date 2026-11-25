@@ -8,6 +8,7 @@ and this project does not follow Semantic Versioning: it makes no versioned rele
 ## [Unreleased]
 
 ### Changed
+- **Synced Google Antigravity CLI/ACP 1.5 hook, agent, and mirror support plus dynamic `Co-Authored-By` attribution from `claude-code-bootstrap` 0.30.0** (`scripts/sync-codex.mjs`, `scripts/sync-antigravity.mjs`, `scripts/antigravity-format.mjs`, `.claude/scripts/_antigravity-hook.sh`, `.claude/rules/commit-changelog.md`, `.claude/references/source-urls.md`, `init-repo`, and `update-practices`): supports both modern CLI/ACP and legacy IDE tool names, uses cross-platform relative hook commands without POSIX `$(...)`, enforces `.claude/settings.json` `permissions.deny` via `--enforce-deny`, flushes queued advice via `systemMessage`, maps `opus`/`sonnet` agents to `model: inherit` with read-only sandboxed `run_command` where needed, adds official Antigravity source URLs, adopts dynamic `Co-Authored-By: {Agent} {Model}` attribution, and regenerates `AGENTS.md`, `.agents/`, and `.codex/`.
 - **The Hub 100 KB truncation gotcha now says how to recover ids from a cut-off list** (`kb/mcp/hub-multi-execute-truncates-results-over-100kb-and-drops-structuredcontent.md`): split the kept text into rows, take the row-level id before `isCompleted` rather than the first UUID (often a linked evidence id), confirm it with a per-item read before any write, and keep item ids in your own records so the full list is never needed.
 
 ## [1.1.6] - 2026-11-21
