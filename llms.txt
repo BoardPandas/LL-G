@@ -269,7 +269,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Jonas index](kb/jonas/llms.txt): Jonas Club Management / Activity Management (JAM) gotchas (1 entry)
 
 ### npm
-- [npm index](kb/npm/llms.txt): npm workspace gotchas (1 entry)
+- [npm index](kb/npm/llms.txt): npm workspace gotchas (2 entries)
 
 ### Jest
 - [Jest index](kb/jest/llms.txt): Jest test-discovery gotchas for exact Next.js app-router paths containing route groups and dynamic segments, plus two test-double traps that both end in a false green (9 entries)
