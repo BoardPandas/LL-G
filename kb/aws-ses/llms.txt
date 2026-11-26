@@ -1,0 +1,7 @@
+# AWS SES Gotchas
+
+> Known Amazon SES behaviours that cause silent mismatches or hard-to-debug failures.
+
+## Entries
+
+- [SES overwrites the Message-ID header and does not document the replacement format](ses-overrides-message-id-undocumented-format.md): Recipients see <MessageId>@email.amazonses.com (observed in us-east-1, other regions unverified), not the ID you generated; store the SES MessageId, derive, and verify with a loopback send. MEDIUM.
