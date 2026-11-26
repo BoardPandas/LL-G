@@ -5,3 +5,4 @@
 ## Entries
 
 - [SES overwrites the Message-ID header and does not document the replacement format](ses-overrides-message-id-undocumented-format.md): Recipients see <MessageId>@email.amazonses.com (observed in us-east-1, other regions unverified), not the ID you generated; store the SES MessageId, derive, and verify with a loopback send. MEDIUM.
+- [A new SES domain identity can stay PENDING for hours after the DNS records are correct](ses-new-domain-identity-stays-pending-after-dns-correct.md): SES backs off after early failed checks; deleting and re-creating the identity re-checks within a minute and Easy DKIM returns the same tokens, so existing CNAMEs stay valid. MEDIUM.
