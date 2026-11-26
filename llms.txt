@@ -326,4 +326,4 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [PDF index](kb/pdf/llms.txt): PDF text-extraction gotchas, including pages that extract as blank with no error (1 entry)
 
 ### AWS SES
-- [AWS SES index](kb/aws-ses/llms.txt): Amazon SES sending, verification, event-publishing and account gotchas (3 entries)
+- [AWS SES index](kb/aws-ses/llms.txt): Amazon SES sending, verification, event-publishing and account gotchas (4 entries)
