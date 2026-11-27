@@ -32,7 +32,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [React Router index](kb/react-router/llms.txt): React Router 7 SSR and routing gotchas (1 entry)
 
 ### Next.js
-- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (39 entries)
+- [Next.js index](kb/nextjs/llms.txt): All Next.js gotchas (40 entries)
 
 ### Express
 - [Express index](kb/express/llms.txt): Express (Node.js) gotchas (10 entries)
@@ -113,7 +113,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [gcloud index](kb/gcloud/llms.txt): Google Cloud CLI gotchas, especially from Git Bash on Windows (2 entries)
 
 ### Git
-- [Git index](kb/git/llms.txt): Git tooling gotchas (22 entries)
+- [Git index](kb/git/llms.txt): Git tooling gotchas (23 entries)
 
 ### Linux
 - [Linux index](kb/linux/llms.txt): Linux server ops, packaging and desktop-session gotchas (12 entries)
@@ -122,7 +122,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [cmd.exe index](kb/cmd/llms.txt): Windows cmd.exe gotchas, especially for zero-disk-space emergencies (2 entries)
 
 ### Windows
-- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (43 entries)
+- [Windows index](kb/windows/llms.txt): Windows OS administration gotchas (44 entries)
 
 ### Media Foundation (Windows)
 - [Media Foundation index](kb/media-foundation/llms.txt): IMFTransform / MFT gotchas, including for hand-written COM vtable callers (Go, Rust, C#) with no SDK headers to transcribe from (6 entries)
@@ -149,7 +149,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [NinjaOne index](kb/ninjaone/llms.txt): NinjaOne API v2 and MCP tool gotchas (11 entries)
 
 ### SupportForge
-- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent execution and ticket-API behaviour (59 entries)
+- [SupportForge index](kb/supportforge/llms.txt): SupportForge gotchas: remote-agent execution and ticket-API behaviour (60 entries)
 
 ### Tauri
 - [Tauri index](kb/tauri/llms.txt): Tauri 2.x desktop app gotchas (4 entries)
@@ -167,7 +167,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Svelte index](kb/svelte/llms.txt): Svelte 5 component and runes gotchas (4 entries)
 
 ### React
-- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright (20 entries)
+- [React index](kb/react/llms.txt): React hooks, lifecycle and render-loop gotchas, including a referential-identity loop that freezes the browser tab outright (21 entries)
 
 ### Gemini
 - [Gemini index](kb/gemini/llms.txt): Google Gemini API gotchas, including long-audio transcription (3 entries)
@@ -185,7 +185,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [SQLite index](kb/sqlite/llms.txt): SQLite query and data integrity gotchas (7 entries)
 
 ### Postgres
-- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL, query and connection-pooling gotchas (51 entries)
+- [Postgres index](kb/postgres/llms.txt): PostgreSQL schema/DDL, query and connection-pooling gotchas (53 entries)
 
 ### M365 Admin Center
 - [M365 Admin Center index](kb/m365-admin/llms.txt): Integrated Apps / Office add-in centralized deployment gotchas (1 entry)
