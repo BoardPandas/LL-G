@@ -333,3 +333,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### OAuth
 - [OAuth index](kb/oauth/llms.txt): Framework-agnostic OAuth 2.x authorization-server gotchas: redirects, codes, refresh tokens and client metadata (6 entries)
+
+### SMTP
+- [SMTP index](kb/smtp/llms.txt): SMTP submission-server, message-parsing and SASL gotchas (6 entries)
