@@ -330,3 +330,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Authentication
 - [Authentication index](kb/auth/llms.txt): Framework-agnostic sign-in, throttling and session gotchas for a server that authenticates people itself (4 entries)
+
+### OAuth
+- [OAuth index](kb/oauth/llms.txt): Framework-agnostic OAuth 2.x authorization-server gotchas: redirects, codes, refresh tokens and client metadata (6 entries)

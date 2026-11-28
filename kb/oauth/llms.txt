@@ -1,0 +1,13 @@
+# OAuth Gotchas
+
+> Framework-agnostic OAuth 2.x authorization-server gotchas: redirects, codes, refresh tokens and client metadata.
+> MCP SDK specifics are in `kb/mcp/`; Better Auth specifics are in `kb/better-auth/`.
+
+## Entries
+
+- [Sending authorization errors to the client's registered redirect URI makes the server an open redirector once anyone can register a client](error-redirect-to-registered-uri-is-an-open-redirector.md): With dynamic registration or client ID metadata documents anyone can register a redirect URI, so an automatic error redirect bounces visitors to an attacker's site; redirect automatically only for trusted clients, otherwise show an error page with a link (RFC 9700 section 4.11.2). HIGH.
+- [A resumed prompt=login / max_age=0 request loops forever unless the return trip carries proof of the fresh sign-in](resumed-prompt-login-request-loops-without-proof-of-fresh-sign-in.md): The request that returns from the sign-in page still says prompt=login, so it loops unless the return trip carries proof of the fresh sign-in; and a raw-query size cap no larger than the decoded cap refuses your own percent-encoded resumed request. MEDIUM.
+- [OAuth 2.1 removed redirect_uri from the token request, so a server that requires it breaks clients that follow only 2.1](requiring-redirect-uri-at-the-token-endpoint-breaks-oauth-2-1-clients.md): OAuth 2.1 dropped the parameter from the token request because PKCE is mandatory; compare it when sent, do not require it. MEDIUM.
+- [An unbounded grace for a used refresh token lets a thief holding a stale token mint tokens while the real client is idle](unbounded-refresh-token-reuse-grace.md): A grace with no time bound is never detected as reuse; bound it by time from the token's first use (60 s) and revoke the access token issued with the superseded successor too. HIGH.
+- [Reporting a spent authorization code as reused before checking the client and PKCE verifier lets anyone who saw the code revoke the user's tokens](spent-code-reuse-reported-before-client-and-pkce-check.md): Anyone who saw a code can sign the user out by replaying it; revoke on replay only when the client and the PKCE verifier match. HIGH.
+- [The Client ID Metadata Document draft forbids following HTTP redirects when fetching the document](client-id-metadata-document-fetch-must-not-follow-redirects.md): The draft requires the document to come from the client_id URL itself, and most HTTP clients follow redirects by default; refuse every 3xx. MEDIUM.
