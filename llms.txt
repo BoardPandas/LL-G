@@ -336,3 +336,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### SMTP
 - [SMTP index](kb/smtp/llms.txt): SMTP submission-server, message-parsing and SASL gotchas (6 entries)
+
+### TLS
+- [TLS index](kb/tls/llms.txt): TLS certificate issuance (ACME / Let's Encrypt), renewal and reload gotchas (2 entries)

@@ -1,0 +1,8 @@
+# TLS Gotchas
+
+> TLS certificate issuance (ACME / Let's Encrypt), renewal and reload gotchas.
+
+## Entries
+
+- [lego 5: the recursive DNS propagation check asks the system resolver, which has cached the NXDOMAIN from just before the TXT record existed](lego-5-recursive-propagation-check-hits-cached-nxdomain.md): DNS-01 issuance fails for the whole propagation wait although the TXT record is correct; use `--dns.propagation.disable-rns` to check authoritative servers only. Also lists the lego 5 renames (`run` also renews, `--renew-days`, `--deploy-hook`, `LEGO_HOOK_CERT_PATH`). MEDIUM.
+- [A certificate renewer writes key and chain non-atomically relative to each other, so a reloader can load a mismatched pair](certificate-reloader-must-swap-only-a-complete-matching-pair.md): Between the two renames one file is new and the other old; swap only a pair that reads identically twice and whose key matches the certificate, and have the renewer rename the key first, then the chain. MEDIUM.
