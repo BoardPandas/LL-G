@@ -3,46 +3,60 @@ tech: supportforge
 tags: [tickets, mcp, ticket-number, id-collision, cross-client, silent-wrong-output, identifiers]
 severity: high
 ---
-# get_ticket(N) resolves the internal id before the MSP number and can return a different client's ticket
+# A bare ticket number is the display number: get_ticket(N) prefers msp_ticket_number, and a colliding internal id is shadowed
 
 ## PROBLEM
-`get_ticket` accepts "ticket id or MSP ticket number" for the same parameter. When both interpretations exist, it resolves the **internal `id`** and never tells you it made a choice.
-
-The two namespaces overlap badly:
-- `msp_ticket_number` is the number in the dashboard URL (`/tickets/wellforce/195`) and is a **small integer** (87, 111, 177, 195 ...).
+Every ticket tool takes "ticket id or MSP ticket number" in one parameter, and the two namespaces overlap:
+- `msp_ticket_number` is the number in the dashboard URL (`/tickets/<msp-slug>/195`) and is a **small integer** (87, 111, 177, 195 ...).
 - `id` is the internal primary key. Modern rows are large (226813, 227010), but **legacy Zendesk-imported rows have small ids in the exact same range**, with `msp_ticket_number: null`.
 
-So `get_ticket(195)` returns internal id 195 -- a closed Fabrikam ticket from 2025 about a stuck Win+P dropdown -- when the operator meant `/tickets/wellforce/195`, which is a live workstation ticket at Contoso (id 227010).
+When both interpretations exist, the platform picks one and never says it made a choice. **Which one it picks changed**, and this entry used to describe the old answer:
 
-Nothing errors. You get a well-formed ticket for **the wrong client**. In an MSP context that is both a cross-tenant data exposure and a live remediation hazard: act on it and you are troubleshooting the wrong machine at the wrong company. The only reason it was caught was that the hostname in the request contradicted the organization on the returned ticket.
+- **Until 2026-07-21** the internal id won. `get_ticket(195)` returned legacy id 195, a closed Fabrikam ticket from 2025, when the operator meant `/tickets/<msp-slug>/195`, a live workstation ticket at Contoso (id 227010). The resolver intended the opposite, but its `ORDER BY (msp_ticket_number = $2) DESC` ranked the NULL of a legacy row first (see `kb/postgres/order-by-desc-nulls-first.md`).
+- **Since 2026-07-21** the display number wins. Every ticket tool and HTTP route resolves through one helper, `resolveTicketInMsp`, which matches the display number first and falls back to the internal id only when no ticket in the MSP has that display number.
+
+So the earlier advice here, "resolve to the internal id and pass that", is now the hazard in the other direction. An internal id is only a fallback: pass one that equals some ticket's display number and you get that other ticket, well-formed, for **the wrong client**, with no error. In an MSP context that is both a cross-client data exposure and a live remediation hazard.
 
 ## WRONG
 ```
-get_ticket(195)
-  -> { id: 195, msp_ticket_number: null, zendesk_ticket_id: "9654",
-       organization_name: "Fabrikam", status: "closed",
-       subject: "The lobby slideshow is playing but on the right of" }
-# Operator meant /tickets/wellforce/195. Different client. Different year. No warning.
+# Treating the internal id as the unambiguous form.
+get_ticket(195)        # meant the legacy import with internal id 195
+  -> { id: 227010, msp_ticket_number: 195, organization_name: "Contoso" }
+# Display number 195 wins. The legacy row is shadowed. No warning.
+
+# Building a prompt, link or message from the internal id.
+"Add this to ticket 227010"
+# Read as display number 227010 first. Correct only while no ticket in the MSP has that number.
+
+# In platform code: matching both columns by hand.
+UPDATE tickets SET deleted_at = now()
+ WHERE msp_id = $1 AND (id = $2 OR msp_ticket_number = $2)
+# No ORDER BY, no LIMIT: a colliding ref changes BOTH rows while RETURNING reports one.
 ```
 
 ## RIGHT
 ```
-# Resolve the display number to an internal id first, then fetch by that id.
-list_tickets(search: "#195")
-  -> { id: 227010, msp_ticket_number: 195, display_number: "195",
-       organization_name: "Contoso" }
-
-get_ticket(227010)     # unambiguous: internal id
+# A number from a person, a URL or the UI is a display number. Pass it as it is.
+get_ticket(195)        # or "#195"
+  -> { id: 227010, msp_ticket_number: 195, organization_name: "Contoso" }
 
 # Then ASSERT the identity matches what you were asked for, before acting on it.
 #   msp_ticket_number == the number in the URL
 #   organization_name == the client you expect
 #   status/created_at  are plausible for a live request
+
+# Text that a person or an assistant will read back: write the display number.
+"Add this to ticket #195"
+
+# In platform code: resolve once to a single row, then act by primary key.
+const ticket = await resolveTicketInMsp(db, mspId, ref);   // { id, client_id } | null
+UPDATE tickets SET deleted_at = now() WHERE id = $1          -- ticket.id
 ```
 
 ## NOTES
-- **A URL number is an `msp_ticket_number`, never an `id`.** `/tickets/<msp>/<N>` always means `msp_ticket_number: N`. Treat any bare number a human gives you as the display number and resolve it via `list_tickets(search:"#N")`.
-- **Fingerprints of a wrong resolution:** `msp_ticket_number: null` (real ones always have it), a non-null `zendesk_ticket_id`, a `status: "closed"` on what should be a live request, a `created_at` months or years old, or an `organization_name` that is not the client you asked about. Any one of these means you got a legacy import, not the ticket you wanted.
-- **Cross-check before you act, always.** Before touching an endpoint, confirm the ticket's `organization_name`/`client_id` matches the machine's client. Here `CTS-WS01` is Contoso's while the returned ticket was Fabrikam's -- that contradiction was the only signal.
-- The same ambiguity applies to any tool taking "id or number" for tickets (`get_ticket_messages`, `list_ticket_attachments`, `add_internal_note`). Pass the resolved internal id to all of them; an internal note posted to the wrong client's ticket is not retractable.
-- Collision space is wide, not a rare edge: every `msp_ticket_number` below the highest legacy imported id is a potential hit.
+- **A URL number is an `msp_ticket_number`, never an `id`.** `/tickets/<msp-slug>/<N>` always means `msp_ticket_number: N`.
+- **The parameter has no id-only form.** `195` and `"#195"` parse to the same reference and take the same path. A legacy import whose internal id equals a live display number cannot be fetched by number through these tools.
+- **Fingerprints of the wrong ticket:** an `organization_name` that is not the client you asked about, a `status: "closed"` on what should be a live request, a `created_at` months or years old, or `msp_ticket_number: null` with a non-null `zendesk_ticket_id` when you expected a current ticket.
+- **Cross-check before you act, always.** Before touching an endpoint, confirm the ticket's `organization_name`/`client_id` matches the machine's client. An internal note posted to the wrong client's ticket is not retractable.
+- The same rule covers every tool taking "id or number" for tickets (`get_ticket_messages`, `list_ticket_attachments`, `add_internal_note`), because they share the resolver.
+- **Check which behaviour you are on before trusting either half of this entry.** A fork, an old deployment or a hand-written query may still have the pre-fix ordering. One call with a known colliding number, compared against the dashboard, settles it.
