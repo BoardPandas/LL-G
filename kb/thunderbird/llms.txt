@@ -1,0 +1,7 @@
+# Thunderbird Gotchas
+
+> Thunderbird add-on and account-setup gotchas.
+
+## Entries
+
+- [Thunderbird add-ons: web-ext lint does not validate oauth_provider manifest keys, and the trailing slash of redirectionEndpoint is significant](web-ext-lint-does-not-validate-oauth-provider-keys.md): A misspelt key inside `oauth_provider` lints clean, and because Thunderbird only replaces the port, `redirectionEndpoint` must match the registered redirect URI including its trailing slash. MEDIUM.

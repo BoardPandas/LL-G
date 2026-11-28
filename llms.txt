@@ -342,3 +342,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### Apple Configuration Profiles
 - [Apple Configuration Profiles index](kb/apple-configuration-profiles/llms.txt): Apple configuration profile (.mobileconfig) generation and signing gotchas (1 entry)
+
+### Thunderbird
+- [Thunderbird index](kb/thunderbird/llms.txt): Thunderbird add-on and account-setup gotchas (1 entry)
