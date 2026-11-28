@@ -1,0 +1,7 @@
+# Apple Configuration Profiles Gotchas
+
+> Apple configuration profile (.mobileconfig) generation and signing gotchas.
+
+## Entries
+
+- [Signed Apple configuration profiles: DER CMS SignedData with embedded content, the same signing identity is required to replace an installed profile, and passwords in the profile are readable](signed-profile-format-and-replacement-identity.md): A signed .mobileconfig is DER CMS SignedData with the plist embedded; a renewal that changes the signing identity can block replacing an installed profile; signing does not hide passwords; the Rust `cms` builder copies content into non-zeroizable values and reads the system clock. MEDIUM.

@@ -339,3 +339,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### TLS
 - [TLS index](kb/tls/llms.txt): TLS certificate issuance (ACME / Let's Encrypt), renewal and reload gotchas (2 entries)
+
+### Apple Configuration Profiles
+- [Apple Configuration Profiles index](kb/apple-configuration-profiles/llms.txt): Apple configuration profile (.mobileconfig) generation and signing gotchas (1 entry)
