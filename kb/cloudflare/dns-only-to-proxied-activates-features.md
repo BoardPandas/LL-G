@@ -1,6 +1,6 @@
 ---
 tech: cloudflare
-tags: [dns, proxied, tunnel, workers, redirect-rules, waf, access, cutover, migration]
+tags: [dns, proxied, tunnel, workers, redirect-rules, waf, access, cutover, migration, email-obfuscation, browser-integrity-check, csp, oauth, zone-settings]
 severity: high
 ---
 # Proxying a DNS-only record activates every Cloudflare-layer feature on that host
@@ -9,6 +9,11 @@ severity: high
 A DNS record set to "DNS only" (grey cloud) bypasses the Cloudflare proxy entirely: requests go straight to the origin, so Workers, Redirect Rules, Transform Rules, WAF, and Access policies scoped to that hostname NEVER run. The moment you flip the record to "Proxied" (orange cloud) -- which you must do to route a host through a Cloudflare Tunnel (`*.cfargotunnel.com`) -- all of those edge features suddenly apply. Any zone-wide Worker route (`*/*`), catch-all redirect rule, or WAF rule that was silently dormant now intercepts the newly-proxied host, often with no origin-side log because the edge handles (or redirects) the request before it reaches your server.
 
 Real failure: a migration flipped `api.` and `control.` from DNS-only to proxied (to reach a tunnel). A pre-existing `*/*` Worker that rewrote all traffic to the app origin (for customer vanity domains) began hijacking `api.`/`control.`, sending them to the web app -- the API and admin portal became unreachable and the dashboard 500'd, all with `server: cloudflare` 307s and nothing in the origin logs.
+
+Zone **settings** switch on the same way, and they are not in any ruleset or route list. Two that break an application the moment its hostname is proxied:
+
+- **Email Obfuscation** rewrites HTML responses and injects a script. An app with a strict Content-Security-Policy blocks the injected script, and the page's own markup is no longer what the server sent.
+- **Browser Integrity Check** blocks requests that do not look like a browser. OAuth and API clients (token endpoint calls, command-line tools) are refused at the edge before they reach the origin.
 
 ## WRONG
 ```bash
@@ -25,6 +30,8 @@ curl -X PATCH "$CF/zones/$ZONE/dns_records/$ID" \
 gh api /zones/$ZONE/workers/routes            # */* routes will now run on this host
 gh api /zones/$ZONE/rulesets                  # redirect / transform / WAF phases
 gh api /accounts/$ACCT/access/apps            # Access policies (redirect-to-login)
+gh api /zones/$ZONE/settings                  # zone settings: Email Obfuscation, Browser Integrity Check, ...
+# Turn off (or exclude this hostname from) settings that rewrite HTML or refuse non-browser clients.
 # Add explicit passthrough/exclusions for the newly-proxied platform hosts, e.g.
 # a Worker guard: if (PLATFORM_HOSTS.has(url.hostname)) return fetch(request);
 # THEN flip the record to proxied.
