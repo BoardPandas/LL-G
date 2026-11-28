@@ -59,7 +59,7 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 - [Tailwind CSS index](kb/tailwind/llms.txt): All Tailwind CSS gotchas (11 entries)
 
 ### Base UI
-- [Base UI index](kb/base-ui/llms.txt): Base UI (@base-ui-components/react) gotchas (2 entries)
+- [Base UI index](kb/base-ui/llms.txt): Base UI (@base-ui-components/react) gotchas (3 entries)
 
 ### Accessibility
 - [Accessibility index](kb/accessibility/llms.txt): Accessibility gotchas (3 entries)
