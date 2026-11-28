@@ -327,3 +327,6 @@ LOW = style/convention, caught by linter -- skip unless explicitly asked
 
 ### AWS SES
 - [AWS SES index](kb/aws-ses/llms.txt): Amazon SES sending, verification, event-publishing and account gotchas (5 entries)
+
+### Authentication
+- [Authentication index](kb/auth/llms.txt): Framework-agnostic sign-in, throttling and session gotchas for a server that authenticates people itself (4 entries)

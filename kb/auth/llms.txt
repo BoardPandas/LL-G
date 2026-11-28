@@ -1,0 +1,11 @@
+# Authentication Gotchas
+
+> Framework-agnostic sign-in, throttling and session gotchas for a server that authenticates people itself.
+> Library-specific behaviour lives on that library's shelf (for example `kb/better-auth/`).
+
+## Entries
+
+- [Counting failed attempts inside the request's own transaction loses the count when that transaction rolls back](failed-attempt-count-in-request-transaction-is-rolled-back.md): The wrong-password path rolls the request transaction back and the increment with it, so lockout never triggers; record failures in a separate transaction or after the request transaction ends. HIGH.
+- [A password step that answers differently for a right and a wrong password before the second factor is a password oracle](password-step-before-second-factor-is-a-password-oracle.md): "Wrong password" at step one confirms passwords without the second factor; always answer "second factor next", with an unstored look-alike token when the password was wrong, and do exactly one hash verification on every path. HIGH.
+- [A per-address failure block consulted before the credential lookup refuses valid credentials](per-address-failure-block-before-lookup-refuses-valid-credentials.md): A few junk attempts from an office or carrier NAT lock out everyone behind it; for random 256-bit tokens look up first and let a valid credential always succeed, and for passwords charge failures, not successes, to the per-address bucket. HIGH.
+- [Not rotating the session identifier at step-up or password change lets a copied cookie ride the owner's re-authentication](session-identifier-not-rotated-at-privilege-change.md): A copied cookie rides the owner's re-authentication; mint a new session value at every privilege change, and have the page re-read the CSRF token derived from it. HIGH.
